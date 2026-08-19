@@ -1,0 +1,51 @@
+services:
+  dvwa:
+    image: vulnerables/web-dvwa
+    container_name: module3-dvwa
+    ports:
+      - "8082:80"
+    networks:
+      module3-net:
+        ipv4_address: 172.31.0.10
+    restart: unless-stopped
+
+  dvwa-db:
+    image: mysql:5.7
+    container_name: module3-dvwa-db
+    environment:
+      MYSQL_ROOT_PASSWORD: dvwa
+      MYSQL_DATABASE: dvwa
+      MYSQL_USER: dvwa
+      MYSQL_PASSWORD: p@ssw0rd
+    networks:
+      module3-net:
+        ipv4_address: 172.31.0.11
+    restart: unless-stopped
+
+  webgoat:
+    image: webgoat/webgoat
+    container_name: module3-webgoat
+    ports:
+      - "8083:8080"
+      - "9091:9090"
+    networks:
+      module3-net:
+        ipv4_address: 172.31.0.20
+    restart: unless-stopped
+
+  juice-shop:
+    image: bkimminich/juice-shop
+    container_name: module3-juice-shop
+    ports:
+      - "3000:3000"
+    networks:
+      module3-net:
+        ipv4_address: 172.31.0.30
+    restart: unless-stopped
+
+networks:
+  module3-net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.31.0.0/24

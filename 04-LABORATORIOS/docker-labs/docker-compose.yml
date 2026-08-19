@@ -1,0 +1,74 @@
+# =============================================================================
+# Lab local de vulnerabilidades web — Plataforma de Estudio
+#
+# Levanta un entorno de práctica AISLADO con tres aplicaciones intencionalmente
+# vulnerables. Ejecuta SOLO en tu red local (127.0.0.1 / red privada de pruebas)
+# y NUNCA lo expongas a Internet. No uses datos reales en estos labs.
+#
+# Uso:
+#   docker compose up -d          # levantar los tres servicios
+#   docker compose ps             # ver estado y puertos
+#   docker compose down           # detener (conserva datos)
+#   docker compose down -v        # detener y eliminar datos
+#
+# Aplicaciones:
+#   1. DVWA (Damn Vulnerable Web App)   -> http://localhost:8080  admin:password
+#   2. OWASP Juice Shop                -> http://localhost:3000
+#   3. Vulnerable Wordpress (WPScan)   -> http://localhost:8081  admin:password
+# =============================================================================
+
+services:
+  dvwa:
+    image: vulnerables/web-dvwa:latest
+    container_name: lab-dvwa
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    networks:
+      - lab-net
+
+  juice-shop:
+    image: bkimminich/juice-shop:latest
+    container_name: lab-juice-shop
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    networks:
+      - lab-net
+
+  wordpress-vuln:
+    image: wordpress:6.0.0-php8.0-apache
+    container_name: lab-wordpress
+    restart: unless-stopped
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: wpuser
+      WORDPRESS_DB_PASSWORD: wppass_lab
+      WORDPRESS_DB_NAME: wordpress
+    ports:
+      - "8081:80"
+    depends_on:
+      - db
+    networks:
+      - lab-net
+
+  db:
+    image: mysql:5.7
+    container_name: lab-db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wpuser
+      MYSQL_PASSWORD: wppass_lab
+      MYSQL_ROOT_PASSWORD: rootpass_lab
+    volumes:
+      - lab-db-data:/var/lib/mysql
+    networks:
+      - lab-net
+
+networks:
+  lab-net:
+    driver: bridge
+
+volumes:
+  lab-db-data:

@@ -1,0 +1,178 @@
+{
+  "header": {
+    "title": "Plataforma de Estudio de Ciberseguridad",
+    "subtitle": "Formación Pública, Gratuita y de Excelencia",
+    "description": "Capacitación integral para proteger el mundo digital, con proyectos prácticos y acceso libre.",
+    "cta1": "Comienza tu formación",
+    "cta2": "Explora nuestros programas",
+    "nav": [
+      {"name": "Inicio", "link": "#inicio"},
+      {"name": "Sobre la Plataforma", "link": "#sobre-nosotros"},
+      {"name": "Programas", "link": "#programas"},
+      {"name": "Gobernanza", "link": "#gobernanza"},
+      {"name": "Comunidad", "link": "#comunidad"},
+      {"name": "Transparencia", "link": "#transparencia"},
+      {"name": "Contacto", "link": "#contacto"}
+    ]
+  },
+  "about": {
+    "title": "Sobre la Plataforma",
+    "history": "Fundada con el objetivo de democratizar el acceso a la educación en ciberseguridad, nuestra institución ofrece programas de nivel gubernamental gratuitos y abiertos a toda la comunidad. Buscamos formar a la próxima generación de defensores digitales capaces de enfrentar los retos tecnológicos del futuro con ética y profesionalismo.",
+    "values": [
+      {"icon": "shield-check", "title": "Transparencia", "desc": "Operamos con políticas abiertas y accesibles para todos."},
+      {"icon": "globe", "title": "Accesibilidad", "desc": "Educación gratuita y sin barreras geográficas ni económicas."},
+      {"icon": "lightbulb", "title": "Innovación", "desc": "Contenidos actualizados con las últimas tendencias y amenazas globales."},
+      {"icon": "users", "title": "Colaboración", "desc": "Fomentamos el trabajo en equipo y el desarrollo de comunidades fuertes."}
+    ],
+    "team": [
+      {
+        "name": "Dra. Elena Ramos",
+        "role": "Directora Académica",
+        "bio": "Especialista en seguridad en la nube con más de 15 años de experiencia en el sector público y privado.",
+        "linkedin": "#"
+      },
+      {
+        "name": "Ing. Carlos Mendoza",
+        "role": "Jefe de Laboratorios",
+        "bio": "Experto en Red Team y Pentesting. Lidera el desarrollo de nuestros entornos simulados de aprendizaje.",
+        "linkedin": "#"
+      },
+      {
+        "name": "MSc. Sofía Navarro",
+        "role": "Coordinadora de Alianzas",
+        "bio": "Investigadora en Criptografía y encargada de relaciones interinstitucionales.",
+        "linkedin": "#"
+      }
+    ]
+  },
+  "programs": {
+    "title": "Programas y Módulos",
+    "download_cta": "Descargar Temario Institucional (PDF)"
+  },
+  "governance": {
+    "title": "Gobernanza y Ética Institucional",
+    "manifesto": {
+      "title": "Manifiesto por la Resiliencia Digital",
+      "text": "Creemos que la educación técnica avanzada debe ser un bien público. Ante la creciente complejidad del entorno cibernético global, nuestra misión es formar defensores digitales íntegros y altamente capacitados. Rechazamos el elitismo técnico y promovemos una cultura de apertura, rigor ético e inclusión para proteger las infraestructuras críticas y a los ciudadanos de nuestra región."
+    },
+    "ethics": [
+      {
+        "title": "Defensa y No Agresión",
+        "desc": "Capacitamos para construir, proteger y auditar, nunca para atacar infraestructuras sin consentimiento explícito y legal."
+      },
+      {
+        "title": "Respeto a la Privacidad",
+        "desc": "Defendemos los derechos fundamentales y el resguardo riguroso de la información personal en todo proceso investigativo y técnico."
+      },
+      {
+        "title": "Apertura y Colaboración",
+        "desc": "Fomentamos la creación de código abierto, el intercambio de inteligencia sobre amenazas y el fortalecimiento de la comunidad."
+      }
+    ],
+    "advisory_board": {
+      "title": "Consejo Asesor Honorario",
+      "description": "Órgano consultivo compuesto por líderes de la academia, el sector público y la industria. Actualmente en fase de convocatoria.",
+      "cta": "Postúlate al Consejo Asesor",
+      "members": [
+        {
+          "name": "Por Definir",
+          "role": "Representante Sector Público",
+          "status": "Convocatoria Abierta"
+        },
+        {
+          "name": "Por Definir",
+          "role": "Representante Academia",
+          "status": "Convocatoria Abierta"
+        },
+        {
+          "name": "Por Definir",
+          "role": "Experto Técnico de Industria",
+          "status": "En Proceso de Selección"
+        }
+      ]
+    }
+  },
+  "testimonials": {
+    "title": "Casos de Éxito",
+    "description": "Estudiantes que han transformado su carrera a través de nuestra educación abierta.",
+    "list": [
+      {
+        "name": "Javier Torres",
+        "role": "Analista SOC Junior",
+        "quote": "El módulo de OSINT y Pentesting me dio las herramientas prácticas que ninguna academia de pago pudo ofrecerme. Gracias a los laboratorios pude armar mi portafolio y conseguir mi primer empleo."
+      },
+      {
+        "name": "Laura Méndez",
+        "role": "Consultora de Seguridad",
+        "quote": "Venía del desarrollo web tradicional. Entender las vulnerabilidades OWASP con el enfoque de defensa de la Plataforma de Estudio cambió completamente mi perspectiva y mi carrera."
+      }
+    ]
+  },
+  "community": {
+    "title": "Comunidad y Colaboración",
+    "description": "Únete a una red activa de profesionales y estudiantes. Participa en proyectos, resuelve dudas en nuestros foros y asiste a eventos exclusivos.",
+    "events": [
+      {"date": "15 Oct 2026", "title": "Webinar: IA en Ciberseguridad", "type": "Online"},
+      {"date": "02 Nov 2026", "title": "Taller: Análisis de Malware", "type": "Laboratorio Virtual"},
+      {"date": "20 Nov 2026", "title": "Foro Anual de Seguridad Gubernamental", "type": "Híbrido"}
+    ],
+    "volunteer_cta": "Formulario de Voluntariado y Prácticas"
+  },
+  "resources": {
+    "title": "Recursos y Materiales",
+    "categories": [
+      {
+        "name": "Biblioteca Digital",
+        "items": ["Guías de Hardening", "Manuales de Respuesta a Incidentes", "Normativas ISO/IEC"]
+      },
+      {
+        "name": "Laboratorios Virtuales",
+        "items": ["Entornos vulnerables Dockerizados", "CTF Institucional", "Simulador SOC"]
+      },
+      {
+        "name": "Repositorios de Código",
+        "items": ["Scripts de Automatización", "Reglas YARA públicas", "Herramientas desarrolladas in-house"]
+      }
+    ]
+  },
+  "transparency": {
+    "title": "Transparencia y Participación",
+    "description": "Comprometidos con el manejo ético y público de nuestros recursos y operaciones.",
+    "metrics": {
+      "title": "Métricas de Impacto",
+      "items": [
+        {
+          "label": "Horas de Laboratorio",
+          "current": 200,
+          "target": 1000
+        },
+        {
+          "label": "Módulos Publicados",
+          "current": 5,
+          "target": 20
+        },
+        {
+          "label": "Estudiantes Activos",
+          "current": 450,
+          "target": 2000
+        }
+      ]
+    },
+    "reports": [
+      {"title": "Informe de Gestión 2025", "link": "#"},
+      {"title": "Resultados de Evaluaciones Académicas", "link": "#"},
+      {"title": "Métricas de Inserción Laboral", "link": "#"}
+    ],
+    "policies": ["Políticas de Privacidad", "Términos y Condiciones", "Protección de Datos (GDPR/LPDP)"]
+  },
+  "contact": {
+    "title": "Contacto y Apoyo",
+    "info": {
+      "address": "Av. Tecnológica 123, Edificio Gubernamental, Ciudad Capital",
+      "phone": "+1 800 555 0199",
+      "email": "contacto@plataformaciber.org",
+      "hours": "Lunes a Viernes, 08:00 - 17:00 Hrs"
+    },
+    "social": ["LinkedIn", "Twitter/X", "GitHub"]
+  }
+}

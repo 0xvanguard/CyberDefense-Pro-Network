@@ -1,0 +1,75 @@
+# Lab 01 — Entorno de práctica OSINT local
+# Levanta una aplicación web vulnerable para practicar reconocimiento
+# USO EXCLUSIVO en entorno local controlado
+
+services:
+
+  # Aplicación web vulnerable para práctica
+  dvwa:
+    image: vulnerables/web-dvwa
+    container_name: lab-osint-dvwa
+    ports:
+      - "8080:80"
+    environment:
+      - MYSQL_PASS=p@ssw0rd
+    networks:
+      - lab-osint
+    restart: unless-stopped
+    labels:
+      - "lab=osint-01"
+      - "nivel=basico"
+
+  # Base de datos para DVWA
+  dvwa-db:
+    image: mysql:5.7
+    container_name: lab-osint-db
+    environment:
+      MYSQL_ROOT_PASSWORD: dvwa
+      MYSQL_DATABASE: dvwa
+      MYSQL_USER: dvwa
+      MYSQL_PASSWORD: p@ssw0rd
+    networks:
+      - lab-osint
+    volumes:
+      - dvwa-db-data:/var/lib/mysql
+    restart: unless-stopped
+
+  # Servidor DNS local para práctica de enumeración DNS
+  dnsmasq:
+    image: jpillora/dnsmasq
+    container_name: lab-osint-dns
+    ports:
+      - "5353:53/tcp"
+      - "5353:53/udp"
+    environment:
+      HTTP_USER: admin
+      HTTP_PASS: admin
+    cap_add:
+      - NET_ADMIN
+    networks:
+      - lab-osint
+    restart: unless-stopped
+
+networks:
+  lab-osint:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/24
+
+volumes:
+  dvwa-db-data:
+
+# Uso:
+#   docker compose up -d          → Levantar el lab
+#   docker compose ps             → Ver estado
+#   docker compose logs -f dvwa   → Ver logs
+#   docker compose down           → Apagar el lab
+#   docker compose down -v        → Apagar y eliminar datos
+#
+# Acceso:
+#   DVWA:       http://localhost:8080   admin / password
+#   DNS local:  localhost:5353
+#
+# Practica reconocimiento DNS contra la red 172.20.0.0/24
+# y reconocimiento web contra http://localhost:8080

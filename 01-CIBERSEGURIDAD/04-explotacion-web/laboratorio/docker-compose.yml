@@ -1,0 +1,41 @@
+services:
+  dvwa:
+    image: vulnerables/web-dvwa
+    container_name: module4-dvwa
+    networks:
+      module4-net:
+        ipv4_address: 172.32.0.10
+
+  webgoat:
+    image: webgoat/webgoat
+    container_name: module4-webgoat
+    networks:
+      module4-net:
+        ipv4_address: 172.32.0.20
+
+  juice-shop:
+    image: bkimminich/juice-shop
+    container_name: module4-juice-shop
+    networks:
+      module4-net:
+        ipv4_address: 172.32.0.30
+
+  reverse-proxy:
+    image: nginx:alpine
+    container_name: module4-reverse-proxy
+    volumes:
+      - ../defensa/reverse-proxy-nginx-ejemplo.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - "8084:8084"
+      - "8085:8085"
+      - "8086:8086"
+    networks:
+      module4-net:
+        ipv4_address: 172.32.0.40
+
+networks:
+  module4-net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.32.0.0/24
