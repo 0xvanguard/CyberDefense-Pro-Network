@@ -292,3 +292,22 @@ document.querySelectorAll('.btn-lab:not(.disabled)').forEach(btn => {
         alert(`Starting lab: ${labName}\n\nThis would open the lab environment in a real implementation.`);
     });
 });
+
+// ========================================
+// Module Blocks - Expand/Collapse
+// ========================================
+document.querySelectorAll('.module-block').forEach(block => {
+    const header = block.querySelector('.module-header');
+    if (header) {
+        header.addEventListener('click', () => {
+            block.classList.toggle('expanded');
+        });
+    }
+});
+
+// Guide steps toggle
+document.querySelectorAll('.step-header').forEach(header => {
+    header.addEventListener('click', () => {
+        header.parentElement.classList.toggle('open');
+    });
+});

@@ -4,117 +4,73 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CyberDefense Pro Network | Plataforma Profesional de Ciberdefensa</title>
-    <meta name="description" content="Aprende ciberseguridad de cero a profesional. Red Team, Blue Team, Cloud, Malware, Forense y más.">
+    <meta name="description" content="Aprende ciberseguridad de cero a profesional. 10 módulos completos con guías paso a paso.">
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body data-theme="dark">
 
-    <!-- ===== NAVBAR ===== -->
+    <!-- NAVBAR -->
     <nav class="navbar" id="navbar">
         <div class="nav-container">
-            <a href="#" class="nav-logo">
-                <span class="logo-icon">🛡️</span>
+            <a href="#hero" class="nav-logo">
+                <span class="logo-icon"><i class="fas fa-shield-halved"></i></span>
                 <span class="logo-text">CDPN</span>
             </a>
             <ul class="nav-menu" id="navMenu">
-                <li><a href="#hero" class="nav-link active" data-section="hero">Inicio</a></li>
+                <li><a href="#hero" class="nav-link">Inicio</a></li>
                 <li class="nav-dropdown">
-                    <a href="#carreras" class="nav-link">Carreras <i class="fas fa-chevron-down"></i></a>
+                    <a href="#modulos" class="nav-link"><i class="fas fa-book"></i> Módulos <i class="fas fa-chevron-down" style="font-size:0.7rem"></i></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#red-team"><span class="dot red"></span> Red Team</a></li>
-                        <li><a href="#blue-team"><span class="dot blue"></span> Blue Team</a></li>
-                        <li><a href="#cloud"><span class="dot cloud"></span> Cloud Security</a></li>
-                        <li><a href="#malware"><span class="dot malware"></span> Malware Analysis</a></li>
-                        <li><a href="#forensics"><span class="dot forensics"></span> Digital Forensics</a></li>
-                        <li><a href="#iot"><span class="dot iot"></span> IoT Security</a></li>
-                        <li><a href="#ai-security"><span class="dot ai"></span> AI Security</a></li>
+                        <li><a href="#intro"><span class="dot" style="background:#00d4ff"></span> 00 - Introducción</a></li>
+                        <li><a href="#ciberseguridad"><span class="dot red"></span> 01 - Ciberseguridad</a></li>
+                        <li><a href="#seguridad-info"><span class="dot blue"></span> 02 - Seguridad Información</a></li>
+                        <li><a href="#ia-agentes"><span class="dot ai"></span> 03 - IA y Agentes</a></li>
+                        <li><a href="#laboratorios"><span class="dot cloud"></span> 04 - Laboratorios</a></li>
+                        <li><a href="#forense"><span class="dot forensics"></span> 05 - Forense Digital</a></li>
+                        <li><a href="#recursos-mod"><span class="dot" style="background:#2ecc71"></span> 09 - Recursos</a></li>
                     </ul>
                 </li>
-                <li><a href="#retos" class="nav-link" data-section="retos">Retos</a></li>
-                <li><a href="#herramientas" class="nav-link" data-section="herramientas">Herramientas</a></li>
-                <li><a href="#labs" class="nav-link" data-section="labs">Labs</a></li>
-                <li><a href="#recursos" class="nav-link" data-section="recursos">Recursos</a></li>
+                <li><a href="#retos" class="nav-link"><i class="fas fa-trophy"></i> Retos</a></li>
+                <li><a href="#herramientas" class="nav-link"><i class="fas fa-wrench"></i> Herramientas</a></li>
+                <li><a href="#labs" class="nav-link"><i class="fas fa-flask"></i> Labs</a></li>
             </ul>
             <div class="nav-actions">
-                <button class="theme-toggle" id="themeToggle" title="Cambiar tema">
-                    <i class="fas fa-moon"></i>
-                </button>
-                <a href="https://github.com/0xvanguard/CyberDefense-Pro-Network" class="btn btn-sm btn-outline" target="_blank">
-                    <i class="fab fa-github"></i>
-                </a>
+                <button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></button>
+                <a href="https://github.com/0xvanguard/CyberDefense-Pro-Network" class="btn btn-sm btn-outline" target="_blank"><i class="fab fa-github"></i></a>
             </div>
-            <button class="mobile-toggle" id="mobileToggle">
-                <span></span><span></span><span></span>
-            </button>
+            <button class="mobile-toggle" id="mobileToggle"><span></span><span></span><span></span></button>
         </div>
     </nav>
 
-    <!-- ===== HERO ===== -->
+    <!-- HERO -->
     <section class="hero" id="hero">
-        <div class="hero-bg">
-            <div class="grid-overlay"></div>
-            <div class="glow glow-1"></div>
-            <div class="glow glow-2"></div>
-        </div>
+        <div class="hero-bg"><div class="grid-overlay"></div></div>
         <div class="container">
             <div class="hero-content">
-                <div class="hero-badge">
-                    <span class="badge-pulse"></span>
-                    Plataforma #1 en Español
-                </div>
-                <h1 class="hero-title">
-                    Domina la<br>
-                    <span class="gradient-text">Ciberdefensa</span>
-                </h1>
-                <p class="hero-subtitle">
-                    Aprende seguridad ofensiva y defensiva con labs prácticos, 
-                    herramientas profesionales y casos de estudio reales.
-                </p>
+                <div class="hero-badge"><span class="badge-pulse"></span> Plataforma #1 en Español</div>
+                <h1 class="hero-title">Domina la<br><span class="gradient-text">Ciberdefensa</span></h1>
+                <p class="hero-subtitle">10 módulos completos con guías paso a paso, retos prácticos y proyectos reales. De cero a profesional.</p>
                 <div class="hero-cta">
-                    <a href="#carreras" class="btn btn-primary btn-lg">
-                        <i class="fas fa-rocket"></i> Explorar Carreras
-                    </a>
-                    <a href="#retos" class="btn btn-outline btn-lg">
-                        <i class="fas fa-play"></i> Retos Gratis
-                    </a>
+                    <a href="#intro" class="btn btn-primary btn-lg"><i class="fas fa-rocket"></i> Empezar Ahora</a>
+                    <a href="#modulos" class="btn btn-outline btn-lg"><i class="fas fa-book"></i> Ver Módulos</a>
                 </div>
                 <div class="hero-stats">
-                    <div class="stat-item">
-                        <span class="stat-number" data-target="366">0</span>
-                        <span class="stat-label">Archivos</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number" data-target="12">0</span>
-                        <span class="stat-label">Módulos</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number" data-target="40">0</span>
-                        <span class="stat-label">Herramientas</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number" data-target="50">0</span>
-                        <span class="stat-label">Retos</span>
-                    </div>
+                    <div class="stat-item"><span class="stat-number" data-target="366">0</span><span class="stat-label">Archivos</span></div>
+                    <div class="stat-item"><span class="stat-number" data-target="10">0</span><span class="stat-label">Módulos</span></div>
+                    <div class="stat-item"><span class="stat-number" data-target="40">0</span><span class="stat-label">Herramientas</span></div>
+                    <div class="stat-item"><span class="stat-number" data-target="50">0</span><span class="stat-label">Retos</span></div>
                 </div>
             </div>
             <div class="hero-terminal">
                 <div class="terminal">
                     <div class="terminal-header">
-                        <div class="terminal-dots">
-                            <span class="dot red"></span>
-                            <span class="dot yellow"></span>
-                            <span class="dot green"></span>
-                        </div>
+                        <div class="terminal-dots"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div>
                         <span class="terminal-title">cdpn@security:~$</span>
                     </div>
-                    <div class="terminal-body" id="terminalBody">
-                        <div class="terminal-line">
-                            <span class="prompt">$</span>
-                            <span class="command" id="terminalCommand"></span>
-                            <span class="cursor">▌</span>
-                        </div>
+                    <div class="terminal-body">
+                        <div class="terminal-line"><span class="prompt">$</span><span class="command" id="terminalCommand"></span><span class="cursor">▌</span></div>
                         <div class="terminal-output" id="terminalOutput"></div>
                     </div>
                 </div>
@@ -122,481 +78,268 @@
         </div>
     </section>
 
-    <!-- ===== CARRERAS / RAMAS ===== -->
-    <section class="section careers" id="carreras">
+    <!-- ===== MÓDULOS ===== -->
+    <section class="section" id="modulos">
         <div class="container">
             <div class="section-header">
-                <span class="section-badge">🎯 Carreras</span>
-                <h2 class="section-title">Elige tu Especialización</h2>
-                <p class="section-desc">Cada carrera tiene su propio camino de aprendizaje con retos y proyectos reales</p>
+                <span class="section-badge"><i class="fas fa-graduation-cap"></i> Programa Completo</span>
+                <h2 class="section-title">10 Módulos de Formación</h2>
+                <p class="section-desc">Cada módulo incluye teoría, práctica, herramientas y retos</p>
             </div>
 
-            <!-- Red Team -->
-            <div class="career-block" id="red-team">
-                <div class="career-header red-theme">
-                    <div class="career-icon">🔴</div>
-                    <div class="career-info">
-                        <h3 class="career-title">Red Team</h3>
-                        <p class="career-tagline">Seguridad Ofensiva · Pentesting · Explotación</p>
+            <!-- 00 - INTRODUCTION -->
+            <div class="module-block" id="intro">
+                <div class="module-header intro-theme">
+                    <div class="module-number">00</div>
+                    <div class="module-info">
+                        <h3>Introducción a la Ciberseguridad</h3>
+                        <p>Tu primer paso - Conceptos básicos para empezar desde cero</p>
                     </div>
-                    <span class="career-level intermediate">Intermedio-Avanzado</span>
+                    <span class="module-level beginner">Principiante</span>
+                    <button class="expand-btn"><i class="fas fa-chevron-down"></i></button>
                 </div>
-                <div class="career-body">
-                    <div class="career-content">
-                        <h4>📋 ¿Qué es el Red Team?</h4>
-                        <p>El Red Team simula ataques reales contra una organización para identificar vulnerabilidades antes de que los atacantes reales lo hagan. Es como ser un "hacker bueno" con autorización.</p>
-                        
-                        <h4>🎓 Lo que aprenderás</h4>
-                        <div class="skills-grid">
-                            <div class="skill-tag"><i class="fas fa-check"></i> Reconocimiento OSINT</div>
-                            <div class="skill-tag"><i class="fas fa-check"></i> Escaneo con Nmap</div>
-                            <div class="skill-tag"><i class="fas fa-check"></i> Explotación Web (SQLi, XSS)</div>
-                            <div class="skill-tag"><i class="fas fa-check"></i> Metasploit Framework</div>
-                            <div class="skill-tag"><i class="fas fa-check"></i> Post-Explotación</div>
-                            <div class="skill-tag"><i class="fas fa-check"></i> Movimiento Lateral</div>
-                            <div class="skill-tag"><i class="fas fa-check"></i> Escalada de Privilegios</div>
-                            <div class="skill-tag"><i class="fas fa-check"></i> Ingeniería Social</div>
-                        </div>
-
-                        <h4>🛠️ Herramientas Principales</h4>
-                        <div class="tools-mini">
-                            <span class="tool-mini">Nmap</span>
-                            <span class="tool-mini">Burp Suite</span>
-                            <span class="tool-mini">Metasploit</span>
-                            <span class="tool-mini">SQLMap</span>
-                            <span class="tool-mini">Hydra</span>
-                            <span class="tool-mini">Cobalt Strike</span>
-                        </div>
-
-                        <h4>📖 Guía Paso a Paso</h4>
-                        <div class="guide-steps">
-                            <div class="step">
-                                <span class="step-num">1</span>
-                                <div class="step-content">
-                                    <strong>Reconocimiento</strong>
-                                    <p>Recopila información sobre el objetivo usando fuentes públicas (OSINT). Usa herramientas como theHarvester, Shodan y Google Dorks.</p>
-                                    <div class="code-block">
-                                        <code>theharvester -d target.com -b google,bing,linkedin</code>
-                                    </div>
+                <div class="module-body">
+                    <div class="module-content">
+                        <div class="content-section">
+                            <h4><i class="fas fa-question-circle"></i> ¿Qué es la Ciberseguridad?</h4>
+                            <p>La <strong>ciberseguridad</strong> es la práctica de proteger sistemas, redes y programas de ataques digitales.</p>
+                            <div class="info-grid">
+                                <div class="info-card">
+                                    <div class="info-icon"><i class="fas fa-mobile-screen-button"></i></div>
+                                    <h5>Tus Dispositivos</h5>
+                                    <p>Computadora, celular, tablet</p>
+                                </div>
+                                <div class="info-card">
+                                    <div class="info-icon"><i class="fas fa-database"></i></div>
+                                    <h5>Tus Datos</h5>
+                                    <p>Fotos, contraseñas, info personal</p>
+                                </div>
+                                <div class="info-card">
+                                    <div class="info-icon"><i class="fas fa-user-shield"></i></div>
+                                    <h5>Tus Cuentas</h5>
+                                    <p>Email, redes sociales, banco</p>
                                 </div>
                             </div>
-                            <div class="step">
-                                <span class="step-num">2</span>
-                                <div class="step-content">
-                                    <strong>Escaneo y Enumeración</strong>
-                                    <p>Descubre puertos abiertos, servicios y versiones. Identifica posibles puntos de entrada.</p>
-                                    <div class="code-block">
-                                        <code>nmap -sV -sC -oA target target.com</code>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="step">
-                                <span class="step-num">3</span>
-                                <div class="step-content">
-                                    <strong>Explotación</strong>
-                                    <p>Explota las vulnerabilidades encontradas para obtener acceso al sistema.</p>
-                                    <div class="code-block">
-                                        <code>msfconsole -x "use exploit/multi/handler; set PAYLOAD python/meterpreter/reverse_tcp; run"</code>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="step">
-                                <span class="step-num">4</span>
-                                <div class="step-content">
-                                    <strong>Post-Explotación</strong>
-                                    <p>Mantén el acceso, escala privilegios y mueve lateralmente por la red.</p>
-                                    <div class="code-block">
-                                        <code>meterpreter > getsystem<br>meterpreter > hashdump<br>meterpreter > run persistence</code>
-                                    </div>
+                            <div class="highlight-box">
+                                <h4>Los 5 Pilares de la Seguridad</h4>
+                                <div class="pillars-grid">
+                                    <div class="pillar"><i class="fas fa-lock"></i><h5>Confidencialidad</h5><p>Solo quien debe ver, ve</p></div>
+                                    <div class="pillar"><i class="fas fa-check-double"></i><h5>Integridad</h5><p>La info no ha sido alterada</p></div>
+                                    <div class="pillar"><i class="fas fa-power-off"></i><h5>Disponibilidad</h5><p>Se puede acceder cuando se necesita</p></div>
+                                    <div class="pillar"><i class="fas fa-fingerprint"></i><h5>Autenticación</h5><p>¿Quién eres?</p></div>
+                                    <div class="pillar"><i class="fas fa-key"></i><h5>Autorización</h5><p>¿Qué puedes hacer?</p></div>
                                 </div>
                             </div>
                         </div>
 
-                        <h4>🏆 Retos de Red Team</h4>
-                        <div class="challenges-grid">
-                            <div class="challenge easy">
-                                <span class="challenge-level">Fácil</span>
-                                <h5>SQL Injection Básico</h5>
-                                <p>Encuentra y explota una vulnerabilidad SQL Injection en una web vulnerable.</p>
-                                <a href="#" class="btn btn-sm btn-outline">Intentar →</a>
+                        <div class="content-section">
+                            <h4><i class="fas fa-sitemap"></i> Las 5 Ramas Principales</h4>
+                            <div class="branches-grid">
+                                <div class="branch-card"><div class="branch-icon"><i class="fas fa-crosshairs"></i></div><h5>Red Team</h5><p>Ofensiva</p><span class="branch-tag">Atacar</span></div>
+                                <div class="branch-card"><div class="branch-icon"><i class="fas fa-shield-halved"></i></div><h5>Blue Team</h5><p>Defensiva</p><span class="branch-tag">Proteger</span></div>
+                                <div class="branch-card"><div class="branch-icon"><i class="fas fa-cloud"></i></div><h5>Cloud</h5><p>Nube</p><span class="branch-tag">AWS/Azure</span></div>
+                                <div class="branch-card"><div class="branch-icon"><i class="fas fa-virus"></i></div><h5>Malware</h5><p>Análisis</p><span class="branch-tag">Virus</span></div>
+                                <div class="branch-card"><div class="branch-icon"><i class="fas fa-magnifying-glass"></i></div><h5>Forense</h5><p>Investigación</p><span class="branch-tag">Evidencia</span></div>
                             </div>
-                            <div class="challenge medium">
-                                <span class="challenge-level">Medio</span>
-                                <h5>XSS Stored</h5>
-                                <p>Creara una vulnerabilidad XSS almacenada para robar cookies de administrador.</p>
-                                <a href="#" class="btn btn-sm btn-outline">Intentar →</a>
-                            </div>
-                            <div class="challenge hard">
-                                <span class="challenge-level">Difícil</span>
-                                <h5>Privilege Escalation</h5>
-                                <p>Escala de usuario a root en un sistema Linux configurado inseguramente.</p>
-                                <a href="#" class="btn btn-sm btn-outline">Intentar →</a>
+                        </div>
+
+                        <div class="content-section">
+                            <h4><i class="fas fa-calendar-days"></i> Tu Primera Semana - Paso a Paso</h4>
+                            <div class="timeline">
+                                <div class="timeline-item"><div class="day">Día 1-2: Preparar Entorno</div><div class="content">
+                                    <ol class="step-list">
+                                        <li>Descargar <strong>VirtualBox</strong> (gratis)</li>
+                                        <li>Descargar <strong>Ubuntu Desktop</strong></li>
+                                        <li>Crear VM con 4GB RAM y 50GB disco</li>
+                                        <li>Instalar Ubuntu en la VM</li>
+                                    </ol>
+                                </div></div>
+                                <div class="timeline-item"><div class="day">Día 3-4: Aprender Linux</div><div class="content">
+                                    <div class="commands-grid">
+                                        <div class="cmd"><code>pwd</code><span>Directorio actual</span></div>
+                                        <div class="cmd"><code>ls</code><span>Listar archivos</span></div>
+                                        <div class="cmd"><code>cd</code><span>Cambiar directorio</span></div>
+                                        <div class="cmd"><code>mkdir</code><span>Crear carpeta</span></div>
+                                        <div class="cmd"><code>nano</code><span>Editar archivo</span></div>
+                                        <div class="cmd"><code>sudo</code><span>Modo admin</span></div>
+                                    </div>
+                                </div></div>
+                                <div class="timeline-item"><div class="day">Día 5: Entender Redes</div><div class="content">
+                                    <ul class="step-list">
+                                        <li><strong>IP Address:</strong> Dirección de tu PC en la red</li>
+                                        <li><strong>DNS:</strong> Traduce nombres a IPs</li>
+                                        <li><strong>HTTP/HTTPS:</strong> Protocolos web</li>
+                                        <li><strong>Puertos:</strong> Canales de comunicación (80=web, 22=SSH)</li>
+                                    </ul>
+                                </div></div>
+                                <div class="timeline-item"><div class="day">Día 6: Primer Escaneo con Nmap</div><div class="content">
+                                    <div class="code-block"><code>sudo apt install nmap<br>nmap localhost<br>nmap scanme.nmap.org</code></div>
+                                </div></div>
+                                <div class="timeline-item"><div class="day">Día 7: Explorar Plataformas</div><div class="content">
+                                    <ul class="step-list">
+                                        <li>✅ Crear cuenta en <strong>TryHackMe</strong></li>
+                                        <li>✅ Completar "Introduction to Cyber Security"</li>
+                                        <li>✅ Explorar ruta "Pre-Security"</li>
+                                    </ul>
+                                </div></div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Blue Team -->
-            <div class="career-block" id="blue-team">
-                <div class="career-header blue-theme">
-                    <div class="career-icon">🔵</div>
-                    <div class="career-info">
-                        <h3 class="career-title">Blue Team</h3>
-                        <p class="career-tagline">Defensa · SOC · Monitoreo · Respuesta a Incidentes</p>
+            <!-- 01 - CIBERSEGURIDAD -->
+            <div class="module-block" id="ciberseguridad">
+                <div class="module-header red-theme">
+                    <div class="module-number">01</div>
+                    <div class="module-info">
+                        <h3>Ciberseguridad Ofensiva</h3>
+                        <p>Red Team, Pentesting, Explotación, OSINT y más</p>
                     </div>
-                    <span class="career-level intermediate">Intermedio</span>
+                    <span class="module-level intermediate">Intermedio</span>
+                    <button class="expand-btn"><i class="fas fa-chevron-down"></i></button>
                 </div>
-                <div class="career-body">
-                    <div class="career-content">
-                        <h4>📋 ¿Qué es el Blue Team?</h4>
-                        <p>El Blue Team es responsable de defender la infraestructura de TI contra amenazas. Monitorea sistemas, detecta intrusiones y responde a incidentes de seguridad.</p>
-
-                        <h4>🎓 Lo que aprenderás</h4>
-                        <div class="skills-grid">
-                            <div class="skill-tag"><i class="fas fa-check"></i> Análisis de Logs</div>
-                            <div class="skill-tag"><i class="fas fa-check"></i> SIEM (Wazuh/ELK)</div>
-                            <div class="skill-tag"><i class="fas fa-check"></i> Threat Hunting</div>
-                            <div class="skill-tag"><i class="fas fa-check"></i> Respuesta a Incidentes</div>
-                            <div class="skill-tag"><i class="fas fa-check"></i> Hardening de Sistemas</div>
-                            <div class="skill-tag"><i class="fas fa-check"></i> Configuración de Firewalls</div>
-                            <div class="skill-tag"><i class="fas fa-check"></i> Análisis de Malware</div>
-                            <div class="skill-tag"><i class="fas fa-check"></i> Reportes de Seguridad</div>
+                <div class="module-body">
+                    <div class="module-content">
+                        <div class="submodules-grid">
+                            <div class="submodule-card"><div class="sub-icon"><i class="fas fa-satellite-dish"></i></div><h5>Reconocimiento OSINT</h5><p>Recopilar información pública sobre objetivos</p><span class="sub-tools">theHarvester, Shodan, Recon-ng</span></div>
+                            <div class="submodule-card"><div class="sub-icon"><i class="fas fa-user-secret"></i></div><h5>Pentesting Red Team</h5><p>Metodología completa de auditoría</p><span class="sub-tools">Nmap, Metasploit, Burp Suite</span></div>
+                            <div class="submodule-card"><div class="sub-icon"><i class="fas fa-bug"></i></div><h5>Análisis Vulnerabilidades</h5><p>Encontrar y explotar debilidades</p><span class="sub-tools">Nessus, OpenVAS, Nuclei</span></div>
+                            <div class="submodule-card"><div class="sub-icon"><i class="fas fa-globe"></i></div><h5>Explotación Web</h5><p>OWASP Top 10, SQLi, XSS, CSRF</p><span class="sub-tools">Burp Suite, SQLMap, XSStrike</span></div>
+                            <div class="submodule-card"><div class="sub-icon"><i class="fas fa-crown"></i></div><h5>Post-Explotación</h5><p>Persistencia y escalamiento</p><span class="sub-tools">Mimikatz, BloodHound</span></div>
+                            <div class="submodule-card"><div class="sub-icon"><i class="fas fa-search"></i></div><h5>Forense Digital</h5><p>Investigar incidentes</p><span class="sub-tools">Autopsy, Volatility, FTK</span></div>
+                            <div class="submodule-card"><div class="sub-icon"><i class="fas fa-user-group"></i></div><h5>Ingeniería Social</h5><p>Phishing y pretexting</p><span class="sub-tools">Gophish, SET</span></div>
+                            <div class="submodule-card"><div class="sub-icon"><i class="fas fa-lock"></i></div><h5>Criptografía</h5><p>Cifrado y hashes</p><span class="sub-tools">Hashcat, John the Ripper</span></div>
                         </div>
-
-                        <h4>🛠️ Herramientas Principales</h4>
-                        <div class="tools-mini">
-                            <span class="tool-mini">Wazuh</span>
-                            <span class="tool-mini">ELK Stack</span>
-                            <span class="tool-mini">Wireshark</span>
-                            <span class="tool-mini">OSSEC</span>
-                            <span class="tool-mini">Snort</span>
-                            <span class="tool-mini">Volatility</span>
-                        </div>
-
-                        <h4>📖 Guía Paso a Paso</h4>
-                        <div class="guide-steps">
-                            <div class="step">
-                                <span class="step-num">1</span>
-                                <div class="step-content">
-                                    <strong>Configurar SIEM</strong>
-                                    <p>Instala y configura Wazuh para monitorear tus sistemas.</p>
-                                    <div class="code-block">
-                                        <code>curl -sO https://packages.wazuh.com/4.7/wazuh-install.sh && sudo bash ./wazuh-install.sh -a</code>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="step">
-                                <span class="step-num">2</span>
-                                <div class="step-content">
-                                    <strong>Analizar Logs</strong>
-                                    <p>Aprende a interpretar logs de seguridad para detectar actividades sospechosas.</p>
-                                    <div class="code-block">
-                                        <code>cat /var/log/auth.log | grep "Failed password" | tail -20</code>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="step">
-                                <span class="step-num">3</span>
-                                <div class="step-content">
-                                    <strong>Detectar Intrusiones</strong>
-                                    <p>Usa reglas de detección para identificar patrones de ataque.</p>
-                                    <div class="code-block">
-                                        <code># Regla Wazuh para detectar brute force<br>&lt;rule id="100001" level="10"&gt;<br>  &lt;if_sid&gt;5712&lt;/if_sid&gt;<br>  &lt;match&gt;Failed password&lt;/match&gt;<br>  &lt;description&gt;Brute force detected&lt;/description&gt;<br>&lt;/rule&gt;</code>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="step">
-                                <span class="step-num">4</span>
-                                <div class="step-content">
-                                    <strong>Responder al Incidente</strong>
-                                    <p>Sigue el proceso de respuesta: Identificar → Contener → Erradicar → Recuperar.</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <h4>🏆 Retos de Blue Team</h4>
-                        <div class="challenges-grid">
-                            <div class="challenge easy">
-                                <span class="challenge-level">Fácil</span>
-                                <h5>Análisis de Logs</h5>
-                                <p>Identifica actividades sospechosas en un archivo de logs de autenticación.</p>
-                                <a href="#" class="btn btn-sm btn-outline">Intentar →</a>
-                            </div>
-                            <div class="challenge medium">
-                                <span class="challenge-level">Medio</span>
-                                <h5>Configurar Wazuh</h5>
-                                <p>Instala y configura Wazuh con reglas personalizadas de detección.</p>
-                                <a href="#" class="btn btn-sm btn-outline">Intentar →</a>
-                            </div>
-                            <div class="challenge hard">
-                                <span class="challenge-level">Difícil</span>
-                                <h5>Incident Response</h5>
-                                <p>Responde a un incidente simulado de ransomware en una empresa.</p>
-                                <a href="#" class="btn btn-sm btn-outline">Intentar →</a>
+                        <div class="highlight-box">
+                            <h4><i class="fas fa-route"></i> Ruta de Aprendizaje Red Team</h4>
+                            <div class="route-steps">
+                                <div class="route-step"><span class="route-num">1</span><h5>Reconocimiento</h5><p>OSINT, enum de subdominios, fingerprinting</p></div>
+                                <div class="route-step"><span class="route-num">2</span><h5>Escaneo</h5><p>Nmap, enumeración de servicios</p></div>
+                                <div class="route-step"><span class="route-num">3</span><h5>Explotación</h5><p>Metasploit, SQLMap, exploits</p></div>
+                                <div class="route-step"><span class="route-num">4</span><h5>Post-Explotación</h5><p>Escalada, movimiento lateral</p></div>
+                                <div class="route-step"><span class="route-num">5</span><h5>Reporte</h5><p>Documentación y recomendaciones</p></div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Cloud Security -->
-            <div class="career-block" id="cloud">
-                <div class="career-header cloud-theme">
-                    <div class="career-icon">☁️</div>
-                    <div class="career-info">
-                        <h3 class="career-title">Cloud Security</h3>
-                        <p class="career-tagline">AWS · Azure · GCP · Docker · Kubernetes</p>
+            <!-- 02 - SEGURIDAD INFORMACIÓN -->
+            <div class="module-block" id="seguridad-info">
+                <div class="module-header blue-theme">
+                    <div class="module-number">02</div>
+                    <div class="module-info">
+                        <h3>Seguridad de la Información</h3>
+                        <p>Blue Team, SOC, Hardening, Compliance, Threat Intelligence</p>
                     </div>
-                    <span class="career-level advanced">Avanzado</span>
+                    <span class="module-level intermediate">Intermedio</span>
+                    <button class="expand-btn"><i class="fas fa-chevron-down"></i></button>
                 </div>
-                <div class="career-body">
-                    <div class="career-content">
-                        <h4>📋 ¿Qué es Cloud Security?</h4>
-                        <p>La seguridad en la nube protege datos, aplicaciones e infraestructura en entornos cloud (AWS, Azure, GCP). Es una de las áreas con mayor demanda laboral.</p>
-
-                        <h4>🎓 Lo que aprenderás</h4>
-                        <div class="skills-grid">
-                            <div class="skill-tag"><i class="fas fa-check"></i> AWS Security</div>
-                            <div class="skill-tag"><i class="fas fa-check"></i> Azure Security</div>
-                            <div class="skill-tag"><i class="fas fa-check"></i> GCP Security</div>
-                            <div class="skill-tag"><i class="fas fa-check"></i> Docker Security</div>
-                            <div class="skill-tag"><i class="fas fa-check"></i> Kubernetes Security</div>
-                            <div class="skill-tag"><i class="fas fa-check"></i> IAM y Accesos</div>
-                            <div class="skill-tag"><i class="fas fa-check"></i> Cloud Pentesting</div>
-                            <div class="skill-tag"><i class="fas fa-check"></i> DevSecOps</div>
-                        </div>
-
-                        <h4>🏆 Retos de Cloud</h4>
-                        <div class="challenges-grid">
-                            <div class="challenge easy">
-                                <span class="challenge-level">Fácil</span>
-                                <h5>AWS Audit</h5>
-                                <p>Audita una cuenta AWS usando Prowler y genera un reporte.</p>
-                                <a href="#" class="btn btn-sm btn-outline">Intentar →</a>
-                            </div>
-                            <div class="challenge medium">
-                                <span class="challenge-level">Medio</span>
-                                <h5>Docker Escape</h5>
-                                <p>Escapa de un contenedor Docker para obtener acceso al host.</p>
-                                <a href="#" class="btn btn-sm btn-outline">Intentar →</a>
-                            </div>
-                            <div class="challenge hard">
-                                <span class="challenge-level">Difícil</span>
-                                <h5>K8s Pentest</h5>
-                                <p>Pentest completo de un clúster de Kubernetes mal configurado.</p>
-                                <a href="#" class="btn btn-sm btn-outline">Intentar →</a>
-                            </div>
+                <div class="module-body">
+                    <div class="module-content">
+                        <div class="submodules-grid">
+                            <div class="submodule-card"><div class="sub-icon"><i class="fas fa-shield-halved"></i></div><h5>Blue Team Defensa</h5><p>Proteger y monitorear sistemas</p><span class="sub-tools">Wazuh, OSSEC, ELK</span></div>
+                            <div class="submodule-card"><div class="sub-icon"><i class="fas fa-building-shield"></i></div><h5>SOC Operations</h5><p>Centro de operaciones de seguridad</p><span class="sub-tools">Splunk, QRadar, Sentinel</span></div>
+                            <div class="submodule-card"><div class="sub-icon"><i class="fas fa-server"></i></div><h5>Hardening</h5><p>Endurecimiento de sistemas</p><span class="sub-tools">CIS Benchmarks, Lynis</span></div>
+                            <div class="submodule-card"><div class="sub-icon"><i class="fas fa-clipboard-check"></i></div><h5>Compliance</h5><p>ISO 27001, GDPR, NIST</p><span class="sub-tools">Frameworks de cumplimiento</span></div>
+                            <div class="submodule-card"><div class="sub-icon"><i class="fas fa-code-branch"></i></div><h5>DevSecOps</h5><p>Seguridad en CI/CD</p><span class="sub-tools">SAST, DAST, Secret Scanning</span></div>
+                            <div class="submodule-card"><div class="sub-icon"><i class="fas fa-crosshairs"></i></div><h5>Threat Intelligence</h5><p>Inteligencia de amenazas</p><span class="sub-tools">MITRE ATT&CK, MISP, OTX</span></div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Malware Analysis -->
-            <div class="career-block" id="malware">
-                <div class="career-header malware-theme">
-                    <div class="career-icon">🦠</div>
-                    <div class="career-info">
-                        <h3 class="career-title">Malware Analysis</h3>
-                        <p class="career-tagline">Análisis Estático · Dinámico · Reverse Engineering</p>
+            <!-- 03 - IA Y AGENTES -->
+            <div class="module-block" id="ia-agentes">
+                <div class="module-header ai-theme">
+                    <div class="module-number">03</div>
+                    <div class="module-info">
+                        <h3>IA y Herramientas de Agentes</h3>
+                        <p>LLM Security, Prompt Injection, AI Red Teaming, MLSecOps</p>
                     </div>
-                    <span class="career-level advanced">Avanzado</span>
+                    <span class="module-level advanced">Avanzado</span>
+                    <button class="expand-btn"><i class="fas fa-chevron-down"></i></button>
                 </div>
-                <div class="career-body">
-                    <div class="career-content">
-                        <h4>📋 ¿Qué es el Análisis de Malware?</h4>
-                        <p>Estudiar virus, troyanos, ransomware y otro software malicioso para entender cómo funcionan y crear defensas efectivas.</p>
-
-                        <h4>🎓 Lo que aprenderás</h4>
-                        <div class="skills-grid">
-                            <div class="skill-tag"><i class="fas fa-check"></i> Tipos de Malware</div>
-                            <div class="skill-tag"><i class="fas fa-check"></i> Análisis Estático</div>
-                            <div class="skill-tag"><i class="fas fa-check"></i> Análisis Dinámico</div>
-                            <div class="skill-tag"><i class="fas fa-check"></i> Reverse Engineering</div>
-                            <div class="skill-tag"><i class="fas fa-check"></i> Reglas YARA</div>
-                            <div class="skill-tag"><i class="fas fa-check"></i> Sandboxing</div>
-                        </div>
-
-                        <h4>📖 Guía: Analizar tu Primer Malware</h4>
-                        <div class="guide-steps">
-                            <div class="step">
-                                <span class="step-num">1</span>
-                                <div class="step-content">
-                                    <strong>Preparar Entorno</strong>
-                                    <p>NUNCA analices malware en tu máquina real. Usa una VM aislada.</p>
-                                    <div class="code-block">
-                                        <code># Crear VM en VirtualBox con Ubuntu<br># Configurar red: Host-Only (aislada)<br># Crear snapshot ANTES de analizar</code>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="step">
-                                <span class="step-num">2</span>
-                                <div class="step-content">
-                                    <strong>Análisis Estático</strong>
-                                    <p>Examina el archivo sin ejecutarlo.</p>
-                                    <div class="code-block">
-                                        <code># Identificar tipo de archivo<br>file malware样本.exe<br><br># Extraer strings<br>strings -n 8 malware样本.exe<br><br># Calcular hashes<br>sha256sum malware样本.exe</code>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="step">
-                                <span class="step-num">3</span>
-                                <div class="step-content">
-                                    <strong>Análisis Dinámico</strong>
-                                    <p>Ejecuta el malware en sandbox y observa su comportamiento.</p>
-                                    <div class="code-block">
-                                        <code># Usar Any.Run (online)<br># https://app.any.run<br><br># O Cuckoo Sandbox (local)<br>cuckoo submit malware样本.exe</code>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <h4>🏆 Retos de Malware</h4>
-                        <div class="challenges-grid">
-                            <div class="challenge medium">
-                                <span class="challenge-level">Medio</span>
-                                <h5>Análisis Estático</h5>
-                                <p>Analiza un troyano con herramientas estáticas y extrae IOCs.</p>
-                                <a href="#" class="btn btn-sm btn-outline">Intentar →</a>
-                            </div>
-                            <div class="challenge hard">
-                                <span class="challenge-level">Difícil</span>
-                                <h5>Reglas YARA</h5>
-                                <p>Crea reglas YARA para detectar una familia de ransomware.</p>
-                                <a href="#" class="btn btn-sm btn-outline">Intentar →</a>
-                            </div>
+                <div class="module-body">
+                    <div class="module-content">
+                        <div class="submodules-grid">
+                            <div class="submodule-card"><div class="sub-icon"><i class="fas fa-robot"></i></div><h5>Agentes OSINT</h5><p>Automatizar reconocimiento con IA</p><span class="sub-tools">LangChain, OpenAI, Scraping</span></div>
+                            <div class="submodule-card"><div class="sub-icon"><i class="fas fa-bolt"></i></div><h5>Agentes Pentest</h5><p>IA para automatizar pruebas</p><span class="sub-tools">AutoGPT, Security Copilot</span></div>
+                            <div class="submodule-card"><div class="sub-icon"><i class="fas fa-brain"></i></div><h5>LLM Security</h5><p>Seguridad de modelos de lenguaje</p><span class="sub-tools">OWASP LLM Top 10</span></div>
+                            <div class="submodule-card"><div class="sub-icon"><i class="fas fa-syringe"></i></div><h5>Prompt Injection</h5><p>Manipular LLMs con prompts</p><span class="sub-tools">Jailbreak, DAN, roleplay</span></div>
+                            <div class="submodule-card"><div class="sub-icon"><i class="fas fa-code"></i></div><h5>Automatización Python</h5><p>Scripts de seguridad con IA</p><span class="sub-tools">Python, APIs, Bots</span></div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Digital Forensics -->
-            <div class="career-block" id="forensics">
-                <div class="career-header forensics-theme">
-                    <div class="career-icon">🔍</div>
-                    <div class="career-info">
-                        <h3 class="career-title">Digital Forensics</h3>
-                        <p class="career-tagline">Forense de Disco · Memoria · Red · Evidencia</p>
+            <!-- 04 - LABORATORIOS -->
+            <div class="module-block" id="laboratorios">
+                <div class="module-header cloud-theme">
+                    <div class="module-number">04</div>
+                    <div class="module-info">
+                        <h3>Laboratorios de Práctica</h3>
+                        <p>CTFs, Docker Labs, HTB/THM, Purple Team</p>
                     </div>
-                    <span class="career-level advanced">Avanzado</span>
+                    <span class="module-level beginner">Principiante</span>
+                    <button class="expand-btn"><i class="fas fa-chevron-down"></i></button>
                 </div>
-                <div class="career-body">
-                    <div class="career-content">
-                        <h4>📋 ¿Qué es la Forense Digital?</h4>
-                        <p>Investigar incidentes digitales recolectando, preservando y analizando evidencia de forma que sea admisible en tribunales.</p>
-
-                        <h4>🎓 Lo que aprenderás</h4>
-                        <div class="skills-grid">
-                            <div class="skill-tag"><i class="fas fa-check"></i> Forense de Disco</div>
-                            <div class="skill-tag"><i class="fas fa-check"></i> Forense de Memoria</div>
-                            <div class="skill-tag"><i class="fas fa-check"></i> Forense de Red</div>
-                            <div class="skill-tag"><i class="fas fa-check"></i> Cadena de Custodia</div>
-                            <div class="skill-tag"><i class="fas fa-check"></i> Análisis de Evidencia</div>
-                            <div class="skill-tag"><i class="fas fa-check"></i> Reportes Forenses</div>
-                        </div>
-
-                        <h4>🏆 Retos de Forense</h4>
-                        <div class="challenges-grid">
-                            <div class="challenge easy">
-                                <span class="challenge-level">Fácil</span>
-                                <h5>Análisis de Disco</h5>
-                                <p>Recupera archivos eliminados de una imagen de disco.</p>
-                                <a href="#" class="btn btn-sm btn-outline">Intentar →</a>
-                            </div>
-                            <div class="challenge medium">
-                                <span class="challenge-level">Medio</span>
-                                <h5>Forense de Memoria</h5>
-                                <p>Analiza un volcado de memoria para encontrar procesos maliciosos.</p>
-                                <a href="#" class="btn btn-sm btn-outline">Intentar →</a>
-                            </div>
+                <div class="module-body">
+                    <div class="module-content">
+                        <div class="labs-showcase">
+                            <div class="lab-item"><div class="lab-icon"><i class="fas fa-vial"></i></div><h5>CTF Writeups</h5><p>Resolución documentada de Capture The Flags</p></div>
+                            <div class="lab-item"><div class="lab-icon"><i class="fab fa-docker"></i></div><h5>Docker Labs</h5><p>Entornos vulnerables reproducibles</p></div>
+                            <div class="lab-item"><div class="lab-icon"><i class="fas fa-cube"></i></div><h5>HTB/THM</h5><p>Guías para HackTheBox y TryHackMe</p></div>
+                            <div class="lab-item"><div class="lab-icon"><i class="fas fa-venn-diagram"></i></div><h5>Purple Team</h5><p>Labs de colaboración ofensiva/defensiva</p></div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- IoT Security -->
-            <div class="career-block" id="iot">
-                <div class="career-header iot-theme">
-                    <div class="career-icon">📡</div>
-                    <div class="career-info">
-                        <h3 class="career-title">IoT Security</h3>
-                        <p class="career-tagline">Firmware · ICS/SCADA · Smart Home · Industria</p>
+            <!-- 05 - FORENSE -->
+            <div class="module-block" id="forense">
+                <div class="module-header forensics-theme">
+                    <div class="module-number">05</div>
+                    <div class="module-info">
+                        <h3>Forense Digital</h3>
+                        <p>Análisis de disco, memoria, red y evidencia</p>
                     </div>
-                    <span class="career-level advanced">Avanzado</span>
+                    <span class="module-level advanced">Avanzado</span>
+                    <button class="expand-btn"><i class="fas fa-chevron-down"></i></button>
                 </div>
-                <div class="career-body">
-                    <div class="career-content">
-                        <h4>📋 ¿Qué es IoT Security?</h4>
-                        <p>Proteger dispositivos de Internet de las Cosas: cámaras, routers, dispositivos médicos, sistemas industriales.</p>
-
-                        <h4>🎓 Lo que aprenderás</h4>
-                        <div class="skills-grid">
-                            <div class="skill-tag"><i class="fas fa-check"></i> Análisis de Firmware</div>
-                            <div class="skill-tag"><i class="fas fa-check"></i> Protocolos IoT</div>
-                            <div class="skill-tag"><i class="fas fa-check"></i> ICS/SCADA</div>
-                            <div class="skill-tag"><i class="fas fa-check"></i> Smart Home Hacking</div>
-                            <div class="skill-tag"><i class="fas fa-check"></i> MQTT/CoAP</div>
-                            <div class="skill-tag"><i class="fas fa-check"></i> Hardware Hacking</div>
-                        </div>
-
-                        <h4>🏆 Retos de IoT</h4>
-                        <div class="challenges-grid">
-                            <div class="challenge medium">
-                                <span class="challenge-level">Medio</span>
-                                <h5>Firmware Analysis</h5>
-                                <p>Extrae y analiza el firmware de un router para encontrar vulnerabilidades.</p>
-                                <a href="#" class="btn btn-sm btn-outline">Intentar →</a>
-                            </div>
-                            <div class="challenge hard">
-                                <span class="challenge-level">Difícil</span>
-                                <h5>ICS/SCADA Lab</h5>
-                                <p>Simula un ataque a un sistema de control industrial.</p>
-                                <a href="#" class="btn btn-sm btn-outline">Intentar →</a>
-                            </div>
+                <div class="module-body">
+                    <div class="module-content">
+                        <div class="submodules-grid">
+                            <div class="submodule-card"><div class="sub-icon"><i class="fas fa-hard-drive"></i></div><h5>Forense de Disco</h5><p>Recuperar archivos eliminados</p><span class="sub-tools">Autopsy, FTK, TestDisk</span></div>
+                            <div class="submodule-card"><div class="sub-icon"><i class="fas fa-memory"></i></div><h5>Forense de Memoria</h5><p>Analizar volcados de RAM</p><span class="sub-tools">Volatility, Rekall</span></div>
+                            <div class="submodule-card"><div class="sub-icon"><i class="fas fa-network-wired"></i></div><h5>Forense de Red</h5><p>Analizar tráfico capturado</p><span class="sub-tools">Wireshark, NetworkMiner</span></div>
+                            <div class="submodule-card"><div class="sub-icon"><i class="fas fa-file-shield"></i></div><h5>Cadena de Custodia</h5><p>Preservar evidencia legal</p><span class="sub-tools">Procedimientos legales</span></div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- AI Security -->
-            <div class="career-block" id="ai-security">
-                <div class="career-header ai-theme">
-                    <div class="career-icon">🤖</div>
-                    <div class="career-info">
-                        <h3 class="career-title">AI Security</h3>
-                        <p class="career-tagline">LLM Security · Prompt Injection · MLSecOps</p>
+            <!-- 09 - RECURSOS -->
+            <div class="module-block" id="recursos-mod">
+                <div class="module-header green-theme">
+                    <div class="module-number">09</div>
+                    <div class="module-info">
+                        <h3>Recursos y Referencias</h3>
+                        <p>Certificaciones, cheatsheets, cursos, libros, herramientas recomendadas</p>
                     </div>
-                    <span class="career-level advanced">Avanzado</span>
+                    <span class="module-level beginner">Todos</span>
+                    <button class="expand-btn"><i class="fas fa-chevron-down"></i></button>
                 </div>
-                <div class="career-body">
-                    <div class="career-content">
-                        <h4>📋 ¿Qué es AI Security?</h4>
-                        <p>Proteger modelos de IA (LLMs, ML) y usar IA para mejorar la ciberseguridad. Una de las áreas más nuevas y demandadas.</p>
-
-                        <h4>🎓 Lo que aprenderás</h4>
-                        <div class="skills-grid">
-                            <div class="skill-tag"><i class="fas fa-check"></i> Prompt Injection</div>
-                            <div class="skill-tag"><i class="fas fa-check"></i> LLM Jailbreaking</div>
-                            <div class="skill-tag"><i class="fas fa-check"></i> AI Red Teaming</div>
-                            <div class="skill-tag"><i class="fas fa-check"></i> MLSecOps</div>
-                            <div class="skill-tag"><i class="fas fa-check"></i> Model Security</div>
-                            <div class="skill-tag"><i class="fas fa-check"></i> Data Poisoning</div>
-                        </div>
-
-                        <h4>🏆 Retos de AI</h4>
-                        <div class="challenges-grid">
-                            <div class="challenge easy">
-                                <span class="challenge-level">Fácil</span>
-                                <h5>Prompt Injection</h5>
-                                <p>Bypassa las restricciones de un LLM con técnicas de prompt injection.</p>
-                                <a href="#" class="btn btn-sm btn-outline">Intentar →</a>
-                            </div>
-                            <div class="challenge hard">
-                                <span class="challenge-level">Difícil</span>
-                                <h5>MLSec Pipeline</h5>
-                                <p>Diseña un pipeline seguro de ML con controles de seguridad.</p>
-                                <a href="#" class="btn btn-sm btn-outline">Intentar →</a>
-                            </div>
+                <div class="module-body">
+                    <div class="module-content">
+                        <div class="resources-showcase">
+                            <div class="resource-item"><div class="res-icon"><i class="fas fa-certificate"></i></div><h5>Certificaciones</h5><p>Security+, eJPT, OSCP, CEH, CISSP</p></div>
+                            <div class="resource-item"><div class="res-icon"><i class="fas fa-book"></i></div><h5>Libros Recomendados</h5><p>Practical Malware Analysis, Web App Hacker's Handbook</p></div>
+                            <div class="resource-item"><div class="res-icon"><i class="fas fa-laptop-code"></i></div><h5>Cursos Gratuitos</h5><p>TryHackMe, PicoCTF, PortSwigger Academy</p></div>
+                            <div class="resource-item"><div class="res-icon"><i class="fas fa-list-check"></i></div><h5>Cheatsheets</h5><p>Nmap, SQLMap, Metasploit, Linux</p></div>
+                            <div class="resource-item"><div class="res-icon"><i class="fas fa-newspaper"></i></div><h5>Noticias</h5><p>Krebs, BleepingComputer, The Hacker News</p></div>
+                            <div class="resource-item"><div class="res-icon"><i class="fas fa-gamepad"></i></div><h5>Plataformas CTF</h5><p>HackTheBox, TryHackMe, VulnHub</p></div>
                         </div>
                     </div>
                 </div>
@@ -605,340 +348,96 @@
         </div>
     </section>
 
-    <!-- ===== RETOS ===== -->
+    <!-- RETOS -->
     <section class="section challenges-section" id="retos">
         <div class="container">
             <div class="section-header">
-                <span class="section-badge">🏆 Retos</span>
+                <span class="section-badge"><i class="fas fa-trophy"></i> Retos</span>
                 <h2 class="section-title">Pon a Prueba tus Habilidades</h2>
-                <p class="section-desc">Retos prácticos organizados por dificultad</p>
+                <p class="section-desc">Retos prácticos por dificultad</p>
             </div>
-
             <div class="challenges-filter">
                 <button class="filter-btn active" data-filter="all">Todos</button>
-                <button class="filter-btn" data-filter="easy">🟢 Fácil</button>
-                <button class="filter-btn" data-filter="medium">🟡 Medio</button>
-                <button class="filter-btn" data-filter="hard">🔴 Difícil</button>
+                <button class="filter-btn" data-filter="easy">Fácil</button>
+                <button class="filter-btn" data-filter="medium">Medio</button>
+                <button class="filter-btn" data-filter="hard">Difícil</button>
             </div>
-
             <div class="challenges-list">
-                <div class="challenge-card" data-difficulty="easy">
-                    <div class="challenge-badge easy">Fácil</div>
-                    <h4>SQL Injection Básico</h4>
-                    <p>Encuentra y explota una SQL Injection en una web vulnerable.</p>
-                    <div class="challenge-meta">
-                        <span><i class="fas fa-clock"></i> 30 min</span>
-                        <span><i class="fas fa-tag"></i> Web</span>
-                    </div>
-                    <a href="#" class="btn btn-sm btn-outline">Comenzar →</a>
-                </div>
-                <div class="challenge-card" data-difficulty="easy">
-                    <div class="challenge-badge easy">Fácil</div>
-                    <h4>XSS Reflejado</h4>
-                    <p>Crea un payload XSS para robar cookies de una víctima.</p>
-                    <div class="challenge-meta">
-                        <span><i class="fas fa-clock"></i> 45 min</span>
-                        <span><i class="fas fa-tag"></i> Web</span>
-                    </div>
-                    <a href="#" class="btn btn-sm btn-outline">Comenzar →</a>
-                </div>
-                <div class="challenge-card" data-difficulty="easy">
-                    <div class="challenge-badge easy">Fácil</div>
-                    <h4>Nmap Scan</h4>
-                    <p>Escanea una red y documenta todos los servicios encontrados.</p>
-                    <div class="challenge-meta">
-                        <span><i class="fas fa-clock"></i> 20 min</span>
-                        <span><i class="fas fa-tag"></i> Red</span>
-                    </div>
-                    <a href="#" class="btn btn-sm btn-outline">Comenzar →</a>
-                </div>
-                <div class="challenge-card" data-difficulty="medium">
-                    <div class="challenge-badge medium">Medio</div>
-                    <h4>Buffer Overflow</h4>
-                    <p>Explota un buffer overflow para obtener ejecución remota de código.</p>
-                    <div class="challenge-meta">
-                        <span><i class="fas fa-clock"></i> 2 horas</span>
-                        <span><i class="fas fa-tag"></i> Binary</span>
-                    </div>
-                    <a href="#" class="btn btn-sm btn-outline">Comenzar →</a>
-                </div>
-                <div class="challenge-card" data-difficulty="medium">
-                    <div class="challenge-badge medium">Medio</div>
-                    <h4>Active Directory</h4>
-                    <p>Compromete un dominio de Active Directory desde cero.</p>
-                    <div class="challenge-meta">
-                        <span><i class="fas fa-clock"></i> 4 horas</span>
-                        <span><i class="fas fa-tag"></i> Red</span>
-                    </div>
-                    <a href="#" class="btn btn-sm btn-outline">Comenzar →</a>
-                </div>
-                <div class="challenge-card" data-difficulty="medium">
-                    <div class="challenge-badge medium">Medio</div>
-                    <h4>Análisis de Malware</h4>
-                    <p>Analiza una muestra de ransomware y extrae IOCs.</p>
-                    <div class="challenge-meta">
-                        <span><i class="fas fa-clock"></i> 3 horas</span>
-                        <span><i class="fas fa-tag"></i> Malware</span>
-                    </div>
-                    <a href="#" class="btn btn-sm btn-outline">Comenzar →</a>
-                </div>
-                <div class="challenge-card" data-difficulty="hard">
-                    <div class="challenge-badge hard">Difícil</div>
-                    <h4>Full Pentest</h4>
-                    <p>Pentest completo de una empresa con múltiples vulnerabilidades.</p>
-                    <div class="challenge-meta">
-                        <span><i class="fas fa-clock"></i> 8 horas</span>
-                        <span><i class="fas fa-tag"></i] Pentest</span>
-                    </div>
-                    <a href="#" class="btn btn-sm btn-outline">Comenzar →</a>
-                </div>
-                <div class="challenge-card" data-difficulty="hard">
-                    <div class="challenge-badge hard">Difícil</div>
-                    <h4>Kubernetes Escape</h4>
-                    <p>Escapa de un clúster Kubernetes y compromete el nodo maestro.</p>
-                    <div class="challenge-meta">
-                        <span><i class="fas fa-clock"></i> 6 horas</span>
-                        <span><i class="fas fa-tag"></i> Cloud</span>
-                    </div>
-                    <a href="#" class="btn btn-sm btn-outline">Comenzar →</a>
-                </div>
-                <div class="challenge-card" data-difficulty="hard">
-                    <div class="challenge-badge hard">Difícil</div>
-                    <h4>APT Simulation</h4>
-                    <p>Simula un APT (Advanced Persistent Threat) completo.</p>
-                    <div class="challenge-meta">
-                        <span><i class="fas fa-clock"></i> 12 horas</span>
-                        <span><i class="fas fa-tag"></i> APT</span>
-                    </div>
-                    <a href="#" class="btn btn-sm btn-outline">Comenzar →</a>
-                </div>
+                <div class="challenge-card" data-difficulty="easy"><div class="challenge-badge easy">Fácil</div><h4><i class="fas fa-database"></i> SQL Injection</h4><p>Encuentra y explota una SQLi en web vulnerable</p><div class="challenge-meta"><span><i class="fas fa-clock"></i> 30 min</span><span><i class="fas fa-tag"></i> Web</span></div><a href="#" class="btn btn-sm btn-primary">Comenzar</a></div>
+                <div class="challenge-card" data-difficulty="easy"><div class="challenge-badge easy">Fácil</div><h4><i class="fas fa-code"></i> XSS Reflejado</h4><p>Crea payload XSS para robar cookies</p><div class="challenge-meta"><span><i class="fas fa-clock"></i> 45 min</span><span><i class="fas fa-tag"></i> Web</span></div><a href="#" class="btn btn-sm btn-primary">Comenzar</a></div>
+                <div class="challenge-card" data-difficulty="easy"><div class="challenge-badge easy">Fácil</div><h4><i class="fas fa-network-wired"></i> Nmap Scan</h4><p>Escanea una red y documenta servicios</p><div class="challenge-meta"><span><i class="fas fa-clock"></i> 20 min</span><span><i class="fas fa-tag"></i> Red</span></div><a href="#" class="btn btn-sm btn-primary">Comenzar</a></div>
+                <div class="challenge-card" data-difficulty="medium"><div class="challenge-badge medium">Medio</div><h4><i class="fas fa-memory"></i> Buffer Overflow</h4><p>Explota BO para ejecución remota</p><div class="challenge-meta"><span><i class="fas fa-clock"></i> 2h</span><span><i class="fas fa-tag"></i> Binary</span></div><a href="#" class="btn btn-sm btn-primary">Comenzar</a></div>
+                <div class="challenge-card" data-difficulty="medium"><div class="challenge-badge medium">Medio</div><h4><i class="fas fa-building"></i> Active Directory</h4><p>Compromete un dominio AD completo</p><div class="challenge-meta"><span><i class="fas fa-clock"></i> 4h</span><span><i class="fas fa-tag"></i> Red</span></div><a href="#" class="btn btn-sm btn-primary">Comenzar</a></div>
+                <div class="challenge-card" data-difficulty="medium"><div class="challenge-badge medium">Medio</div><h4><i class="fas fa-virus"></i> Malware Analysis</h4><p>Analiza ransomware y extrae IOCs</p><div class="challenge-meta"><span><i class="fas fa-clock"></i> 3h</span><span><i class="fas fa-tag"></i> Malware</span></div><a href="#" class="btn btn-sm btn-primary">Comenzar</a></div>
+                <div class="challenge-card" data-difficulty="hard"><div class="challenge-badge hard">Difícil</div><h4><i class="fas fa-user-ninja"></i> Full Pentest</h4><p>Pentest completo con múltiples vulnerabilidades</p><div class="challenge-meta"><span><i class="fas fa-clock"></i> 8h</span><span><i class="fas fa-tag"></i> Pentest</span></div><a href="#" class="btn btn-sm btn-primary">Comenzar</a></div>
+                <div class="challenge-card" data-difficulty="hard"><div class="challenge-badge hard">Difícil</div><h4><i class="fab fa-docker"></i> K8s Escape</h4><p>Escapa de un clúster Kubernetes</p><div class="challenge-meta"><span><i class="fas fa-clock"></i> 6h</span><span><i class="fas fa-tag"></i> Cloud</span></div><a href="#" class="btn btn-sm btn-primary">Comenzar</a></div>
+                <div class="challenge-card" data-difficulty="hard"><div class="challenge-badge hard">Difícil</div><h4><i class="fas fa-skull-crossbones"></i> APT Simulation</h4><p>Simula un APT completo</p><div class="challenge-meta"><span><i class="fas fa-clock"></i> 12h</span><span><i class="fas fa-tag"></i> APT</span></div><a href="#" class="btn btn-sm btn-primary">Comenzar</a></div>
             </div>
         </div>
     </section>
 
-    <!-- ===== HERRAMIENTAS ===== -->
+    <!-- HERRAMIENTAS -->
     <section class="section tools-section" id="herramientas">
         <div class="container">
             <div class="section-header">
-                <span class="section-badge">🔧 Herramientas</span>
+                <span class="section-badge"><i class="fas fa-wrench"></i> Herramientas</span>
                 <h2 class="section-title">Stack Tecnológico</h2>
-                <p class="section-desc">Las mismas herramientas que usan los profesionales</p>
+                <p class="section-desc">Las herramientas que usan los profesionales</p>
             </div>
-
             <div class="tools-grid">
-                <div class="tool-card">
-                    <div class="tool-icon">🔍</div>
-                    <h4>Nmap</h4>
-                    <p>Escaneo de redes y puertos</p>
-                    <span class="tool-category red">Red Team</span>
-                </div>
-                <div class="tool-card">
-                    <div class="tool-icon">🕷️</div>
-                    <h4>Burp Suite</h4>
-                    <p>Testing de aplicaciones web</p>
-                    <span class="tool-category red">Red Team</span>
-                </div>
-                <div class="tool-card">
-                    <div class="tool-icon">💥</div>
-                    <h4>Metasploit</h4>
-                    <p>Framework de exploits</p>
-                    <span class="tool-category red">Red Team</span>
-                </div>
-                <div class="tool-card">
-                    <div class="tool-icon">📡</div>
-                    <h4>Wireshark</h4>
-                    <p>Análisis de tráfico de red</p>
-                    <span class="tool-category blue">Blue Team</span>
-                </div>
-                <div class="tool-card">
-                    <div class="tool-icon">📊</div>
-                    <h4>Wazuh</h4>
-                    <p>SIEM y monitoreo</p>
-                    <span class="tool-category blue">Blue Team</span>
-                </div>
-                <div class="tool-card">
-                    <div class="tool-icon">📈</div>
-                    <h4>ELK Stack</h4>
-                    <p>Análisis de logs</p>
-                    <span class="tool-category blue">Blue Team</span>
-                </div>
-                <div class="tool-card">
-                    <div class="tool-icon">☁️</div>
-                    <h4>Prowler</h4>
-                    <p>Auditoría AWS</p>
-                    <span class="tool-category cloud">Cloud</span>
-                </div>
-                <div class="tool-card">
-                    <div class="tool-icon">🐳</div>
-                    <h4>Trivy</h4>
-                    <p>Scanner de contenedores</p>
-                    <span class="tool-category cloud">Cloud</span>
-                </div>
-                <div class="tool-card">
-                    <div class="tool-icon">🦠</div>
-                    <h4>YARA</h4>
-                    <p>Detección de malware</p>
-                    <span class="tool-category malware">Malware</span>
-                </div>
-                <div class="tool-card">
-                    <div class="tool-icon">🔬</div>
-                    <h4>Volatility</h4>
-                    <p>Forense de memoria</p>
-                    <span class="tool-category forensics">Forense</span>
-                </div>
-                <div class="tool-card">
-                    <div class="tool-icon">🛡️</div>
-                    <h4>OSSEC</h4>
-                    <p>Host IDS</p>
-                    <span class="tool-category blue">Blue Team</span>
-                </div>
-                <div class="tool-card">
-                    <div class="tool-icon">🔑</div>
-                    <h4>Checkov</h4>
-                    <p>IaC Security</p>
-                    <span class="tool-category cloud">Cloud</span>
-                </div>
+                <div class="tool-card"><div class="tool-icon"><i class="fas fa-satellite-dish"></i></div><h4>Nmap</h4><p>Escaneo de redes</p><span class="tool-category red">Red Team</span></div>
+                <div class="tool-card"><div class="tool-icon"><i class="fas fa-spider"></i></div><h4>Burp Suite</h4><p>Testing web</p><span class="tool-category red">Red Team</span></div>
+                <div class="tool-card"><div class="tool-icon"><i class="fas fa-bomb"></i></div><h4>Metasploit</h4><p>Framework de exploits</p><span class="tool-category red">Red Team</span></div>
+                <div class="tool-card"><div class="tool-icon"><i class="fas fa-wave-square"></i></div><h4>Wireshark</h4><p>Análisis de tráfico</p><span class="tool-category blue">Blue Team</span></div>
+                <div class="tool-card"><div class="tool-icon"><i class="fas fa-chart-line"></i></div><h4>Wazuh</h4><p>SIEM y monitoreo</p><span class="tool-category blue">Blue Team</span></div>
+                <div class="tool-card"><div class="tool-icon"><i class="fas fa-chart-area"></i></div><h4>ELK Stack</h4><p>Análisis de logs</p><span class="tool-category blue">Blue Team</span></div>
+                <div class="tool-card"><div class="tool-icon"><i class="fas fa-cloud"></i></div><h4>Prowler</h4><p>Auditoría AWS</p><span class="tool-category cloud">Cloud</span></div>
+                <div class="tool-card"><div class="tool-icon"><i class="fab fa-docker"></i></div><h4>Trivy</h4><p>Scanner de contenedores</p><span class="tool-category cloud">Cloud</span></div>
+                <div class="tool-card"><div class="tool-icon"><i class="fas fa-virus"></i></div><h4>YARA</h4><p>Detección de malware</p><span class="tool-category malware">Malware</span></div>
+                <div class="tool-card"><div class="tool-icon"><i class="fas fa-microscope"></i></div><h4>Volatility</h4><p>Forense de memoria</p><span class="tool-category forensics">Forense</span></div>
+                <div class="tool-card"><div class="tool-icon"><i class="fas fa-helmet-safety"></i></div><h4>OSSEC</h4><p>Host IDS</p><span class="tool-category blue">Blue Team</span></div>
+                <div class="tool-card"><div class="tool-icon"><i class="fas fa-key"></i></div><h4>Checkov</h4><p>IaC Security</p><span class="tool-category cloud">Cloud</span></div>
             </div>
         </div>
     </section>
 
-    <!-- ===== LABS ===== -->
+    <!-- LABS -->
     <section class="section labs-section" id="labs">
         <div class="container">
             <div class="section-header">
-                <span class="section-badge">🧪 Laboratorios</span>
+                <span class="section-badge"><i class="fas fa-flask"></i> Laboratorios</span>
                 <h2 class="section-title">Practica en Entornos Reales</h2>
-                <p class="section-desc">Labs Docker listos para usar en tu máquina</p>
+                <p class="section-desc">Labs Docker listos para usar</p>
             </div>
-
             <div class="labs-grid">
-                <div class="lab-card">
-                    <div class="lab-status available">Disponible</div>
-                    <h4>Vulnerable Web App</h4>
-                    <p>Aplicación web con vulnerabilidades OWASP Top 10 para practicar.</p>
-                    <div class="lab-meta">
-                        <span class="lab-level beginner">Principiante</span>
-                        <span class="lab-time"><i class="fas fa-clock"></i> 2h</span>
-                    </div>
-                    <div class="lab-stack">
-                        <span>DVWA</span>
-                        <span>MySQL</span>
-                        <span>PHP</span>
-                    </div>
-                    <button class="btn btn-sm btn-primary">Iniciar Lab</button>
-                </div>
-                <div class="lab-card">
-                    <div class="lab-status available">Disponible</div>
-                    <h4>Active Directory Lab</h4>
-                    <p>Entorno AD completo con dominio, usuarios y configuración típica.</p>
-                    <div class="lab-meta">
-                        <span class="lab-level intermediate">Intermedio</span>
-                        <span class="lab-time"><i class="fas fa-clock"></i> 4h</span>
-                    </div>
-                    <div class="lab-stack">
-                        <span>Windows Server</span>
-                        <span>AD</span>
-                        <span>DNS</span>
-                    </div>
-                    <button class="btn btn-sm btn-primary">Iniciar Lab</button>
-                </div>
-                <div class="lab-card">
-                    <div class="lab-status coming">Próximamente</div>
-                    <h4>SOC Simulation</h4>
-                    <p>Simulación de centro de operaciones de seguridad con alertas reales.</p>
-                    <div class="lab-meta">
-                        <span class="lab-level intermediate">Intermedio</span>
-                        <span class="lab-time"><i class="fas fa-clock"></i> 6h</span>
-                    </div>
-                    <div class="lab-stack">
-                        <span>Wazuh</span>
-                        <span>ELK</span>
-                        <span>Suricata</span>
-                    </div>
-                    <button class="btn btn-sm btn-outline" disabled>Próximamente</button>
-                </div>
-                <div class="lab-card">
-                    <div class="lab-status coming">Próximamente</div>
-                    <h4>Cloud Pentest Lab</h4>
-                    <p>Entorno AWS vulnerable para practicar cloud pentesting.</p>
-                    <div class="lab-meta">
-                        <span class="lab-level advanced">Avanzado</span>
-                        <span class="lab-time"><i class="fas fa-clock"></i> 8h</span>
-                    </div>
-                    <div class="lab-stack">
-                        <span>AWS</span>
-                        <span>S3</span>
-                        <span>IAM</span>
-                    </div>
-                    <button class="btn btn-sm btn-outline" disabled>Próximamente</button>
-                </div>
+                <div class="lab-card"><div class="lab-status available">Disponible</div><h4><i class="fas fa-globe"></i> Vulnerable Web App</h4><p>OWASP Top 10 en práctica</p><div class="lab-meta"><span class="lab-level beginner">Principiante</span><span class="lab-time"><i class="fas fa-clock"></i> 2h</span></div><div class="lab-stack"><span>DVWA</span><span>MySQL</span><span>PHP</span></div><button class="btn btn-sm btn-primary">Iniciar Lab</button></div>
+                <div class="lab-card"><div class="lab-status available">Disponible</div><h4><i class="fas fa-building"></i> Active Directory Lab</h4><p>Entorno AD completo</p><div class="lab-meta"><span class="lab-level intermediate">Intermedio</span><span class="lab-time"><i class="fas fa-clock"></i> 4h</span></div><div class="lab-stack"><span>Windows Server</span><span>AD</span></div><button class="btn btn-sm btn-primary">Iniciar Lab</button></div>
+                <div class="lab-card"><div class="lab-status coming">Próximamente</div><h4><i class="fas fa-shield-halved"></i> SOC Simulation</h4><p>Simulación de centro de seguridad</p><div class="lab-meta"><span class="lab-level intermediate">Intermedio</span><span class="lab-time"><i class="fas fa-clock"></i> 6h</span></div><div class="lab-stack"><span>Wazuh</span><span>ELK</span></div><button class="btn btn-sm btn-outline" disabled>Próximamente</button></div>
+                <div class="lab-card"><div class="lab-status coming">Próximamente</div><h4><i class="fas fa-cloud"></i> Cloud Pentest Lab</h4><p>Entorno AWS vulnerable</p><div class="lab-meta"><span class="lab-level advanced">Avanzado</span><span class="lab-time"><i class="fas fa-clock"></i> 8h</span></div><div class="lab-stack"><span>AWS</span><span>S3</span><span>IAM</span></div><button class="btn btn-sm btn-outline" disabled>Próximamente</button></div>
             </div>
         </div>
     </section>
 
-    <!-- ===== RECURSOS ===== -->
-    <section class="section resources-section" id="recursos">
+    <!-- CTA -->
+    <section class="section cta-section">
         <div class="container">
-            <div class="section-header">
-                <span class="section-badge">📚 Recursos</span>
-                <h2 class="section-title">Aprende y Crece</h2>
-                <p class="section-desc">Recursos curados para cada nivel</p>
-            </div>
-
-            <div class="resources-grid">
-                <div class="resource-card">
-                    <div class="resource-icon">🎓</div>
-                    <h4>Cursos Gratuitos</h4>
-                    <ul>
-                        <li><a href="#">TryHackMe - Pre Security</a></li>
-                        <li><a href="#">PicoCTF</a></li>
-                        <li><a href="#">PortSwigger Academy</a></li>
-                        <li><a href="#">Cisco NetAcad</a></li>
-                    </ul>
-                </div>
-                <div class="resource-card">
-                    <div class="resource-icon">📖</div>
-                    <h4>Certificaciones</h4>
-                    <ul>
-                        <li><a href="#">CompTIA Security+</a></li>
-                        <li><a href="#">eJPT (eLearnSecurity)</a></li>
-                        <li><a href="#">OSCP (OffSec)</a></li>
-                        <li><a href="#">CEH (EC-Council)</a></li>
-                    </ul>
-                </div>
-                <div class="resource-card">
-                    <div class="resource-icon">🎮</div>
-                    <h4>Plataformas CTF</h4>
-                    <ul>
-                        <li><a href="#">HackTheBox</a></li>
-                        <li><a href="#">TryHackMe</a></li>
-                        <li><a href="#">VulnHub</a></li>
-                        <li><a href="#">OverTheWire</a></li>
-                    </ul>
-                </div>
-                <div class="resource-card">
-                    <div class="resource-icon">📰</div>
-                    <h4>Noticias y Blogs</h4>
-                    <ul>
-                        <li><a href="#">Krebs on Security</a></li>
-                        <li><a href="#">BleepingComputer</a></li>
-                        <li><a href="#">The Hacker News</a></li>
-                        <li><a href="#">Dark Reading</a></li>
-                    </ul>
+            <div class="cta-content">
+                <h2>¿Listo para empezar?</h2>
+                <p>10 módulos, 40+ herramientas, 50+ retos. Todo gratis.</p>
+                <div class="cta-buttons">
+                    <a href="#intro" class="btn btn-primary btn-lg"><i class="fas fa-rocket"></i> Empezar Ahora</a>
+                    <a href="https://github.com/0xvanguard/CyberDefense-Pro-Network" class="btn btn-outline btn-lg" target="_blank"><i class="fab fa-github"></i> Ver en GitHub</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ===== FOOTER ===== -->
+    <!-- FOOTER -->
     <footer class="footer">
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-brand">
-                    <div class="footer-logo">
-                        <span class="logo-icon">🛡️</span>
-                        <span class="logo-text">CDPN</span>
-                    </div>
+                    <div class="footer-logo"><span class="logo-icon"><i class="fas fa-shield-halved"></i></span><span class="logo-text">CDPN</span></div>
                     <p>Formando profesionales de ciberdefensa en todo el mundo hispanohablante.</p>
                     <div class="footer-social">
                         <a href="https://github.com/0xvanguard/CyberDefense-Pro-Network" target="_blank"><i class="fab fa-github"></i></a>
@@ -947,41 +446,11 @@
                         <a href="#"><i class="fab fa-linkedin"></i></a>
                     </div>
                 </div>
-                <div class="footer-links">
-                    <h4>Carreras</h4>
-                    <ul>
-                        <li><a href="#red-team">Red Team</a></li>
-                        <li><a href="#blue-team">Blue Team</a></li>
-                        <li><a href="#cloud">Cloud Security</a></li>
-                        <li><a href="#malware">Malware Analysis</a></li>
-                        <li><a href="#forensics">Digital Forensics</a></li>
-                        <li><a href="#iot">IoT Security</a></li>
-                        <li><a href="#ai-security">AI Security</a></li>
-                    </ul>
-                </div>
-                <div class="footer-links">
-                    <h4>Recursos</h4>
-                    <ul>
-                        <li><a href="#herramientas">Herramientas</a></li>
-                        <li><a href="#labs">Laboratorios</a></li>
-                        <li><a href="#retos">Retos</a></li>
-                        <li><a href="#">Certificaciones</a></li>
-                        <li><a href="#">Documentación</a></li>
-                    </ul>
-                </div>
-                <div class="footer-links">
-                    <h4>Comunidad</h4>
-                    <ul>
-                        <li><a href="#">Discord</a></li>
-                        <li><a href="#">GitHub</a></li>
-                        <li><a href="#">Contribuir</a></li>
-                        <li><a href="#">Newsletter</a></li>
-                    </ul>
-                </div>
+                <div class="footer-links"><h4>Módulos</h4><ul><li><a href="#intro">Introducción</a></li><li><a href="#ciberseguridad">Ciberseguridad</a></li><li><a href="#seguridad-info">Seg. Información</a></li><li><a href="#ia-agentes">IA y Agentes</a></li><li><a href="#forense">Forense Digital</a></li></ul></div>
+                <div class="footer-links"><h4>Recursos</h4><ul><li><a href="#herramientas">Herramientas</a></li><li><a href="#labs">Laboratorios</a></li><li><a href="#retos">Retos</a></li><li><a href="#">Certificaciones</a></li></ul></div>
+                <div class="footer-links"><h4>Comunidad</h4><ul><li><a href="#">Discord</a></li><li><a href="#">Contribuir</a></li><li><a href="#">Newsletter</a></li></ul></div>
             </div>
-            <div class="footer-bottom">
-                <p>© 2026 CyberDefense Pro Network. Hecho con ❤️ por profesionales, para profesionales.</p>
-            </div>
+            <div class="footer-bottom"><p>© 2026 CyberDefense Pro Network. Hecho con <i class="fas fa-heart" style="color:#e74c3c"></i> para la comunidad.</p></div>
         </div>
     </footer>
 
