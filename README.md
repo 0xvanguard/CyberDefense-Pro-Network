@@ -1,3 +1,10 @@
+<div align="right">
+
+[![English](https://img.shields.io/badge/English-README-blue)](./docs/README-EN.md)
+[![Español](https://img.shields.io/badge/Español-README-orange)](./README.md)
+
+</div>
+
 <div align="center">
 
 <br/>
