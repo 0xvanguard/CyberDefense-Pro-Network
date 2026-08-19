@@ -3,671 +3,454 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Plataforma de Estudio de Ciberseguridad - Formación pública, gratuita y de excelencia en ciberseguridad.">
-    <title>Plataforma de Estudio de Ciberseguridad</title>
-    <link rel="stylesheet" href="styles.css">
-    <!-- Preconnect & Fonts: Inter for a clean, professional look -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>CyberDefense Pro Network - Plataforma de Formación</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #fff;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 40px 0;
+            border-bottom: 2px solid #0f3460;
+            margin-bottom: 40px;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #00d9ff, #00ff88);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .subtitle {
+            color: #a0a0a0;
+            font-size: 1.2rem;
+        }
+        
+        .modules {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+        
+        .module-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+        
+        .module-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 217, 255, 0.2);
+            border-color: #00d9ff;
+        }
+        
+        .module-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+        
+        .module-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: #00d9ff;
+        }
+        
+        .module-description {
+            color: #a0a0a0;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        
+        .module-meta {
+            margin-top: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .level {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+        
+        .level-basic { background: #2ecc71; color: #000; }
+        .level-intermediate { background: #f39c12; color: #000; }
+        .level-advanced { background: #e74c3c; color: #fff; }
+        
+        .duration {
+            color: #a0a0a0;
+            font-size: 0.9rem;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin: 40px 0;
+        }
+        
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #00d9ff;
+        }
+        
+        .stat-label {
+            color: #a0a0a0;
+            margin-top: 5px;
+        }
+        
+        .tools-section {
+            margin-top: 60px;
+        }
+        
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            text-align: center;
+            color: #00ff88;
+        }
+        
+        .tool-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+        
+        .tool-item {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 3px solid #00d9ff;
+        }
+        
+        .tool-name {
+            font-weight: bold;
+            color: #00d9ff;
+            margin-bottom: 5px;
+        }
+        
+        .tool-desc {
+            color: #a0a0a0;
+            font-size: 0.9rem;
+        }
+        
+        .cta-section {
+            text-align: center;
+            margin: 60px 0;
+            padding: 40px;
+            background: rgba(0, 217, 255, 0.1);
+            border-radius: 15px;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: linear-gradient(90deg, #00d9ff, #00ff88);
+            color: #000;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-top: 20px;
+            transition: transform 0.3s;
+        }
+        
+        .cta-button:hover {
+            transform: scale(1.05);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 60px;
+            color: #a0a0a0;
+        }
+        
+        @media (max-width: 768px) {
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
 </head>
 <body>
-    <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
-
-    <!-- Header & Navigation -->
-    <header class="site-header" id="header">
-        <div class="container header-container">
-            <div class="brand">
-                <!-- SVG Shield Logo representing security and institution -->
-                <svg class="logo-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                </svg>
-                <span class="brand-text">Plataforma de Estudio de Ciberseguridad</span>
+    <div class="container">
+        <header>
+            <h1>🛡️ CyberDefense Pro Network</h1>
+            <p class="subtitle">Plataforma Profesional de Formación en Ciberdefensa</p>
+        </header>
+        
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-number">10</div>
+                <div class="stat-label">Módulos</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">50+</div>
+                <div class="stat-label">Herramientas</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">20+</div>
+                <div class="stat-label">Laboratorios</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">100+</div>
+                <div class="stat-label">Horas de Contenido</div>
+            </div>
+        </div>
+        
+        <section class="modules">
+            <div class="module-card" onclick="showModule('red-team')">
+                <div class="module-icon">🔴</div>
+                <h3 class="module-title">Red Team (Ofensiva)</h3>
+                <p class="module-description">Aprende técnicas de penetración, explotación de vulnerabilidades y post-explotación.</p>
+                <div class="module-meta">
+                    <span class="level level-intermediate">Intermedio</span>
+                    <span class="duration">3-4 meses</span>
+                </div>
             </div>
             
-            <button class="mobile-menu-toggle" aria-controls="primary-nav" aria-expanded="false" aria-label="Abrir menú">
-                <span class="hamburger"></span>
-            </button>
-
-            <nav id="primary-nav" class="primary-nav" aria-label="Navegación principal">
-                <ul>
-                    <li><a href="#inicio">Inicio</a></li>
-                    <li><a href="#programas">Programas</a></li>
-                    <li><a href="programas-materiales.html">Materiales</a></li>
-                    <li><a href="#testimonios">Testimonios</a></li>
-                    <li><a href="#comunidad">Comunidad</a></li>
-                    <li><a href="#blog">Blog</a></li>
-                    <li><a href="#sobre-nosotros">Sobre Nosotros</a></li>
-                    <li><a href="#faq">FAQ</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
-
-    <main id="main-content">
-        <!-- Hero Section -->
-        <section id="inicio" class="hero-section" aria-labelledby="hero-title" style="background-image: linear-gradient(rgba(13, 35, 58, 0.85), rgba(17, 24, 39, 0.95)), url('assets/hero-bg.png'); background-size: cover; background-position: center; color: white;">
-            <div class="container hero-container">
-                <div class="hero-content">
-                    <h1 id="hero-title" style="color: white;">Formación Abierta en Ciberseguridad, Gratis y en Español</h1>
-                    <p class="hero-subtitle" style="color: #e5e7eb;">Cursos prácticos, accesibles y actualizados para impulsar tu carrera.</p>
-                    <div class="hero-actions">
-                        <a href="#programas" class="btn btn-primary">Ver programas</a>
-                        <a href="#comunidad" class="btn btn-secondary" style="background: rgba(255,255,255,0.1); color: white; border-color: rgba(255,255,255,0.3);">Únete a la comunidad</a>
-                    </div>
+            <div class="module-card" onclick="showModule('blue-team')">
+                <div class="module-icon">🔵</div>
+                <h3 class="module-title">Blue Team (Defensiva)</h3>
+                <p class="module-description">Dominia SOC, monitoreo de seguridad, respuesta a incidentes y threat hunting.</p>
+                <div class="module-meta">
+                    <span class="level level-intermediate">Intermedio</span>
+                    <span class="duration">3-4 meses</span>
+                </div>
+            </div>
+            
+            <div class="module-card" onclick="showModule('cloud')">
+                <div class="module-icon">☁️</div>
+                <h3 class="module-title">Cloud Security</h3>
+                <p class="module-description">Seguridad en AWS, Azure, GCP, contenedores y Kubernetes.</p>
+                <div class="module-meta">
+                    <span class="level level-advanced">Avanzado</span>
+                    <span class="duration">4-6 semanas</span>
+                </div>
+            </div>
+            
+            <div class="module-card" onclick="showModule('malware')">
+                <div class="module-icon">🦠</div>
+                <h3 class="module-title">Malware Analysis</h3>
+                <p class="module-description">Análisis estático y dinámico, reverse engineering, reglas YARA.</p>
+                <div class="module-meta">
+                    <span class="level level-advanced">Avanzado</span>
+                    <span class="duration">6-8 semanas</span>
+                </div>
+            </div>
+            
+            <div class="module-card" onclick="showModule('forensics')">
+                <div class="module-icon">🔍</div>
+                <h3 class="module-title">Digital Forensics</h3>
+                <p class="module-description">Forense de disco, memoria, red y análisis de evidencia digital.</p>
+                <div class="module-meta">
+                    <span class="level level-advanced">Avanzado</span>
+                    <span class="duration">4-6 semanas</span>
+                </div>
+            </div>
+            
+            <div class="module-card" onclick="showModule('automation')">
+                <div class="module-icon">🤖</div>
+                <h3 class="module-title">Automatización</h3>
+                <p class="module-description">Scripts de seguridad, CI/CD, automatización de tareas repetitivas.</p>
+                <div class="module-meta">
+                    <span class="level level-basic">Básico</span>
+                    <span class="duration">2-3 semanas</span>
                 </div>
             </div>
         </section>
-
-
-
-        <!-- Programas y Módulos -->
-        <section id="programas" class="section bg-light" aria-labelledby="programs-title">
-            <div class="container">
-                <div class="section-header">
-                    <h2 id="programs-title">Programas y Módulos</h2>
-                    <p class="section-lead">Nuestra oferta académica estructurada para formar expertos desde las bases hasta la especialización.</p>
+        
+        <section class="tools-section">
+            <h2 class="section-title">🔧 Herramientas Incluidas</h2>
+            <div class="tool-list">
+                <div class="tool-item">
+                    <div class="tool-name">Nmap</div>
+                    <div class="tool-desc">Escaneo de redes y puertos</div>
                 </div>
-
-                <div class="programs-grid">
-                    <!-- Facultad Ofensiva -->
-                    <article class="program-card">
-                        <div class="program-header">
-                            <span class="badge level-advanced">Facultad</span>
-                            <h3>
-                                <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: text-bottom; margin-right: 0.5rem;"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><line x1="10" y1="9" x2="8" y2="9"></line></svg>
-                                Ciberseguridad Ofensiva
-                            </h3>
-                        </div>
-                        <p class="description">Red Team, pentesting, explotación controlada y post-explotación.</p>
-                        <ul class="program-bullets">
-                            <li>01 - Reconocimiento OSINT</li>
-                            <li>02 - Pentesting / Red Team</li>
-                            <li>03 - Análisis de Vulnerabilidades</li>
-                            <li>04 - Explotación Web</li>
-                        </ul>
-                        <a href="programas-materiales.html" class="link-arrow" style="margin-top: 1rem; display: inline-block;">Ver todos los módulos →</a>
-                    </article>
-
-                    <!-- Facultad Blue Team -->
-                    <article class="program-card">
-                        <div class="program-header">
-                            <span class="badge level-intermediate">Facultad</span>
-                            <h3>
-                                <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: text-bottom; margin-right: 0.5rem;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                                Seguridad de la Información
-                            </h3>
-                        </div>
-                        <p class="description">Defensa, Blue Team, gestión de riesgos y operaciones SOC.</p>
-                        <ul class="program-bullets">
-                            <li>01 - Gestión de Riesgos</li>
-                            <li>02 - Blue Team Defensa</li>
-                            <li>03 - SOC Operations</li>
-                            <li>04 - DevSecOps</li>
-                        </ul>
-                        <a href="programas-materiales.html" class="link-arrow" style="margin-top: 1rem; display: inline-block;">Ver todos los módulos →</a>
-                    </article>
-
-                    <!-- Facultad IA -->
-                    <article class="program-card">
-                        <div class="program-header">
-                            <span class="badge level-basic">Facultad</span>
-                            <h3>
-                                <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: text-bottom; margin-right: 0.5rem;"><rect x="3" y="11" width="18" height="10" rx="2"></rect><circle cx="12" cy="5" r="2"></circle><path d="M12 7v4"></path><line x1="8" y1="16" x2="8" y2="16"></line><line x1="16" y1="16" x2="16" y2="16"></line></svg>
-                                IA y Automatización
-                            </h3>
-                        </div>
-                        <p class="description">Herramientas LLM aplicadas a la ciberseguridad y automatización.</p>
-                        <ul class="program-bullets">
-                            <li>01 - Agentes OSINT</li>
-                            <li>02 - Agentes Pentest</li>
-                            <li>03 - LLM Security</li>
-                            <li>04 - Herramientas Trending</li>
-                        </ul>
-                        <a href="programas-materiales.html" class="link-arrow" style="margin-top: 1rem; display: inline-block;">Ver todos los módulos →</a>
-                    </article>
+                <div class="tool-item">
+                    <div class="tool-name">Burp Suite</div>
+                    <div class="tool-desc">Testing de aplicaciones web</div>
                 </div>
-
-
-        <!-- Sobre Nosotros -->
-        <section id="sobre-nosotros" class="section" aria-labelledby="about-title">
-            <div class="container">
-                <div class="section-header">
-                    <h2 id="about-title">Nuestra Misión y Visión</h2>
-                    <p class="section-lead">La base de nuestra integridad y compromiso público.</p>
+                <div class="tool-item">
+                    <div class="tool-name">Metasploit</div>
+                    <div class="tool-desc">Framework de exploits</div>
                 </div>
-
-                <div class="governance-layout" style="margin-bottom: 3rem;">
-                    <div class="manifesto-panel">
-                        <blockquote class="manifesto-quote" style="margin-bottom: 1.5rem;">
-                            <h3 class="manifesto-title">Nuestra Misión</h3>
-                            <p>Brindar educación libre, accesible y actualizada en ciberseguridad para hispanohablantes, fomentando el conocimiento práctico y el desarrollo profesional.</p>
-                        </blockquote>
-                        <blockquote class="manifesto-quote" style="border-left-color: var(--color-secondary);">
-                            <h3 class="manifesto-title" style="color: var(--color-primary-dark);">Nuestra Visión</h3>
-                            <p>Convertirnos en la referencia principal en formación abierta de ciberseguridad en español, impulsando comunidades de aprendizaje colaborativo e innovación.</p>
-                        </blockquote>
-                    </div>
-
-                    <div class="advisory-panel glass-panel bg-light" style="display: flex; flex-direction: column; justify-content: center;">
-                        <h3 style="margin-top: 0; color: var(--color-primary-dark);">Nuestra Historia</h3>
-                        <p style="font-size: 1.05rem; line-height: 1.6; color: var(--color-text-main);">Fundada en 2023 por un grupo de profesionales apasionados por la ciberseguridad, nuestra plataforma nació con la idea de democratizar el acceso a la educación técnica y práctica sin costo.</p>
-                        <div style="margin-top: 1.5rem;">
-                            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary-light)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                        </div>
-                    </div>
+                <div class="tool-item">
+                    <div class="tool-name">Wireshark</div>
+                    <div class="tool-desc">Análisis de tráfico de red</div>
                 </div>
-
-                <div class="section-header" style="margin-top: 4rem;">
-                    <h2>Equipo Fundador y Docente</h2>
-                    <p class="section-lead">Conoce a los profesionales que hacen posible este proyecto educativo.</p>
+                <div class="tool-item">
+                    <div class="tool-name">YARA</div>
+                    <div class="tool-desc">Reglas de detección de malware</div>
                 </div>
-
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
-                    <!-- Team 1 -->
-                    <div class="team-card glass-panel" style="text-align: center; padding: 2rem;">
-                        <div class="author-avatar" style="width: 80px; height: 80px; margin: 0 auto 1rem; border-radius: 50%; background: var(--color-bg-light); border: 2px solid var(--color-primary); color: var(--color-primary); display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: bold;">
-                            MF
-                        </div>
-                        <h4 style="margin: 0; font-size: 1.25rem;">María Fernández</h4>
-                        <span class="role" style="display: block; color: var(--color-primary); font-weight: 600; margin-bottom: 1rem;">Directora Académica</span>
-                        <p style="color: var(--color-text-main); font-size: 0.95rem; margin-bottom: 0;">Experta en educación y desarrollo de currículos especializados en ciberseguridad.</p>
-                    </div>
-                    <!-- Team 2 -->
-                    <div class="team-card glass-panel" style="text-align: center; padding: 2rem;">
-                        <div class="author-avatar" style="width: 80px; height: 80px; margin: 0 auto 1rem; border-radius: 50%; background: var(--color-bg-light); border: 2px solid var(--color-primary); color: var(--color-primary); display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: bold;">
-                            JP
-                        </div>
-                        <h4 style="margin: 0; font-size: 1.25rem;">Juan Pérez</h4>
-                        <span class="role" style="display: block; color: var(--color-primary); font-weight: 600; margin-bottom: 1rem;">Coordinador de Comunidad</span>
-                        <p style="color: var(--color-text-main); font-size: 0.95rem; margin-bottom: 0;">Administrador de comunidades tech y facilitador de eventos y webinars.</p>
-                    </div>
-                    <!-- Team 3 -->
-                    <div class="team-card glass-panel" style="text-align: center; padding: 2rem;">
-                        <div class="author-avatar" style="width: 80px; height: 80px; margin: 0 auto 1rem; border-radius: 50%; background: var(--color-bg-light); border: 2px solid var(--color-primary); color: var(--color-primary); display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: bold;">
-                            LR
-                        </div>
-                        <h4 style="margin: 0; font-size: 1.25rem;">Lucía Rojas</h4>
-                        <span class="role" style="display: block; color: var(--color-primary); font-weight: 600; margin-bottom: 1rem;">Desarrolladora Web</span>
-                        <p style="color: var(--color-text-main); font-size: 0.95rem; margin-bottom: 0;">Encargada del desarrollo y mantenimiento de la plataforma digital.</p>
-                    </div>
+                <div class="tool-item">
+                    <div class="tool-name">Wazuh</div>
+                    <div class="tool-desc">SIEM y monitoreo de seguridad</div>
                 </div>
-
-                <div style="margin-top: 3rem; text-align: center;">
-                    <a href="#contacto" class="btn btn-outline">Únete a nuestro equipo docente</a>
+                <div class="tool-item">
+                    <div class="tool-name">Docker</div>
+                    <div class="tool-desc">Entornos aislados de práctica</div>
+                </div>
+                <div class="tool-item">
+                    <div class="tool-name">Python</div>
+                    <div class="tool-desc">Scripting de seguridad</div>
                 </div>
             </div>
         </section>
-
-        <!-- Casos de Éxito / Testimonios -->
-        <section id="testimonios" class="section bg-light" aria-labelledby="testimonials-title">
-            <div class="container">
-                <div class="section-header">
-                    <h2 id="testimonials-title">Casos de Éxito</h2>
-                    <p class="section-lead">Estudiantes que han transformado su carrera a través de nuestra educación abierta.</p>
-                </div>
-                <div class="testimonials-grid" id="testimonials-container">
-                    <article class="testimonial-card">
-                        <svg class="quote-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
-                        <p class="testimonial-quote">"El módulo de OSINT y Pentesting me dio las herramientas prácticas que ninguna academia de pago pudo ofrecerme. Gracias a los laboratorios pude armar mi portafolio y conseguir mi primer empleo."</p>
-                        <div style="margin-bottom: 1.5rem;">
-                            <button class="btn btn-sm btn-outline" style="display: inline-flex; align-items: center; gap: 0.5rem;">
-                                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-                                Ver Video Entrevista
-                            </button>
-                        </div>
-                        <div class="testimonial-author" style="display: flex; align-items: center; justify-content: space-between;">
-                            <div style="display: flex; align-items: center; gap: 1rem;">
-                                <div class="author-avatar" style="background: var(--color-bg-light); border: 1px solid var(--color-border); color: var(--color-primary);">
-                                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                                </div>
-                                <div>
-                                    <h4 style="margin: 0; font-size: 1rem;">Javier Torres</h4>
-                                    <span class="role" style="font-size: 0.85rem; color: var(--color-text-main);">Analista SOC Junior</span>
-                                </div>
-                            </div>
-                            <a href="#" class="social-link" title="Ver perfil en LinkedIn" aria-label="Perfil de LinkedIn de Javier Torres">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                            </a>
-                        </div>
-                    </article>
-                    <article class="testimonial-card">
-                        <svg class="quote-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
-                        <p class="testimonial-quote">"Venía del desarrollo web tradicional. Entender las vulnerabilidades OWASP con el enfoque de defensa de la Plataforma Abierta cambió completamente mi perspectiva."</p>
-                        <div style="margin-bottom: 1.5rem;">
-                            <button class="btn btn-sm btn-outline" style="display: inline-flex; align-items: center; gap: 0.5rem;">
-                                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-                                Ver Historia Completa
-                            </button>
-                        </div>
-                        <div class="testimonial-author" style="display: flex; align-items: center; justify-content: space-between;">
-                            <div style="display: flex; align-items: center; gap: 1rem;">
-                                <div class="author-avatar" style="background: var(--color-bg-light); border: 1px solid var(--color-border); color: var(--color-primary);">
-                                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                                </div>
-                                <div>
-                                    <h4 style="margin: 0; font-size: 1rem;">Laura Méndez</h4>
-                                    <span class="role" style="font-size: 0.85rem; color: var(--color-text-main);">Consultora de Seguridad</span>
-                                </div>
-                            </div>
-                            <a href="#" class="social-link" title="Ver perfil en LinkedIn" aria-label="Perfil de LinkedIn de Laura Méndez">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                            </a>
-                        </div>
-                    </article>
-                    <article class="testimonial-card">
-                        <svg class="quote-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
-                        <p class="testimonial-quote">"El enfoque de la Facultad de IA en automatización me permitió desarrollar agentes de seguridad defensivos para la empresa donde trabajo. La calidad es increíble."</p>
-                        <div style="margin-bottom: 1.5rem;">
-                            <button class="btn btn-sm btn-outline" style="display: inline-flex; align-items: center; gap: 0.5rem;">
-                                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-                                Escuchar Testimonio
-                            </button>
-                        </div>
-                        <div class="testimonial-author" style="display: flex; align-items: center; justify-content: space-between;">
-                            <div style="display: flex; align-items: center; gap: 1rem;">
-                                <div class="author-avatar" style="background: var(--color-bg-light); border: 1px solid var(--color-border); color: var(--color-primary);">
-                                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                                </div>
-                                <div>
-                                    <h4 style="margin: 0; font-size: 1rem;">Carlos Silva</h4>
-                                    <span class="role" style="font-size: 0.85rem; color: var(--color-text-main);">Ingeniero DevSecOps</span>
-                                </div>
-                            </div>
-                            <a href="#" class="social-link" title="Ver perfil en LinkedIn" aria-label="Perfil de LinkedIn de Carlos Silva">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                            </a>
-                        </div>
-                    </article>
-                </div>
-            </div>
+        
+        <section class="cta-section">
+            <h2>🚀 ¿Listo para comenzar?</h2>
+            <p>Únete a la comunidad de profesionales de ciberdefensa</p>
+            <a href="https://github.com/0xvanguard/CyberDefense-Pro-Network" class="cta-button">Ver en GitHub</a>
         </section>
-
-        <!-- Comunidad y Colaboración -->
-        <section id="comunidad" class="section" aria-labelledby="community-title">
-            <div class="container">
-                <div class="section-header">
-                    <h2 id="community-title">Comunidad y Colaboración</h2>
-                    <p class="section-lead">Únete a una red activa de profesionales y estudiantes. Participa en proyectos, resuelve dudas en nuestros foros y asiste a eventos exclusivos.</p>
-                </div>
-                <div class="chat-banner glass-panel" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; padding: 1.5rem 2rem; margin-bottom: 2rem; background: var(--color-bg-light); border-left: 4px solid var(--color-primary); border-radius: var(--radius-md);">
-                    <div style="flex: 1 1 300px;">
-                        <h3 style="margin-top: 0; margin-bottom: 0.5rem; font-size: 1.25rem;">Únete a nuestros canales oficiales</h3>
-                        <p style="margin-bottom: 0; color: var(--color-text-main); font-size: 0.95rem;">Comparte conocimiento, resuelve dudas en tiempo real y haz networking con otros profesionales y estudiantes en Discord y Slack.</p>
-                    </div>
-                    <div style="display: flex; gap: 1rem; flex-shrink: 0;">
-                        <a href="#" class="btn btn-primary" style="background-color: #5865F2; border-color: #5865F2;">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: text-bottom; margin-right: 0.5rem;"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg>
-                            Discord
-                        </a>
-                        <a href="#" class="btn btn-primary" style="background-color: #4A154B; border-color: #4A154B;">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: text-bottom; margin-right: 0.5rem;"><path d="M5.042 15.165a2.528 2.528 0 0 1-2.52 2.523A2.528 2.528 0 0 1 0 15.165a2.527 2.527 0 0 1 2.522-2.52h2.52v2.52zM6.313 15.165a2.527 2.527 0 0 1 2.521-2.52 2.527 2.527 0 0 1 2.521 2.52v6.313A2.528 2.528 0 0 1 8.834 24a2.528 2.528 0 0 1-2.521-2.522v-6.313zM8.834 5.042a2.528 2.528 0 0 1 2.521-2.52A2.528 2.528 0 0 1 13.876 5.042a2.527 2.527 0 0 1-2.521 2.52h-2.521v-2.52zM8.834 6.313a2.527 2.527 0 0 1 2.521 2.521 2.527 2.527 0 0 1-2.521 2.521H2.522A2.528 2.528 0 0 1 0 8.834a2.528 2.528 0 0 1 2.522-2.521h6.312zM18.956 8.834a2.528 2.528 0 0 1 2.522-2.521A2.528 2.528 0 0 1 24 8.834a2.527 2.527 0 0 1-2.522 2.521h-2.522V8.834zM17.688 8.834a2.527 2.527 0 0 1-2.523 2.521 2.527 2.527 0 0 1-2.52-2.521V2.522A2.528 2.528 0 0 1 15.165 0a2.528 2.528 0 0 1 2.523 2.522v6.312zM15.165 18.956a2.528 2.528 0 0 1-2.523 2.522A2.528 2.528 0 0 1 10.12 18.956a2.527 2.527 0 0 1 2.522-2.521h2.523v2.521zM15.165 17.688a2.527 2.527 0 0 1-2.523-2.523 2.526 2.526 0 0 1 2.523-2.52h6.312A2.527 2.527 0 0 1 24 15.165a2.528 2.528 0 0 1-2.522 2.523h-6.313z"/></svg>
-                            Slack
-                        </a>
-                    </div>
-                </div>
-                
-                <div class="community-layout">
-                    <div class="events-panel">
-                        <h3>Próximos Eventos</h3>
-                        <ul class="events-list">
-                            <li class="event-item">
-                                <div class="event-date">
-                                    <span class="day">15</span>
-                                    <span class="month">Oct</span>
-                                </div>
-                                <div class="event-info">
-                                    <h4>Webinar: IA en Ciberseguridad</h4>
-                                    <span class="event-type">Online</span>
-                                </div>
-                            </li>
-                            <li class="event-item">
-                                <div class="event-date">
-                                    <span class="day">02</span>
-                                    <span class="month">Nov</span>
-                                </div>
-                                <div class="event-info">
-                                    <h4>Taller: Análisis de Malware</h4>
-                                    <span class="event-type">Laboratorio Virtual</span>
-                                </div>
-                            </li>
-                            <li class="event-item">
-                                <div class="event-date">
-                                    <span class="day">20</span>
-                                    <span class="month">Nov</span>
-                                </div>
-                                <div class="event-info">
-                                    <h4>Foro Anual de Seguridad Gubernamental</h4>
-                                    <span class="event-type">Híbrido</span>
-                                </div>
-                            </li>
-                        </ul>
-                        <div style="margin-top: 1.5rem;">
-                            <a href="#" class="link-arrow">Ver todos los eventos y foros <span>→</span></a>
-                        </div>
-                    </div>
-
-                    <div class="volunteer-panel glass-panel">
-                        <h3>Formulario de Voluntariado</h3>
-                        <p style="margin-bottom: 1.5rem; color: var(--text-muted);">Postula para prácticas profesionales o participa en nuestros programas de concientización ciudadana.</p>
-                        <form id="volunteer-form" class="form-standard" novalidate>
-                            <div class="form-group">
-                                <label for="v-name">Nombre Completo <span aria-hidden="true">*</span></label>
-                                <input type="text" id="v-name" name="name" required aria-required="true">
-                                <span class="error-message" id="v-name-error">Este campo es requerido.</span>
-                            </div>
-                            <div class="form-group">
-                                <label for="v-email">Correo Electrónico Institucional/Personal <span aria-hidden="true">*</span></label>
-                                <input type="email" id="v-email" name="email" required aria-required="true">
-                                <span class="error-message" id="v-email-error">Ingrese un correo válido.</span>
-                            </div>
-                            <div class="form-group">
-                                <label for="v-area">Área de Interés</label>
-                                <select id="v-area" name="area">
-                                    <option value="soc">Asistencia SOC</option>
-                                    <option value="dev">Desarrollo de Laboratorios</option>
-                                    <option value="research">Investigación</option>
-                                    <option value="comm">Comunidad y Redes</option>
-                                </select>
-                            </div>
-                            <button type="submit" class="btn btn-primary w-100">Enviar Solicitud</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Blog y Noticias -->
-        <section id="blog" class="section bg-light" aria-labelledby="blog-title">
-            <div class="container">
-                <div class="section-header">
-                    <h2 id="blog-title">Blog y Noticias</h2>
-                    <p class="section-lead">Mantente actualizado con artículos, guías y tendencias del mundo de la ciberseguridad.</p>
-                </div>
-                
-                <div class="blog-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
-                    <!-- Post 1 -->
-                    <article class="blog-card glass-panel" style="padding: 1.5rem; text-align: left; display: flex; flex-direction: column;">
-                        <div style="margin-bottom: 1rem;">
-                            <span class="badge level-advanced" style="font-size: 0.75rem; padding: 0.2rem 0.5rem;">Tendencias</span>
-                            <span class="badge level-advanced" style="font-size: 0.75rem; padding: 0.2rem 0.5rem; margin-left: 0.5rem;">IA</span>
-                        </div>
-                        <h3 style="font-size: 1.25rem; margin-top: 0; line-height: 1.3;">Tendencias en Ciberseguridad para 2024</h3>
-                        <div style="font-size: 0.85rem; color: var(--color-text-main); margin-bottom: 1rem; display: flex; align-items: center; justify-content: space-between;">
-                            <span>Por <strong style="color: var(--color-text-dark);">Ana Martínez</strong></span>
-                            <span>2024-06-01</span>
-                        </div>
-                        <p style="color: var(--color-text-main); font-size: 0.95rem; margin-bottom: 1.5rem; flex-grow: 1;">Descubre las últimas tendencias en ciberseguridad que marcarán el rumbo este año, desde inteligencia artificial hasta protección en la nube.</p>
-                        <a href="https://0xvanguard.github.io/blog/tendencias-2024" class="btn btn-outline w-100" style="text-align: center;">Leer artículo completo</a>
-                    </article>
-                    <!-- Post 2 -->
-                    <article class="blog-card glass-panel" style="padding: 1.5rem; text-align: left; display: flex; flex-direction: column;">
-                        <div style="margin-bottom: 1rem;">
-                            <span class="badge level-intermediate" style="font-size: 0.75rem; padding: 0.2rem 0.5rem;">Blue Team</span>
-                            <span class="badge level-intermediate" style="font-size: 0.75rem; padding: 0.2rem 0.5rem; margin-left: 0.5rem;">Defensa</span>
-                        </div>
-                        <h3 style="font-size: 1.25rem; margin-top: 0; line-height: 1.3;">Cómo Prepararte para una Carrera en Blue Team</h3>
-                        <div style="font-size: 0.85rem; color: var(--color-text-main); margin-bottom: 1rem; display: flex; align-items: center; justify-content: space-between;">
-                            <span>Por <strong style="color: var(--color-text-dark);">Carlos López</strong></span>
-                            <span>2024-05-15</span>
-                        </div>
-                        <p style="color: var(--color-text-main); font-size: 0.95rem; margin-bottom: 1.5rem; flex-grow: 1;">Guía práctica para fortalecer tus habilidades y aprovechar al máximo los recursos de defensa y monitoreo de incidentes.</p>
-                        <a href="https://0xvanguard.github.io/blog/preparacion-blue-team" class="btn btn-outline w-100" style="text-align: center;">Leer artículo completo</a>
-                    </article>
-                    <!-- Post 3 -->
-                    <article class="blog-card glass-panel" style="padding: 1.5rem; text-align: left; display: flex; flex-direction: column;">
-                        <div style="margin-bottom: 1rem;">
-                            <span class="badge level-basic" style="font-size: 0.75rem; padding: 0.2rem 0.5rem;">Automatización</span>
-                            <span class="badge level-basic" style="font-size: 0.75rem; padding: 0.2rem 0.5rem; margin-left: 0.5rem;">Eficiencia</span>
-                        </div>
-                        <h3 style="font-size: 1.25rem; margin-top: 0; line-height: 1.3;">Beneficios de la Automatización en Ciberseguridad</h3>
-                        <div style="font-size: 0.85rem; color: var(--color-text-main); margin-bottom: 1rem; display: flex; align-items: center; justify-content: space-between;">
-                            <span>Por <strong style="color: var(--color-text-dark);">Laura Gómez</strong></span>
-                            <span>2024-05-05</span>
-                        </div>
-                        <p style="color: var(--color-text-main); font-size: 0.95rem; margin-bottom: 1.5rem; flex-grow: 1;">Analizamos cómo la automatización puede ayudar a ahorrar tiempo y prevenir errores humanos en la gestión de seguridad.</p>
-                        <a href="https://0xvanguard.github.io/blog/automatizacion-beneficios" class="btn btn-outline w-100" style="text-align: center;">Leer artículo completo</a>
-                    </article>
-                </div>
-            </div>
-        </section>
-
-        <!-- Transparencia -->
-        <section id="transparencia" class="section" aria-labelledby="transparency-title">
-            <div class="container">
-                <div class="section-header">
-                    <h2 id="transparency-title">Transparencia y Participación</h2>
-                    <p class="section-lead">Comprometidos con el manejo ético y público de nuestros recursos y operaciones.</p>
-                </div>
-                
-                <div class="metrics-grid" style="margin-bottom: 3rem;">
-                    <div class="metric-card">
-                        <span class="metric-value">200</span>
-                        <span class="metric-label">Horas de Laboratorio</span>
-                        <span class="metric-target">Objetivo: 1000 en 1 año</span>
-                    </div>
-                    <div class="metric-card">
-                        <span class="metric-value">5</span>
-                        <span class="metric-label">Módulos Publicados</span>
-                        <span class="metric-target">Objetivo: 20 en 1 año</span>
-                    </div>
-                    <div class="metric-card">
-                        <span class="metric-value">450</span>
-                        <span class="metric-label">Estudiantes Activos</span>
-                        <span class="metric-target">Objetivo: 2000 en 1 año</span>
-                    </div>
-                </div>
-
-                <div class="transparency-layout">
-                    <div class="reports-panel">
-                        <h3>Informes Oficiales</h3>
-                        <div class="report-links">
-                            <a href="#" class="report-card">
-                                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-                                <span>Informe de Gestión 2025</span>
-                            </a>
-                            <a href="#" class="report-card">
-                                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
-                                <span>Resultados de Evaluaciones Académicas</span>
-                            </a>
-                            <a href="#" class="report-card">
-                                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-                                <span>Métricas de Inserción Laboral</span>
-                            </a>
-                        </div>
-                        <div class="legal-links" style="margin-top: 2rem;">
-                            <h4>Políticas Institucionales</h4>
-                            <ul>
-                                <li><a href="#">Políticas de Privacidad</a></li>
-                                <li><a href="#">Términos y Condiciones</a></li>
-                                <li><a href="#">Protección de Datos (GDPR/LPDP)</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    
-                    <div class="feedback-panel bg-light p-4 radius-lg">
-                        <h3>Canal de Atención Ciudadana</h3>
-                        <p>Utilice este canal para presentar quejas, reportar incidentes éticos o sugerir mejoras institucionales. El proceso es confidencial y seguro.</p>
-                        <a href="#contacto" class="btn btn-outline" style="margin-top: 1rem;">Ir al formulario de reporte</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Contacto -->
-        <section id="contacto" class="section bg-dark text-white" aria-labelledby="contact-title">
-            <div class="container">
-                <div class="contact-grid">
-                    <div class="contact-info">
-                        <h2 id="contact-title" style="color: #fff;">Contacto y Apoyo</h2>
-                        <p style="color: var(--gray-400); margin-bottom: 2rem;">Estamos a su disposición para resolver consultas sobre programas, procesos de admisión y participación comunitaria.</p>
-                        
-                        <address class="contact-details">
-                            <p>
-                                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                                Av. Tecnológica 123, Edificio Gubernamental, Ciudad Capital
-                            </p>
-                            <p>
-                                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                                +1 800 555 0199
-                            </p>
-                            <p>
-                                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                                <a href="mailto:contacto@plataformaciber.org" style="color: inherit; text-decoration: none;">contacto@plataformaciber.org</a>
-                            </p>
-                            <p>
-                                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                                Lunes a Viernes, 08:00 - 17:00 Hrs
-                            </p>
-                        </address>
-                        
-                        <div class="social-links" style="margin-top: 2rem;">
-                            <a href="#" aria-label="Síguenos en LinkedIn">LinkedIn</a>
-                            <a href="#" aria-label="Síguenos en Twitter / X">Twitter</a>
-                            <a href="#" aria-label="Visita nuestro GitHub">GitHub</a>
-                        </div>
-                    </div>
-
-                    <div class="contact-form-container glass-panel-dark">
-                        <form id="contact-form" class="form-standard form-dark" novalidate>
-                            <div class="form-group">
-                                <label for="c-name">Nombre <span aria-hidden="true">*</span></label>
-                                <input type="text" id="c-name" name="name" required aria-required="true">
-                                <span class="error-message" id="c-name-error">Requerido.</span>
-                            </div>
-                            <div class="form-group">
-                                <label for="c-email">Correo Electrónico <span aria-hidden="true">*</span></label>
-                                <input type="email" id="c-email" name="email" required aria-required="true">
-                                <span class="error-message" id="c-email-error">Ingrese un correo válido.</span>
-                            </div>
-                            <div class="form-group">
-                                <label for="c-subject">Asunto</label>
-                                <select id="c-subject" name="subject">
-                                    <option value="general">Consulta General</option>
-                                    <option value="programs">Información de Programas</option>
-                                    <option value="press">Prensa y Comunicación</option>
-                                    <option value="report">Reporte / Queja</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="c-message">Mensaje <span aria-hidden="true">*</span></label>
-                                <textarea id="c-message" name="message" rows="4" required aria-required="true"></textarea>
-                                <span class="error-message" id="c-message-error">Requerido.</span>
-                            </div>
-                            <div class="form-group checkbox-group">
-                                <input type="checkbox" id="c-privacy" name="privacy" required aria-required="true">
-                                <label for="c-privacy" style="font-weight: 400; font-size: 0.875rem;">Acepto las políticas de privacidad y protección de datos. <span aria-hidden="true">*</span></label>
-                                <span class="error-message" id="c-privacy-error" style="display:block;">Debe aceptar las políticas.</span>
-                            </div>
-                            <button type="submit" class="btn btn-primary w-100">Enviar Mensaje</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- FAQ -->
-        <section id="faq" class="section bg-light" aria-labelledby="faq-title">
-            <div class="container">
-                <div class="section-header">
-                    <h2 id="faq-title">Preguntas Frecuentes</h2>
-                    <p class="section-lead">Resuelve tus dudas rápidamente sobre nuestra modalidad, requisitos y certificación.</p>
-                </div>
-                
-                <div class="faq-container" style="max-width: 800px; margin: 0 auto;">
-                    <details class="faq-item glass-panel" style="margin-bottom: 1rem; padding: 1.5rem; border-radius: var(--radius-md); background: white;">
-                        <summary style="font-size: 1.15rem; font-weight: 600; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; color: var(--color-primary-dark);">
-                            ¿Tienen algún costo los programas o el acceso a los laboratorios?
-                            <svg class="faq-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; transition: transform 0.3s ease;"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                        </summary>
-                        <p style="margin-top: 1rem; margin-bottom: 0; color: var(--color-text-main); line-height: 1.6; font-size: 0.95rem;">Absolutamente ninguno. La Plataforma de Estudio de Ciberseguridad es una iniciativa comunitaria y pública. Todos los materiales, laboratorios, herramientas y foros son completamente gratuitos para todos los usuarios, con especial enfoque en estudiantes de Latinoamérica.</p>
-                    </details>
-                    
-                    <details class="faq-item glass-panel" style="margin-bottom: 1rem; padding: 1.5rem; border-radius: var(--radius-md); background: white;">
-                        <summary style="font-size: 1.15rem; font-weight: 600; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; color: var(--color-primary-dark);">
-                            ¿Entregan certificaciones al finalizar los módulos?
-                            <svg class="faq-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; transition: transform 0.3s ease;"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                        </summary>
-                        <p style="margin-top: 1rem; margin-bottom: 0; color: var(--color-text-main); line-height: 1.6; font-size: 0.95rem;">Al ser una plataforma abierta, nuestro enfoque principal está en la generación de <strong>portafolio público y demostrable</strong>. No somos una entidad acreditadora formal. Sin embargo, al completar los laboratorios (CTFs), obtendrás insignias digitales (badges) públicas verificables por empleadores, que demuestran tus habilidades prácticas, lo cual es mucho más valioso en la industria que un certificado teórico.</p>
-                    </details>
-                    
-                    <details class="faq-item glass-panel" style="margin-bottom: 1rem; padding: 1.5rem; border-radius: var(--radius-md); background: white;">
-                        <summary style="font-size: 1.15rem; font-weight: 600; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; color: var(--color-primary-dark);">
-                            ¿Qué nivel de conocimientos previos necesito para comenzar?
-                            <svg class="faq-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; transition: transform 0.3s ease;"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                        </summary>
-                        <p style="margin-top: 1rem; margin-bottom: 0; color: var(--color-text-main); line-height: 1.6; font-size: 0.95rem;">Depende del programa. Tenemos módulos introductorios de "Fundamentos de Redes y Sistemas Operativos" donde puedes empezar desde cero. Para programas de Red Team o Blue Team, recomendamos conocimientos básicos en redes TCP/IP y comandos de Linux. Todo nuestro material está diseñado para escalar desde lo básico hasta nivel avanzado.</p>
-                    </details>
-                    
-                    <details class="faq-item glass-panel" style="margin-bottom: 1rem; padding: 1.5rem; border-radius: var(--radius-md); background: white;">
-                        <summary style="font-size: 1.15rem; font-weight: 600; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; color: var(--color-primary-dark);">
-                            ¿Cómo puedo postular al voluntariado o al Consejo Asesor?
-                            <svg class="faq-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; transition: transform 0.3s ease;"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                        </summary>
-                        <p style="margin-top: 1rem; margin-bottom: 0; color: var(--color-text-main); line-height: 1.6; font-size: 0.95rem;">Puedes utilizar el formulario de voluntariado ubicado en la sección de Comunidad, indicando tu área de interés. Si deseas participar como docente o en el Consejo Asesor, también puedes escribirnos directamente a nuestros correos de contacto institucionales al pie de la página, adjuntando tu perfil de LinkedIn y experiencia.</p>
-                    </details>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- Footer -->
-    <footer class="site-footer" style="background: var(--color-bg-dark); color: white; padding: 4rem 0 2rem;">
-        <div class="container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 3rem; margin-bottom: 3rem;">
-            <!-- Brand -->
-            <div>
-                <div class="footer-brand" style="margin-bottom: 1.5rem; justify-content: flex-start; gap: 0.75rem;">
-                    <svg class="logo-icon-small" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color: var(--color-primary-light);"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                    <span style="font-size: 1.25rem; font-weight: 700;">U.A.C.</span>
-                </div>
-                <p style="color: #9ca3af; font-size: 0.95rem; line-height: 1.6; margin-bottom: 1.5rem;">Educación libre, accesible y actualizada en ciberseguridad para hispanohablantes.</p>
-                <div style="display: flex; gap: 1.5rem;">
-                    <!-- Redes Sociales -->
-                    <a href="#" style="color: #9ca3af; transition: color 0.3s ease;" aria-label="LinkedIn" onmouseover="this.style.color='var(--color-primary-light)'" onmouseout="this.style.color='#9ca3af'">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                    </a>
-                    <a href="#" style="color: #9ca3af; transition: color 0.3s ease;" aria-label="GitHub" onmouseover="this.style.color='var(--color-primary-light)'" onmouseout="this.style.color='#9ca3af'">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Enlaces Rápidos -->
-            <div>
-                <h4 style="color: white; margin-top: 0; margin-bottom: 1.5rem; font-size: 1.1rem;">Navegación</h4>
-                <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.8rem;">
-                    <li><a href="#programas" style="color: #9ca3af; text-decoration: none; transition: color 0.3s ease;" onmouseover="this.style.color='white'" onmouseout="this.style.color='#9ca3af'">Programas y Módulos</a></li>
-                    <li><a href="programas-materiales.html" style="color: #9ca3af; text-decoration: none; transition: color 0.3s ease;" onmouseover="this.style.color='white'" onmouseout="this.style.color='#9ca3af'">Material Didáctico</a></li>
-                    <li><a href="#blog" style="color: #9ca3af; text-decoration: none; transition: color 0.3s ease;" onmouseover="this.style.color='white'" onmouseout="this.style.color='#9ca3af'">Blog y Noticias</a></li>
-                    <li><a href="#faq" style="color: #9ca3af; text-decoration: none; transition: color 0.3s ease;" onmouseover="this.style.color='white'" onmouseout="this.style.color='#9ca3af'">Preguntas Frecuentes</a></li>
-                </ul>
-            </div>
-
-            <!-- Newsletter -->
-            <div style="grid-column: span auto;">
-                <h4 style="color: white; margin-top: 0; margin-bottom: 1.5rem; font-size: 1.1rem;">Suscríbete a nuestro Newsletter</h4>
-                <p style="color: #9ca3af; font-size: 0.95rem; margin-bottom: 1rem;">Recibe notificaciones sobre nuevos cursos, eventos y tendencias en ciberseguridad.</p>
-                <form class="newsletter-form" style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-                    <input type="email" placeholder="Tu correo electrónico" required aria-label="Correo para newsletter" style="flex: 1 1 200px; padding: 0.75rem 1rem; border-radius: var(--radius-md); border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); color: white;">
-                    <button type="submit" class="btn btn-primary" style="padding: 0.75rem 1.5rem; white-space: nowrap;">Suscribirse</button>
-                </form>
-            </div>
-        </div>
-
-        <div class="container" style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 2rem; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1rem;">
-            <p class="copyright" style="margin: 0; color: #9ca3af; font-size: 0.9rem;">&copy; <span id="current-year"></span> Plataforma de Estudio de Ciberseguridad. Proyecto público y gratuito.</p>
-            <div class="footer-links" style="display: flex; gap: 1.5rem; flex-wrap: wrap;">
-                <a href="#" style="color: #9ca3af; text-decoration: none; font-size: 0.9rem; transition: color 0.3s ease;" onmouseover="this.style.color='white'" onmouseout="this.style.color='#9ca3af'">Aviso de Privacidad</a>
-                <a href="#" style="color: #9ca3af; text-decoration: none; font-size: 0.9rem; transition: color 0.3s ease;" onmouseover="this.style.color='white'" onmouseout="this.style.color='#9ca3af'">Términos de Uso</a>
-                <a href="#" style="color: #9ca3af; text-decoration: none; font-size: 0.9rem; transition: color 0.3s ease;" onmouseover="this.style.color='white'" onmouseout="this.style.color='#9ca3af'">Accesibilidad (WCAG)</a>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Security & Performance notice just simulated -->
-    <div class="ssl-badge" aria-label="Sitio web seguro con certificado SSL 256-bit" title="Conexión Segura SSL">
-        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+        
+        <footer>
+            <p>🛡️ CyberDefense Pro Network © 2026</p>
+            <p>Plataforma de formación en ciberseguridad</p>
+        </footer>
     </div>
-
-    <script src="script.js" defer></script>
+    
+    <script>
+        function showModule(module) {
+            const modules = {
+                'red-team': {
+                    title: 'Red Team (Ofensiva)',
+                    content: `
+                        <h3>Módulos Incluidos:</h3>
+                        <ul>
+                            <li>Reconocimiento y OSINT</li>
+                            <li>Escaneo y Enumeración</li>
+                            <li>Explotación de Vulnerabilidades</li>
+                            <li>Post-Explotación</li>
+                            <li>Movimiento Lateral</li>
+                            <li>Exfiltración de Datos</li>
+                        </ul>
+                        <h3>Herramientas Principales:</h3>
+                        <p>Nmap, Burp Suite, Metasploit, Cobalt Strike</p>
+                    `
+                },
+                'blue-team': {
+                    title: 'Blue Team (Defensiva)',
+                    content: `
+                        <h3>Módulos Incluidos:</h3>
+                        <ul>
+                            <li>Fundamentos SOC</li>
+                            <li>Análisis de Logs</li>
+                            <li>SIEM (Wazuh/ELK)</li>
+                            <li>Monitoreo de Seguridad</li>
+                            <li>Respuesta a Incidentes</li>
+                            <li>Threat Hunting</li>
+                        </ul>
+                        <h3>Herramientas Principales:</h3>
+                        <p>Wazuh, ELK Stack, OSSEC, Splunk</p>
+                    `
+                },
+                'cloud': {
+                    title: 'Cloud Security',
+                    content: `
+                        <h3>Módulos Incluidos:</h3>
+                        <ul>
+                            <li>AWS Security</li>
+                            <li>Azure Security</li>
+                            <li>GCP Security</li>
+                            <li>Container Security</li>
+                            <li>Kubernetes Security</li>
+                        </ul>
+                        <h3>Herramientas Principales:</h3>
+                        <p>Prowler, ScoutSuite, Checkov, Trivy</p>
+                    `
+                },
+                'malware': {
+                    title: 'Malware Analysis',
+                    content: `
+                        <h3>Módulos Incluidos:</h3>
+                        <ul>
+                            <li>Tipos de Malware</li>
+                            <li>Análisis Estático</li>
+                            <li>Análisis Dinámico</li>
+                            <li>Reverse Engineering</li>
+                            <li>Reglas YARA</li>
+                        </ul>
+                        <h3>Herramientas Principales:</h3>
+                        <p>YARA, PE-bear, Floss, Cuckoo Sandbox</p>
+                    `
+                },
+                'forensics': {
+                    title: 'Digital Forensics',
+                    content: `
+                        <h3>Módulos Incluidos:</h3>
+                        <ul>
+                            <li>Forense de Disco</li>
+                            <li>Forense de Memoria</li>
+                            <li>Forense de Red</li>
+                            <li>Análisis de Evidencia</li>
+                            <li>Reportes Forenses</li>
+                        </ul>
+                        <h3>Herramientas Principales:</h3>
+                        <p>Autopsy, Volatility, FTK, dd</p>
+                    `
+                },
+                'automation': {
+                    title: 'Automatización',
+                    content: `
+                        <h3>Módulos Incluidos:</h3>
+                        <ul>
+                            <li>Python para Seguridad</li>
+                            <li>Bash Scripting</li>
+                            <li>CI/CD Security</li>
+                            <li>Automatización de Tareas</li>
+                        </ul>
+                        <h3>Herramientas Principales:</h3>
+                        <p>Python, Bash, GitHub Actions, Ansible</p>
+                    `
+                }
+            };
+            
+            const mod = modules[module];
+            if (mod) {
+                alert(`${mod.title}\n\n${mod.content.replace(/<[^>]*>/g, '')}`);
+            }
+        }
+    </script>
 </body>
 </html>
