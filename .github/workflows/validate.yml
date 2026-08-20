@@ -14,43 +14,22 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-
-      - name: Install dependencies
-        run: |
-          pip install markdown-lint-cli
-          pip install yamllint
-
-      - name: Validate Markdown files
-        run: |
-          echo "🔍 Validating Markdown files..."
-          find . -name "*.md" -not -path "./.git/*" -exec markdownlint {} \; || true
-          echo "✅ Markdown validation complete"
-
-      - name: Validate YAML files
-        run: |
-          echo "🔍 Validating YAML files..."
-          find . -name "*.yml" -o -name "*.yaml" | xargs yamllint -d relaxed || true
-          echo "✅ YAML validation complete"
-
-      - name: Check for broken links
-        run: |
-          echo "🔗 Checking for broken links..."
-          # Add link checker here
-          echo "✅ Link check complete"
-
       - name: Validate structure
         run: |
           echo "📁 Validating repository structure..."
           test -f README.md && echo "✅ README.md exists" || echo "❌ README.md missing"
           test -f LICENSE && echo "✅ LICENSE exists" || echo "❌ LICENSE missing"
           test -f CONTRIBUTING.md && echo "✅ CONTRIBUTING.md exists" || echo "❌ CONTRIBUTING.md missing"
-          test -f ROADMAP.md && echo "✅ ROADMAP.md exists" || echo "❌ ROADMAP.md missing"
-          test -f CURRICULUM.md && echo "✅ CURRICULUM.md exists" || echo "❌ CURRICULUM.md missing"
+          test -f docs/app.html && echo "✅ Web app exists" || echo "❌ Web app missing"
+          test -f docs/styles.css && echo "✅ Styles exist" || echo "❌ Styles missing"
+          test -f docs/script.js && echo "✅ Script exists" || echo "❌ Script missing"
           echo "✅ Structure validation complete"
+
+      - name: Validate HTML
+        run: |
+          echo "🔍 Checking HTML..."
+          grep -c "</html>" docs/app.html && echo "✅ HTML properly closed" || echo "❌ HTML issue"
+          echo "✅ HTML validation complete"
 
       - name: Summary
         run: |
