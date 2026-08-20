@@ -1,0 +1,28 @@
+{
+  "name": "CyberDefense Pro Network",
+  "short_name": "CDPN",
+  "description": "Plataforma educativa de ciberseguridad en español",
+  "start_url": "/CyberDefense-Pro-Network/",
+  "scope": "/CyberDefense-Pro-Network/",
+  "display": "standalone",
+  "background_color": "#0a0e1a",
+  "theme_color": "#0a0e1a",
+  "lang": "es",
+  "icons": [
+    {
+      "src": "assets/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+
+# Páginas y recursos que no should indexar
+Disallow: /app.html
+Disallow: /404.html
+
+# Sitemap
+Sitemap: https://0xvanguard.github.io/CyberDefense-Pro-Network/sitemap.xml
+
+# Hosts reference (botones de host explícitos)
+# Host: 0xvanguard.github.io

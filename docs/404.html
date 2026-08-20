@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="404 — Página no encontrada en CyberDefense Pro Network.">
+    <meta name="theme-color" content="#0a0e1a">
+    <meta name="robots" content="noindex, follow">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="canonical" href="https://0xvanguard.github.io/CyberDefense-Pro-Network/404.html">
+    <title>404 - Página no encontrada | CDPN</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/global.css">
+    <link rel="stylesheet" href="assets/css/subpages.css">
+    <link rel="stylesheet" href="assets/css/a11y.css">
+    <style>
+        .error-shell {
+            min-height: calc(100vh - 200px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem 1.5rem;
+        }
+        .error-card {
+            max-width: 720px;
+            width: 100%;
+            background: rgba(10, 14, 26, 0.85);
+            border: 1px solid rgba(0, 212, 255, 0.25);
+            border-radius: 16px;
+            padding: 3rem 2rem;
+            text-align: center;
+            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.6);
+        }
+        .error-code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: clamp(5rem, 14vw, 9rem);
+            font-weight: 700;
+            line-height: 1;
+            margin: 0 0 1rem;
+            background: linear-gradient(135deg, #00d4ff, #0066ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .error-terminal {
+            background: #050810;
+            border: 1px solid rgba(0, 212, 255, 0.15);
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+            text-align: left;
+            margin: 2rem 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            color: #a0aec0;
+        }
+        .error-terminal .prompt { color: #00d4ff; }
+        .error-terminal .err { color: #e74c3c; }
+        .error-terminal .ok { color: #00ff88; }
+        .error-actions {
+            display: flex;
+            gap: 0.75rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+        .error-search {
+            margin: 2rem 0 0.5rem;
+            display: flex;
+            gap: 0.5rem;
+            max-width: 420px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .error-search input {
+            flex: 1;
+            padding: 0.65rem 0.9rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 8px;
+            color: #fff;
+            font-family: inherit;
+        }
+        .error-search input:focus { outline: 3px solid #00d4ff; outline-offset: 2px; }
+        .error-search button {
+            padding: 0.65rem 1rem;
+            background: #00d4ff;
+            color: #0a0e1a;
+            border: 0;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .error-search button:focus-visible {
+            outline: 3px solid #ffffff;
+            outline-offset: 2px;
+        }
+        .error-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 0.5rem;
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+        .error-links a { color: #00d4ff; }
+    </style>
+</head>
+<body>
+
+    <a href="#main" class="skip-link">Saltar al contenido principal</a>
+
+    <nav class="navbar" role="navigation" aria-label="Navegación principal">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo" aria-label="CDPN - Inicio">
+                <i class="fas fa-shield-halved" aria-hidden="true"></i> CDPN
+            </a>
+            <ul class="nav-menu" role="list">
+                <li><a href="index.html"><i class="fas fa-home" aria-hidden="true"></i> Inicio</a></li>
+                <li><a href="retos.html"><i class="fas fa-trophy" aria-hidden="true"></i> Retos</a></li>
+                <li><a href="herramientas.html"><i class="fas fa-tools" aria-hidden="true"></i> Herramientas</a></li>
+                <li><a href="labs.html"><i class="fas fa-flask" aria-hidden="true"></i> Labs</a></li>
+                <li><a href="recursos.html"><i class="fas fa-book" aria-hidden="true"></i> Recursos</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main id="main">
+        <div class="error-shell">
+            <div class="error-card">
+                <p class="error-code" aria-hidden="true">404</p>
+                <h1 style="margin: 0 0 0.5rem; color: #fff;">Página no encontrada</h1>
+                <p style="color: #94a3b8; margin: 0;">La URL solicitada no existe o fue movida. Verifica la dirección o regresa al inicio.</p>
+
+                <div class="error-terminal" role="img" aria-label="Terminal mostrando que la ruta no existe">
+                    <div><span class="prompt">$</span> curl -I <span style="color:#fff">/&lt;tu-ruta&gt;</span></div>
+                    <div><span class="err">HTTP/1.1 404 Not Found</span></div>
+                    <div><span class="prompt">$</span> <span class="ok">Sugerencia:</span> prueba la búsqueda o los enlaces rápidos</div>
+                </div>
+
+                <form class="error-search" role="search" action="recursos.html" method="get" onsubmit="return cdpn404Search(this)">
+                    <label for="q" class="sr-only">Buscar en CDPN</label>
+                    <input id="q" name="q" type="search" placeholder="Buscar módulos, herramientas, labs..." autocomplete="off">
+                    <button type="submit"><i class="fas fa-search" aria-hidden="true"></i> Buscar</button>
+                </form>
+
+                <div class="error-actions">
+                    <a href="index.html" class="btn btn-primary"><i class="fas fa-home" aria-hidden="true"></i> Volver al inicio</a>
+                    <a href="recursos.html" class="btn btn-outline"><i class="fas fa-book" aria-hidden="true"></i> Ver recursos</a>
+                </div>
+
+                <nav class="error-links" aria-label="Atajos frecuentes">
+                    <a href="retos.html">Retos</a>
+                    <a href="herramientas.html">Herramientas</a>
+                    <a href="labs.html">Labs</a>
+                    <a href="recursos.html">Recursos</a>
+                    <a href="programas-materiales.html">Programas</a>
+                </nav>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-bottom">
+                <p>&copy; 2026 CyberDefense Pro Network. <a href="index.html" style="color:#00d4ff">Regresar</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Búsqueda simple: redirige a recursos.html?q=... si hay query
+        function cdpn404Search(form) {
+            var q = (form.q.value || '').trim();
+            if (!q) return false;
+            // Construye URL con query
+            window.location.href = 'recursos.html?q=' + encodeURIComponent(q);
+            return false;
+        }
+    </script>
+</body>
+</html>
