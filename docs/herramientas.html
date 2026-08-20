@@ -739,6 +739,279 @@ yara -r rules/ malware_sample.exe</code></pre>
             </div>
         </section>
 
+    
+
+        <!-- ==================== FLUJO DE TRABAJO COMPLETO ==================== -->
+        <section class="tool-category-section">
+            <div class="category-header">
+                <div class="category-icon"><i class="fas fa-project-diagram"></i></div>
+                <div>
+                    <h2>Flujo de Trabajo: Pentest Completo</h2>
+                    <p>Cómo encadenar todas las herramientas en un pentest real, paso a paso.</p>
+                </div>
+            </div>
+
+            <div class="content-block">
+                <h3><i class="fas fa-route"></i> Flujo de 6 Fases</h3>
+                <div class="step-guide">
+                    <div class="guide-step"><span class="guide-num">1</span><div><strong>Reconocimiento Pasivo (OSINT):</strong> Sin tocar el target. <code>subfinder -d target.com -o subs.txt && theHarvester -d target.com -b google</code></div></div>
+                    <div class="guide-step"><span class="guide-num">2</span><div><strong>Escaneo Activo:</strong> Descubrir puertos/servicios. <code>nmap -sV -sC -p- -oA scan target.com</code></div></div>
+                    <div class="guide-step"><span class="guide-num">3</span><div><strong>Enumeración Web:</strong> Directorios y tecnología. <code>gobuster dir -u http://target.com -w /usr/share/wordlists/dirb/big.txt -x php,html,txt</code></div></div>
+                    <div class="guide-step"><span class="guide-num">4</span><div><strong>Análisis de Vulnerabilidades:</strong> Buscar flaws. <code>nmap --script=vuln target.com</code> + manual con Burp Suite</div></div>
+                    <div class="guide-step"><span class="guide-num">5</span><div><strong>Explotación:</strong> Explotar vulnerabilidades. <code>sqlmap -u "http://target.com/page?id=1" --dbs --batch</code> o Metasploit</div></div>
+                    <div class="guide-step"><span class="guide-num">6</span><div><strong>Post-Explotación:</strong> Escalar privilegios y documentar. Meterpreter → <code>getsystem</code> → <code>hashdump</code></div></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== GUÍA: NMAP PROFESIONAL ==================== -->
+        <section class="tool-category-section">
+            <div class="category-header">
+                <div class="category-icon"><i class="fas fa-network-wired"></i></div>
+                <div>
+                    <h2>Guía Profesional: Nmap</h2>
+                    <p>Domina el escáner de redes más poderoso del mundo con estos escenarios reales.</p>
+                </div>
+            </div>
+
+            <div class="content-block">
+                <h3><i class="fas fa-search"></i> Escaneo Básico → Avanzado</h3>
+                <div class="step-guide">
+                    <div class="guide-step"><span class="guide-num">1</span><div><strong>Descubrir hosts vivos:</strong> <code>nmap -sn 192.168.1.0/24</code> — Encuentra todos los dispositivos en tu red.</div></div>
+                    <div class="guide-step"><span class="guide-num">2</span><div><strong>Escaneo rápido:</strong> <code>nmap -T4 target.com</code> — Los 1000 puertos comunes.</div></div>
+                    <div class="guide-step"><span class="guide-num">3</span><div><strong>Todos los puertos:</strong> <code>nmap -p- -T4 target.com</code> — Los 65,535 puertos.</div></div>
+                    <div class="guide-step"><span class="guide-num">4</span><div><strong>Detectar versiones:</strong> <code>nmap -sV -sC target.com</code> — Versión exacta de cada servicio.</div></div>
+                    <div class="guide-step"><span class="guide-num">5</span><div><strong>Detectar SO:</strong> <code>nmap -O target.com</code> — Fingerprinting del sistema operativo.</div></div>
+                    <div class="guide-step"><span class="guide-num">6</span><div><strong>Scripts de vulnerabilidad:</strong> <code>nmap --script=vuln target.com</code> — Detección automática.</div></div>
+                </div>
+                <div class="code-block">
+                    <div class="code-header"><span class="code-lang">Escenarios Reales</span></div>
+                    <pre><code># ESCENARIO 1: Pentest web rápido
+nmap -sV -sC -p 80,443,8080,8443 target.com
+
+# ESCENARIO 2: Red interna completa
+nmap -sV -sC -O -p- --min-rate=5000 -oA full_internal 10.0.0.0/24
+
+# ESCENARIO 3: Stealth (SYN scan) — evita logs
+nmap -sS -T1 -Pn --randomize-hosts target.com
+
+# ESCENARIO 4: Buscar MySQL abierto a internet
+nmap -p 3306 --script mysql-info -iL targets.txt
+
+# ESCENARIO 5: Escaneo de vulnerabilidades específico
+nmap --script=smb-vuln-ms17-010,http-vuln-cve2021-44228 -p 445,80 target.com
+
+# ESCENARIO 6: Output para reporte
+nmap -sV -sC -oX report.xml -oN report.txt target.com</code></pre>
+                </div>
+            </div>
+
+            <div class="content-block">
+                <h3><i class="fas fa-chart-bar"></i> Tabla de Flags Esenciales</h3>
+                <div class="table-wrapper">
+                    <table class="comparison-table">
+                        <thead><tr><th>Flag</th><th>Función</th><th>Ejemplo</th></tr></thead>
+                        <tbody>
+                            <tr><td><code>-sV</code></td><td>Detectar versiones</td><td><code>nmap -sV target</code></td></tr>
+                            <tr><td><code>-sC</code></td><td>Ejecutar scripts default</td><td><code>nmap -sC target</code></td></tr>
+                            <tr><td><code>-p-</code></td><td>Todos los puertos (1-65535)</td><td><code>nmap -p- target</code></td></tr>
+                            <tr><td><code>-O</code></td><td>Detectar SO</td><td><code>nmap -O target</code></td></tr>
+                            <tr><td><code>-sS</code></td><td>SYN scan (stealth)</td><td><code>nmap -sS target</code></td></tr>
+                            <tr><td><code>-T4</code></td><td>Velocidad agresiva</td><td><code>nmap -T4 target</code></td></tr>
+                            <tr><td><code>--script=vuln</code></td><td>Scripts de vulnerabilidad</td><td><code>nmap --script=vuln target</code></td></tr>
+                            <tr><td><code>-oA</code></td><td>Output en 3 formatos</td><td><code>nmap -oA result target</code></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== GUÍA: BURP SUITE ==================== -->
+        <section class="tool-category-section">
+            <div class="category-header">
+                <div class="category-icon"><i class="fas fa-spider"></i></div>
+                <div>
+                    <h2>Guía Profesional: Burp Suite</h2>
+                    <p>El arsenal completo para testing de aplicaciones web.</p>
+                </div>
+            </div>
+
+            <div class="content-block">
+                <h3><i class="fas fa-cogs"></i> Setup y Flujo de Trabajo</h3>
+                <div class="step-guide">
+                    <div class="guide-step"><span class="guide-num">1</span><div><strong>Instalar:</strong> Descarga desde portswigger.net/burp/community. Es gratis la versión Community.</div></div>
+                    <div class="guide-step"><span class="guide-num">2</span><div><strong>Configurar proxy:</strong> En el navegador, configura proxy a <code>127.0.0.1:8080</code>. Instala el CA certificate de Burp para HTTPS.</div></div>
+                    <div class="guide-step"><span class="guide-num">3</span><div><strong>Interceptar requests:</strong> Proxy → Intercept → ON. Navega por la web objetivo y Burp captura cada request.</div></div>
+                    <div class="guide-step"><span class="guide-num">4</span><div><strong>Repeater:</strong> Envía requests modificadas manualmente. Cambia parámetros, headers, cookies. Observa las respuestas.</div></div>
+                    <div class="guide-step"><span class="guide-num">5</span><div><strong>Intruder:</strong> Automatiza fuzzing. Positions: marca los parámetros. Payloads: listas de inyección SQL, XSS, etc.</div></div>
+                    <div class="guide-step"><span class="guide-num">6</span><div><strong>Comparer:</strong> Compara respuestas para detectar diferencias (useful para blind SQLi).</div></div>
+                </div>
+                <div class="code-block">
+                    <div class="code-header"><span class="code-lang">Escenarios Reales con Burp</span></div>
+                    <pre><code># ESCENARIO 1: Testear un login por fuerza bruta
+# 1. Capturar request de login en Proxy
+# 2. Send to Intruder (Ctrl+I)
+# 3. Positions: marcar el campo password con §
+# 4. Payloads: load wordlist (rockyou.txt o ceclib)
+# 5. Start attack → ordenar por longitud de respuesta
+
+# ESCENARIO 2: Buscar SQL Injection manual
+# 1. En Repeater, enviar: GET /page?id=1' HTTP/1.1
+# 2. Si error de SQL → vulnerable
+# 3. Probar: id=1' OR '1'='1
+# 4. Probar: id=1' ORDER BY 10--
+# 5. Probar: id=1' UNION SELECT NULL,NULL,NULL--
+
+# ESCENARIO 3: XSS Stored
+# 1. En Repeater, enviar comment con: &lt;script&gt;alert(1)&lt;/script&gt;
+# 2. Verificar si se almacena sin sanitizar
+# 3. Probar bypass: &lt;img src=x onerror=alert(1)&gt;
+
+# ESCENARIO 4: IDOR
+# 1. Capturar request GET /api/user/123
+# 2. Cambiar a /api/user/124, /api/user/125
+# 3. Si ves datos de otro usuario → IDOR</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== GUÍA: SQLMAP ==================== -->
+        <section class="tool-category-section">
+            <div class="category-header">
+                <div class="category-icon"><i class="fas fa-code"></i></div>
+                <div>
+                    <h2>Guía Profesional: SQLMap</h2>
+                    <p>Automatiza la detección y explotación de inyecciones SQL como un profesional.</p>
+                </div>
+            </div>
+
+            <div class="content-block">
+                <h3><i class="fas fa-database"></i> Flujo de Explotación SQLi</h3>
+                <div class="step-guide">
+                    <div class="guide-step"><span class="guide-num">1</span><div><strong>Detección:</strong> <code>sqlmap -u "http://target.com/page?id=1"</code> — SQLMap detecta automáticamente el tipo de inyección.</div></div>
+                    <div class="guide-step"><span class="guide-num">2</span><div><strong>Bases de datos:</strong> <code>sqlmap -u "..." --dbs</code> — Lista todas las bases de datos del servidor.</div></div>
+                    <div class="guide-step"><span class="guide-num">3</span><div><strong>Tablas:</strong> <code>sqlmap -u "..." -D dbname --tables</code> — Lista tablas de una BD específica.</div></div>
+                    <div class="guide-step"><span class="guide-num">4</span><div><strong>Datos:</strong> <code>sqlmap -u "..." -D dbname -T users --dump</code> — Extrae todos los datos de una tabla.</div></div>
+                    <div class="guide-step"><span class="guide-num">5</span><div><strong>Shell:</strong> <code>sqlmap -u "..." --os-shell</code> — Si tiene permisos de escritura, obtienes una shell del servidor.</div></div>
+                </div>
+                <div class="code-block">
+                    <div class="code-header"><span class="code-lang">Escenarios Reales</span></div>
+                    <pre><code># ESCENARIO 1: URL con parámetro GET
+sqlmap -u "http://target.com/page?id=1" --dbs --batch
+
+# ESCENARIO 2: Login con POST
+sqlmap -u "http://target.com/login" --data="user=admin&pass=test" --dbs --batch
+
+# ESCENARIO 3: Cookie vulnerable
+sqlmap -u "http://target.com/dashboard" --cookie="session_id=*" --dbs --batch
+
+# ESCENARIO 4: Bypass WAF
+sqlmap -u "http://target.com/?id=1" --tamper=space2comment,randomcase --batch
+
+# ESCENARIO 5: SQLi con headers personalizados
+sqlmap -u "http://target.com/api" --headers="X-Forwarded-For: *" --dbs
+
+# ESCENARIO 6: Extraer hashes de contraseñas
+sqlmap -u "http://target.com/?id=1" -D users -T credentials --dump --batch</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== CHEAT SHEET: WIRESHARK ==================== -->
+        <section class="tool-category-section">
+            <div class="category-header">
+                <div class="category-icon"><i class="fas fa-eye"></i></div>
+                <div>
+                    <h2>Cheat Sheet: Wireshark</h2>
+                    <p>Filtros y comandos esenciales para análisis de tráfico de red.</p>
+                </div>
+            </div>
+
+            <div class="content-block">
+                <h3><i class="fas fa-filter"></i> Filtros Más Usados</h3>
+                <div class="concepts-grid">
+                    <div class="concept-card">
+                        <h4><i class="fas fa-globe"></i> Por IP</h4>
+                        <div class="code-block"><div class="code-header"><span class="code-lang">Display Filters</span></div>
+                        <pre><code>ip.addr == 192.168.1.100
+ip.src == 10.0.0.5
+ip.dst == 10.0.0.1
+!(ip.addr == 192.168.1.1)</code></pre></div>
+                    </div>
+                    <div class="concept-card">
+                        <h4><i class="fas fa-plug"></i> Por Puerto/Protocolo</h4>
+                        <div class="code-block"><div class="code-header"><span class="code-lang">Display Filters</span></div>
+                        <pre><code>tcp.port == 80
+tcp.port == 443
+udp.port == 53
+http || dns
+tls || ssl</code></pre></div>
+                    </div>
+                    <div class="concept-card">
+                        <h4><i class="fas fa-bug"></i> Para Seguridad</h4>
+                        <div class="code-block"><div class="code-header"><span class="code-lang">Display Filters</span></div>
+                        <pre><code># SQL Injection attempts
+http.request.uri contains "SELECT"
+http.request.uri contains "UNION"
+
+# XSS attempts
+http.request.uri contains "<script>"
+http.request.uri contains "alert("
+
+# Brute force
+tcp.flags.syn==1 && tcp.flags.ack==0</code></pre></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== CHEAT SHEET: LINUX ==================== -->
+        <section class="tool-category-section">
+            <div class="category-header">
+                <div class="category-icon"><i class="fab fa-linux"></i></div>
+                <div>
+                    <h2>Cheat Sheet: Linux para Seguridad</h2>
+                    <p>Comandos de Linux esenciales que todo profesional de seguridad debe dominar.</p>
+                </div>
+            </div>
+
+            <div class="content-block">
+                <h3><i class="fas fa-terminal"></i> Comandos Clave</h3>
+                <div class="concepts-grid">
+                    <div class="concept-card">
+                        <h4><i class="fas fa-folder"></i> Navegación</h4>
+                        <div class="code-block"><div class="code-header"><span class="code-lang">Terminal</span></div>
+                        <pre><code>pwd                    # Directorio actual
+ls -la                 # Listar todo (ocultos)
+cd /path               # Cambiar directorio
+find / -name "*.conf"  # Buscar archivos
+locate passwd          # Buscar con índice</code></pre></div>
+                    </div>
+                    <div class="concept-card">
+                        <h4><i class="fas fa-users"></i> Usuarios/Permisos</h4>
+                        <div class="code-block"><div class="code-header"><span class="code-lang">Terminal</span></div>
+                        <pre><code>whoami                 # Usuario actual
+id                     # UID, GID, grupos
+sudo -l                # Permisos sudo
+chmod 777 file         # Dar permisos
+chown user:grp file    # Cambiar dueño
+cat /etc/passwd        # Usuarios del sistema</code></pre></div>
+                    </div>
+                    <div class="concept-card">
+                        <h4><i class="fas fa-network-wired"></i> Red</h4>
+                        <div class="code-block"><div class="code-header"><span class="code-lang">Terminal</span></div>
+                        <pre><code>ip a                   # IPs de la máquina
+ip r                   # Tabla de rutas
+ss -tlnp               # Puertos abiertos
+curl -I http://target  # Headers HTTP
+dig target.com         # DNS lookup
+traceroute target      # Ruta de red</code></pre></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
     </main>
 
     <!-- FOOTER -->
