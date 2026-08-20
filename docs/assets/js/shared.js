@@ -81,37 +81,84 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // ===== Language Switcher =====
+    // ===== Language Switcher (a11y-enhanced) =====
     const langSwitcher = document.getElementById('langSwitcher');
     const langToggle = document.getElementById('langToggle');
     const langDropdown = document.getElementById('langDropdown');
     if (langSwitcher && langToggle && langDropdown) {
+        const setLangOpen = (open) => {
+            langSwitcher.classList.toggle('open', open);
+            langToggle.setAttribute('aria-expanded', String(open));
+            langDropdown.hidden = !open;
+            // Update aria-label to reflect current state
+            const currentLang = (typeof CDPN_i18n !== 'undefined' && CDPN_i18n.current) || 'es';
+            const langName = langToggle.querySelector('.lang-name');
+            const label = `Cambiar idioma. Idioma actual: ${langName ? langName.textContent.trim() : currentLang}`;
+            langToggle.setAttribute('aria-label', label);
+            if (open) {
+                // Focus the currently-active language option
+                const activeBtn = langDropdown.querySelector(`button[data-lang="${currentLang}"]`)
+                    || langDropdown.querySelector('button[data-lang]');
+                if (activeBtn) activeBtn.focus();
+            }
+        };
+
         // Toggle dropdown
         langToggle.addEventListener('click', (e) => {
             e.stopPropagation();
-            langSwitcher.classList.toggle('open');
+            setLangOpen(!langSwitcher.classList.contains('open'));
         });
+
         // Close on outside click
-        document.addEventListener('click', () => langSwitcher.classList.remove('open'));
+        document.addEventListener('click', (e) => {
+            if (!langSwitcher.contains(e.target)) setLangOpen(false);
+        });
+
+        // Close on Escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && langSwitcher.classList.contains('open')) {
+                setLangOpen(false);
+                langToggle.focus();
+            }
+        });
+
         // Handle language selection
         langDropdown.querySelectorAll('button[data-lang]').forEach(btn => {
             btn.addEventListener('click', () => {
                 const lang = btn.dataset.lang;
                 if (typeof CDPN_i18n !== 'undefined') {
                     CDPN_i18n.set(lang);
+                    announce(lang);
                 }
-                langSwitcher.classList.remove('open');
+                setLangOpen(false);
+                langToggle.focus();
             });
         });
+
         // Highlight current language
         function updateActiveLang() {
             const currentLang = typeof CDPN_i18n !== 'undefined' ? CDPN_i18n.current : 'es';
             langDropdown.querySelectorAll('button[data-lang]').forEach(btn => {
-                btn.classList.toggle('active-lang', btn.dataset.lang === currentLang);
+                const isActive = btn.dataset.lang === currentLang;
+                btn.classList.toggle('active-lang', isActive);
+                btn.setAttribute('aria-selected', String(isActive));
             });
         }
-        // Observe language changes
         setInterval(updateActiveLang, 500);
+    }
+
+    // ===== Live region for SR announcements =====
+    function announce(msg) {
+        let live = document.getElementById('cdpn-live');
+        if (!live) {
+            live = document.createElement('div');
+            live.id = 'cdpn-live';
+            live.setAttribute('aria-live', 'polite');
+            live.setAttribute('aria-atomic', 'true');
+            live.className = 'sr-only';
+            document.body.appendChild(live);
+        }
+        live.textContent = msg;
     }
 
     console.log('🛡️ CDPN shared.js loaded');

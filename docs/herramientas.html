@@ -3,18 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Herramientas - CDPN</title>
+    <title>Herramientas - CDPN | CyberDefense Pro Network</title>
+    <meta name="description" content="Herramientas profesionales de ciberseguridad: Nmap, Burp Suite, Wireshark, Metasploit, BloodHound y más. Guías de instalación y uso.">
+    <meta name="theme-color" content="#0a0e1a">
+    <meta name="color-scheme" content="dark light">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/apple-touch-icon.png">
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="canonical" content="https://0xvanguard.github.io/CyberDefense-Pro-Network/herramientas.html">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Herramientas - CDPN">
+    <meta property="og:description" content="Herramientas profesionales de ciberseguridad con guías, cheat sheets y casos de uso.">
+    <meta property="og:image" content="https://0xvanguard.github.io/CyberDefense-Pro-Network/assets/og/og-image.png">
+    <meta property="og:url" content="https://0xvanguard.github.io/CyberDefense-Pro-Network/herramientas.html">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Herramientas - CDPN">
+    <meta name="twitter:image" content="https://0xvanguard.github.io/CyberDefense-Pro-Network/assets/og/og-image.png">
+    <meta name="twitter:description" content="Herramientas profesionales de ciberseguridad con guías, cheat sheets y casos de uso.">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/global.css">
     <link rel="stylesheet" href="assets/css/module.css">
     <link rel="stylesheet" href="assets/css/subpages.css">
+    <link rel="stylesheet" href="assets/css/a11y.css">
 </head>
 <body>
+
+    <!-- Skip link -->
+    <a href="#main" class="skip-link">Saltar al contenido principal</a>
+
     <!-- NAVBAR -->
-    <nav class="navbar">
+    <nav class="navbar" role="navigation" aria-label="Navegación principal">
         <div class="nav-container">
-            <a href="index.html" class="nav-logo"><i class="fas fa-shield-halved"></i> CDPN</a>
+            <a href="index.html" class="nav-logo" aria-label="CDPN - Inicio"><i class="fas fa-shield-halved" aria-hidden="true"></i> CDPN</a>
             <ul class="nav-menu">
                 <li><a href="index.html"><i class="fas fa-home"></i> Inicio</a></li>
                 <li class="nav-dropdown">
@@ -29,17 +54,20 @@
                         <li><a href="modules/laboratorios/"><span class="dot lab"></span> Laboratorios</a></li>
                     </ul>
                 </li>
-                <li><a href="retos.html"><i class="fas fa-trophy"></i> Retos</a></li>
-                <li><a href="herramientas.html" class="active"><i class="fas fa-tools"></i> Herramientas</a></li>
-                <li><a href="labs.html"><i class="fas fa-flask"></i> Labs</a></li>
-                <li><a href="recursos.html"><i class="fas fa-book"></i> Recursos</a></li>
+                <li><a href="retos.html"><i class="fas fa-trophy" aria-hidden="true"></i> Retos</a></li>
+                <li><a href="herramientas.html" class="active" aria-current="page"><i class="fas fa-tools" aria-hidden="true"></i> Herramientas</a></li>
+                <li><a href="labs.html"><i class="fas fa-flask" aria-hidden="true"></i> Labs</a></li>
+                <li><a href="recursos.html"><i class="fas fa-book" aria-hidden="true"></i> Recursos</a></li>
             </ul>
             <div class="nav-actions">
                                 <div class="lang-switcher" id="langSwitcher">
-                    <button class="lang-toggle" id="langToggle">
+                    <button class="lang-toggle" id="langToggle"
+                            aria-haspopup="listbox"
+                            aria-expanded="false"
+                            aria-label="Cambiar idioma. Idioma actual: Español">
                         <span class="lang-flag">🇪🇸</span> <span class="lang-name">Español</span>
                     </button>
-                    <div class="lang-dropdown" id="langDropdown">
+                    <div class="lang-dropdown" id="langDropdown" role="listbox" aria-label="Seleccionar idioma" hidden>
                         <button data-lang="es"><span class="lang-flag">🇪🇸</span> Español</button>
                         <button data-lang="en"><span class="lang-flag">🇺🇸</span> English</button>
                         <button data-lang="zh"><span class="lang-flag">🇨🇳</span> 中文</button>
@@ -52,11 +80,13 @@
                         <button data-lang="de"><span class="lang-flag">🇩🇪</span> Deutsch</button>
                     </div>
                 </div>
-                <button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></button>
-                <a href="https://github.com/0xvanguard/CyberDefense-Pro-Network" class="nav-github" target="_blank"><i class="fab fa-github"></i></a>
+                <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema claro/oscuro"><i class="fas fa-moon" aria-hidden="true"></i></button>
+                <a href="https://github.com/0xvanguard/CyberDefense-Pro-Network" class="nav-github" target="_blank" rel="noopener noreferrer" aria-label="Repositorio en GitHub (abre en nueva pestaña)"><i class="fab fa-github" aria-hidden="true"></i></a>
             </div>
         </div>
     </nav>
+
+    <main id="main">
 
     <!-- PAGE HERO -->
     <section class="page-hero herramientas-hero">
@@ -1033,6 +1063,8 @@ traceroute target      # Ruta de red</code></pre></div>
     </main>
 
     <!-- FOOTER -->
+    </main>
+
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-grid">
@@ -1073,6 +1105,7 @@ traceroute target      # Ruta de red</code></pre></div>
     </footer>
 
     <script src="assets/js/i18n.js"></script>
+    <script src="assets/js/i18n-lang.js"></script>
     <script src="assets/js/shared.js"></script>
 </body>
 </html>
