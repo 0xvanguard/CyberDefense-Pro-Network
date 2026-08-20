@@ -81,5 +81,38 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // ===== Language Switcher =====
+    const langSwitcher = document.getElementById('langSwitcher');
+    const langToggle = document.getElementById('langToggle');
+    const langDropdown = document.getElementById('langDropdown');
+    if (langSwitcher && langToggle && langDropdown) {
+        // Toggle dropdown
+        langToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            langSwitcher.classList.toggle('open');
+        });
+        // Close on outside click
+        document.addEventListener('click', () => langSwitcher.classList.remove('open'));
+        // Handle language selection
+        langDropdown.querySelectorAll('button[data-lang]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const lang = btn.dataset.lang;
+                if (typeof CDPN_i18n !== 'undefined') {
+                    CDPN_i18n.set(lang);
+                }
+                langSwitcher.classList.remove('open');
+            });
+        });
+        // Highlight current language
+        function updateActiveLang() {
+            const currentLang = typeof CDPN_i18n !== 'undefined' ? CDPN_i18n.current : 'es';
+            langDropdown.querySelectorAll('button[data-lang]').forEach(btn => {
+                btn.classList.toggle('active-lang', btn.dataset.lang === currentLang);
+            });
+        }
+        // Observe language changes
+        setInterval(updateActiveLang, 500);
+    }
+
     console.log('🛡️ CDPN shared.js loaded');
 });
