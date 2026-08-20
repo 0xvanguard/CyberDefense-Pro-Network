@@ -1,82 +1,156 @@
 <!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>02 - Seguridad de la Información | CDPN</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../../assets/css/global.css">
-    <link rel="stylesheet" href="../../assets/css/module.css">
-</head>
-<body>
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="../../index.html" class="nav-logo"><i class="fas fa-shield-halved"></i> CDPN</a>
-            <ul class="nav-menu">
-                <li><a href="../../index.html"><i class="fas fa-home"></i> Inicio</a></li>
-                <li class="nav-dropdown">
-                    <a href="#"><i class="fas fa-layer-group"></i> Módulos <i class="fas fa-chevron-down"></i></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="../introduccion/"><span class="dot intro"></span> Introducción</a></li>
-                        <li><a href="../red-team/"><span class="dot red"></span> Ciberseguridad Ofensiva</a></li>
-                        <li><a href="../seguridad-informacion/" class="active"><span class="dot blue"></span> Seguridad Info.</a></li>
-                        <li><a href="../ai-agents/"><span class="dot ai"></span> AI Agents</a></li>
-                        <li><a href="../blue-team/"><span class="dot blue"></span> Blue Team</a></li>
-                        <li><a href="../purple-team/"><span class="dot purple"></span> Purple Team</a></li>
-                        <li><a href="../laboratorios/"><span class="dot lab"></span> Labs</a></li>
-                        <li><a href="../recursos/"><span class="dot resources"></span> Recursos</a></li>
-                    </ul>
-                </li>
-                <li><a href="../../retos.html"><i class="fas fa-trophy"></i> Retos</a></li>
-                <li><a href="../../herramientas.html"><i class="fas fa-tools"></i> Herramientas</a></li>
-                <li><a href="../../labs.html"><i class="fas fa-flask"></i> Labs</a></li>
-                <li><a href="../../recursos.html"><i class="fas fa-book"></i> Recursos</a></li>
-            </ul>
-            <div class="nav-actions">
-                <button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></button>
-                <a href="https://github.com/0xvanguard/CyberDefense-Pro-Network" class="nav-github" target="_blank"><i class="fab fa-github"></i></a>
-            </div>
-        </div>
-    </nav>
+<html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>02 - Seguridad Info | CDPN</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/css/global.css">
+<link rel="stylesheet" href="../../assets/css/module.css"></head><body><nav class="navbar"><div class="nav-container">
+<a href="../../index.html" class="nav-logo"><i class="fas fa-shield-halved"></i> CDPN</a>
+<ul class="nav-menu">
+<li><a href="../../index.html"><i class="fas fa-home"></i> Inicio</a></li>
+<li class="nav-dropdown"><a href="#"><i class="fas fa-layer-group"></i> Mods <i class="fas fa-chevron-down"></i></a>
+<ul class="dropdown-menu">
+<li><a href="../introduccion/"><span class="dot intro"></span> Intro</a></li>
+<li><a href="../red-team/"><span class="dot red"></span> Ofensiva</a></li>
+<li><a href="../seguridad-informacion/" class="active"><span class="dot blue"></span> Seg Info</a></li>
+<li><a href="../ai-agents/"><span class="dot ai"></span> AI</a></li>
+<li><a href="../blue-team/"><span class="dot blue"></span> Blue Team</a></li>
+<li><a href="../purple-team/"><span class="dot purple"></span> Purple</a></li>
+<li><a href="../laboratorios/"><span class="dot lab"></span> Labs</a></li>
+<li><a href="../recursos/"><span class="dot resources"></span> Recursos</a></li>
+</ul></li>
+<li><a href="../../retos.html"><i class="fas fa-trophy"></i> Retos</a></li>
+<li><a href="../../herramientas.html"><i class="fas fa-tools"></i> Tools</a></li>
+<li><a href="../../labs.html"><i class="fas fa-flask"></i> Labs</a></li>
+<li><a href="../../recursos.html"><i class="fas fa-book"></i> Recursos</a></li>
+</ul>
+<div class="nav-actions"><button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></button>
+<a href="https://github.com/0xvanguard/CyberDefense-Pro-Network" class="nav-github" target="_blank"><i class="fab fa-github"></i></a>
+</div></div></nav><div class="breadcrumb"><a href="../../index.html">CDPN</a><span>/</span> Modulo 02: Seguridad de la Informacion</div>
+<section class="module-hero" style="--hero-glow: rgba(52,152,219,0.08);">
+<div class="module-hero-content"><span class="module-badge intermediate"><i class="fas fa-shield-alt"></i> INTERMEDIO</span>
+<h1>02 - Seguridad de la <span class="gradient-text">Informacion</span></h1>
+<p>Gestion de riesgos, cumplimiento normativo y controles de seguridad.</p></div></section>
+<main class="module-main"><div class="content-block"><h3><i class="fas fa-list-check"></i> Areas Clave</h3>
+<div class="areas-grid">
+<div class="area-card"><i class="fas fa-file-shield"></i><h4>Gestion de Riesgos</h4><p>Identificar, evaluar y mitigar riesgos.</p></div>
+<div class="area-card"><i class="fas fa-gavel"></i><h4>Compliance / GRC</h4><p>ISO 27001, NIST, GDPR, PCI-DSS.</p></div>
+<div class="area-card"><i class="fas fa-user-check"></i><h4>Politicas</h4><p>Crear politicas de seguridad.</p></div>
+<div class="area-card"><i class="fas fa-hard-hat"></i><h4>Hardening</h4><p>Endurecer sistemas.</p></div>
+<div class="area-card"><i class="fas fa-code-branch"></i><h4>DevSecOps</h4><p>Seguridad en CI/CD.</p></div>
+<div class="area-card"><i class="fas fa-satellite-dish"></i><h4>Threat Intel</h4><p>Inteligencia de amenazas.</p></div>
+</div></div><div class="content-block"><h3><i class="fas fa-calculator"></i> Guia: Evaluacion de Riesgos</h3>
+<div class="step-guide">
+<div class="guide-step"><span class="guide-num">1</span><div><strong>Inventario:</strong> Servidores, BD, codigo, datos.</div></div>
+<div class="guide-step"><span class="guide-num">2</span><div><strong>Amenazas:</strong> Hackers, desastres, fallos, insiders.</div></div>
+<div class="guide-step"><span class="guide-num">3</span><div><strong>Controles:</strong> Firewall, antivirus, MFA.</div></div>
+<div class="guide-step"><span class="guide-num">4</span><div><strong>Calcular:</strong> Prob(1-5) x Impacto(1-5) = Riesgo.</div></div>
+<div class="guide-step"><span class="guide-num">5</span><div><strong>Tratar:</strong> Mitigar, Transferir, Aceptar, Evitar.</div></div>
+</div>
+<div class="code-block"><div class="code-header"><span class="code-lang">Python - Matriz</span></div>
+<pre><code>def riesgo(activo, amenaza, prob, imp):
+    r = prob * imp
+    n = "CRITICO" if r>=20 else "ALTO" if r>=12 else "MEDIO" if r>=6 else "BAJO"
+    return f"[{n}] {activo}: {amenaza} (Riesgo: {r}/25)"
 
-    <div class="breadcrumb">
-        <a href="../../index.html">CDPN</a><span>/</span> Módulo 02: Seguridad de la Información
-    </div>
-
-    <section class="module-hero" style="--hero-glow: rgba(52, 152, 219, 0.08);">
-        <div class="module-hero-content">
-            <span class="module-badge intermediate"><i class="fas fa-shield-alt"></i> INTERMEDIO</span>
-            <h1>02 — Seguridad de la <span class="gradient-text">Información</span></h1>
-            <p>Gestión de riesgos, cumplimiento normativo y controles de seguridad organizacional.</p>
-        </div>
-    </section>
-
-    <main class="module-main">
-        <div class="content-block">
-            <h3><i class="fas fa-list-check"></i> Áreas Clave</h3>
-            <div class="areas-grid">
-                <div class="area-card"><i class="fas fa-file-shield"></i><h4>Gestión de Riesgos</h4><p>Identificar, evaluar y mitigar riesgos de seguridad de la información.</p></div>
-                <div class="area-card"><i class="fas fa-gavel"></i><h4>Compliance / GRC</h4><p>Cumplimiento normativo: ISO 27001, NIST, GDPR, PCI-DSS.</p></div>
-                <div class="area-card"><i class="fas fa-user-check"></i><h4>Políticas de Seguridad</h4><p>Crear y mantener políticas organizacionales de seguridad.</p></div>
-                <div class="area-card"><i class="fas fa-hard-hat"></i><h4>Hardening</h4><p>Endurecimiento de sistemas operativos y aplicaciones.</p></div>
-                <div class="area-card"><i class="fas fa-code-branch"></i><h4>DevSecOps</h4><p>Integrar seguridad en pipelines de desarrollo CI/CD.</p></div>
-                <div class="area-card"><i class="fas fa-satellite-dish"></i><h4>Threat Intelligence</h4><p>Inteligencia de amenazas y análisis de adversarios.</p></div>
-            </div>
-        </div>
-    </main>
-
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-grid">
-                <div class="footer-col"><h4><i class="fas fa-shield-halved"></i> CDPN</h4><p>Formando profesionales de ciberdefensa en todo el mundo.</p></div>
-                <div class="footer-col"><h4>Módulos</h4><ul><li><a href="../introduccion/">Introducción</a></li><li><a href="../red-team/">Red Team</a></li><li><a href="../blue-team/">Blue Team</a></li><li><a href="../purple-team/">Purple Team</a></li></ul></div>
-                <div class="footer-col"><h4>Secciones</h4><ul><li><a href="../../retos.html">Retos</a></li><li><a href="../../herramientas.html">Herramientas</a></li><li><a href="../../labs.html">Labs</a></li><li><a href="../../recursos.html">Recursos</a></li></ul></div>
-                <div class="footer-col"><h4>Comunidad</h4><ul><li><a href="https://github.com/0xvanguard/CyberDefense-Pro-Network" target="_blank"><i class="fab fa-github"></i> GitHub</a></li></ul></div>
-            </div>
-            <div class="footer-bottom"><p>&copy; 2026 CyberDefense Pro Network. Todos los derechos reservados.</p></div>
-        </div>
-    </footer>
-    <script src="../../assets/js/shared.js"></script>
-</body>
-</html>
+print(riesgo("BD clientes", "SQLi", 4, 5))
+print(riesgo("Servidor web", "DDoS", 3, 4))
+print(riesgo("Laptops", "Perdida fisica", 2, 3))</code></pre></div></div><div class="content-block"><h3><i class="fas fa-file-alt"></i> Guia: Politica de Contrasenas</h3>
+<div class="step-guide">
+<div class="guide-step"><span class="guide-num">1</span><div>12+ caracteres, mayuscula, digito, especial.</div></div>
+<div class="guide-step"><span class="guide-num">2</span><div>MFA obligatorio en todos los sistemas.</div></div>
+<div class="guide-step"><span class="guide-num">3</span><div>Caducidad 90 dias, historial 12 contrasenas.</div></div>
+<div class="guide-step"><span class="guide-num">4</span><div>Bloqueo tras 5 intentos fallidos.</div></div>
+</div>
+<div class="code-block"><div class="code-header"><span class="code-lang">Bash</span></div>
+<pre><code>sudo sed -i 's/^PASS_MAX_DAYS.*/PASS_MAX_DAYS   90/' /etc/login.defs
+sudo apt install -y libpam-pwquality
+cat > /etc/security/pwquality.conf << 'EOF'
+minlen = 12
+dcredit = -1
+ucredit = -1
+lcredit = -1
+ocredit = -1
+maxrepeat = 3
+EOF</code></pre></div></div><div class="content-block"><h3><i class="fas fa-hard-hat"></i> Guia: Hardening Linux</h3>
+<div class="step-guide">
+<div class="guide-step"><span class="guide-num">1</span><div><code>apt update && apt upgrade -y</code></div></div>
+<div class="guide-step"><span class="guide-num">2</span><div>Firewall UFW: solo 22, 80, 443</div></div>
+<div class="guide-step"><span class="guide-num">3</span><div>SSH: PermitRootLogin no, solo keys</div></div>
+<div class="guide-step"><span class="guide-num">4</span><div>Deshabilitar: avahi, cups, bluetooth</div></div>
+<div class="guide-step"><span class="guide-num">5</span><div>Auditoria: lynis audit system --quick</div></div>
+</div>
+<div class="code-block"><div class="code-header"><span class="code-lang">hardening.sh</span></div>
+<pre><code>#!/bin/bash
+apt update && apt upgrade -y
+apt install -y ufw lynis
+ufw default deny incoming
+ufw allow 22/tcp
+ufw --force enable
+cat >> /etc/ssh/sshd_config << 'SSH'
+PermitRootLogin no
+PasswordAuthentication no
+SSH
+systemctl restart sshd
+lynis audit system --quick</code></pre></div></div><div class="content-block"><h3><i class="fas fa-code-branch"></i> DevSecOps Pipeline</h3>
+<div class="step-guide">
+<div class="guide-step"><span class="guide-num">1</span><div><strong>Plan:</strong> Threat modeling</div></div>
+<div class="guide-step"><span class="guide-num">2</span><div><strong>Code:</strong> SAST con Semgrep</div></div>
+<div class="guide-step"><span class="guide-num">3</span><div><strong>Build:</strong> SCA con Trivy</div></div>
+<div class="guide-step"><span class="guide-num">4</span><div><strong>Test:</strong> DAST con OWASP ZAP</div></div>
+<div class="guide-step"><span class="guide-num">5</span><div><strong>Deploy:</strong> IaC con Checkov</div></div>
+<div class="guide-step"><span class="guide-num">6</span><div><strong>Monitor:</strong> RASP + WAF</div></div>
+</div>
+<div class="code-block"><div class="code-header"><span class="code-lang">.gitlab-ci.yml</span></div>
+<pre><code>stages: [build, security, deploy]
+sast:
+  stage: security
+  script: semgrep --config auto .
+container_scan:
+  stage: security
+  script: trivy image myapp:$CI_COMMIT_SHA
+dast:
+  stage: security
+  script: docker run --rm owasp/zap2docker-stable zap-full-scan.py http://app:8080</code></pre></div></div><div class="content-block"><h3><i class="fas fa-gavel"></i> ISO 27001 y GDPR</h3>
+<div class="concepts-grid">
+<div class="concept-card"><h4><i class="fas fa-certificate"></i> ISO 27001</h4><p>Sistema de Gestion de Seguridad (ISMS).</p>
+<div class="step-guide">
+<div class="guide-step"><span class="guide-num">1</span><div>Definir alcance del ISMS</div></div>
+<div class="guide-step"><span class="guide-num">2</span><div>Analisis de riesgos</div></div>
+<div class="guide-step"><span class="guide-num">3</span><div>114 controles del Anexo A</div></div>
+<div class="guide-step"><span class="guide-num">4</span><div>Auditoria + certificacion</div></div>
+</div></div>
+<div class="concept-card"><h4><i class="fas fa-shield-alt"></i> GDPR</h4><p>Proteccion de datos de la UE.</p>
+<div class="step-guide">
+<div class="guide-step"><span class="guide-num">1</span><div>Consentimiento explicito</div></div>
+<div class="guide-step"><span class="guide-num">2</span><div>Derechos ARCO</div></div>
+<div class="guide-step"><span class="guide-num">3</span><div>Minimizacion de datos</div></div>
+<div class="guide-step"><span class="guide-num">4</span><div>Notificacion 72h</div></div>
+</div></div></div></div><div class="content-block"><h3><i class="fas fa-trophy"></i> Retos Practicos</h3>
+<div class="labs-grid">
+<div class="lab-card"><div class="lab-status available"><i class="fas fa-check-circle"></i> Reto</div>
+<h4>Auditoria con Lynis</h4><p>Ejecuta Lynis y corrige los 5 problemas mas criticos.</p>
+<div class="lab-steps">
+<div class="guide-step"><span class="guide-num">1</span><div><code>sudo apt install lynis</code></div></div>
+<div class="guide-step"><span class="guide-num">2</span><div><code>sudo lynis audit system</code></div></div>
+<div class="guide-step"><span class="guide-num">3</span><div>Corregir warnings y re-ejecutar</div></div>
+</div></div>
+<div class="lab-card"><div class="lab-status available"><i class="fas fa-check-circle"></i> Reto</div>
+<h4>Hardening SSH</h4><p>Root=no, keys only, puerto 2222.</p>
+<div class="lab-steps">
+<div class="guide-step"><span class="guide-num">1</span><div><code>PermitRootLogin no</code></div></div>
+<div class="guide-step"><span class="guide-num">2</span><div><code>PasswordAuthentication no</code></div></div>
+<div class="guide-step"><span class="guide-num">3</span><div><code>Port 2222</code></div></div>
+</div></div>
+<div class="lab-card"><div class="lab-status available"><i class="fas fa-check-circle"></i> Reto</div>
+<h4>Politica Contrasenas</h4><p>Implementa pam_pwquality con 12+ chars.</p>
+<div class="lab-steps">
+<div class="guide-step"><span class="guide-num">1</span><div>Instalar libpam-pwquality</div></div>
+<div class="guide-step"><span class="guide-num">2</span><div>Configurar y probar</div></div>
+</div></div></div></div></main><footer class="footer"><div class="footer-content"><div class="footer-grid">
+<div class="footer-col"><h4><i class="fas fa-shield-halved"></i> CDPN</h4><p>Ciberdefensa profesional.</p></div>
+<div class="footer-col"><h4>Mods</h4><ul><li><a href="../introduccion/">Intro</a></li><li><a href="../red-team/">Red Team</a></li><li><a href="../blue-team/">Blue</a></li><li><a href="../purple-team/">Purple</a></li></ul></div>
+<div class="footer-col"><h4>Secciones</h4><ul><li><a href="../../retos.html">Retos</a></li><li><a href="../../herramientas.html">Tools</a></li><li><a href="../../labs.html">Labs</a></li><li><a href="../../recursos.html">Recursos</a></li></ul></div>
+<div class="footer-col"><h4>GitHub</h4><ul><li><a href="https://github.com/0xvanguard/CyberDefense-Pro-Network"><i class="fab fa-github"></i> Repo</a></li></ul></div>
+</div><div class="footer-bottom"><p>&copy; 2026 CDPN.</p></div></div></footer>
+<script src="../../assets/js/shared.js"></script></body></html>

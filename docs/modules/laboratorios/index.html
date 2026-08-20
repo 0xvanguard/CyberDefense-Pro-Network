@@ -1,115 +1,209 @@
 <!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>04 - Laboratorios | CDPN</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../../assets/css/global.css">
-    <link rel="stylesheet" href="../../assets/css/module.css">
-</head>
-<body>
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="../../index.html" class="nav-logo"><i class="fas fa-shield-halved"></i> CDPN</a>
-            <ul class="nav-menu">
-                <li><a href="../../index.html"><i class="fas fa-home"></i> Inicio</a></li>
-                <li class="nav-dropdown">
-                    <a href="#"><i class="fas fa-layer-group"></i> Módulos <i class="fas fa-chevron-down"></i></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="../introduccion/"><span class="dot intro"></span> Introducción</a></li>
-                        <li><a href="../red-team/"><span class="dot red"></span> Ciberseguridad Ofensiva</a></li>
-                        <li><a href="../seguridad-informacion/"><span class="dot blue"></span> Seguridad Info.</a></li>
-                        <li><a href="../ai-agents/"><span class="dot ai"></span> AI Agents</a></li>
-                        <li><a href="../blue-team/"><span class="dot blue"></span> Blue Team</a></li>
-                        <li><a href="../purple-team/"><span class="dot purple"></span> Purple Team</a></li>
-                        <li><a href="../laboratorios/" class="active"><span class="dot lab"></span> Labs</a></li>
-                        <li><a href="../recursos/"><span class="dot resources"></span> Recursos</a></li>
-                    </ul>
-                </li>
-                <li><a href="../../retos.html"><i class="fas fa-trophy"></i> Retos</a></li>
-                <li><a href="../../herramientas.html"><i class="fas fa-tools"></i> Herramientas</a></li>
-                <li><a href="../../labs.html"><i class="fas fa-flask"></i> Labs</a></li>
-                <li><a href="../../recursos.html"><i class="fas fa-book"></i> Recursos</a></li>
-            </ul>
-            <div class="nav-actions">
-                <button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></button>
-                <a href="https://github.com/0xvanguard/CyberDefense-Pro-Network" class="nav-github" target="_blank"><i class="fab fa-github"></i></a>
-            </div>
-        </div>
-    </nav>
+<html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>04 - Laboratorios | CDPN</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/css/global.css">
+<link rel="stylesheet" href="../../assets/css/module.css"></head><body><nav class="navbar"><div class="nav-container">
+<a href="../../index.html" class="nav-logo"><i class="fas fa-shield-halved"></i> CDPN</a>
+<ul class="nav-menu">
+<li><a href="../../index.html"><i class="fas fa-home"></i> Inicio</a></li>
+<li class="nav-dropdown"><a href="#"><i class="fas fa-layer-group"></i> Mods <i class="fas fa-chevron-down"></i></a>
+<ul class="dropdown-menu">
+<li><a href="../introduccion/"><span class="dot intro"></span> Intro</a></li>
+<li><a href="../red-team/"><span class="dot red"></span> Ofensiva</a></li>
+<li><a href="../seguridad-informacion/"><span class="dot blue"></span> Seg Info</a></li>
+<li><a href="../ai-agents/"><span class="dot ai"></span> AI</a></li>
+<li><a href="../blue-team/"><span class="dot blue"></span> Blue Team</a></li>
+<li><a href="../purple-team/"><span class="dot purple"></span> Purple</a></li>
+<li><a href="../laboratorios/" class="active"><span class="dot lab"></span> Labs</a></li>
+<li><a href="../recursos/"><span class="dot resources"></span> Recursos</a></li>
+</ul></li>
+<li><a href="../../retos.html"><i class="fas fa-trophy"></i> Retos</a></li>
+<li><a href="../../herramientas.html"><i class="fas fa-tools"></i> Tools</a></li>
+<li><a href="../../labs.html"><i class="fas fa-flask"></i> Labs</a></li>
+<li><a href="../../recursos.html"><i class="fas fa-book"></i> Recursos</a></li>
+</ul>
+<div class="nav-actions"><button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></button>
+<a href="https://github.com/0xvanguard/CyberDefense-Pro-Network" class="nav-github" target="_blank"><i class="fab fa-github"></i></a>
+</div></div></nav><div class="breadcrumb"><a href="../../index.html">CDPN</a><span>/</span> Modulo 04: Laboratorios</div>
+<section class="module-hero" style="--hero-glow: rgba(26,188,156,0.08);">
+<div class="module-hero-content"><span class="module-badge beginner"><i class="fas fa-flask"></i> PRACTICA</span>
+<h1>04 - <span class="gradient-text">Laboratorios</span></h1>
+<p>Practica controlada: CTFs, HTB, TryHackMe y labs Docker.</p></div></section>
+<main class="module-main"><div class="content-block"><h3><i class="fas fa-box-open"></i> Estructura de Labs</h3>
+<div class="labs-structure">
+<div class="lab-type"><i class="fas fa-flag"></i><h4>CTF Writeups</h4><p>picoCTF, HTB CTF, BSides</p></div>
+<div class="lab-type"><i class="fas fa-box"></i><h4>HTB / TryHackMe</h4><p>Maquinas y rooms</p></div>
+<div class="lab-type"><i class="fas fa-hammer"></i><h4>Labs Propios</h4><p>Entornos vulnerables</p></div>
+<div class="lab-type"><i class="fab fa-docker"></i><h4>Docker Labs</h4><p>docker-compose listos</p></div>
+</div></div><div class="content-block"><h3><i class="fab fa-docker"></i> Guia: Tu Primer Lab con Docker</h3>
+<div class="step-guide">
+<div class="guide-step"><span class="guide-num">1</span><div><code>curl -fsSL https://get.docker.com | sh</code></div></div>
+<div class="guide-step"><span class="guide-num">2</span><div><code>sudo apt install docker-compose</code></div></div>
+<div class="guide-step"><span class="guide-num">3</span><div><code>mkdir ~/labs/vuln-web && cd ~/labs/vuln-web</code></div></div>
+<div class="guide-step"><span class="guide-num">4</span><div>Crear docker-compose.yml (abajo)</div></div>
+<div class="guide-step"><span class="guide-num">5</span><div><code>docker-compose up -d</code></div></div>
+<div class="guide-step"><span class="guide-num">6</span><div><code>http://localhost:8080</code> (admin/password)</div></div>
+</div>
+<div class="code-block"><div class="code-header"><span class="code-lang">docker-compose.yml - DVWA + WebGoat</span></div>
+<pre><code>version: '3.8'
+services:
+  dvwa:
+    image: vulnerables/web-dvwa
+    container_name: dvwa
+    ports: ["8080:80"]
+    depends_on: [db]
+    networks: [vuln-net]
 
-    <div class="breadcrumb">
-        <a href="../../index.html">CDPN</a><span>/</span> Módulo 04: Laboratorios
-    </div>
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: dvwa
+      MYSQL_DATABASE: dvwa
+    volumes: [db-data:/var/lib/mysql]
+    networks: [vuln-net]
 
-    <section class="module-hero" style="--hero-glow: rgba(26, 188, 156, 0.08);">
-        <div class="module-hero-content">
-            <span class="module-badge beginner"><i class="fas fa-flask"></i> PRÁCTICA</span>
-            <h1>04 — <span class="gradient-text">Laboratorios</span></h1>
-            <p>Práctica controlada: CTFs, HTB, TryHackMe y labs propios con Docker.</p>
-        </div>
-    </section>
+  webgoat:
+    image: webgoat/webgoat
+    ports: ["8081:8080", "9090:9090"]
+    networks: [vuln-net]
 
-    <main class="module-main">
-        <div class="content-block">
-            <h3><i class="fas fa-box-open"></i> Estructura de Labs</h3>
-            <div class="labs-structure">
-                <div class="lab-type"><i class="fas fa-flag"></i><h4>CTF Writeups</h4><p>Writeups detallados de CTFs (picoCTF, HTB CTF, BSides)</p></div>
-                <div class="lab-type"><i class="fas fa-box"></i><h4>HTB / TryHackMe</h4><p>Máquinas HackTheBox + rooms TryHackMe</p></div>
-                <div class="lab-type"><i class="fas fa-hammer"></i><h4>Labs Propios</h4><p>Entornos vulnerables creados por el equipo</p></div>
-                <div class="lab-type"><i class="fab fa-docker"></i><h4>Docker Labs</h4><p>docker-compose.yml para reproducir cada lab</p></div>
-            </div>
-        </div>
+networks:
+  vuln-net: {driver: bridge}
+volumes:
+  db-data:</code></pre></div>
+<div class="code-block"><div class="code-header"><span class="code-lang">Comandos Esenciales</span></div>
+<pre><code>docker-compose up -d        # Levantar
+docker ps                    # Ver contenedores
+docker logs -f dvwa          # Ver logs
+docker exec -it dvwa bash    # Entrar al contenedor
+docker-compose down          # Detener
+docker-compose down -v       # Limpiar todo</code></pre></div></div><div class="content-block"><h3><i class="fas fa-flag"></i> Metodologia CTF</h3>
+<div class="concepts-grid">
+<div class="concept-card"><h4><i class="fas fa-search"></i> Fase 1: Recon</h4>
+<div class="step-guide">
+<div class="guide-step"><span class="guide-num">1</span><div><code>nmap -sV -sC target</code></div></div>
+<div class="guide-step"><span class="guide-num">2</span><div><code>gobuster dir -u http://target -w wordlist.txt</code></div></div>
+<div class="guide-step"><span class="guide-num">3</span><div>Identificar tecnologias</div></div>
+<div class="guide-step"><span class="guide-num">4</span><div><code>subfinder -d target</code></div></div>
+</div></div>
+<div class="concept-card"><h4><i class="fas fa-bug"></i> Fase 2: Explotacion</h4>
+<div class="step-guide">
+<div class="guide-step"><span class="guide-num">1</span><div>Buscar CVEs para servicios</div></div>
+<div class="guide-step"><span class="guide-num">2</span><div>OWASP Top 10 en web apps</div></div>
+<div class="guide-step"><span class="guide-num">3</span><div>Metasploit o exploit manual</div></div>
+<div class="guide-step"><span class="guide-num">4</span><div>Shell reversa</div></div>
+</div></div>
+<div class="concept-card"><h4><i class="fas fa-crown"></i> Fase 3: Privesc</h4>
+<div class="step-guide">
+<div class="guide-step"><span class="guide-num">1</span><div>Linux: <code>sudo -l && find / -perm -4000</code></div></div>
+<div class="guide-step"><span class="guide-num">2</span><div>Windows: <code>whoami /priv && systeminfo</code></div></div>
+<div class="guide-step"><span class="guide-num">3</span><div>Kernel exploits con searchsploit</div></div>
+<div class="guide-step"><span class="guide-num">4</span><div>GTFOBins para SUID</div></div>
+</div></div></div></div><div class="content-block"><h3><i class="fas fa-gamepad"></i> Plataformas de Practica</h3>
+<div class="labs-grid">
+<div class="lab-card"><div class="lab-status available"><i class="fas fa-check-circle"></i> Principiante</div>
+<h4>TryHackMe</h4><p>Rooms guiados paso a paso.</p>
+<div class="lab-steps">
+<div class="guide-step"><span class="guide-num">1</span><div>Crear cuenta gratuita</div></div>
+<div class="guide-step"><span class="guide-num">2</span><div>Pre-Security Path</div></div>
+<div class="guide-step"><span class="guide-num">3</span><div>Complete Beginner Path</div></div>
+<div class="guide-step"><span class="guide-num">4</span><div>Jr Penetration Tester</div></div>
+</div></div>
+<div class="lab-card"><div class="lab-status available"><i class="fas fa-check-circle"></i> Intermedio</div>
+<h4>HackTheBox</h4><p>Maquinas activas mas dificiles.</p>
+<div class="lab-steps">
+<div class="guide-step"><span class="guide-num">1</span><div>Empezar con Easy</div></div>
+<div class="guide-step"><span class="guide-num">2</span><div>Proceder a Medium</div></div>
+<div class="guide-step"><span class="guide-num">3</span><div>Participar en CTFs mensuales</div></div>
+</div></div>
+<div class="lab-card"><div class="lab-status available"><i class="fas fa-check-circle"></i> Gratis</div>
+<h4>PicoCTF</h4><p>CTFs educativos de Carnegie Mellon.</p>
+<div class="lab-steps">
+<div class="guide-step"><span class="guide-num">1</span><div>Categorias: Web, Crypto, Forensics, RE</div></div>
+<div class="guide-step"><span class="guide-num">2</span><div>Empezar 100-200 pts</div></div>
+</div></div></div></div><div class="content-block"><h3><i class="fas fa-clipboard-list"></i> Plantilla Writeup</h3>
+<div class="code-block"><div class="code-header"><span class="code-lang">writeup-template.md</span></div>
+<pre><code># [Nombre]
 
-        <div class="content-block">
-            <h3><i class="fas fa-clipboard-list"></i> Plantilla de Writeup</h3>
-            <div class="code-block">
-                <div class="code-header"><span class="code-lang">writeup-template.md</span></div>
-                <pre><code># [Nombre de la máquina/CTF]
-
-| Metadato | Valor |
-|----------|-------|
+| Campo | Valor |
+|-------|-------|
 | Plataforma | HTB / THM / picoCTF |
 | Dificultad | Easy / Medium / Hard |
-| Categoría | Web / AD / Linux / Crypto |
+| Categoria | Web / AD / Linux / Crypto |
 
-## Resumen ejecutivo
-TL;DR en una línea.
+## Resumen
+TL;DR en una linea.
 
 ## Reconocimiento
-- Nmap scan
-- Web enumeration
-- Servicios identificados
+nmap -sV -sC -oA scan target
+- Puerto 22: OpenSSH 8.2
+- Puerto 80: Apache 2.4.41
 
-## Explotación
-- Vector de entrada
-- CVE/técnica usada
-- Foothold obtenido
+## Explotacion
+Vuln: SQL Injection en /login
+Payload: admin' --
+Result: Acceso admin sin pass
 
-## Escalada de privilegios
-- Vector de privesc
-- Técnica MITRE ATT&CK
+## Privesc
+SUID: /usr/bin/python3
+GTFOBins: python3 -c 'import os;os.execl("/bin/sh","sh","-p")'
 
-## Lecciones defensivas
-- ¿Cómo se detectaría?
-- ¿Qué control hubiera prevenido?</code></pre>
-            </div>
-        </div>
-    </main>
+## Flags
+- User: flag{xxxxx}
+- Root: flag{xxxxx}
 
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-grid">
-                <div class="footer-col"><h4><i class="fas fa-shield-halved"></i> CDPN</h4><p>Formando profesionales de ciberdefensa en todo el mundo.</p></div>
-                <div class="footer-col"><h4>Módulos</h4><ul><li><a href="../introduccion/">Introducción</a></li><li><a href="../red-team/">Red Team</a></li><li><a href="../blue-team/">Blue Team</a></li><li><a href="../purple-team/">Purple Team</a></li></ul></div>
-                <div class="footer-col"><h4>Secciones</h4><ul><li><a href="../../retos.html">Retos</a></li><li><a href="../../herramientas.html">Herramientas</a></li><li><a href="../../labs.html">Labs</a></li><li><a href="../../recursos.html">Recursos</a></li></ul></div>
-                <div class="footer-col"><h4>Comunidad</h4><ul><li><a href="https://github.com/0xvanguard/CyberDefense-Pro-Network" target="_blank"><i class="fab fa-github"></i> GitHub</a></li></ul></div>
-            </div>
-            <div class="footer-bottom"><p>&copy; 2026 CyberDefense Pro Network. Todos los derechos reservados.</p></div>
-        </div>
-    </footer>
-    <script src="../../assets/js/shared.js"></script>
-</body>
-</html>
+## Lecciones Defensivas
+- Deteccion: Alerta SIEM por SQLi
+- Prevencion: WAF + validacion inputs
+- MITRE: T1190 Exploit Public-Facing App</code></pre></div></div><div class="content-block"><h3><i class="fas fa-clipboard-check"></i> Checklist Pre-Lab</h3>
+<div class="concepts-grid">
+<div class="concept-card"><h4><i class="fas fa-laptop-code"></i> Entorno</h4>
+<ul class="factors-list">
+<li class="factor"><i class="fas fa-check"></i> VirtualBox/VMware instalado</li>
+<li class="factor"><i class="fas fa-check"></i> Kali Linux como VM</li>
+<li class="factor"><i class="fas fa-check"></i> Red Host-Only configurada</li>
+<li class="factor"><i class="fas fa-check"></i> Snapshots creados</li>
+<li class="factor"><i class="fas fa-check"></i> Docker instalado</li>
+</ul></div>
+<div class="concept-card"><h4><i class="fas fa-tools"></i> Herramientas</h4>
+<ul class="factors-list">
+<li class="factor"><i class="fas fa-check"></i> Nmap actualizado</li>
+<li class="factor"><i class="fas fa-check"></i> Burp Suite Community</li>
+<li class="factor"><i class="fas fa-check"></i> Metasploit Framework</li>
+<li class="factor"><i class="fas fa-check"></i> SQLMap</li>
+<li class="factor"><i class="fas fa-check"></i> Gobuster/ffuf</li>
+</ul></div>
+<div class="concept-card"><h4><i class="fas fa-book"></i> Metodologia</h4>
+<ul class="factors-list">
+<li class="factor"><i class="fas fa-check"></i> Plantilla writeup lista</li>
+<li class="factor"><i class="fas fa-check"></i> Notas organizadas</li>
+<li class="factor"><i class="fas fa-check"></i> Cuenta en THM/HTB</li>
+<li class="factor"><i class="fas fa-check"></i> Wordlists descargadas</li>
+<li class="factor"><i class="fas fa-check"></i> Proxy Burp configurado</li>
+</ul></div></div></div><div class="content-block"><h3><i class="fas fa-hammer"></i> Reto: Crea Tu Propio Lab</h3>
+<div class="step-guide">
+<div class="guide-step"><span class="guide-num">1</span><div><code>mkdir my-vuln-app && cd my-vuln-app</code></div></div>
+<div class="guide-step"><span class="guide-num">2</span><div>Crear docker-compose.yml con PHP+MySQL</div></div>
+<div class="guide-step"><span class="guide-num">3</span><div>Implementar: SQLi, XSS, IDOR, Broken Auth</div></div>
+<div class="guide-step"><span class="guide-num">4</span><div>Agregar 5 retos de dificultad creciente</div></div>
+<div class="guide-step"><span class="guide-num">5</span><div>Documentar cada vulnerabilidad con solucion</div></div>
+<div class="guide-step"><span class="guide-num">6</span><div>Compartir en GitHub</div></div>
+</div>
+<div class="code-block"><div class="code-header"><span class="code-lang">login.php - Vulnerable vs Seguro</span></div>
+<pre><code>&lt;?php
+// VULNERABLE (para practica)
+$query = "SELECT * FROM users WHERE username='$user' AND pass='$pass'";
+
+// SEGURO (produccion)
+$stmt = $conn->prepare("SELECT * FROM users WHERE username=? AND pass=?");
+$stmt->bind_param("ss", $user, $pass);
+$stmt->execute();
+?&gt;</code></pre></div></div></main><footer class="footer"><div class="footer-content"><div class="footer-grid">
+<div class="footer-col"><h4><i class="fas fa-shield-halved"></i> CDPN</h4><p>Ciberdefensa profesional.</p></div>
+<div class="footer-col"><h4>Mods</h4><ul><li><a href="../introduccion/">Intro</a></li><li><a href="../red-team/">Red Team</a></li><li><a href="../blue-team/">Blue</a></li><li><a href="../purple-team/">Purple</a></li></ul></div>
+<div class="footer-col"><h4>Secciones</h4><ul><li><a href="../../retos.html">Retos</a></li><li><a href="../../herramientas.html">Tools</a></li><li><a href="../../labs.html">Labs</a></li><li><a href="../../recursos.html">Recursos</a></li></ul></div>
+<div class="footer-col"><h4>GitHub</h4><ul><li><a href="https://github.com/0xvanguard/CyberDefense-Pro-Network"><i class="fab fa-github"></i> Repo</a></li></ul></div>
+</div><div class="footer-bottom"><p>&copy; 2026 CDPN.</p></div></div></footer>
+<script src="../../assets/js/shared.js"></script></body></html>
