@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recursos - CDPN</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="app.html" class="nav-logo"><i class="fas fa-shield-halved"></i> CDPN</a>
+            <ul class="nav-menu">
+                <li><a href="app.html"><i class="fas fa-home"></i> Inicio</a></li>
+                <li class="nav-dropdown">
+                    <a href="app.html#modulos"><i class="fas fa-layer-group"></i> Módulos <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="app.html#mod-00"><span class="dot intro"></span> Introducción</a></li>
+                        <li><a href="app.html#mod-01"><span class="dot red"></span> Ciberseguridad Ofensiva</a></li>
+                        <li><a href="app.html#mod-02"><span class="dot blue"></span> Seguridad de la Información</a></li>
+                        <li><a href="app.html#mod-03ai"><span class="dot ai"></span> AI Agents & Tools</a></li>
+                        <li><a href="app.html#mod-03bt"><span class="dot blue"></span> Blue Team / Defensa</a></li>
+                        <li><a href="app.html#mod-04pt"><span class="dot purple"></span> Purple Team</a></li>
+                        <li><a href="app.html#mod-04labs"><span class="dot lab"></span> Laboratorios</a></li>
+                    </ul>
+                </li>
+                <li><a href="retos.html"><i class="fas fa-trophy"></i> Retos</a></li>
+                <li><a href="herramientas.html"><i class="fas fa-tools"></i> Herramientas</a></li>
+                <li><a href="labs.html"><i class="fas fa-flask"></i> Labs</a></li>
+                <li><a href="recursos.html" class="active"><i class="fas fa-book"></i> Recursos</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></button>
+                <a href="https://github.com/0xvanguard/CyberDefense-Pro-Network" class="nav-github" target="_blank"><i class="fab fa-github"></i></a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- PAGE HERO -->
+    <section class="page-hero recursos-hero">
+        <div class="page-hero-content">
+            <span class="page-badge"><i class="fas fa-book"></i> BIBLIOTECA DE RECURSOS</span>
+            <h1>Recursos y <span class="gradient-text">Certificaciones</span></h1>
+            <p>Todo lo que necesitas para planificar tu carrera en ciberseguridad: certificaciones, cursos, libros y plataformas de aprendizaje.</p>
+            <div class="hero-stats">
+                <div class="stat"><span class="stat-number">8</span><span class="stat-label">Certificaciones</span></div>
+                <div class="stat"><span class="stat-number">6</span><span class="stat-label">Plataformas</span></div>
+                <div class="stat"><span class="stat-number">10+</span><span class="stat-label">Libros</span></div>
+            </div>
+        </div>
+    </section>
+
+    <main class="main-content">
+
+        <!-- CERTIFICACIONES POR NIVEL -->
+        <section class="recursos-section">
+            <h2><i class="fas fa-certificate"></i> Certificaciones por Nivel</h2>
+            <p class="section-desc">Ruta de certificaciones recomendada desde principiante hasta experto.</p>
+
+            <!-- Nivel Principiante -->
+            <div class="cert-level-section">
+                <h3><span class="level-badge beginner">🥉 Principiante</span> Tu primera certificación</h3>
+                <div class="cert-grid">
+                    <div class="cert-card-large">
+                        <div class="cert-header beginner">
+                            <div class="cert-icon"><i class="fas fa-shield-halved"></i></div>
+                            <div>
+                                <h4>CompTIA Security+</h4>
+                                <span class="cert-provider">CompTIA</span>
+                            </div>
+                        </div>
+                        <p>La certificación de entrada más reconocida en ciberseguridad. Cubre fundamentos, amenazas, arquitectura y operaciones.</p>
+                        <div class="cert-details">
+                            <div class="cert-detail"><i class="fas fa-dollar-sign"></i> $350 USD</div>
+                            <div class="cert-detail"><i class="fas fa-clock"></i> 90 minutos</div>
+                            <div class="cert-detail"><i class="fas fa-list"></i> 90 preguntas</div>
+                            <div class="cert-detail"><i class="fas fa-trophy"></i> Pasar: 750/900</div>
+                        </div>
+                        <div class="cert-topics">
+                            <span>Threats & Attacks</span>
+                            <span>Architecture</span>
+                            <span>Implementation</span>
+                            <span>Operations</span>
+                            <span>Governance</span>
+                        </div>
+                        <div class="cert-prep">
+                            <h5>Recursos de preparación:</h5>
+                            <ul>
+                                <li><a href="https://www.professormesser.com/security-plus/sy0-701/sy0-701-video/sy0-701-comptia-security-plus-course/" target="_blank"><i class="fas fa-play"></i> Professor Messer (Gratis)</a></li>
+                                <li><a href="https://www.udemy.com/course/comptia-security-cert-sy0-601/" target="_blank"><i class="fas fa-book"></i> Udemy - Jason Dion</a></li>
+                                <li><i class="fas fa-book"></i> Book: CompTIA Security+ Study Guide</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="cert-card-large">
+                        <div class="cert-header beginner">
+                            <div class="cert-icon"><i class="fas fa-crosshairs"></i></div>
+                            <div>
+                                <h4>eLearnSecurity eJPT</h4>
+                                <span class="cert-provider">INE / eLearnSecurity</span>
+                            </div>
+                        </div>
+                        <p>Certificación 100% práctica en pentesting básico. SinExamen teórico — resuelves un examen práctico real.</p>
+                        <div class="cert-details">
+                            <div class="cert-detail"><i class="fas fa-dollar-sign"></i> $200 USD</div>
+                            <div class="cert-detail"><i class="fas fa-clock"></i> 3 días</div>
+                            <div class="cert-detail"><i class="fas fa-laptop-code"></i> 20 máquinas</div>
+                            <div class="cert-detail"><i class="fas fa-trophy"></i> Pasar: 17/20</div>
+                        </div>
+                        <div class="cert-prep">
+                            <h5>Recursos:</h5>
+                            <ul>
+                                <li><a href="https://ine.com/learning/programs/penetration-testing-student" target="_blank"><i class="fas fa-play"></i> PTS v4 (INE)</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nivel Intermedio -->
+            <div class="cert-level-section">
+                <h3><span class="level-badge intermediate">🥇 Intermedio</span> Especialización</h3>
+                <div class="cert-grid">
+                    <div class="cert-card-large">
+                        <div class="cert-header intermediate">
+                            <div class="cert-icon"><i class="fas fa-shield-alt"></i></div>
+                            <div>
+                                <h4>CompTIA CySA+</h4>
+                                <span class="cert-provider">CompTIA</span>
+                            </div>
+                        </div>
+                        <p>Análisis de seguridad y defensa. Enfocado en Blue Team: SIEM, análisis de vulnerabilidades y respuesta a incidentes.</p>
+                        <div class="cert-details">
+                            <div class="cert-detail"><i class="fas fa-dollar-sign"></i> $370 USD</div>
+                            <div class="cert-detail"><i class="fas fa-clock"></i> 165 minutos</div>
+                            <div class="cert-detail"><i class="fas fa-list"></i> 85 preguntas</div>
+                        </div>
+                        <div class="cert-topics">
+                            <span>Vulnerability Management</span>
+                            <span>Incident Response</span>
+                            <span>Threat Intelligence</span>
+                            <span>Security Architecture</span>
+                        </div>
+                    </div>
+
+                    <div class="cert-card-large">
+                        <div class="cert-header intermediate">
+                            <div class="cert-icon"><i class="fas fa-crown"></i></div>
+                            <div>
+                                <h4>PENET (eCPPT)</h4>
+                                <span class="cert-provider">INE / eLearnSecurity</span>
+                            </div>
+                        </div>
+                        <p>Certificación práctica de pentesting a nivel intermedio. Incluye redes, Active Directory y explotación.</p>
+                        <div class="cert-details">
+                            <div class="cert-detail"><i class="fas fa-dollar-sign"></i> $250 USD</div>
+                            <div class="cert-detail"><i class="fas fa-clock"></i> 7 días</div>
+                            <div class="cert-detail"><i class="fas fa-laptop-code"></i> Examen práctico</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nivel Avanzado -->
+            <div class="cert-level-section">
+                <h3><span class="level-badge advanced">🏆 Avanzado</span> Estándar de la Industria</h3>
+                <div class="cert-grid">
+                    <div class="cert-card-large premium">
+                        <div class="cert-header advanced">
+                            <div class="cert-icon"><i class="fas fa-trophy"></i></div>
+                            <div>
+                                <h4>OSCP</h4>
+                                <span class="cert-provider">Offensive Security</span>
+                            </div>
+                        </div>
+                        <p>Offensive Security Certified Professional. La certificación más respetada en pentesting. Examen práctico de 24 horas.</p>
+                        <div class="cert-details">
+                            <div class="cert-detail"><i class="fas fa-dollar-sign"></i> $1,599 USD</div>
+                            <div class="cert-detail"><i class="fas fa-clock"></i> 24 horas examen</div>
+                            <div class="cert-detail"><i class="fas fa-laptop-code"></i> 5 máquinas + reporte</div>
+                            <div class="cert-detail"><i class="fas fa-trophy"></i> Pasar: root en todas</div>
+                        </div>
+                        <div class="cert-topics">
+                            <span>Buffer Overflow</span>
+                            <span>Web Attacks</span>
+                            <span>Privilege Escalation</span>
+                            <span>Active Directory</span>
+                            <span>Report Writing</span>
+                        </div>
+                        <div class="cert-prep">
+                            <h5>Preparación:</h5>
+                            <ul>
+                                <li><a href="https://www.offsec.com/courses/pen-200/" target="_blank"><i class="fas fa-play"></i> PEN-200 (OffSec)</a></li>
+                                <li><i class="fas fa-book"></i> HackTheBox Pro Labs</li>
+                                <li><i class="fas fa-book"></i> TJ Null's OSCP Prep (HTB)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="cert-card-large">
+                        <div class="cert-header advanced">
+                            <div class="cert-icon"><i class="fas fa-user-ninja"></i></div>
+                            <div>
+                                <h4>OSCE</h4>
+                                <span class="cert-provider">Offensive Security</span>
+                            </div>
+                        </div>
+                        <p>Offensive Security Certified Expert. Nivel experto: exploit development, web exploitation avanzada y evasión.</p>
+                        <div class="cert-details">
+                            <div class="cert-detail"><i class="fas fa-dollar-sign"></i> $2,499 USD</div>
+                            <div class="cert-detail"><i class="fas fa-clock"></i> 48 horas</div>
+                            <div class="cert-detail"><i class="fas fa-laptop-code"></i> Examen práctico</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- RUTA DE APRENDIZAJE -->
+        <section class="recursos-section">
+            <h2><i class="fas fa-route"></i> Ruta de Aprendizaje Recomendada</h2>
+            <p class="section-desc">Sigue esta ruta para construir una carrera sólida en ciberseguridad.</p>
+
+            <div class="learning-path">
+                <div class="path-step">
+                    <div class="path-num">1</div>
+                    <div class="path-content">
+                        <h4>Fundamentos (Mes 1-2)</h4>
+                        <ul>
+                            <li>Aprende Linux básico (OverTheWire Bandit)</li>
+                            <li>Redes: TCP/IP, DNS, HTTP (CompTIA Network+)</li>
+                            <li>Terminal y comandos básicos</li>
+                            <li>Primeras prácticas en TryHackMe</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="path-step">
+                    <div class="path-num">2</div>
+                    <div class="path-content">
+                        <h4>Seguridad Básica (Mes 3-4)</h4>
+                        <ul>
+                            <li>CompTIA Security+ (estudiar + certificar)</li>
+                            <li>eJPT (examen práctico)</li>
+                            <li>Conceptos: CIA, autenticación, criptografía</li>
+                            <li>Herramientas: Nmap, Burp Suite básico</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="path-step">
+                    <div class="path-num">3</div>
+                    <div class="path-content">
+                        <h4>Especialización (Mes 5-8)</h4>
+                        <ul>
+                            <li>Elige: Ofensiva (PEN-200) o Defensiva (CySA+)</li>
+                            <li>Máquinas HTB y THM regularmente</li>
+                            <li>Writeups detallados de cada máquina</li>
+                            <li>Participa en CTFs</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="path-step">
+                    <div class="path-num">4</div>
+                    <div class="path-content">
+                        <h4>Profesional (Mes 9-12)</h4>
+                        <ul>
+                            <li>OSCP o CySA+ certificación</li>
+                            <li>Proyectos personales en GitHub</li>
+                            <li>Blog o portfolio de writeups</li>
+                            <li>Networking con la comunidad</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="path-step">
+                    <div class="path-num">5</div>
+                    <div class="path-content">
+                        <h4>Avanzado (Año 2+)</h4>
+                        <ul>
+                            <li>OSCE, OSEP u otras avanzadas</li>
+                            <li>Contribuciones open source</li>
+                            <li>Mentoría y enseñanza</li>
+                            <li>Especialización profunda</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- LIBROS RECOMENDADOS -->
+        <section class="recursos-section">
+            <h2><i class="fas fa-book-open"></i> Libros Recomendados</h2>
+            <p class="section-desc">Los libros esenciales para cada área de la ciberseguridad.</p>
+
+            <div class="books-grid">
+                <div class="book-card">
+                    <div class="book-cover red"><i class="fas fa-crosshairs"></i></div>
+                    <h4>The Web Application Hacker's Handbook</h4>
+                    <p class="book-author">Dafydd Stuttard, Marcus Pinto</p>
+                    <p>La biblia del testing de seguridad web. Cubre OWASP Top 10 a fondo.</p>
+                    <span class="book-level"><i class="fas fa-signal"></i> Intermedio-Avanzado</span>
+                </div>
+                <div class="book-card">
+                    <div class="book-cover blue"><i class="fas fa-shield-alt"></i></div>
+                    <h4>Blue Team Handbook</h4>
+                    <p class="book-author">Don Murdoch</p>
+                    <p>Referencia rápida para Blue Teamers: SIEM, IR, log analysis, threat hunting.</p>
+                    <span class="book-level"><i class="fas fa-signal"></i> Intermedio</span>
+                </div>
+                <div class="book-card">
+                    <div class="book-cover green"><i class="fab fa-linux"></i></div>
+                    <h4>The Linux Command Line</h4>
+                    <p class="book-author">William Shotts</p>
+                    <p>Domina la línea de comandos de Linux desde cero. Esencial para todo cybersecurity.</p>
+                    <span class="book-level"><i class="fas fa-signal"></i> Principiante</span>
+                </div>
+                <div class="book-card">
+                    <div class="book-cover purple"><i class="fas fa-virus"></i></div>
+                    <h4>Practical Malware Analysis</h4>
+                    <p class="book-author">Michael Sikorski</p>
+                    <p>El libro definitivo para análisis de malware: estático, dinámico y reverse engineering.</p>
+                    <span class="book-level"><i class="fas fa-signal"></i> Avanzado</span>
+                </div>
+                <div class="book-card">
+                    <div class="book-cover orange"><i class="fas fa-building"></i></div>
+                    <h4>Active Directory Attack & Defense</h4>
+                    <p class="book-author">Andrew Robbins</p>
+                    <p>Guía completa para atacar y defender entornos Active Directory.</p>
+                    <span class="book-level"><i class="fas fa-signal"></i> Intermedio-Avanzado</span>
+                </div>
+                <div class="book-card">
+                    <div class="book-cover red"><i class="fas fa-explosion"></i></div>
+                    <h4>Hacking: The Art of Exploitation</h4>
+                    <p class="book-author">Jon Erickson</p>
+                    <p>Entiende la explotación desde los fundamentos: buffer overflows, shellcode, networking.</p>
+                    <span class="book-level"><i class="fas fa-signal"></i> Avanzado</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- CHEATSHEETS -->
+        <section class="recursos-section">
+            <h2><i class="fas fa-file-code"></i> Cheatsheets Esenciales</h2>
+            <p class="section-desc">Referencias rápidas que deberías tener siempre a mano.</p>
+
+            <div class="cheatsheets-grid">
+                <div class="cheat-card">
+                    <h4><i class="fas fa-terminal"></i> Linux Commands</h4>
+                    <div class="code-block small">
+                        <pre><code># Navegación
+pwd, ls -la, cd, find, locate
+
+# Archivos
+cp, mv, rm, mkdir, touch, cat, nano
+
+# Procesos
+ps aux, top, kill, bg, fg
+
+# Red
+ip a, ss -tlnp, ping, curl, wget
+
+# Permisos
+chmod 777, chown, chgrp
+
+# Búsqueda
+grep -r "pattern", find / -name "*.txt"</code></pre>
+                    </div>
+                </div>
+                <div class="cheat-card">
+                    <h4><i class="fas fa-network-wired"></i> Nmap</h4>
+                    <div class="code-block small">
+                        <pre><code># Básico
+nmap target
+
+# Completo
+nmap -sV -sC -O -p- target
+
+# Stealth
+nmap -sS -T2 -Pn target
+
+# Scripts
+nmap --script=vuln target
+
+# Output
+nmap -oA result target</code></pre>
+                    </div>
+                </div>
+                <div class="cheat-card">
+                    <h4><i class="fas fa-code"></i> SQL Injection</h4>
+                    <div class="code-block small">
+                        <pre><code># Auth bypass
+' OR 1=1--
+admin' --
+'/*
+
+# UNION
+' UNION SELECT NULL,NULL--
+' UNION SELECT username,password FROM users--
+
+# SQLMap
+sqlmap -u "URL?id=1" --dbs</code></pre>
+                    </div>
+                </div>
+                <div class="cheat-card">
+                    <h4><i class="fas fa-key"></i> Privilege Escalation</h4>
+                    <div class="code-block small">
+                        <pre><code># Linux
+sudo -l
+find / -perm -4000 2>/dev/null
+cat /etc/crontab
+uname -a
+
+# Windows
+whoami /all
+net user
+systeminfo
+wmic qfe list</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BEST PRACTICES -->
+        <section class="recursos-section">
+            <h2><i class="fas fa-star"></i> Best Practices por Área</h2>
+            <p class="section-desc">Guías de mejores prácticas profesionales que debes conocer.</p>
+
+            <div class="bestpractices-grid">
+                <div class="bp-card">
+                    <div class="bp-icon red"><i class="fas fa-crosshairs"></i></div>
+                    <h4>Red Team</h4>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Siempre ten autorización por escrito</li>
+                        <li><i class="fas fa-check"></i> Documenta cada paso y hallazgo</li>
+                        <li><i class="fas fa-check"></i> Reporta hallazgos críticos de inmediato</li>
+                        <li><i class="fas fa-check"></i> Respeta el alcance definido</li>
+                        <li><i class="fas fa-check"></i> Incluye lecciones defensivas en tu reporte</li>
+                    </ul>
+                </div>
+                <div class="bp-card">
+                    <div class="bp-icon blue"><i class="fas fa-shield-alt"></i></div>
+                    <h4>Blue Team</h4>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Mantén logs centralizados (SIEM)</li>
+                        <li><i class="fas fa-check"></i> Implementa MFA en todo</li>
+                        <li><i class="fas fa-check"></i> Actualiza y parchea regularmente</li>
+                        <li><i class="fas fa-check"></i> Segmenta tu red</li>
+                        <li><i class="fas fa-check"></i> Ejecuta tabletop exercises</li>
+                    </ul>
+                </div>
+                <div class="bp-card">
+                    <div class="bp-icon cloud"><i class="fas fa-cloud"></i></div>
+                    <h4>Cloud Security</h4>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Nunca hardcodear credenciales</li>
+                        <li><i class="fas fa-check"></i> Usar IAM least privilege</li>
+                        <li><i class="fas fa-check"></i> Habilitar CloudTrail/audit logs</li>
+                        <li><i class="fas fa-check"></i> Usar Vault para secrets</li>
+                        <li><i class="fas fa-check"></i> Escanear IaC antes de deployar</li>
+                    </ul>
+                </div>
+                <div class="bp-card">
+                    <div class="bp-icon purple"><i class="fas fa-code-branch"></i></div>
+                    <h4>DevSecOps</h4>
+                    <ul>
+                        <li><i class="fas fa-check"></i> SAST en el pipeline CI/CD</li>
+                        <li><i class="fas fa-check"></i> SCA para dependencias</li>
+                        <li><i class="fas fa-check"></i> Container scanning</li>
+                        <li><i class="fas fa-check"></i> Secrets scanning en repos</li>
+                        <li><i class="fas fa-check"></i> Infrastructure as Code scanning</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- CASE STUDIES -->
+        <section class="recursos-section">
+            <h2><i class="fas fa-briefcase"></i> Casos de Estudio Reales</h2>
+            <p class="section-desc">Aprende de los mayores incidentes de seguridad de la historia.</p>
+
+            <div class="cases-grid">
+                <div class="case-card critical">
+                    <div class="case-severity critical">CRÍTICO</div>
+                    <h4><i class="fas fa-truck"></i> Colonial Pipeline</h4>
+                    <span class="case-type">Ransomware • 2021</span>
+                    <p>Ataque que paralizó el oleoducto más grande de EE.UU. durante 6 días. Causa: contraseña reutilizada en VPN sin MFA.</p>
+                    <div class="case-lessons">
+                        <strong>Lecciones:</strong>
+                        <span>MFA</span>
+                        <span>Segmentación de red</span>
+                        <span>Backup offline</span>
+                    </div>
+                </div>
+                <div class="case-card critical">
+                    <div class="case-severity critical">CRÍTICO</div>
+                    <h4><i class="fas fa-link"></i> SolarWinds</h4>
+                    <span class="case-type">Supply Chain • 2020</span>
+                    <p>Compromiso masivo de cadena de suministro. El backdoor SUNBURST afectó a 18,000+ organizaciones incluyendo agencias gubernamentales.</p>
+                    <div class="case-lessons">
+                        <strong>Lecciones:</strong>
+                        <span>Zero Trust</span>
+                        <span>SBOM</span>
+                        <span>Code signing</span>
+                    </div>
+                </div>
+                <div class="case-card critical">
+                    <div class="case-severity critical">CRÍTICO</div>
+                    <h4><i class="fas fa-bug"></i> Log4Shell</h4>
+                    <span class="case-type">Vulnerabilidad Web • 2021</span>
+                    <p>CVE-2021-44228 en la librería Log4j más usada del mundo. Afectó a millones de aplicaciones Java.</p>
+                    <div class="case-lessons">
+                        <strong>Lecciones:</strong>
+                        <span>Dependency Mgmt</span>
+                        <span>Patching</span>
+                        <span>SBOM</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4><i class="fas fa-shield-halved"></i> CDPN</h4>
+                    <p>Formando profesionales de ciberdefensa en todo el mundo.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Plataforma</h4>
+                    <ul>
+                        <li><a href="app.html#mod-00">Introducción</a></li>
+                        <li><a href="app.html#mod-01">Ciberseguridad Ofensiva</a></li>
+                        <li><a href="app.html#mod-03bt">Blue Team</a></li>
+                        <li><a href="app.html#mod-04pt">Purple Team</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Secciones</h4>
+                    <ul>
+                        <li><a href="retos.html">Retos</a></li>
+                        <li><a href="herramientas.html">Herramientas</a></li>
+                        <li><a href="labs.html">Labs</a></li>
+                        <li><a href="recursos.html">Recursos</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Comunidad</h4>
+                    <ul>
+                        <li><a href="https://github.com/0xvanguard/CyberDefense-Pro-Network" target="_blank"><i class="fab fa-github"></i> GitHub</a></li>
+                        <li><a href="#"><i class="fab fa-discord"></i> Discord</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 CyberDefense Pro Network. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

