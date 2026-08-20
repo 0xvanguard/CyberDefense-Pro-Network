@@ -34,6 +34,17 @@ Al completar los primeros módulos de Purple Team, el estudiante debería ser ca
 
 ---
 
+## 2.5 Módulos del área
+
+| Módulo | Contenido | Estado |
+|---|---|---|
+| [`01-purple-endpoint-procesos-telemetria/`](./01-purple-endpoint-procesos-telemetria/) | Telemetría de host: procesos, comandos y detección en endpoint | ✅ Base |
+| [`02-detection-engineering/`](./02-detection-engineering/) | Ciclo de vida de detecciones, tipos, **métricas (precision/recall/MTTD/MTTR)** y cobertura ATT&CK | ✅ Completo |
+| [`03-adversary-emulation/`](./03-adversary-emulation/) | **Atomic Red Team + CALDERA** para validar detecciones con emulación | ✅ Completo |
+| [`laboratorios/`](./laboratorios/) | Pack Purple Web NovaPay (login storm, rutas raras) | ✅ Base |
+
+---
+
 ## 3. Pack Purple Web NovaPay v1 (ruta sugerida)
 
 Como primer conjunto de ejercicios integrados, esta área ofrece el **Pack Purple Web NovaPay v1**, una ruta sugerida que conecta los módulos ofensivos y defensivos ya construidos en torno al portal de merchants de NovaPay Labs.
