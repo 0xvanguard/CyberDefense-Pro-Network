@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="es"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ruta Atacante (Red Team) | CDPN</title>
+<link rel="icon" type="image/svg+xml" href="../../../favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="../../../assets/icons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../../../assets/icons/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../../../assets/icons/apple-touch-icon.png">
+<link rel="manifest" href="../../../manifest.webmanifest">
+<meta name="description" content="Ruta de aprendizaje Red Team / Pentest: metodología, herramientas, labs y certificaciones para empezar en el lado ofensivo.">
+<meta name="theme-color" content="#0a0e1a">
+<meta name="color-scheme" content="dark light">
+<link rel="canonical" href="https://0xvanguard.github.io/CyberDefense-Pro-Network/modules/fundamentos/rutas/ruta-atacante.html">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../../assets/css/global.css">
+<link rel="stylesheet" href="../../../assets/css/module.css">
+<link rel="stylesheet" href="../../../assets/css/a11y.css">
+</head>
+<body>
+<a href="#main" class="skip-link">Saltar al contenido principal</a>
+
+<nav class="navbar" role="navigation" aria-label="Navegación principal">
+<div class="nav-container">
+<a href="../../../index.html" class="nav-logo"><i class="fas fa-shield-halved"></i> CDPN</a>
+<button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false"><i class="fas fa-bars" aria-hidden="true"></i></button>
+<ul class="nav-menu" id="navMenu">
+<li><a href="../../../index.html">Inicio</a></li>
+<li><a href="../index.html">Fundamentos</a></li>
+<li><a href="../../introduccion/">Introducción</a></li>
+<li><a href="../../red-team/">Red Team</a></li>
+<li><a href="../../laboratorios/">Labs</a></li>
+<li><a href="../../recursos/">Recursos</a></li>
+</ul>
+<div class="nav-actions">
+<div class="lang-switcher" id="langSwitcher">
+<button class="lang-btn" id="langBtn" aria-label="Cambiar idioma" aria-haspopup="true" aria-expanded="false">
+  <i class="fas fa-globe" aria-hidden="true"></i> <span id="langLabel">ES</span>
+</button>
+<div class="lang-dropdown" id="langDropdown" role="menu">
+  <button class="lang-option" data-lang="es" role="menuitem">Español</button>
+  <button class="lang-option" data-lang="en" role="menuitem">English</button>
+</div>
+</div>
+<a href="https://github.com/0xvanguard/CyberDefense-Pro-Network" class="nav-github" target="_blank" rel="noopener"><i class="fab fa-github"></i></a>
+</div>
+</div>
+</nav>
+
+<main id="main">
+<div class="breadcrumb">
+  <a href="../../../index.html">CDPN</a><span>/</span>
+  <a href="../index.html">Fundamentos</a><span>/</span>
+  <a href="../index.html">Rutas</a><span>/</span>
+  <span>⚔️ Atacante</span>
+</div>
+
+<section class="module-hero" style="--hero-glow: rgba(231, 76, 60, 0.20);">
+  <div class="module-hero-content">
+    <h1>⚔️ Ruta <span class="gradient-text">Atacante</span></h1>
+    <p>Para gente curiosa por saber cómo se rompen las cosas. <strong>Con responsabilidad</strong>: ética primero, ley primero, siempre.</p>
+  </div>
+</section>
+
+<div class="content-block">
+  <h3><i class="fas fa-quote-left"></i> Mentalidad</h3>
+  <div class="hero-quote">
+    <p>"Si rompo esto aquí, ¿qué roto en producción? ¿Quién se entera? ¿Cómo se defiende?"</p>
+  </div>
+  <p>Antes de empezar, lee <a href="../07-etica-y-leyes.html">07 — Ética y leyes</a>. Si no estás cómodo con ese marco, esta ruta no es para ti.</p>
+</div>
+
+<div class="content-block">
+  <h3><i class="fas fa-user-tie"></i> Roles Red Team</h3>
+  <ul>
+    <li><strong>Pentester</strong> — auditorías cortas (1-2 semanas).</li>
+    <li><strong>Red Teamer</strong> — simulación prolongada de un adversary.</li>
+    <li><strong>Bug Bounty Hunter</strong> — freelance, por recompensa.</li>
+    <li><strong>Exploit Developer</strong> — escribe los exploits que otros usan.</li>
+  </ul>
+</div>
+
+<div class="content-block">
+  <h3><i class="fas fa-tools"></i> Refuerza la base técnica</h3>
+  <ul>
+    <li><a href="../03-internet-y-redes.html">03 — Internet y redes</a>: TCP, HTTP, DNS, TLS.</li>
+    <li><a href="../04-sistema-operativo-y-terminal.html">04 — SO y terminal</a>: vive en la terminal.</li>
+    <li>Aprende algo de scripting: <strong>Python es obligatorio</strong>, Bash también.</li>
+    <li>Repasa <a href="../06-vulnerabilidades.html">06 — Vulnerabilidades</a>: OWASP, CVEs, CWE.</li>
+  </ul>
+</div>
+
+<div class="content-block">
+  <h3><i class="fas fa-folder-open"></i> Carpetas del repo para Red Team</h3>
+  <ol>
+    <li><a href="../../../02-pentesting-red-team/"><code>02-pentesting-red-team/</code></a> — Punto de entrada en español con labs específicos.</li>
+    <li><a href="../../../02-pentesting-red-team/teoria/"><code>.../teoria/</code></a> — Metodología pentest vs red team.</li>
+    <li><a href="../../../02-pentesting-red-team/laboratorios/"><code>.../laboratorios/</code></a> — Lab concreto: pentest web.</li>
+    <li><a href="../../../01-CIBERSEGURIDAD/02-pentesting-red-team/"><code>01-CIBERSEGURIDAD/02-pentesting-red-team/</code></a> — Pentest desde el superset.</li>
+    <li><a href="../../../01-CIBERSEGURIDAD/01-reconocimiento-osint/"><code>.../01-reconocimiento-osint/</code></a> — OSINT.</li>
+    <li><a href="../../../01-CIBERSEGURIDAD/03-analisis-vulnerabilidades/"><code>.../03-analisis-vulnerabilidades/</code></a> — Análisis de bugs.</li>
+    <li><a href="../../../01-CIBERSEGURIDAD/04-explotacion-web/"><code>.../04-explotacion-web/</code></a> — Explotación web.</li>
+    <li><a href="../../../01-CIBERSEGURIDAD/05-post-explotacion/"><code>.../05-post-explotacion/</code></a> — Qué hacer después.</li>
+    <li><a href="../../../01-CIBERSEGURIDAD/07-ingenieria-social/"><code>.../07-ingenieria-social/</code></a> — Social engineering.</li>
+    <li><a href="../../../01-CIBERSEGURIDAD/bug-bounty-hunting/"><code>.../bug-bounty-hunting/</code></a> — Carrera bug bounty.</li>
+    <li><a href="../../../01-CIBERSEGURIDAD/pentester-red-team/"><code>.../pentester-red-team/</code></a> — Rol pentester.</li>
+  </ol>
+</div>
+
+<div class="content-block">
+  <h3><i class="fas fa-list-ol"></i> Las fases del pentest</h3>
+  <ol>
+    <li><strong>Pre-engagement</strong> — contrato, scope, reglas.</li>
+    <li><strong>Reconocimiento</strong> (pasivo / activo).</li>
+    <li><strong>Enumeración</strong> — servicios, versiones, users.</li>
+    <li><strong>Análisis de vulnerabilidades.</strong></li>
+    <li><strong>Explotación.</strong></li>
+    <li><strong>Post-explotación</strong> — pivot, persistencia.</li>
+    <li><strong>Reporte.</strong></li>
+  </ol>
+  <p>Las herramientas por fase:</p>
+<pre><code>nmap → masscan → rustscan
+├── whatweb → Wappalyzer
+├── gobuster → feroxbuster
+├── Burp Suite / ZAP
+├── Metasploit / searchsploit
+├── LinPEAS / WinPEAS (priv esc)
+└── BloodHound (Active Directory)</code></pre>
+</div>
+
+<div class="content-block">
+  <h3><i class="fas fa-trophy"></i> Plataformas para practicar</h3>
+  <table class="data-table">
+    <thead><tr><th>Plataforma</th><th>Tipo</th></tr></thead>
+    <tbody>
+      <tr><td><a href="https://tryhackme.com/" target="_blank" rel="noopener">TryHackMe</a></td><td>"Jr Penetration Tester" path (introductorio)</td></tr>
+      <tr><td><a href="https://www.hackthebox.com/" target="_blank" rel="noopener">HackTheBox</a></td><td>Starting Point (gratis)</td></tr>
+      <tr><td><a href="https://portswigger.net/web-security" target="_blank" rel="noopener">PortSwigger Academy</a></td><td>Labs web GRATIS</td></tr>
+      <tr><td><a href="https://pentesterlab.com/" target="_blank" rel="noopener">PentesterLab</a></td><td>Web + binary</td></tr>
+      <tr><td>DVWA / WebGoat / OWASP Juice Shop (Docker)</td><td>Apps vulnerables locales</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="content-block">
+  <h3><i class="fas fa-file-alt"></i> Reporte — la mitad del trabajo</h3>
+  <p>El éxito de un pentest se mide <strong>por el reporte, no por los hallazgos</strong>.</p>
+  <p>Estructura recomendada:</p>
+  <ol>
+    <li>Resumen ejecutivo (1 página, sin jerga, para CISO).</li>
+    <li>Metodología.</li>
+    <li>Hallazgos (Título + severidad + CVE/CWE/CVSS, descripción, pasos, impacto, evidencia, recomendación).</li>
+    <li>Conclusiones.</li>
+  </ol>
+  <p>Templates disponibles en <a href="../../../02-pentesting-red-team/portafolio/"><code>02-pentesting-red-team/portafolio/</code></a>.</p>
+</div>
+
+<div class="content-block">
+  <h3><i class="fas fa-certificate"></i> Certificaciones sugeridas</h3>
+  <ol>
+    <li><strong>eJPT</strong> (eLearnSecurity Junior Penetration Tester) — primer paso accesible.</li>
+    <li><strong>CompTIA PenTest+</strong> — base general.</li>
+    <li><strong>PNPT</strong> (Practical Network Penetration Tester) — práctico.</li>
+    <li><strong>OSCP</strong> — la referencia de facto en pentest.</li>
+    <li><strong>OSWE</strong> — si te enfocas en web.</li>
+    <li><strong>CRTO</strong> — si te enfocas en red team moderno.</li>
+    <li><strong>CRTP</strong> — Active Directory.</li>
+  </ol>
+</div>
+
+<div class="content-block" style="background: linear-gradient(135deg, rgba(231,76,60,0.10), rgba(243,156,18,0.10));">
+  <h3><i class="fas fa-calendar-alt"></i> Plan de 30 días</h3>
+  <ul>
+    <li><strong>Semana 1:</strong> Instala Kali o tira una VM Ubuntu. Aprende 5 comandos diarios. Termina <a href="../04-sistema-operativo-y-terminal.html">04 — SO</a>.</li>
+    <li><strong>Semana 2:</strong> Completa TryHackMe "Jr Penetration Tester" hasta la mitad. Lee <a href="../08-herramientas-esenciales.html">08 — Herramientas</a>.</li>
+    <li><strong>Semana 3:</strong> Resuelve 3 retos de PortSwigger Academy (XSS, SQLi, SSRF).</li>
+    <li><strong>Semana 4:</strong> Abre <a href="../../../02-pentesting-red-team/"><code>02-pentesting-red-team/</code></a> y haz el lab. Escribe tu primer mini-reporte.</li>
+  </ul>
+</div>
+
+<div class="content-block" style="margin-top: 3rem;">
+  <div class="info-box" style="border-left-color: #e74c3c;">
+    <div class="info-title"><i class="fas fa-undo"></i> Volver atrás</div>
+    <p><a href="../09-como-seguir-este-repo.html">Volver al mapa de rutas</a> · <a href="ruta-defensor.html">Ruta Defensor</a> · <a href="ruta-ai-security.html">Ruta AI Security</a></p>
+  </div>
+</div>
+
+</main>
+
+<footer class="footer">
+<div class="footer-content">
+<div class="footer-grid">
+  <div class="footer-col"><h4><i class="fas fa-shield-halved"></i> CDPN</h4><p>Ciberdefensa profesional.</p></div>
+  <div class="footer-col">
+    <h4>Rutas</h4>
+    <ul>
+      <li><a href="../index.html">Fundamentos</a></li>
+      <li><a href="ruta-defensor.html">🛡️ Defensor</a></li>
+      <li>⚔️ Atacante</li>
+      <li><a href="ruta-ai-security.html">🤖 AI</a></li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <h4>Módulos</h4>
+    <ul>
+      <li><a href="../../introduccion/">Introducción</a></li>
+      <li><a href="../../red-team/">Red Team</a></li>
+      <li><a href="../../blue-team/">Blue Team</a></li>
+      <li><a href="../../ai-agents/">AI Security</a></li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <h4>GitHub</h4>
+    <ul><li><a href="https://github.com/0xvanguard/CyberDefense-Pro-Network"><i class="fab fa-github"></i> Repo</a></li></ul>
+  </div>
+</div>
+<div class="footer-bottom"><p>&copy; 2026 CDPN — CyberDefense Pro Network.</p></div>
+</div>
+</footer>
+
+<script src="../../../assets/js/i18n.js"></script>
+<script src="../../../assets/js/i18n-lang.js"></script>
+<script src="../../../assets/js/shared.js"></script>
+</body>
+</html>

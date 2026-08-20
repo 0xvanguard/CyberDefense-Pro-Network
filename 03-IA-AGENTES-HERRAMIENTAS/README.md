@@ -1,3 +1,7 @@
+> 🚀 **¿Eres principiante?** Antes de este módulo, revisa la **[base común del repo](../00-FUNDAMENTOS/)** (1 carpeta atrás). La seguridad de IA asume que ya entiendes vulnerabilidades, redes y herramientas generales.
+>
+> Elige tu ruta de aprendizaje: 🛡️ [Defensor](../00-FUNDAMENTOS/rutas/ruta-defensor.md) · ⚔️ [Atacante](../00-FUNDAMENTOS/rutas/ruta-atacante.md) · 🤖 [AI Security](../00-FUNDAMENTOS/rutas/ruta-ai-security.md)
+
 # 🤖 Área 3 — IA, Agentes y Automatización en Ciberseguridad
 
 Bienvenido a la **Área de IA Aplicada a Seguridad**, donde se entrena el "cerebro adicional" de un Purple Team / DevSecOps moderno: agentes, automatización y seguridad de modelos de lenguaje.

@@ -18,6 +18,8 @@
  ╚═════╝ ╚═╝  ╚═══╝╚═╝  ╚═══╝  ╚══════╝╚═╝  ╚═╝╚══════╝╚═╝╚═════╝ ╚═╝  ╚═╝ ╚═════╝
 ```
 
+> 🚀 **¿Eres principiante?** Antes de explorar este repo, revisa la **[base común para principiantes](./00-FUNDAMENTOS/)**. Contiene 9 archivos temáticos + 3 rutas (Blue Team, Red Team, AI Security) y está pensada para que cualquier persona pueda construir una base sólida antes de saltar a los módulos especializados.
+
 # Plataforma de Estudio de Ciberseguridad y Seguridad de la Información
 
 **Aprende haciendo. Demuestra con evidencia. Construye tu carrera.**

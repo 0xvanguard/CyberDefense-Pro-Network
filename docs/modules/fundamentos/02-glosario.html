@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="es"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>02 — Glosario | CDPN</title>
+<link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="../../assets/icons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../../assets/icons/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../../assets/icons/apple-touch-icon.png">
+<link rel="manifest" href="../../manifest.webmanifest">
+<meta name="description" content="Glosario con ~70 términos esenciales de ciberseguridad: ataque, blue team, CVE, CVSS, red team, OWASP, SOC, SIEM, malware y muchos más.">
+<meta name="theme-color" content="#0a0e1a">
+<meta name="color-scheme" content="dark light">
+<link rel="canonical" href="https://0xvanguard.github.io/CyberDefense-Pro-Network/modules/fundamentos/02-glosario.html">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/css/global.css">
+<link rel="stylesheet" href="../../assets/css/module.css">
+<link rel="stylesheet" href="../../assets/css/a11y.css">
+</head>
+<body>
+<a href="#main" class="skip-link">Saltar al contenido principal</a>
+
+<nav class="navbar" role="navigation" aria-label="Navegación principal">
+<div class="nav-container">
+<a href="../../index.html" class="nav-logo"><i class="fas fa-shield-halved"></i> CDPN</a>
+<button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false"><i class="fas fa-bars" aria-hidden="true"></i></button>
+<ul class="nav-menu" id="navMenu">
+<li><a href="../../index.html">Inicio</a></li>
+<li><a href="../introduccion/">Introducción</a></li>
+<li><a href="../red-team/">Red Team</a></li>
+<li><a href="../blue-team/">Blue Team</a></li>
+<li><a href="../purple-team/">Purple Team</a></li>
+<li><a href="../ai-agents/">AI Security</a></li>
+<li><a href="../laboratorios/">Labs</a></li>
+<li><a href="../recursos/">Recursos</a></li>
+<li><a href="index.html"><strong>Fundamentos</strong></a></li>
+</ul>
+<div class="nav-actions">
+<div class="lang-switcher" id="langSwitcher">
+<button class="lang-btn" id="langBtn" aria-label="Cambiar idioma" aria-haspopup="true" aria-expanded="false">
+  <i class="fas fa-globe" aria-hidden="true"></i> <span id="langLabel">ES</span>
+</button>
+<div class="lang-dropdown" id="langDropdown" role="menu">
+  <button class="lang-option" data-lang="es" role="menuitem">Español</button>
+  <button class="lang-option" data-lang="en" role="menuitem">English</button>
+</div>
+</div>
+<a href="https://github.com/0xvanguard/CyberDefense-Pro-Network" class="nav-github" target="_blank" rel="noopener"><i class="fab fa-github"></i></a>
+</div>
+</div>
+</nav>
+
+<main id="main">
+<div class="breadcrumb">
+  <a href="../../index.html">CDPN</a><span>/</span>
+  <a href="index.html">Fundamentos</a><span>/</span>
+  <span>02 — Glosario</span>
+</div>
+
+<section class="module-hero" style="--hero-glow: rgba(46, 204, 113, 0.10);">
+  <div class="module-hero-content">
+    <h1>02 — <span class="gradient-text">Glosario</span> de términos esenciales</h1>
+    <p>~70 términos que verás 1000 veces. Referencia rápida. Vuelve aquí cada vez que un archivo nuevo use un término que no conoces.</p>
+  </div>
+</section>
+
+<div class="content-block">
+  <div class="info-box" style="border-left-color: #3498db;">
+    <div class="info-title"><i class="fas fa-info-circle"></i> Cómo usar este archivo</div>
+    <p>No hace falta leerlo entero. <strong>Términos en negrita</strong> son los más importantes. Los enlaces apuntan a otros archivos de esta base o a carpetas del repo.</p>
+  </div>
+</div>
+
+<div class="content-block">
+  <h3><i class="fas fa-a"></i> A – E</h3>
+  <dl class="glossary">
+    <dt><strong>Ataque</strong></dt><dd>Cualquier intento de comprometer la Confidencialidad, Integridad o disponibilidad de un sistema.</dd>
+
+    <dt>APT (Advanced Persistent Threat)</dt><dd>Atacante sofisticado (a menudo estatal) que entra, se queda y observa durante meses.</dd>
+
+    <dt>Attack Surface</dt><dd>La "superficie atacable": todos los puntos por donde un atacante podría entrar.</dd>
+
+    <dt>Authentication</dt><dd>Probar quién eres (sabes algo, tienes algo, eres algo). Ver <strong>MFA</strong>.</dd>
+
+    <dt>Authorization</dt><dd>Qué se te permite hacer una vez autenticado.</dd>
+
+    <dt>Backdoor</dt><dd>Puerta trasera: acceso oculto que evita la autenticación normal.</dd>
+
+    <dt><strong>Blue Team</strong></dt><dd>Equipo de defensa. Mira <a href="01-que-es-ciberseguridad.html">01 — Qué es</a>.</dd>
+
+    <dt>Bug Bounty</dt><dd>Programa donde una empresa paga a hackers éticos por reportar vulnerabilidades.</dd>
+
+    <dt>CIA Triad</dt><dd>Confidencialidad, Integridad, Disponibilidad (Availability). Los 3 pilares.</dd>
+
+    <dt>CVE (Common Vulnerabilities and Exposures)</dt><dd>ID único para una vulnerabilidad pública. Ej: <code>CVE-2017-0144</code>.</dd>
+
+    <dt>CVSS</dt><dd>Sistema de 0 a 10 para puntuar la gravedad de un CVE.</dd>
+
+    <dt>CWE</dt><dd>Categoría de debilidad de software (la "familia" del problema).</dd>
+
+    <dt>DDoS (Distributed Denial of Service)</dt><dd>Tumbar un servicio enviándole tráfico desde miles de máquinas.</dd>
+
+    <dt>DNS</dt><dd>La "agenda" de internet: traduce <code>google.com</code> a <code>142.250.190.78</code>.</dd>
+
+    <dt>Endpoint</dt><dd>Cualquier dispositivo conectado: laptop, móvil, servidor, IoT.</dd>
+
+    <dt>Enumeration</dt><dd>Fase del pentest donde recopilas usuarios, recursos, servicios.</dd>
+
+    <dt>Exploit</dt><dd>Código que aprovecha una vulnerabilidad.</dd>
+  </dl>
+</div>
+
+<div class="content-block">
+  <h3><i class="fas fa-f"></i> F – M</h3>
+  <dl class="glossary">
+    <dt>Firewall</dt><dd>Filtra el tráfico de red según reglas. Hay de hardware y de software.</dd>
+
+    <dt>Forensics</dt><dd>Investigación post-incidente para entender qué pasó, cómo y cuándo.</dd>
+
+    <dt>Hash</dt><dd>Función que convierte cualquier dato en una cadena fija de tamaño. Ver <a href="05-criptografia-basica.html">05 — Cripto</a>.</dd>
+
+    <dt>Honeypot</dt><dd>Sistema señuelo: parece real pero sirve para detectar y estudiar atacantes.</dd>
+
+    <dt>HTTP / HTTPS</dt><dd>Protocolo de la web. La <em>S</em> significa "con TLS" (cifrado).</dd>
+
+    <dt>IDS / IPS</dt><dd>Intrusion Detection / Prevention System. Detecta o bloquea ataques.</dd>
+
+    <dt>Incident</dt><dd>Un evento de seguridad confirmado que requiere respuesta.</dd>
+
+    <dt>Ing Social</dt><dd>Engañar a personas para que revelen info o hagan algo. Ver <strong>Phishing</strong>.</dd>
+
+    <dt>IOC (Indicator of Compromise)</dt><dd>Huella que deja un ataque: IP, hash, dominio, patrón.</dd>
+
+    <dt>IP (Internet Protocol)</dt><dd>Dirección numérica del dispositivo en una red. <code>192.168.1.1</code>.</dd>
+
+    <dt>JWT</dt><dd>Token firmado para autenticación web sin estado.</dd>
+
+    <dt>Kill Chain</dt><dd>Pasos típicos de un ataque: reconocimiento → arma → entrega → explotación → instalación → command &amp; control → acciones.</dd>
+
+    <dt>Lateral Movement</dt><dd>Una vez dentro, el atacante se mueve a otros sistemas de la misma red.</dd>
+
+    <dt>Linux</dt><dd>Familia de SO (Ubuntu, Debian, Kali) muy usada en servidores y seguridad.</dd>
+
+    <dt>Malware</dt><dd>Software malicioso. Incluye virus, troyanos, ransomware, spyware.</dd>
+
+    <dt><strong>MFA (Multi-Factor Authentication)</strong></dt><dd>Pedir 2+ pruebas de identidad. Bloquea el 99% de ataques de cuentas.</dd>
+
+    <dt>MITM (Man in the Middle)</dt><dd>Atacante que intercepta comunicación entre dos partes.</dd>
+  </dl>
+</div>
+
+<div class="content-block">
+  <h3><i class="fas fa-n"></i> N – S</h3>
+  <dl class="glossary">
+    <dt>Nmap</dt><dd>Escáner de puertos. La navaja suiza del reconocimiento.</dd>
+
+    <dt>OSINT</dt><dd>Recopilar info de fuentes públicas: redes sociales, leaks, DNS.</dd>
+
+    <dt><strong>OWASP</strong></dt><dd>Organización que mantiene el famoso <em>Top 10</em> de vulnerabilidades web.</dd>
+
+    <dt>P0 / P1 / P2</dt><dd>Prioridades: P0 = crítico (cae producción), P1 = urgente, P2 = importante.</dd>
+
+    <dt>Password Hashing</dt><dd>Guardar contraseñas como hash (no en texto plano).</dd>
+
+    <dt>Patch</dt><dd>Actualización que corrige una vulnerabilidad.</dd>
+
+    <dt>Pentest</dt><dd>Test de penetración autorizado. Buscar vulns con permiso.</dd>
+
+    <dt>Phishing</dt><dd>Email/mensaje fraudulento que imita a alguien legítimo.</dd>
+
+    <dt>Port (puerto)</dt><dd>"Puerta" de un servicio en una máquina. HTTP=80, HTTPS=443, SSH=22.</dd>
+
+    <dt>Privilege Escalation</dt><dd>Conseguir más permisos de los que deberías tener.</dd>
+
+    <dt>Purple Team</dt><dd>Equipo mixto red + blue. Mira <a href="01-que-es-ciberseguridad.html">01 — Qué es</a>.</dd>
+
+    <dt>Ransomware</dt><dd>Malware que cifra tus datos y pide rescate.</dd>
+
+    <dt><strong>Red Team</strong></dt><dd>Equipo ofensivo. Mira <a href="01-que-es-ciberseguridad.html">01 — Qué es</a>.</dd>
+
+    <dt>Reverse Shell</dt><dd>Conexión que la víctima abre hacia el atacante. Común post-exploit.</dd>
+
+    <dt>Risk</dt><dd>Probabilidad × Impacto. Lo que tu jefe quiere ver para presupuesto.</dd>
+
+    <dt>SIEM</dt><dd>Sistema central que recoge logs y dispara alertas (Splunk, Elastic, Wazuh).</dd>
+
+    <dt><strong>SOC (Security Operations Center)</strong></dt><dd>El equipo que vigila 24/7 con ayuda del SIEM.</dd>
+
+    <dt>SQL Injection</dt><dd>Inyectar SQL en un input para manipular la base de datos.</dd>
+
+    <dt>SSL/TLS</dt><dd>Protocolo que cifra las comunicaciones en internet. La S de HTTPS.</dd>
+  </dl>
+</div>
+
+<div class="content-block">
+  <h3><i class="fas fa-t"></i> T – Z</h3>
+  <dl class="glossary">
+    <dt>Threat</dt><dd>Amenaza: algo que podría causar daño.</dd>
+
+    <dt>Threat Intelligence</dt><dd>Estudia amenazas: quién ataca, cómo, por qué, qué busca.</dd>
+
+    <dt>Threat Hunting</dt><dd>Buscar activamente atacantes ya dentro pero aún no detectados.</dd>
+
+    <dt>Token</dt><dd>Cadena que prueba que estás autenticado sin guardar sesión.</dd>
+
+    <dt>TTP</dt><dd>Tactics, Techniques, Procedures. Lo modela MITRE ATT&amp;CK.</dd>
+
+    <dt>Vulnerability</dt><dd>Debilidad que un atacante puede explotar.</dd>
+
+    <dt>WAF (Web Application Firewall)</dt><dd>Firewall especializado en tráfico HTTP/HTTPS.</dd>
+
+    <dt>Wireshark</dt><dd>Analizador de tráfico de red. Captura paquetes para analizarlos.</dd>
+
+    <dt>XSS (Cross-Site Scripting)</dt><dd>Inyectar JS malicioso en una página web.</dd>
+
+    <dt>Zero-Day</dt><dd>Vulnerabilidad recién descubierta para la que aún no hay parche.</dd>
+  </dl>
+</div>
+
+<div class="content-block">
+  <h3><i class="fas fa-tag"></i> Siglas que verás mucho</h3>
+  <div class="info-grid">
+    <div class="info-col"><h4>Operaciones</h4><ul>
+      <li><strong>CTF</strong> — Capture The Flag: retos de hacking</li>
+      <li><strong>CSIRT / CERT</strong> — Equipos de respuesta a incidentes</li>
+      <li><strong>EDR / XDR</strong> — Endpoint / Extended Detection &amp; Response</li>
+      <li><strong>MDM</strong> — Mobile Device Management</li>
+      <li><strong>NDR</strong> — Network Detection &amp; Response</li>
+      <li><strong>SOAR</strong> — Security Orchestration, Automation, Response</li>
+    </ul></div>
+    <div class="info-col"><h4>Gobernanza</h4><ul>
+      <li><strong>GRC</strong> — Governance, Risk, Compliance</li>
+      <li><strong>IAM</strong> — Identity &amp; Access Management</li>
+      <li><strong>IR</strong> — Incident Response</li>
+      <li><strong>VPN</strong> — Red privada virtual</li>
+    </ul></div>
+  </div>
+</div>
+
+<div class="content-block" style="margin-top: 3rem;">
+  <div class="info-box" style="border-left-color: #2ecc71;">
+    <div class="info-title"><i class="fas fa-arrow-right"></i> Siguiente paso</div>
+    <p><a href="03-internet-y-redes.html"><strong>03 — Internet y redes</strong></a> — los conceptos mínimos de redes que necesitas.</p>
+  </div>
+</div>
+
+</main>
+
+<footer class="footer">
+<div class="footer-content">
+<div class="footer-grid">
+  <div class="footer-col"><h4><i class="fas fa-shield-halved"></i> CDPN</h4><p>Ciberdefensa profesional.</p></div>
+  <div class="footer-col">
+    <h4>Fundamentos</h4>
+    <ul>
+      <li><a href="index.html">Índice</a></li>
+      <li><a href="01-que-es-ciberseguridad.html">01 — Qué es</a></li>
+      <li>02 — Glosario</li>
+      <li><a href="03-internet-y-redes.html">03 — Redes</a></li>
+      <li><a href="04-sistema-operativo-y-terminal.html">04 — SO</a></li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <h4>Secciones</h4>
+    <ul>
+      <li><a href="../../retos.html">Retos</a></li>
+      <li><a href="../../herramientas.html">Herramientas</a></li>
+      <li><a href="../../labs.html">Labs</a></li>
+      <li><a href="../../recursos.html">Recursos</a></li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <h4>GitHub</h4>
+    <ul><li><a href="https://github.com/0xvanguard/CyberDefense-Pro-Network"><i class="fab fa-github"></i> Repo</a></li></ul>
+  </div>
+</div>
+<div class="footer-bottom"><p>&copy; 2026 CDPN — CyberDefense Pro Network.</p></div>
+</div>
+</footer>
+
+<script src="../../assets/js/i18n.js"></script>
+<script src="../../assets/js/i18n-lang.js"></script>
+<script src="../../assets/js/shared.js"></script>
+</body>
+</html>

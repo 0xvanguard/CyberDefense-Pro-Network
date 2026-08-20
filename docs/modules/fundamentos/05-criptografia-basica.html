@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>05 — Criptografía básica | CDPN</title>
+<link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="../../assets/icons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../../assets/icons/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../../assets/icons/apple-touch-icon.png">
+<link rel="manifest" href="../../manifest.webmanifest">
+<meta name="description" content="Criptografía básica: hash, cifrado simétrico y asimétrico, firmas digitales, certificados y TLS, explicado para principiantes.">
+<meta name="theme-color" content="#0a0e1a">
+<meta name="color-scheme" content="dark light">
+<link rel="canonical" href="https://0xvanguard.github.io/CyberDefense-Pro-Network/modules/fundamentos/05-criptografia-basica.html">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/css/global.css">
+<link rel="stylesheet" href="../../assets/css/module.css">
+<link rel="stylesheet" href="../../assets/css/a11y.css">
+</head>
+<body>
+<a href="#main" class="skip-link">Saltar al contenido principal</a>
+
+<nav class="navbar" role="navigation" aria-label="Navegación principal">
+<div class="nav-container">
+<a href="../../index.html" class="nav-logo"><i class="fas fa-shield-halved"></i> CDPN</a>
+<button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false"><i class="fas fa-bars" aria-hidden="true"></i></button>
+<ul class="nav-menu" id="navMenu">
+<li><a href="../../index.html">Inicio</a></li>
+<li><a href="../introduccion/">Introducción</a></li>
+<li><a href="../red-team/">Red Team</a></li>
+<li><a href="../blue-team/">Blue Team</a></li>
+<li><a href="../purple-team/">Purple Team</a></li>
+<li><a href="../ai-agents/">AI Security</a></li>
+<li><a href="../laboratorios/">Labs</a></li>
+<li><a href="../recursos/">Recursos</a></li>
+<li><a href="index.html"><strong>Fundamentos</strong></a></li>
+</ul>
+<div class="nav-actions">
+<div class="lang-switcher" id="langSwitcher">
+<button class="lang-btn" id="langBtn" aria-label="Cambiar idioma" aria-haspopup="true" aria-expanded="false">
+  <i class="fas fa-globe" aria-hidden="true"></i> <span id="langLabel">ES</span>
+</button>
+<div class="lang-dropdown" id="langDropdown" role="menu">
+  <button class="lang-option" data-lang="es" role="menuitem">Español</button>
+  <button class="lang-option" data-lang="en" role="menuitem">English</button>
+</div>
+</div>
+<a href="https://github.com/0xvanguard/CyberDefense-Pro-Network" class="nav-github" target="_blank" rel="noopener"><i class="fab fa-github"></i></a>
+</div>
+</div>
+</nav>
+
+<main id="main">
+<div class="breadcrumb">
+  <a href="../../index.html">CDPN</a><span>/</span>
+  <a href="index.html">Fundamentos</a><span>/</span>
+  <span>05 — Criptografía</span>
+</div>
+
+<section class="module-hero" style="--hero-glow: rgba(46, 204, 113, 0.10);">
+  <div class="module-hero-content">
+    <h1>05 — <span class="gradient-text">Criptografía</span> básica</h1>
+    <p>Conceptos esenciales de hash, cifrado simétrico y asimétrico. Sin meterte fórmulas.</p>
+  </div>
+</section>
+
+<div class="content-block">
+  <h3><i class="fas fa-shield-alt"></i> 1. Las 3 cosas que protege</h3>
+  <ul>
+    <li><strong>Confidencialidad</strong> — nadie más lee.</li>
+    <li><strong>Integridad</strong> — nadie alteró sin permiso.</li>
+    <li><strong>Autenticidad</strong> — quién lo envió y que no se alteró.</li>
+  </ul>
+</div>
+
+<div class="content-block">
+  <h3><i class="fas fa-fingerprint"></i> 2. Hash — la huella digital de un dato</h3>
+  <p>Un <strong>hash</strong> toma cualquier cantidad de datos y devuelve una cadena fija de tamaño.</p>
+<pre><code>"hola"      → 4d...uo  (SHA-256)
+"hola."     → d8...xq  (distinto aunque cambies 1 carácter)</code></pre>
+  <p><strong>Propiedades:</strong> Determinista, rápido, irreversible (del hash no recuperas la entrada), resistente a colisiones.</p>
+
+  <h4>Algoritmos comunes</h4>
+  <table class="data-table">
+    <thead><tr><th>Algoritmo</th><th>Tamaño</th><th>Estado</th></tr></thead>
+    <tbody>
+      <tr><td>MD5</td><td>128 bits</td><td style="color:#e74c3c;">❌ Roto. Solo legacy.</td></tr>
+      <tr><td>SHA-1</td><td>160 bits</td><td style="color:#e74c3c;">❌ Roto.</td></tr>
+      <tr><td><strong>SHA-256</strong></td><td>256 bits</td><td style="color:#2ecc71;">✅ Estándar.</td></tr>
+      <tr><td>SHA-3</td><td>256+</td><td style="color:#2ecc71;">✅ Más nuevo.</td></tr>
+      <tr><td>BLAKE2</td><td>variable</td><td style="color:#2ecc71;">✅ Muy rápido.</td></tr>
+    </tbody>
+  </table>
+  <div class="info-box" style="border-left-color: #e74c3c;">
+    <div class="info-title"><i class="fas fa-exclamation-triangle"></i> Error común</div>
+    <p>Usar SHA-256 directamente sobre la contraseña. Correcto es usar un algoritmo <strong>lento y con sal</strong>: <strong>bcrypt, scrypt, Argon2</strong>.</p>
+  </div>
+</div>
+
+<div class="content-block">
+  <h3><i class="fas fa-key"></i> 3. Cifrado simétrico — misma clave</h3>
+<pre><code>   ┌──── mensaje ────┐
+        clave K
+   └──── mismo K ────┘
+   cifrado         descifrado</code></pre>
+  <p><strong>Algoritmos recomendados:</strong> AES-256-GCM (estándar), ChaCha20-Poly1305 (alternativa moderna).</p>
+  <p><strong>Problema:</strong> ¿cómo compartes la clave sin que la intercepten?</p>
+</div>
+
+<div class="content-block">
+  <h3><i class="fas fa-key"></i> 4. Cifrado asimétrico — par de claves</h3>
+<pre><code>  Clave pública (cualquiera la ve)
+            ↓ cifra
+        mensaje cifrado
+            ↓ descifra con clave privada
+        mensaje original
+
+  Clave privada (solo tú)</code></pre>
+  <p><strong>Algoritmos:</strong> RSA (clásico), ECC/Curve25519 (mod), Ed25519 (firmas).</p>
+  <p><strong>Usos:</strong> cifrar (solo receptor descifra), firmar (cualquiera verifica), HTTPS acuerda clave simétrica.</p>
+</div>
+
+<div class="content-block">
+  <h3><i class="fas fa-signature"></i> 5. Firmas digitales</h3>
+  <ol>
+    <li>Hash del documento.</li>
+    <li>Cifras el hash con tu clave privada → firma.</li>
+    <li>Adjuntas firma al documento.</li>
+    <li>Receptor descifra la firma con tu pública → compara con hash del documento. Si coinciden: íntegro y auténtico.</li>
+  </ol>
+</div>
+
+<div class="content-block">
+  <h3><i class="fas fa-certificate"></i> 6. Certificados y PKI</h3>
+  <p>Un <strong>certificado digital</strong> (<code>X.509</code>) ata una identidad (dominio) a una clave pública. Lo firma una <strong>CA</strong> de confianza (Let's Encrypt, DigiCert).</p>
+<pre><code># Ver el certificado de una web
+openssl s_client -connect github.com:443 -showcerts
+
+# Extraer info
+echo | openssl s_client -connect github.com:443 2&gt;/dev/null | openssl x509 -noout -subject -issuer -dates</code></pre>
+</div>
+
+<div class="content-block">
+  <h3><i class="fas fa-lock"></i> 7. HTTPS — qué pasa realmente</h3>
+  <ol>
+    <li><strong>Tu navegador</strong> → "Hola, quiero HTTPS".</li>
+    <li><strong>Servidor</strong> → "Aquí mi certificado".</li>
+    <li><strong>Tu navegador</strong> → verifica la cadena.</li>
+    <li>Ambos acuerdan un <strong>algoritmo</strong> y generan una <strong>clave simétrica</strong> (TLS handshake).</li>
+    <li>A partir de ahí, todo va cifrado con AES.</li>
+  </ol>
+</div>
+
+<div class="content-block" style="margin-top: 3rem;">
+  <div class="info-box" style="border-left-color: #2ecc71;">
+    <div class="info-title"><i class="fas fa-arrow-right"></i> Siguiente paso</div>
+    <p><a href="06-vulnerabilidades.html"><strong>06 — Vulnerabilidades</strong></a> — qué es, cómo se clasifican, CVE/CWE/CVSS y OWASP Top 10.</p>
+  </div>
+</div>
+
+</main>
+
+<footer class="footer">
+<div class="footer-content">
+<div class="footer-grid">
+  <div class="footer-col"><h4><i class="fas fa-shield-halved"></i> CDPN</h4><p>Ciberdefensa profesional.</p></div>
+  <div class="footer-col">
+    <h4>Fundamentos</h4>
+    <ul>
+      <li><a href="index.html">Índice</a></li>
+      <li><a href="04-sistema-operativo-y-terminal.html">04 — SO</a></li>
+      <li>05 — Cripto</li>
+      <li><a href="06-vulnerabilidades.html">06 — Vulns</a></li>
+      <li><a href="07-etica-y-leyes.html">07 — Ética</a></li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <h4>Secciones</h4>
+    <ul>
+      <li><a href="../../retos.html">Retos</a></li>
+      <li><a href="../../herramientas.html">Herramientas</a></li>
+      <li><a href="../../labs.html">Labs</a></li>
+      <li><a href="../../recursos.html">Recursos</a></li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <h4>GitHub</h4>
+    <ul><li><a href="https://github.com/0xvanguard/CyberDefense-Pro-Network"><i class="fab fa-github"></i> Repo</a></li></ul>
+  </div>
+</div>
+<div class="footer-bottom"><p>&copy; 2026 CDPN — CyberDefense Pro Network.</p></div>
+</div>
+</footer>
+
+<script src="../../assets/js/i18n.js"></script>
+<script src="../../assets/js/i18n-lang.js"></script>
+<script src="../../assets/js/shared.js"></script>
+</body>
+</html>

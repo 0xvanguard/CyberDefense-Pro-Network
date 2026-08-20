@@ -1,3 +1,7 @@
+> 🚀 **¿Eres principiante?** Antes de este módulo, revisa la **[base común del repo](../00-FUNDAMENTOS/)** (1 carpeta atrás). Purple team une red+blue: necesitas base de ambos lados primero.
+>
+> Empieza por 🛡️ [Ruta Defensor](../00-FUNDAMENTOS/rutas/ruta-defensor.md) o ⚔️ [Ruta Atacante](../00-FUNDAMENTOS/rutas/ruta-atacante.md) y vuelve aquí cuando domines una de las dos.
+
 # Área: Purple Team / Colaboración Red–Blue
 
 > **Rol de el área:** Unir el trabajo de **Red Team (ofensiva)** y **Blue Team (defensiva)** para diseñar, ejecutar y medir ejercicios donde ataque y defensa colaboran para mejorar las detecciones y la seguridad real del entorno.

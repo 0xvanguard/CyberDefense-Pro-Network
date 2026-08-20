@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="es"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ruta Defensor (Blue Team) | CDPN</title>
+<link rel="icon" type="image/svg+xml" href="../../../favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="../../../assets/icons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../../../assets/icons/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../../../assets/icons/apple-touch-icon.png">
+<link rel="manifest" href="../../../manifest.webmanifest">
+<meta name="description" content="Ruta de aprendizaje Blue Team / Defensor: SOC, threat hunting, IR, blue team. Plan paso a paso con recursos y certificaciones.">
+<meta name="theme-color" content="#0a0e1a">
+<meta name="color-scheme" content="dark light">
+<link rel="canonical" href="https://0xvanguard.github.io/CyberDefense-Pro-Network/modules/fundamentos/rutas/ruta-defensor.html">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../../assets/css/global.css">
+<link rel="stylesheet" href="../../../assets/css/module.css">
+<link rel="stylesheet" href="../../../assets/css/a11y.css">
+</head>
+<body>
+<a href="#main" class="skip-link">Saltar al contenido principal</a>
+
+<nav class="navbar" role="navigation" aria-label="Navegación principal">
+<div class="nav-container">
+<a href="../../../index.html" class="nav-logo"><i class="fas fa-shield-halved"></i> CDPN</a>
+<button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false"><i class="fas fa-bars" aria-hidden="true"></i></button>
+<ul class="nav-menu" id="navMenu">
+<li><a href="../../../index.html">Inicio</a></li>
+<li><a href="../index.html">Fundamentos</a></li>
+<li><a href="../../introduccion/">Introducción</a></li>
+<li><a href="../../blue-team/">Blue Team</a></li>
+<li><a href="../../laboratorios/">Labs</a></li>
+<li><a href="../../recursos/">Recursos</a></li>
+</ul>
+<div class="nav-actions">
+<div class="lang-switcher" id="langSwitcher">
+<button class="lang-btn" id="langBtn" aria-label="Cambiar idioma" aria-haspopup="true" aria-expanded="false">
+  <i class="fas fa-globe" aria-hidden="true"></i> <span id="langLabel">ES</span>
+</button>
+<div class="lang-dropdown" id="langDropdown" role="menu">
+  <button class="lang-option" data-lang="es" role="menuitem">Español</button>
+  <button class="lang-option" data-lang="en" role="menuitem">English</button>
+</div>
+</div>
+<a href="https://github.com/0xvanguard/CyberDefense-Pro-Network" class="nav-github" target="_blank" rel="noopener"><i class="fab fa-github"></i></a>
+</div>
+</div>
+</nav>
+
+<main id="main">
+<div class="breadcrumb">
+  <a href="../../../index.html">CDPN</a><span>/</span>
+  <a href="../index.html">Fundamentos</a><span>/</span>
+  <a href="../index.html">Rutas</a><span>/</span>
+  <span>🛡️ Defensor</span>
+</div>
+
+<section class="module-hero" style="--hero-glow: rgba(52, 152, 219, 0.20);">
+  <div class="module-hero-content">
+    <h1>🛡️ Ruta <span class="gradient-text">Defensor</span></h1>
+    <p>Para gente que disfruta encontrar al malo, mirar logs, configurar detecciones y responder a incidentes.</p>
+  </div>
+</section>
+
+<div class="content-block">
+  <h3><i class="fas fa-quote-left"></i> Mentalidad</h3>
+  <div class="hero-quote">
+    <p>"Los atacantes tienen que acertar UNA vez. Yo tengo que acertar SIEMPRE."</p>
+  </div>
+  <p>Suena injusto, pero también significa que tu trabajo se nota cuando funciona (nada se rompe) y se nota MUCHO cuando no funciona. Por eso defender bien es difícil y se paga bien.</p>
+</div>
+
+<div class="content-block">
+  <h3><i class="fas fa-user-tie"></i> Roles Blue Team que existen</h3>
+  <ul>
+    <li><strong>Analista SOC</strong> — vigila alertas 24/7.</li>
+    <li><strong>Threat Hunter</strong> — busca atacantes ya dentro.</li>
+    <li><strong>Incident Responder</strong> — actúa cuando algo se rompe.</li>
+    <li><strong>Threat Intelligence Analyst</strong> — estudia quién atacaría y cómo.</li>
+    <li><strong>Forense</strong> — investiga después de un incidente.</li>
+    <li><strong>Malware Analyst</strong> — desarma software malicioso.</li>
+  </ul>
+</div>
+
+<div class="content-block">
+  <h3><i class="fas fa-tools"></i> Aprende lo técnico defensivo</h3>
+  <h4>Redes</h4>
+  <ul>
+    <li>Aprende a leer PCAPs con Wireshark.</li>
+    <li>Entiende cómo se mueve lateralmente un atacante.</li>
+  </ul>
+  <h4>Logs</h4>
+  <ul>
+    <li>Conoce las ubicaciones de logs en Linux y los Event IDs clave en Windows.</li>
+    <li>Practica filtrar: <code>grep</code>, <code>awk</code>, <code>jq</code>, Splunk SPL.</li>
+  </ul>
+  <h4>Herramientas</h4>
+  <ul>
+    <li><strong>Wazuh / OSSEC</strong> — HIDS.</li>
+    <li><strong>Splunk / ELK</strong> — SIEM.</li>
+    <li><strong>Velociraptor</strong> — endpoint DFIR.</li>
+    <li><strong>MISP / OpenCTI</strong> — Threat Intel.</li>
+  </ul>
+</div>
+
+<div class="content-block">
+  <h3><i class="fas fa-folder-open"></i> Carpetas del repo para Blue Team</h3>
+  <ol>
+    <li><a href="../../../03-blue-team-defensa/"><code>03-blue-team-defensa/</code></a> — Punto de entrada Blue Team con labs específicos.</li>
+    <li><a href="../../../03-blue-team-defensa/01-fundamentos-blue-team-y-soc/"><code>.../01-fundamentos-blue-team-y-soc/</code></a> — SOC fundamentals + labs de logs.</li>
+    <li><a href="../../../02-SEGURIDAD-INFORMACION/02-blue-team-defensa/"><code>02-SEGURIDAD-INFORMACION/02-blue-team-defensa/</code></a> — SIEM Wazuh, threat hunting, MITRE D3FEND.</li>
+    <li><a href="../../../01-CIBERSEGURIDAD/seguridad-defensiva-blue-team/"><code>01-CIBERSEGURIDAD/seguridad-defensiva-blue-team/</code></a> — Hardening, casos de uso.</li>
+    <li><a href="../../../01-CIBERSEGURIDAD/analista-soc/"><code>01-CIBERSEGURIDAD/analista-soc/</code></a> — Vista de un analista SOC.</li>
+    <li><a href="../../../01-CIBERSEGURIDAD/threat-hunter/"><code>01-CIBERSEGURIDAD/threat-hunter/</code></a> — Hunting proactivo.</li>
+    <li><a href="../../../01-CIBERSEGURIDAD/incident-responder/"><code>01-CIBERSEGURIDAD/incident-responder/</code></a> — Pasos de respuesta a incidentes.</li>
+    <li><a href="../../../01-CIBERSEGURIDAD/malware-analyst/"><code>01-CIBERSEGURIDAD/malware-analyst/</code></a> — Análisis reversible.</li>
+    <li><a href="../../../01-CIBERSEGURIDAD/forense-digital/"><code>01-CIBERSEGURIDAD/forense-digital/</code></a> — Forensia digital.</li>
+    <li><a href="../../../04-purple-team-colaboracion/"><code>04-purple-team-colaboracion/</code></a> — Colaboración con red team.</li>
+  </ol>
+</div>
+
+<div class="content-block">
+  <h3><i class="fas fa-flask"></i> Aprende el marco MITRE</h3>
+  <ul>
+    <li><strong>MITRE ATT&amp;CK</strong> — cómo piensa y actúa un atacante.</li>
+    <li><strong>MITRE D3FEND</strong> — técnicas defensivas para contrarrestar.</li>
+    <li><strong>MITRE Caldera</strong> — emular atacantes en tu entorno.</li>
+  </ul>
+</div>
+
+<div class="content-block">
+  <h3><i class="fas fa-certificate"></i> Certificaciones sugeridas (opcional)</h3>
+  <ol>
+    <li><strong>BTL1</strong> (Blue Team Level 1) — excelente para empezar.</li>
+    <li><strong>CompTIA Security+</strong> — base general.</li>
+    <li><strong>SC-200</strong> (Microsoft Security Operations Analyst) — Azure + Sentinel.</li>
+    <li><strong>GCIH</strong> (GIAC Certified Incident Handler) — respuesta a incidentes.</li>
+    <li><strong>GCFA</strong> (GIAC Certified Forensic Analyst) — forense.</li>
+    <li><strong>CISSP</strong> — cuando tengas experiencia.</li>
+  </ol>
+</div>
+
+<div class="content-block">
+  <h3><i class="fas fa-home"></i> Haz "home labs" reales</h3>
+  <ul>
+    <li>Monta un SIEM casero (ELK o Wazuh + VMs).</li>
+    <li>Levanta un endpoint y prueba detecciones.</li>
+    <li>Genera tráfico malicioso controlado y mira qué loggea.</li>
+    <li>Escribe detecciones propias y mide falsos positivos.</li>
+  </ul>
+</div>
+
+<div class="content-block" style="background: linear-gradient(135deg, rgba(52,152,219,0.12), rgba(46,204,113,0.10));">
+  <h3><i class="fas fa-calendar-alt"></i> Plan de 30 días para empezar</h3>
+  <ul>
+    <li><strong>Semana 1:</strong> Relee el glosario y abre <a href="../../../03-blue-team-defensa/"><code>03-blue-team-defensa/</code></a>.</li>
+    <li><strong>Semana 2:</strong> Completa 2 labs de <a href="../../../03-blue-team-defensa/01-fundamentos-blue-team-y-soc/laboratorios/"><code>.../laboratorios/</code></a>.</li>
+    <li><strong>Semana 3:</strong> Monta Wazuh o ELK en tu VM y configura detección básica.</li>
+    <li><strong>Semana 4:</strong> Lee todo lo de <a href="../../../02-SEGURIDAD-INFORMACION/02-blue-team-defensa/"><code>02-blue-team-defensa/</code></a> y elige un área para profundizar.</li>
+  </ul>
+  <div class="info-box" style="border-left-color: #9b59b6;">
+    <div class="info-title"><i class="fas fa-lightbulb"></i> Bonus</div>
+    <p>Si haces Red Team además de Blue Team, mira <a href="../../../04-purple-team-colaboracion/"><code>04-purple-team-colaboracion/</code></a>. El perfil completo Blue+Red es muy buscado.</p>
+  </div>
+</div>
+
+<div class="content-block" style="margin-top: 3rem;">
+  <div class="info-box" style="border-left-color: #3498db;">
+    <div class="info-title"><i class="fas fa-undo"></i> Volver atrás</div>
+    <p><a href="../09-como-seguir-este-repo.html">Volver al mapa de rutas</a> · <a href="ruta-atacante.html">Ruta Atacante</a> · <a href="ruta-ai-security.html">Ruta AI Security</a></p>
+  </div>
+</div>
+
+</main>
+
+<footer class="footer">
+<div class="footer-content">
+<div class="footer-grid">
+  <div class="footer-col"><h4><i class="fas fa-shield-halved"></i> CDPN</h4><p>Ciberdefensa profesional.</p></div>
+  <div class="footer-col">
+    <h4>Rutas</h4>
+    <ul>
+      <li><a href="../index.html">Fundamentos</a></li>
+      <li>🛡️ Defensor</li>
+      <li><a href="ruta-atacante.html">⚔️ Atacante</a></li>
+      <li><a href="ruta-ai-security.html">🤖 AI</a></li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <h4>Módulos</h4>
+    <ul>
+      <li><a href="../../introduccion/">Introducción</a></li>
+      <li><a href="../../blue-team/">Blue Team</a></li>
+      <li><a href="../../red-team/">Red Team</a></li>
+      <li><a href="../../ai-agents/">AI Security</a></li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <h4>GitHub</h4>
+    <ul><li><a href="https://github.com/0xvanguard/CyberDefense-Pro-Network"><i class="fab fa-github"></i> Repo</a></li></ul>
+  </div>
+</div>
+<div class="footer-bottom"><p>&copy; 2026 CDPN — CyberDefense Pro Network.</p></div>
+</div>
+</footer>
+
+<script src="../../../assets/js/i18n.js"></script>
+<script src="../../../assets/js/i18n-lang.js"></script>
+<script src="../../../assets/js/shared.js"></script>
+</body>
+</html>

@@ -1,3 +1,7 @@
+> 🚀 **¿Eres principiante?** Antes de este módulo, revisa la **[base común del repo](../00-FUNDAMENTOS/)** (1 carpeta atrás). El blue team opera sobre logs y eventos: necesitas base sólida de redes y SO.
+>
+> Recomendado: empieza por la ruta 🛡️ [Defensor](../00-FUNDAMENTOS/rutas/ruta-defensor.md).
+
 # Área: Blue Team / Defensa
 
 > **Rol de el área:** Formar profesionales capaces de **detectar, investigar y responder** a ataques en entornos reales, conectando directamente con lo que hacen los equipos SOC, incident response y threat hunting en la industria.

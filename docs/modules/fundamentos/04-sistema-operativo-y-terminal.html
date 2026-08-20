@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="es"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>04 — Sistema operativo y terminal | CDPN</title>
+<link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="../../assets/icons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../../assets/icons/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../../assets/icons/apple-touch-icon.png">
+<link rel="manifest" href="../../manifest.webmanifest">
+<meta name="description" content="Sistema operativo y terminal: comandos clave para Linux y Windows, logs y permisos para empezar en ciberseguridad.">
+<meta name="theme-color" content="#0a0e1a">
+<meta name="color-scheme" content="dark light">
+<link rel="canonical" href="https://0xvanguard.github.io/CyberDefense-Pro-Network/modules/fundamentos/04-sistema-operativo-y-terminal.html">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/css/global.css">
+<link rel="stylesheet" href="../../assets/css/module.css">
+<link rel="stylesheet" href="../../assets/css/a11y.css">
+</head>
+<body>
+<a href="#main" class="skip-link">Saltar al contenido principal</a>
+
+<nav class="navbar" role="navigation" aria-label="Navegación principal">
+<div class="nav-container">
+<a href="../../index.html" class="nav-logo"><i class="fas fa-shield-halved"></i> CDPN</a>
+<button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false"><i class="fas fa-bars" aria-hidden="true"></i></button>
+<ul class="nav-menu" id="navMenu">
+<li><a href="../../index.html">Inicio</a></li>
+<li><a href="../introduccion/">Introducción</a></li>
+<li><a href="../red-team/">Red Team</a></li>
+<li><a href="../blue-team/">Blue Team</a></li>
+<li><a href="../purple-team/">Purple Team</a></li>
+<li><a href="../ai-agents/">AI Security</a></li>
+<li><a href="../laboratorios/">Labs</a></li>
+<li><a href="../recursos/">Recursos</a></li>
+<li><a href="index.html"><strong>Fundamentos</strong></a></li>
+</ul>
+<div class="nav-actions">
+<div class="lang-switcher" id="langSwitcher">
+<button class="lang-btn" id="langBtn" aria-label="Cambiar idioma" aria-haspopup="true" aria-expanded="false">
+  <i class="fas fa-globe" aria-hidden="true"></i> <span id="langLabel">ES</span>
+</button>
+<div class="lang-dropdown" id="langDropdown" role="menu">
+  <button class="lang-option" data-lang="es" role="menuitem">Español</button>
+  <button class="lang-option" data-lang="en" role="menuitem">English</button>
+</div>
+</div>
+<a href="https://github.com/0xvanguard/CyberDefense-Pro-Network" class="nav-github" target="_blank" rel="noopener"><i class="fab fa-github"></i></a>
+</div>
+</div>
+</nav>
+
+<main id="main">
+<div class="breadcrumb">
+  <a href="../../index.html">CDPN</a><span>/</span>
+  <a href="index.html">Fundamentos</a><span>/</span>
+  <span>04 — SO y terminal</span>
+</div>
+
+<section class="module-hero" style="--hero-glow: rgba(46, 204, 113, 0.10);">
+  <div class="module-hero-content">
+    <h1>04 — Sistema operativo y <span class="gradient-text">Terminal</span></h1>
+    <p>Linux y Windows desde la perspectiva defensiva. La terminal es tu herramienta diaria.</p>
+  </div>
+</section>
+
+<div class="content-block">
+  <h3><i class="fas fa-terminal"></i> ¿Por qué la terminal?</h3>
+  <ul>
+    <li>Casi todo en servidores funciona <strong>sin interfaz gráfica</strong>.</li>
+    <li>Los atacantes operan en shell — no hay GUI donde esconderse.</li>
+    <li>Automatizas con scripts lo que en GUI sería eterno.</li>
+    <li>Cuando algo se rompe, la terminal es tu única esperanza.</li>
+  </ul>
+</div>
+
+<div class="content-block">
+  <h3><i class="fab fa-linux"></i> 1. Distribuciones Linux que verás en seguridad</h3>
+  <table class="data-table">
+    <thead><tr><th>Distro</th><th>Para qué</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Kali Linux</strong></td><td>Pentest. Trae todas las herramientas preinstaladas.</td></tr>
+      <tr><td><strong>Parrot OS</strong></td><td>Similar a Kali, más ligero.</td></tr>
+      <tr><td><strong>Ubuntu / Debian</strong></td><td>Servidores comunes. Aprender a defender aquí es clave.</td></tr>
+      <tr><td><strong>Alpine</strong></td><td>Imágenes Docker minimalistas.</td></tr>
+      <tr><td><strong>BlackArch</strong></td><td>Arch-based, catálogo enorme de herramientas pentest.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="content-block">
+  <h3><i class="fas fa-keyboard"></i> 2. Los 15 comandos que aprender primero</h3>
+<pre><code># Navegación
+pwd                     # dónde estoy
+ls -la                  # qué hay aquí (incluye ocultos)
+cd /var/log             # cambiar de directorio
+tree -L 2               # árbol de directorios
+
+# Archivos
+cat archivo             # ver contenido
+less archivo            # ver con scroll
+head -n 20 archivo      # primeras 20 líneas
+tail -f archivo         # últimas líneas EN VIVO (logs!)
+grep "error" archivo    # buscar patrón
+find / -name "*.conf"   # buscar archivos
+
+# Permisos / ownership
+chmod 755 script.sh     # permisos octales
+chown user:group file   # cambiar dueño
+sudo comando            # ejecutar como root
+
+# Sistema
+ps aux                  # procesos en ejecución
+top / htop              # procesos en vivo
+df -h                   # espacio en disco
+free -h                 # memoria
+systemctl status nginx  # estado de un servicio</code></pre>
+</div>
+
+<div class="content-block">
+  <h3><i class="fas fa-folder-tree"></i> 3. Sistema de archivos</h3>
+<pre><code>/
+├── /home/usuario       ← tus archivos personales
+├── /etc                ← configuración del sistema
+├── /var/log            ← logs (ORO para defender)
+├── /var/www            ← webs típicas
+├── /tmp                ← temporales (sospechoso si persistencia)
+├── /opt                ← apps opcionales
+├── /usr/bin            ← binarios instalados
+└── /root               ← home del root</code></pre>
+  <div class="info-box" style="border-left-color: #f39c12;">
+    <div class="info-title"><i class="fas fa-exclamation-triangle"></i> Zonas favoritas del atacante</div>
+    <p><code>/tmp</code>, <code>/var/tmp</code> y ocultos en <code>~/.ssh/</code> son zonas favoritas para persistencia.</p>
+  </div>
+</div>
+
+<div class="content-block">
+  <h3><i class="fas fa-user-shield"></i> 4. Usuarios y permisos</h3>
+<pre><code># Quién soy
+whoami
+id
+
+# Ver permisos (rwx = read/write/execute)
+ls -la archivo
+# -rwxr-xr-x  1 user group 1234 archivo
+#  ^^^ permiso dueño
+#     ^^^ permiso grupo
+#        ^^^ permiso otros
+
+# Octal: r=4, w=2, x=1
+# 755 = rwx para dueño, rx para grupo y otros
+chmod 755 archivo</code></pre>
+</div>
+
+<div class="content-block">
+  <h3><i class="fab fa-windows"></i> 5. Windows básico — PowerShell</h3>
+<pre><code># Navegación
+Get-ChildItem           # ls, dir
+Set-Location C:\Users   # cd
+Get-Location            # pwd
+
+# Procesos
+Get-Process             # ps
+Stop-Process -Name notepad
+
+# Servicios
+Get-Service
+Restart-Service Spooler
+
+# Red
+Get-NetIPAddress
+Test-NetConnection google.com -Port 443
+
+# Logs (Event Viewer desde CLI)
+Get-EventLog -LogName System -Newest 20
+Get-WinEvent -FilterHashtable @{LogName='Security'; ID=4624} -MaxEvents 10</code></pre>
+</div>
+
+<div class="content-block">
+  <h3><i class="fas fa-clipboard-list"></i> 6. Logs: lo que de verdad importa</h3>
+  <div class="info-grid">
+    <div class="info-col">
+      <h4>Linux</h4>
+      <ul>
+        <li><code>/var/log/syslog</code> — Eventos generales</li>
+        <li><code>/var/log/auth.log</code> — Logins, sudo, SSH</li>
+        <li><code>/var/log/kern.log</code> — Kernel</li>
+        <li><code>~/.bash_history</code> — Comandos (!)</li>
+      </ul>
+    </div>
+    <div class="info-col">
+      <h4>Windows (Event IDs clave)</h4>
+      <ul>
+        <li><strong>4624</strong> — Logon exitoso</li>
+        <li><strong>4625</strong> — Logon fallido</li>
+        <li><strong>4688</strong> — Nuevo proceso creado</li>
+        <li><strong>4720</strong> — Usuario creado</li>
+        <li><strong>1102</strong> — 🚩 Log de auditoría borrado</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="content-block" style="margin-top: 3rem;">
+  <div class="info-box" style="border-left-color: #2ecc71;">
+    <div class="info-title"><i class="fas fa-arrow-right"></i> Siguiente paso</div>
+    <p><a href="05-criptografia-basica.html"><strong>05 — Criptografía básica</strong></a> — hash, cifrado simétrico y asimétrico, TLS.</p>
+  </div>
+</div>
+
+</main>
+
+<footer class="footer">
+<div class="footer-content">
+<div class="footer-grid">
+  <div class="footer-col"><h4><i class="fas fa-shield-halved"></i> CDPN</h4><p>Ciberdefensa profesional.</p></div>
+  <div class="footer-col">
+    <h4>Fundamentos</h4>
+    <ul>
+      <li><a href="index.html">Índice</a></li>
+      <li><a href="01-que-es-ciberseguridad.html">01 — Qué es</a></li>
+      <li><a href="02-glosario.html">02 — Glosario</a></li>
+      <li><a href="03-internet-y-redes.html">03 — Redes</a></li>
+      <li>04 — SO</li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <h4>Secciones</h4>
+    <ul>
+      <li><a href="../../retos.html">Retos</a></li>
+      <li><a href="../../herramientas.html">Herramientas</a></li>
+      <li><a href="../../labs.html">Labs</a></li>
+      <li><a href="../../recursos.html">Recursos</a></li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <h4>GitHub</h4>
+    <ul><li><a href="https://github.com/0xvanguard/CyberDefense-Pro-Network"><i class="fab fa-github"></i> Repo</a></li></ul>
+  </div>
+</div>
+<div class="footer-bottom"><p>&copy; 2026 CDPN — CyberDefense Pro Network.</p></div>
+</div>
+</footer>
+
+<script src="../../assets/js/i18n.js"></script>
+<script src="../../assets/js/i18n-lang.js"></script>
+<script src="../../assets/js/shared.js"></script>
+</body>
+</html>

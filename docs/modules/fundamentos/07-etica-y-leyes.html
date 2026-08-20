@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>07 — Ética y leyes | CDPN</title>
+<link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="../../assets/icons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../../assets/icons/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../../assets/icons/apple-touch-icon.png">
+<link rel="manifest" href="../../manifest.webmanifest">
+<meta name="description" content="Ética del hacking: reglas de oro, divulgación coordinada, marco legal básico y buenas prácticas profesionales.">
+<meta name="theme-color" content="#0a0e1a">
+<meta name="color-scheme" content="dark light">
+<link rel="canonical" href="https://0xvanguard.github.io/CyberDefense-Pro-Network/modules/fundamentos/07-etica-y-leyes.html">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/css/global.css">
+<link rel="stylesheet" href="../../assets/css/module.css">
+<link rel="stylesheet" href="../../assets/css/a11y.css">
+</head>
+<body>
+<a href="#main" class="skip-link">Saltar al contenido principal</a>
+
+<nav class="navbar" role="navigation" aria-label="Navegación principal">
+<div class="nav-container">
+<a href="../../index.html" class="nav-logo"><i class="fas fa-shield-halved"></i> CDPN</a>
+<button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false"><i class="fas fa-bars" aria-hidden="true"></i></button>
+<ul class="nav-menu" id="navMenu">
+<li><a href="../../index.html">Inicio</a></li>
+<li><a href="../introduccion/">Introducción</a></li>
+<li><a href="../red-team/">Red Team</a></li>
+<li><a href="../blue-team/">Blue Team</a></li>
+<li><a href="../purple-team/">Purple Team</a></li>
+<li><a href="../ai-agents/">AI Security</a></li>
+<li><a href="../laboratorios/">Labs</a></li>
+<li><a href="../recursos/">Recursos</a></li>
+<li><a href="index.html"><strong>Fundamentos</strong></a></li>
+</ul>
+<div class="nav-actions">
+<div class="lang-switcher" id="langSwitcher">
+<button class="lang-btn" id="langBtn" aria-label="Cambiar idioma" aria-haspopup="true" aria-expanded="false">
+  <i class="fas fa-globe" aria-hidden="true"></i> <span id="langLabel">ES</span>
+</button>
+<div class="lang-dropdown" id="langDropdown" role="menu">
+  <button class="lang-option" data-lang="es" role="menuitem">Español</button>
+  <button class="lang-option" data-lang="en" role="menuitem">English</button>
+</div>
+</div>
+<a href="https://github.com/0xvanguard/CyberDefense-Pro-Network" class="nav-github" target="_blank" rel="noopener"><i class="fab fa-github"></i></a>
+</div>
+</div>
+</nav>
+
+<main id="main">
+<div class="breadcrumb">
+  <a href="../../index.html">CDPN</a><span>/</span>
+  <a href="index.html">Fundamentos</a><span>/</span>
+  <span>07 — Ética y leyes</span>
+</div>
+
+<section class="module-hero" style="--hero-glow: rgba(46, 204, 113, 0.10);">
+  <div class="module-hero-content">
+    <h1>07 — <span class="gradient-text">Ética y leyes</span></h1>
+    <p>Los límites que todo profesional debe respetar. Divulgación responsable y marco legal.</p>
+  </div>
+</section>
+
+<div class="content-block">
+  <h3><i class="fas fa-star"></i> 1. La regla de oro del hacking ético</h3>
+  <div class="hero-quote">
+    <p><strong>"Si no tienes permiso por escrito, no lo hagas."</strong></p>
+  </div>
+  <p>No importa que la vulnerabilidad sea obvia. No importa que la empresa sea negligente. No importa que tu intención sea ayudar. <strong>Sin autorización, es delito</strong> en casi todas las jurisdicciones.</p>
+</div>
+
+<div class="content-block">
+  <h3><i class="fas fa-file-contract"></i> 2. ¿Por qué existe el hacking ético?</h3>
+  <p>Porque las empresas necesitan gente que piense como el atacante para encontrar huecos <strong>antes</strong> de que los exploten. Pero necesitan garantías legales. Por eso existe:</p>
+  <ul>
+    <li><strong>Contrato / scope</strong> — autorizar exactamente qué puedes probar.</li>
+    <li><strong>Reglas de engagement</strong> — qué métodos están permitidos (¿DoS? ¿Ing social?).</li>
+    <li><strong>Disclosure coordinado</strong> — aviso al fabricante antes de publicar.</li>
+    <li><strong>NDA</strong> — no divulgar lo que veas.</li>
+  </ul>
+</div>
+
+<div class="content-block">
+  <h3><i class="fas fa-bell"></i> 3. Divulgación responsable (Coordinated Disclosure)</h3>
+  <p>El ciclo correcto cuando encuentras algo:</p>
+  <ol>
+    <li><strong>Reportas</strong> al fabricante (o vía bug bounty) con detalle técnico.</li>
+    <li><strong>Esperas</strong> un plazo razonable (típico: 90 días).</li>
+    <li><strong>Si parchean</strong>, publicas los detalles reconociendo al fabricante.</li>
+    <li><strong>Si no parchean</strong> y el riesgo es alto, publicas con aviso y plazo mayor.</li>
+  </ol>
+  <div class="info-box" style="border-left-color: #e74c3c;">
+    <div class="info-title"><i class="fas fa-ban"></i> NO hacer</div>
+    <ul>
+      <li>❌ Vender un 0-day en mercados negros.</li>
+      <li>❌ Exigir rescate ("te digo el bug si me pagas").</li>
+      <li>❌ Amenazar con publicarlo.</li>
+      <li>❌ Probar el bug en sistemas reales sin autorización.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="content-block">
+  <h3><i class="fas fa-check-circle"></i> 4. Lo que SÍ puedes hacer sin pedir permiso</h3>
+  <ul>
+    <li>Auditar tu propio equipo o tu propio código.</li>
+    <li>Hacer cosas en <strong>laboratorios aislados</strong> (HackTheBox, TryHackMe, Docker labs propios).</li>
+    <li>Analizar código <strong>open source</strong> ya publicado.</li>
+    <li>Leer CVE/Changelog público y estudiarlos.</li>
+    <li>Participar en <strong>CTFs</strong> expresamente diseñados para practicar.</li>
+  </ul>
+</div>
+
+<div class="content-block">
+  <h3><i class="fas fa-gavel"></i> 5. Marco legal según país (resumen)</h3>
+  <div class="info-box" style="border-left-color: #f39c12;">
+    <div class="info-title"><i class="fas fa-exclamation-triangle"></i> Disclaimer</div>
+    <p>No soy abogado. Verifica siempre la ley local.</p>
+  </div>
+  <table class="data-table">
+    <thead><tr><th>País</th><th>Referencia</th></tr></thead>
+    <tbody>
+      <tr><td>🇪🇸 España</td><td>Código Penal art. 197 / 264 / 264 bis + LOPD-GDD / RGPD.</td></tr>
+      <tr><td>🇲🇽 México</td><td>Código Penal Federal art. 211 bis 1-4 + Ley Federal de Protección de Datos.</td></tr>
+      <tr><td>🇦🇷 Argentina</td><td>Código Penal art. 153-157 + Ley 25.326.</td></tr>
+      <tr><td>🇨🇴 Colombia</td><td>Ley 1273 de 2009.</td></tr>
+      <tr><td>🇨🇱 Chile</td><td>Ley 19.223.</td></tr>
+      <tr><td>🇺🇸 EE.UU.</td><td>CFAA (Computer Fraud and Abuse Act) + DMCA.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="content-block">
+  <h3><i class="fas fa-balance-scale"></i> 6. Lo SÍ y lo NO en tu trabajo</h3>
+  <div class="info-grid">
+    <div class="info-col" style="border-top: 3px solid #e74c3c;">
+      <h4>🚫 NO hacer</h4>
+      <ul>
+        <li>Usar accesos obtenidos en pruebas para beneficio propio.</li>
+        <li>Revelar vulnerabilidades públicamente sin avisar al fabricante primero.</li>
+        <li>Probar DoS en producción sin autorización explícita.</li>
+        <li>Hacer pruebas de ingeniería social si no están en el scope.</li>
+        <li>Borrar logs (a menos que sea parte autorizada del test).</li>
+        <li>Mentir sobre lo que hiciste.</li>
+      </ul>
+    </div>
+    <div class="info-col" style="border-top: 3px solid #2ecc71;">
+      <h4>✅ SÍ hacer</h4>
+      <ul>
+        <li><strong>Documenta TODO.</strong> Tu trabajo sin evidencia no vale.</li>
+        <li><strong>Comunica hallazgo crítico</strong> al CISO y al equipo afectado rápido.</li>
+        <li><strong>Prueba en sandbox</strong> todo lo que pueda romper.</li>
+        <li><strong>Mantén contrato firmado</strong> y guárdalo años.</li>
+        <li><strong>Borra datos sensibles</strong> que recopiles en pruebas.</li>
+        <li><strong>Respeta a otros equipos</strong> — un pentester arrogante no dura.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="content-block">
+  <h3><i class="fas fa-user-shield"></i> 7. Privacidad: GDPR / RGPD / LOPD</h3>
+  <ul>
+    <li><strong>Minimización:</strong> recopila lo mínimo necesario.</li>
+    <li><strong>Propósito claro:</strong> define para qué los usas antes de pedirlos.</li>
+    <li><strong>Consentimiento informado:</strong> explica qué harás y obtén permiso.</li>
+    <li><strong>Retención limitada:</strong> borra cuando ya no los necesites.</li>
+    <li><strong>Transparencia:</strong> registro de actividades de tratamiento.</li>
+    <li><strong>Notificación de brecha:</strong> notifica a la autoridad en 72h (UE).</li>
+  </ul>
+</div>
+
+<div class="content-block" style="margin-top: 3rem;">
+  <div class="info-box" style="border-left-color: #2ecc71;">
+    <div class="info-title"><i class="fas fa-arrow-right"></i> Siguiente paso</div>
+    <p><a href="08-herramientas-esenciales.html"><strong>08 — Herramientas esenciales</strong></a> — nmap, Wireshark, Burp, Metasploit y compañía.</p>
+  </div>
+</div>
+
+</main>
+
+<footer class="footer">
+<div class="footer-content">
+<div class="footer-grid">
+  <div class="footer-col"><h4><i class="fas fa-shield-halved"></i> CDPN</h4><p>Ciberdefensa profesional.</p></div>
+  <div class="footer-col">
+    <h4>Fundamentos</h4>
+    <ul>
+      <li><a href="index.html">Índice</a></li>
+      <li><a href="06-vulnerabilidades.html">06 — Vulns</a></li>
+      <li>07 — Ética</li>
+      <li><a href="08-herramientas-esenciales.html">08 — Tools</a></li>
+      <li><a href="09-como-seguir-este-repo.html">09 — Rutas</a></li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <h4>Secciones</h4>
+    <ul>
+      <li><a href="../../retos.html">Retos</a></li>
+      <li><a href="../../herramientas.html">Herramientas</a></li>
+      <li><a href="../../labs.html">Labs</a></li>
+      <li><a href="../../recursos.html">Recursos</a></li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <h4>GitHub</h4>
+    <ul><li><a href="https://github.com/0xvanguard/CyberDefense-Pro-Network"><i class="fab fa-github"></i> Repo</a></li></ul>
+  </div>
+</div>
+<div class="footer-bottom"><p>&copy; 2026 CDPN — CyberDefense Pro Network.</p></div>
+</div>
+</footer>
+
+<script src="../../assets/js/i18n.js"></script>
+<script src="../../assets/js/i18n-lang.js"></script>
+<script src="../../assets/js/shared.js"></script>
+</body>
+</html>

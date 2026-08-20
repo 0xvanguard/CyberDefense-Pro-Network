@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="es"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fundamentos — Base para principiantes | CDPN | CyberDefense Pro Network</title>
+<link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="../../assets/icons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../../assets/icons/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../../assets/icons/apple-touch-icon.png">
+<link rel="manifest" href="../../manifest.webmanifest">
+<meta name="description" content="Base pequeña pero completa para principiantes en ciberseguridad: 9 temas fundamentales + 3 rutas de aprendizaje (Blue, Red, AI Security).">
+<meta name="theme-color" content="#0a0e1a">
+<meta name="color-scheme" content="dark light">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Fundamentos — Base para principiantes | CDPN">
+<meta property="og:description" content="Base pequeña pero completa para principiantes en ciberseguridad.">
+<meta property="og:url" content="https://0xvanguard.github.io/CyberDefense-Pro-Network/modules/fundamentos/">
+<meta property="og:image" content="https://0xvanguard.github.io/CyberDefense-Pro-Network/assets/og/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Fundamentos — Base para principiantes | CDPN">
+<meta name="twitter:description" content="Base pequeña pero completa para principiantes en ciberseguridad.">
+<meta name="twitter:image" content="https://0xvanguard.github.io/CyberDefense-Pro-Network/assets/og/og-image.png">
+<link rel="canonical" href="https://0xvanguard.github.io/CyberDefense-Pro-Network/modules/fundamentos/">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/css/global.css">
+<link rel="stylesheet" href="../../assets/css/module.css">
+<link rel="stylesheet" href="../../assets/css/a11y.css">
+</head>
+<body>
+<a href="#main" class="skip-link">Saltar al contenido principal</a>
+
+<nav class="navbar" role="navigation" aria-label="Navegación principal">
+<div class="nav-container">
+<a href="../../index.html" class="nav-logo"><i class="fas fa-shield-halved"></i> CDPN</a>
+<button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false">
+<i class="fas fa-bars" aria-hidden="true"></i>
+</button>
+<ul class="nav-menu" id="navMenu">
+<li><a href="../../index.html" data-i18n="nav_home">Inicio</a></li>
+<li><a href="../introduccion/" data-i18n="nav_intro">Introducción</a></li>
+<li><a href="../red-team/" data-i18n="nav_red">Red Team</a></li>
+<li><a href="../blue-team/" data-i18n="nav_blue">Blue Team</a></li>
+<li><a href="../purple-team/" data-i18n="nav_purple">Purple Team</a></li>
+<li><a href="../ai-agents/" data-i18n="nav_ai">AI Security</a></li>
+<li><a href="../laboratorios/" data-i18n="nav_labs">Labs</a></li>
+<li><a href="../recursos/" data-i18n="nav_resources">Recursos</a></li>
+<li><a href="../../retos.html" data-i18n="nav_retos">Retos</a></li>
+<li><a href="../../herramientas.html" data-i18n="nav_tools">Herramientas</a></li>
+</ul>
+<div class="nav-actions">
+<div class="lang-switcher" id="langSwitcher">
+<button class="lang-btn" id="langBtn" aria-label="Cambiar idioma" aria-haspopup="true" aria-expanded="false">
+  <i class="fas fa-globe" aria-hidden="true"></i> <span id="langLabel">ES</span>
+</button>
+<div class="lang-dropdown" id="langDropdown" role="menu">
+  <button class="lang-option" data-lang="es" role="menuitem">Español</button>
+  <button class="lang-option" data-lang="en" role="menuitem">English</button>
+</div>
+</div>
+<a href="https://github.com/0xvanguard/CyberDefense-Pro-Network" class="nav-github" target="_blank" rel="noopener"><i class="fab fa-github"></i></a>
+</div>
+</div>
+</nav>
+
+<main id="main">
+<div class="breadcrumb">
+  <a href="../../index.html">CDPN</a><span>/</span>
+  <a href="../introduccion/">Módulos</a><span>/</span>
+  <span>Fundamentos</span>
+</div>
+
+<section class="module-hero" style="--hero-glow: rgba(46, 204, 113, 0.10);">
+  <div class="module-hero-content">
+    <h1><span class="gradient-text">Fundamentos</span> — Base para principiantes</h1>
+    <p>Si estás empezando desde cero, empieza aquí. Una base pequeña pero completa antes de saltar a los módulos especializados.</p>
+  </div>
+</section>
+
+<div class="content-block">
+  <h3><i class="fas fa-rocket"></i> 🚀 Tu puerta de entrada</h3>
+  <p>Este módulo es la <strong>base común</strong> del repo. Está pensado para que cualquier persona, sin experiencia previa, pueda construir una base sólida antes de leer pentesting, blue team, IA ofensiva o criptografía aplicada. Cada archivo es autónomo y enlaza con el resto del repo cuando llega el momento.</p>
+  <div class="info-box" style="background: linear-gradient(135deg, rgba(46,204,113,0.10), rgba(52,152,219,0.10)); border-left-color: #2ecc71;">
+    <div class="info-title"><i class="fas fa-lightbulb"></i> Consejo antes de empezar</div>
+    <ul>
+      <li><strong>No te apures.</strong> Mejor 1 archivo por día que tragarte 9 en una noche.</li>
+      <li><strong>Toma notas en papel.</strong> Las bases se olvidan rápido si no las escribes a mano al menos una vez.</li>
+      <li><strong>Practica después de leer.</strong> La teoría sin práctica no entra.</li>
+      <li><strong>Pregunta sin miedo.</strong> Edita lo que creas que falta; este repo mejora con la comunidad.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="content-block">
+  <h3><i class="fas fa-map"></i> 🗺️ Índice de la base (en orden de lectura recomendado)</h3>
+  <div class="cards-grid">
+    <a href="01-que-es-ciberseguridad.html" class="card">
+      <span class="card-num">01</span>
+      <h4><i class="fas fa-question-circle"></i> ¿Qué es la ciberseguridad?</h4>
+      <p>El campo, los roles, las especializaciones. ~15 min.</p>
+    </a>
+    <a href="02-glosario.html" class="card">
+      <span class="card-num">02</span>
+      <h4><i class="fas fa-book"></i> Glosario</h4>
+      <p>~70 términos que verás 1000 veces. Referencia.</p>
+    </a>
+    <a href="03-internet-y-redes.html" class="card">
+      <span class="card-num">03</span>
+      <h4><i class="fas fa-globe"></i> Internet y redes</h4>
+      <p>Cómo funciona internet, TCP/IP, DNS, HTTP. ~30 min.</p>
+    </a>
+    <a href="04-sistema-operativo-y-terminal.html" class="card">
+      <span class="card-num">04</span>
+      <h4><i class="fas fa-terminal"></i> Sistema operativo y terminal</h4>
+      <p>Linux y Windows desde una perspectiva defensiva. ~45 min.</p>
+    </a>
+    <a href="05-criptografia-basica.html" class="card">
+      <span class="card-num">05</span>
+      <h4><i class="fas fa-key"></i> Criptografía básica</h4>
+      <p>Hash, cifrado simétrico/asimétrico, firmas. ~30 min.</p>
+    </a>
+    <a href="06-vulnerabilidades.html" class="card">
+      <span class="card-num">06</span>
+      <h4><i class="fas fa-bug"></i> Vulnerabilidades</h4>
+      <p>Qué es una vulnerabilidad, OWASP Top 10, CVEs. ~25 min.</p>
+    </a>
+    <a href="07-etica-y-leyes.html" class="card">
+      <span class="card-num">07</span>
+      <h4><i class="fas fa-balance-scale"></i> Ética y leyes</h4>
+      <p>Hacking ético, qué puedes y qué NO debes hacer. ~15 min.</p>
+    </a>
+    <a href="08-herramientas-esenciales.html" class="card">
+      <span class="card-num">08</span>
+      <h4><i class="fas fa-toolbox"></i> Herramientas esenciales</h4>
+      <p>nmap, Wireshark, Burp, Metasploit y compañía. ~40 min.</p>
+    </a>
+    <a href="09-como-seguir-este-repo.html" class="card">
+      <span class="card-num">09</span>
+      <h4><i class="fas fa-route"></i> Cómo seguir este repo</h4>
+      <p>Rutas de aprendizaje según tu interés. ~10 min.</p>
+    </a>
+  </div>
+</div>
+
+<div class="content-block">
+  <h3><i class="fas fa-compass"></i> 🧭 Rutas recomendadas (elige la tuya)</h3>
+  <p>Tras leer la base, salta a la ruta que más te interese. Cada una te indica las carpetas específicas del repo que necesitas abrir.</p>
+  <div class="branches-grid">
+    <a href="rutas/ruta-defensor.html" class="branch-card">
+      <div class="branch-icon" style="color: #3498db;"><i class="fas fa-shield-alt"></i></div>
+      <h4>🛡️ Ruta Defensor</h4>
+      <p>Blue Team: defender sistemas, vigilar alertas, responder incidentes.</p>
+      <div class="branch-tools"><strong>Carpetas:</strong> blue-team, info-sec/02-blue-team</div>
+    </a>
+    <a href="rutas/ruta-atacante.html" class="branch-card">
+      <div class="branch-icon" style="color: #e74c3c;"><i class="fas fa-crosshairs"></i></div>
+      <h4>⚔️ Ruta Atacante</h4>
+      <p>Red Team: pentesting, red team, bug bounty. Con ética firme.</p>
+      <div class="branch-tools"><strong>Carpetas:</strong> 02-pentesting-red-team, 01-red-team</div>
+    </a>
+    <a href="rutas/ruta-ai-security.html" class="branch-card">
+      <div class="branch-icon" style="color: #9b59b6;"><i class="fas fa-robot"></i></div>
+      <h4>🤖 Ruta AI Security</h4>
+      <p>Prompt injection, LLMs seguros, AI Red Teaming, governance.</p>
+      <div class="branch-tools"><strong>Carpetas:</strong> 03-IA-AGENTES-HERRAMIENTAS, 03-AI-AGENTS-TOOLS</div>
+    </a>
+  </div>
+</div>
+
+<div class="content-block">
+  <h3><i class="fas fa-sitemap"></i> 📚 Cómo está organizado este repo</h3>
+  <div class="info-box">
+    <div class="info-title"><i class="fas fa-folder-tree"></i> Mapa rápido (raíz)</div>
+    <ul style="font-family: 'JetBrains Mono', monospace; font-size: 0.9rem;">
+      <li><strong>00-FUNDAMENTOS/</strong> ← ESTÁS AQUÍ (base para principiantes)</li>
+      <li>01-CIBERSEGURIDAD/ → Roles profesionales y temas generales</li>
+      <li>02-SEGURIDAD-INFORMACION/ → GRC, riesgo, cumplimiento</li>
+      <li>02-pentesting-red-team/ → Red team + labs específicos</li>
+      <li>03-AI-AGENTS-TOOLS/ → Seguridad de IA (en inglés)</li>
+      <li>03-IA-AGENTES-HERRAMIENTAS/ → Seguridad de IA (en español)</li>
+      <li>03-blue-team-defensa/ → Defensa, SOC, fundamentos blue team</li>
+      <li>04-LABORATORIOS/ → Labs propios, CTFs, HTB/THM</li>
+      <li>04-purple-team-colaboracion/ → Colaboración red + blue</li>
+      <li>05-RECURSOS/ → Libros, certificaciones, cursos, cheatsheets</li>
+    </ul>
+  </div>
+</div>
+
+<div class="content-block">
+  <div class="info-box" style="border-left-color: #f39c12;">
+    <div class="info-title"><i class="fas fa-clock"></i> Tiempo total estimado</div>
+    <p>Lectura completa de la base: <strong>~3.5 horas</strong> distribuidas en una semana es una meta realista y saludable. No te agobies con todo de golpe.</p>
+  </div>
+</div>
+
+</main>
+
+<footer class="footer">
+<div class="footer-content">
+<div class="footer-grid">
+  <div class="footer-col">
+    <h4><i class="fas fa-shield-halved"></i> CDPN</h4>
+    <p>Ciberdefensa profesional.</p>
+  </div>
+  <div class="footer-col">
+    <h4>Módulos</h4>
+    <ul>
+      <li><a href="../introduccion/">Introducción</a></li>
+      <li><a href="../red-team/">Red Team</a></li>
+      <li><a href="../blue-team/">Blue Team</a></li>
+      <li><a href="../purple-team/">Purple Team</a></li>
+      <li><a href="../ai-agents/">AI Security</a></li>
+      <li><a href="index.html">Fundamentos</a></li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <h4>Secciones</h4>
+    <ul>
+      <li><a href="../../retos.html" data-i18n="nav_retos">Retos</a></li>
+      <li><a href="../../herramientas.html" data-i18n="nav_tools">Herramientas</a></li>
+      <li><a href="../../labs.html" data-i18n="nav_labs">Labs</a></li>
+      <li><a href="../../recursos.html" data-i18n="nav_resources">Recursos</a></li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <h4>GitHub</h4>
+    <ul>
+      <li><a href="https://github.com/0xvanguard/CyberDefense-Pro-Network"><i class="fab fa-github"></i> Repo</a></li>
+    </ul>
+  </div>
+</div>
+<div class="footer-bottom">
+  <p>&copy; 2026 CDPN — CyberDefense Pro Network.</p>
+</div>
+</div>
+</footer>
+
+<script src="../../assets/js/i18n.js"></script>
+<script src="../../assets/js/i18n-lang.js"></script>
+<script src="../../assets/js/shared.js"></script>
+</body>
+</html>

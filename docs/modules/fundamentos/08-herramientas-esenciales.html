@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="es"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>08 — Herramientas esenciales | CDPN</title>
+<link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="../../assets/icons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../../assets/icons/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../../assets/icons/apple-touch-icon.png">
+<link rel="manifest" href="../../manifest.webmanifest">
+<meta name="description" content="Herramientas esenciales para empezar en ciberseguridad: nmap, Wireshark, Burp Suite, OWASP ZAP, Metasploit y más.">
+<meta name="theme-color" content="#0a0e1a">
+<meta name="color-scheme" content="dark light">
+<link rel="canonical" href="https://0xvanguard.github.io/CyberDefense-Pro-Network/modules/fundamentos/08-herramientas-esenciales.html">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/css/global.css">
+<link rel="stylesheet" href="../../assets/css/module.css">
+<link rel="stylesheet" href="../../assets/css/a11y.css">
+</head>
+<body>
+<a href="#main" class="skip-link">Saltar al contenido principal</a>
+
+<nav class="navbar" role="navigation" aria-label="Navegación principal">
+<div class="nav-container">
+<a href="../../index.html" class="nav-logo"><i class="fas fa-shield-halved"></i> CDPN</a>
+<button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false"><i class="fas fa-bars" aria-hidden="true"></i></button>
+<ul class="nav-menu" id="navMenu">
+<li><a href="../../index.html">Inicio</a></li>
+<li><a href="../introduccion/">Introducción</a></li>
+<li><a href="../red-team/">Red Team</a></li>
+<li><a href="../blue-team/">Blue Team</a></li>
+<li><a href="../purple-team/">Purple Team</a></li>
+<li><a href="../ai-agents/">AI Security</a></li>
+<li><a href="../laboratorios/">Labs</a></li>
+<li><a href="../recursos/">Recursos</a></li>
+<li><a href="index.html"><strong>Fundamentos</strong></a></li>
+</ul>
+<div class="nav-actions">
+<div class="lang-switcher" id="langSwitcher">
+<button class="lang-btn" id="langBtn" aria-label="Cambiar idioma" aria-haspopup="true" aria-expanded="false">
+  <i class="fas fa-globe" aria-hidden="true"></i> <span id="langLabel">ES</span>
+</button>
+<div class="lang-dropdown" id="langDropdown" role="menu">
+  <button class="lang-option" data-lang="es" role="menuitem">Español</button>
+  <button class="lang-option" data-lang="en" role="menuitem">English</button>
+</div>
+</div>
+<a href="https://github.com/0xvanguard/CyberDefense-Pro-Network" class="nav-github" target="_blank" rel="noopener"><i class="fab fa-github"></i></a>
+</div>
+</div>
+</nav>
+
+<main id="main">
+<div class="breadcrumb">
+  <a href="../../index.html">CDPN</a><span>/</span>
+  <a href="index.html">Fundamentos</a><span>/</span>
+  <span>08 — Herramientas</span>
+</div>
+
+<section class="module-hero" style="--hero-glow: rgba(46, 204, 113, 0.10);">
+  <div class="module-hero-content">
+    <h1>08 — <span class="gradient-text">Herramientas</span> esenciales</h1>
+    <p>Las 10-15 herramientas que verás 1000 veces. Todas gratuitas o con versión community.</p>
+  </div>
+</section>
+
+<div class="content-block">
+  <h3><i class="fas fa-exclamation-triangle"></i> Antes de instalar nada</h3>
+  <ul>
+    <li>Practica SIEMPRE en máquinas propias o en <strong>TryHackMe</strong> / <strong>HackTheBox</strong>.</li>
+    <li>Si vas a usar Kali, viene preinstalado: solo arranca y aprende.</li>
+    <li>Casi todas tienen versión Docker: <code>docker run -it kalilinux/kali-rolling /bin/bash</code>.</li>
+    <li><strong>No mezcles herramientas de ataque con tu vida personal.</strong> Usa una VM dedicada.</li>
+  </ul>
+</div>
+
+<div class="content-block">
+  <h3><i class="fas fa-search"></i> Reconocimiento / OSINT</h3>
+  <h4>Nmap — el rey del escaneo de puertos</h4>
+<pre><code># Scan básico
+nmap 192.168.1.1
+
+# Rápido y sigiloso (SYN)
+nmap -sS -T4 192.168.1.0/24
+
+# Detección de versiones y OS
+nmap -sV -O 192.168.1.1
+
+# Scripts NSE (vulns, brute fuerza)
+nmap --script=vuln 192.168.1.1</code></pre>
+
+  <h4>theHarvester / Amass / SpiderFoot</h4>
+<pre><code># theHarvester: emails, subdominios, hosts
+theHarvester -d ejemplo.com -b all
+
+# Amass: subdominios
+amass enum -d ejemplo.com</code></pre>
+  <p><strong>Shodan / Censys:</strong> <a href="https://shodan.io" target="_blank" rel="noopener">shodan.io</a> — buscar dispositivos conectados en internet.</p>
+</div>
+
+<div class="content-block">
+  <h3><i class="fas fa-network-wired"></i> Análisis de tráfico</h3>
+  <h4>Wireshark</h4>
+<pre><code># CLI (tshark) en servers
+sudo tshark -i eth0 -c 100     # captura 100 paquetes
+sudo tshark -i eth0 -Y 'http'  # solo HTTP
+sudo tshark -i eth0 -Y 'ip.addr == 1.2.3.4'</code></pre>
+  <p><strong>Trucos de filtro:</strong> <code>http.request</code>, <code>dns.qry.name</code>, <code>tcp.flags.syn == 1 &amp;&amp; tcp.flags.ack == 0</code>.</p>
+
+  <h4>tcpdump — clásico CLI</h4>
+<pre><code>sudo tcpdump -i eth0 -w captura.pcap
+sudo tcpdump -i eth0 'port 80'</code></pre>
+</div>
+
+<div class="content-block">
+  <h3><i class="fas fa-spider"></i> Web — pentest y defensa</h3>
+  <h4>Burp Suite — el inspector web</h4>
+  <ol>
+    <li>Configura tu navegador para usar Burp como proxy (<code>127.0.0.1:8080</code>).</li>
+    <li>Instala el certificado CA de Burp para HTTPS.</li>
+    <li>Navega como siempre — Burp captura y permite modificar.</li>
+    <li>Replay con <em>Repeater</em>.</li>
+  </ol>
+
+  <h4>OWASP ZAP — alternativa open source</h4>
+  <p>Similar a Burp pero open source.</p>
+
+  <h4>Gobuster / dirsearch — fuerza bruta de directorios</h4>
+<pre><code>gobuster dir -u https://ejemplo.com -w /usr/share/wordlists/dirb/common.txt</code></pre>
+
+  <h4>Nikto — escáner web</h4>
+<pre><code>nikto -h https://ejemplo.com</code></pre>
+</div>
+
+<div class="content-block">
+  <h3><i class="fas fa-bomb"></i> Explotación</h3>
+  <h4>Metasploit Framework</h4>
+<pre><code># Inicia
+msfconsole
+
+# Busca un exploit
+search type:exploit name:smb
+
+# Usa un módulo
+use exploit/windows/smb/ms17_010_eternalblue
+
+# Configura y lanza
+set RHOSTS 192.168.1.10
+exploit</code></pre>
+  <div class="info-box" style="border-left-color: #e74c3c;">
+    <p><strong>Solo en labs autorizados.</strong></p>
+  </div>
+
+  <h4>searchsploit — busca exploits localmente</h4>
+<pre><code>searchsploit nginx 1.14</code></pre>
+
+  <h4>John the Ripper / hashcat — romper hashes</h4>
+<pre><code>john --wordlist=/usr/share/wordlists/rockyou.txt hash.txt
+hashcat -m 0 hash.txt rockyou.txt    # MD5</code></pre>
+</div>
+
+<div class="content-block">
+  <h3><i class="fas fa-shield"></i> Blue Team / Defensa</h3>
+  <ul>
+    <li><strong>Wazuh / OSSEC</strong> — HIDS open source.</li>
+    <li><strong>Splunk (free) / Elastic Stack</strong> — SIEM casero. Splunk 500 MB/día gratis. ELK open source completo.</li>
+    <li><strong>Velociraptor</strong> — DFIR endpoint.</li>
+    <li><strong>MISP</strong> — threat intelligence platform.</li>
+  </ul>
+</div>
+
+<div class="content-block">
+  <h3><i class="fas fa-table"></i> Tabla resumen — la mochila mínima</h3>
+  <table class="data-table">
+    <thead><tr><th>Categoría</th><th>Principal</th><th>Alternativa</th></tr></thead>
+    <tbody>
+      <tr><td>Escaneo de red</td><td>nmap</td><td>masscan, rustscan</td></tr>
+      <tr><td>Tráfico de red</td><td>Wireshark</td><td>tcpdump, tshark</td></tr>
+      <tr><td>Proxy web</td><td>Burp Suite CE</td><td>OWASP ZAP</td></tr>
+      <tr><td>OSINT</td><td>theHarvester</td><td>recon-ng, spiderfoot</td></tr>
+      <tr><td>Subdominios</td><td>amass</td><td>subfinder</td></tr>
+      <tr><td>Directorios web</td><td>gobuster</td><td>dirsearch, feroxbuster</td></tr>
+      <tr><td>Vulns web</td><td>Nikto</td><td>Nuclei</td></tr>
+      <tr><td>Explotación</td><td>Metasploit</td><td>busca exploits manualmente</td></tr>
+      <tr><td>Hashes</td><td>hashcat</td><td>john</td></tr>
+      <tr><td>SIEM casero</td><td>ELK</td><td>Wazuh</td></tr>
+      <tr><td>Notas</td><td>Obsidian</td><td>CherryTree</td></tr>
+      <tr><td>Lenguaje</td><td>Python</td><td>Bash</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="content-block" style="margin-top: 3rem;">
+  <div class="info-box" style="border-left-color: #2ecc71;">
+    <div class="info-title"><i class="fas fa-arrow-right"></i> Siguiente paso</div>
+    <p><a href="09-como-seguir-este-repo.html"><strong>09 — Cómo seguir este repo</strong></a> — rutas según tu interés.</p>
+  </div>
+</div>
+
+</main>
+
+<footer class="footer">
+<div class="footer-content">
+<div class="footer-grid">
+  <div class="footer-col"><h4><i class="fas fa-shield-halved"></i> CDPN</h4><p>Ciberdefensa profesional.</p></div>
+  <div class="footer-col">
+    <h4>Fundamentos</h4>
+    <ul>
+      <li><a href="index.html">Índice</a></li>
+      <li><a href="07-etica-y-leyes.html">07 — Ética</a></li>
+      <li>08 — Tools</li>
+      <li><a href="09-como-seguir-este-repo.html">09 — Rutas</a></li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <h4>Secciones</h4>
+    <ul>
+      <li><a href="../../retos.html">Retos</a></li>
+      <li><a href="../../herramientas.html">Herramientas</a></li>
+      <li><a href="../../labs.html">Labs</a></li>
+      <li><a href="../../recursos.html">Recursos</a></li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <h4>GitHub</h4>
+    <ul><li><a href="https://github.com/0xvanguard/CyberDefense-Pro-Network"><i class="fab fa-github"></i> Repo</a></li></ul>
+  </div>
+</div>
+<div class="footer-bottom"><p>&copy; 2026 CDPN — CyberDefense Pro Network.</p></div>
+</div>
+</footer>
+
+<script src="../../assets/js/i18n.js"></script>
+<script src="../../assets/js/i18n-lang.js"></script>
+<script src="../../assets/js/shared.js"></script>
+</body>
+</html>
