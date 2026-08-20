@@ -1,0 +1,826 @@
+/* ========================================
+   CDPN Subpages Styles — Shared across Retos, Herramientas, Labs, Recursos
+   ======================================== */
+
+/* === Page Hero === */
+.page-hero {
+    padding: 120px 24px 60px;
+    text-align: center;
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border-color);
+    position: relative;
+    overflow: hidden;
+}
+.page-hero::before {
+    content: '';
+    position: absolute;
+    top: -40%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(0, 212, 255, 0.06) 0%, transparent 70%);
+    pointer-events: none;
+}
+.page-hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+}
+.page-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 20px;
+    background: rgba(0, 212, 255, 0.1);
+    border: 1px solid rgba(0, 212, 255, 0.2);
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--accent-primary);
+    margin-bottom: 24px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+.page-hero h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 900;
+    margin-bottom: 16px;
+}
+.page-hero p {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
+.hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 32px;
+}
+.stat {
+    text-align: center;
+}
+.stat-number {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--accent-primary);
+    font-family: var(--font-mono);
+}
+.stat-label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+/* === Main Content === */
+.main-content {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 40px 24px;
+}
+
+/* === Category Section (Tools, Labs, etc.) === */
+.tool-category-section {
+    margin-bottom: 60px;
+}
+.category-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 32px;
+}
+.category-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 212, 255, 0.1);
+    color: var(--accent-primary);
+    font-size: 1.3rem;
+    flex-shrink: 0;
+}
+.category-header h2 {
+    font-size: 1.5rem;
+    margin-bottom: 2px;
+}
+.category-header p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+/* === Tools Grid Full Width === */
+.tools-grid-full {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 20px;
+}
+
+/* === Tool Detail Card === */
+.tool-detail-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    transition: all var(--transition-normal);
+}
+.tool-detail-card:hover {
+    border-color: rgba(0, 212, 255, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+.tool-detail-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 14px;
+}
+.tool-logo {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 212, 255, 0.1);
+    color: var(--accent-primary);
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+.tool-detail-card h3 {
+    font-size: 1.1rem;
+    margin-bottom: 2px;
+}
+.tool-type {
+    font-size: 0.8rem;
+    color: var(--accent-primary);
+    font-weight: 500;
+}
+.tool-detail-card p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: 14px;
+    line-height: 1.6;
+}
+
+/* === Tool Features Tags === */
+.tool-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 16px;
+}
+.feature-tag {
+    padding: 4px 10px;
+    background: rgba(0, 212, 255, 0.06);
+    border: 1px solid rgba(0, 212, 255, 0.1);
+    border-radius: 50px;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+.feature-tag i {
+    color: var(--accent-green);
+    font-size: 0.65rem;
+}
+
+/* === Tool Meta === */
+.tool-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border-color);
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+.tool-meta span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* === Code Block (for tools) === */
+.tool-detail-card .code-block {
+    margin: 16px 0 0;
+}
+
+/* === Filter Section === */
+.filter-section {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 20px 24px 0;
+}
+.filter-bar {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+.filter-btn {
+    padding: 8px 18px;
+    border-radius: 50px;
+    border: 1px solid var(--border-color);
+    background: transparent;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all var(--transition-fast);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-main);
+}
+.filter-btn:hover,
+.filter-btn.active {
+    background: rgba(0, 212, 255, 0.1);
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
+}
+.diff-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+}
+.diff-dot.easy { background: var(--accent-green); }
+.diff-dot.medium { background: var(--accent-orange); }
+.diff-dot.hard { background: var(--accent-red); }
+
+/* === Challenges Section === */
+.challenges-section {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 40px 24px;
+}
+.challenges-section h2 {
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.diff-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+.diff-badge.easy { background: rgba(26, 188, 156, 0.15); color: var(--accent-green); }
+.diff-badge.medium { background: rgba(243, 156, 18, 0.15); color: var(--accent-orange); }
+.diff-badge.hard { background: rgba(231, 76, 60, 0.15); color: var(--accent-red); }
+
+.section-desc {
+    color: var(--text-secondary);
+    margin-bottom: 24px;
+    font-size: 0.95rem;
+}
+
+.challenges-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 20px;
+}
+
+/* === Challenge Card === */
+.challenge-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    transition: all var(--transition-normal);
+}
+.challenge-card:hover {
+    border-color: rgba(0, 212, 255, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+.challenge-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+.challenge-num {
+    font-family: var(--font-mono);
+    font-weight: 800;
+    color: var(--accent-primary);
+    font-size: 1.1rem;
+}
+.challenge-diff {
+    font-size: 0.8rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+.challenge-diff.easy { color: var(--accent-green); }
+.challenge-diff.medium { color: var(--accent-orange); }
+.challenge-diff.hard { color: var(--accent-red); }
+.challenge-card h3 {
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+}
+.challenge-card p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: 14px;
+    line-height: 1.6;
+}
+.challenge-meta {
+    display: flex;
+    gap: 14px;
+    margin-bottom: 16px;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+.challenge-meta span {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* === Comparison Section === */
+.comparison-section {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 40px 24px;
+}
+.comparison-section h2 {
+    font-size: 1.5rem;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.table-wrapper {
+    overflow-x: auto;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+}
+.comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+.comparison-table th {
+    padding: 14px 16px;
+    background: var(--bg-tertiary);
+    text-align: left;
+    font-weight: 600;
+    color: var(--accent-primary);
+    border-bottom: 1px solid var(--border-color);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+.comparison-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-secondary);
+}
+.comparison-table tr:hover td {
+    background: rgba(0, 212, 255, 0.03);
+}
+
+/* === Labs Section === */
+.labs-section {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 40px 24px;
+}
+.labs-section h2 {
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* === Labs Grid (large cards) === */
+.labs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 20px;
+}
+.lab-card-large {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    transition: all var(--transition-normal);
+}
+.lab-card-large:hover {
+    border-color: rgba(0, 212, 255, 0.2);
+    transform: translateY(-2px);
+}
+.lab-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 12px;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+.lab-status.available {
+    background: rgba(0, 255, 136, 0.1);
+    color: var(--accent-secondary);
+}
+.lab-card-large h3 {
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.lab-card-large h3 i {
+    color: var(--accent-primary);
+}
+.lab-card-large p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: 14px;
+    line-height: 1.6;
+}
+.lab-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 14px;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+.lab-info span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.lab-modules {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 16px;
+}
+.lab-modules span {
+    padding: 4px 12px;
+    background: rgba(0, 212, 255, 0.06);
+    border: 1px solid rgba(0, 212, 255, 0.1);
+    border-radius: 50px;
+    font-size: 0.75rem;
+    color: var(--accent-primary);
+    font-weight: 500;
+}
+
+/* === Platform Grid === */
+.platforms-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+}
+.platform-card {
+    padding: 24px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    text-align: center;
+    color: inherit;
+    transition: all var(--transition-normal);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.platform-card:hover {
+    border-color: rgba(0, 212, 255, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+.platform-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: rgba(0, 212, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+    color: var(--accent-primary);
+    font-size: 1.4rem;
+}
+.platform-card h4 {
+    font-size: 1.05rem;
+    margin-bottom: 8px;
+}
+.platform-card p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 14px;
+    line-height: 1.5;
+}
+.platform-features {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 14px;
+    width: 100%;
+}
+.platform-features span {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.platform-features i {
+    color: var(--accent-green);
+    font-size: 0.7rem;
+}
+.platform-price {
+    font-size: 0.9rem;
+    color: var(--accent-secondary);
+    font-weight: 700;
+    padding: 6px 16px;
+    background: rgba(0, 255, 136, 0.06);
+    border-radius: 50px;
+    margin-top: auto;
+}
+
+/* === Step Guide (reused from module.css but scoped) === */
+.main-content .step-guide {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 16px 0;
+}
+.main-content .guide-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 16px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: var(--radius-sm);
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    border-left: 3px solid var(--border-color);
+    transition: border-color var(--transition-fast);
+}
+.main-content .guide-step:hover {
+    border-left-color: var(--accent-primary);
+}
+.main-content .guide-num {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--accent-primary);
+    color: #000;
+    font-weight: 700;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+.main-content .guide-step strong {
+    color: var(--text-primary);
+}
+
+/* === Content Block (for guides) === */
+.main-content .content-block {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    margin-bottom: 24px;
+}
+.main-content .content-block h3 {
+    font-size: 1.2rem;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.main-content .content-block h3 i {
+    color: var(--accent-primary);
+    font-size: 1rem;
+}
+
+/* === Code Block === */
+.code-block {
+    margin: 16px 0;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+}
+.code-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px;
+    background: var(--bg-tertiary);
+    border-bottom: 1px solid var(--border-color);
+}
+.code-lang {
+    font-size: 0.8rem;
+    color: var(--accent-primary);
+    font-weight: 600;
+    font-family: var(--font-mono);
+}
+.code-block pre {
+    padding: 20px;
+    overflow-x: auto;
+    background: rgba(0, 0, 0, 0.3);
+    margin: 0;
+}
+.code-block code {
+    font-size: 0.85rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    font-family: var(--font-mono);
+}
+
+/* === Concept Grid (for cheat sheets) === */
+.concepts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+    margin: 16px 0;
+}
+.concept-card {
+    padding: 24px;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+}
+.concept-card h4 {
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1rem;
+}
+.concept-card h4 i {
+    color: var(--accent-primary);
+}
+
+/* === Certification Grid === */
+.cert-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+    margin: 16px 0;
+}
+.cert-card {
+    padding: 24px;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    text-align: center;
+    transition: all var(--transition-fast);
+}
+.cert-card:hover {
+    border-color: rgba(0, 212, 255, 0.2);
+    transform: translateY(-2px);
+}
+.cert-level {
+    font-size: 0.85rem;
+    margin-bottom: 8px;
+}
+.cert-card h4 {
+    font-size: 1rem;
+    margin-bottom: 8px;
+}
+.cert-card p {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+    line-height: 1.5;
+}
+.cert-cost {
+    display: inline-block;
+    padding: 4px 12px;
+    background: rgba(0, 255, 136, 0.06);
+    border-radius: 50px;
+    font-size: 0.8rem;
+    color: var(--accent-secondary);
+    font-weight: 600;
+}
+
+/* === Tools by Level === */
+.tools-levels {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin: 16px 0;
+}
+.tools-level h4 {
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.level-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+.level-badge.beginner { background: rgba(26, 188, 156, 0.15); color: var(--accent-green); }
+.level-badge.intermediate { background: rgba(52, 152, 219, 0.15); color: var(--accent-blue); }
+.level-badge.advanced { background: rgba(231, 76, 60, 0.15); color: var(--accent-red); }
+.tools-grid-small {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.tool-small {
+    padding: 10px 16px;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-secondary);
+    transition: all var(--transition-fast);
+}
+.tool-small:hover {
+    border-color: rgba(0, 212, 255, 0.2);
+    color: var(--accent-primary);
+}
+.tool-small i {
+    color: var(--accent-primary);
+}
+
+/* === Info Box === */
+.info-box {
+    background: rgba(0, 212, 255, 0.04);
+    border: 1px solid rgba(0, 212, 255, 0.12);
+    border-radius: var(--radius-md);
+    padding: 24px;
+    margin: 16px 0;
+}
+.info-box.highlight {
+    border-left: 3px solid var(--accent-primary);
+}
+.info-box h4 {
+    margin-bottom: 12px;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.info-box ul {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.info-box ul li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+/* === Responsive === */
+@media (max-width: 1024px) {
+    .nav-menu { display: none; }
+}
+@media (max-width: 768px) {
+    .tools-grid-full,
+    .challenges-grid,
+    .labs-grid,
+    .platforms-grid {
+        grid-template-columns: 1fr;
+    }
+    .hero-stats {
+        flex-direction: column;
+        gap: 16px;
+    }
+    .category-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    .concepts-grid {
+        grid-template-columns: 1fr;
+    }
+    .cert-grid {
+        grid-template-columns: 1fr;
+    }
+}

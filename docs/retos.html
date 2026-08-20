@@ -8,71 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/global.css">
     <link rel="stylesheet" href="assets/css/module.css">
-
-    <style>
-        .page-hero { padding: 120px 24px 60px; text-align: center; background: var(--bg-secondary); border-bottom: 1px solid var(--border-color); }
-        .page-hero-content { max-width: 800px; margin: 0 auto; }
-        .page-badge { display: inline-flex; align-items: center; gap: 8px; padding: 8px 20px; background: rgba(0,212,255,0.1); border: 1px solid rgba(0,212,255,0.2); border-radius: 50px; font-size: 0.85rem; font-weight: 600; color: var(--accent-primary); margin-bottom: 24px; }
-        .page-hero h1 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 900; margin-bottom: 16px; }
-        .page-hero p { color: var(--text-secondary); font-size: 1.1rem; max-width: 600px; margin: 0 auto; }
-        .page-hero .hero-stats { display: flex; justify-content: center; gap: 40px; margin-top: 32px; }
-        .page-hero .stat { text-align: center; }
-        .page-hero .stat-number { display: block; font-size: 1.5rem; font-weight: 800; color: var(--accent-primary); font-family: var(--font-mono); }
-        .page-hero .stat-label { font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; }
-        .main-content { max-width: 1280px; margin: 0 auto; padding: 40px 24px; }
-        .tool-category-section { margin-bottom: 60px; }
-        .category-header { display: flex; align-items: center; gap: 16px; margin-bottom: 32px; }
-        .category-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; background: rgba(0,212,255,0.1); color: var(--accent-primary); font-size: 1.3rem; }
-        .category-header h2 { font-size: 1.5rem; }
-        .category-header p { color: var(--text-secondary); font-size: 0.9rem; }
-        .tools-grid-full { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 20px; }
-        .tool-detail-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 28px; transition: all var(--transition-normal); }
-        .tool-detail-card:hover { border-color: rgba(0,212,255,0.2); transform: translateY(-2px); }
-        .tool-detail-header { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
-        .tool-logo { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; background: rgba(0,212,255,0.1); color: var(--accent-primary); font-size: 1.2rem; }
-        .tool-type { font-size: 0.8rem; color: var(--accent-primary); font-weight: 500; }
-        .tool-detail-card p { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 14px; }
-        .tool-features { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
-        .feature-tag { padding: 4px 10px; background: rgba(0,212,255,0.06); border: 1px solid rgba(0,212,255,0.1); border-radius: 50px; font-size: 0.75rem; color: var(--text-secondary); display: flex; align-items: center; gap: 4px; }
-        .feature-tag i { color: var(--accent-green); font-size: 0.65rem; }
-        .tool-meta { display: flex; justify-content: space-between; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border-color); font-size: 0.8rem; color: var(--text-muted); }
-        .filter-section { max-width: 1280px; margin: 0 auto; padding: 20px 24px 0; }
-        .filter-bar { display: flex; gap: 8px; flex-wrap: wrap; }
-        .filter-btn { padding: 8px 18px; border-radius: 50px; border: 1px solid var(--border-color); background: transparent; color: var(--text-secondary); cursor: pointer; font-size: 0.85rem; font-weight: 500; transition: all var(--transition-fast); display: flex; align-items: center; gap: 6px; }
-        .filter-btn:hover, .filter-btn.active { background: rgba(0,212,255,0.1); border-color: var(--accent-primary); color: var(--accent-primary); }
-        .diff-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
-        .diff-dot.easy { background: var(--accent-green); }
-        .diff-dot.medium { background: var(--accent-orange); }
-        .diff-dot.hard { background: var(--accent-red); }
-        .challenges-section { max-width: 1280px; margin: 0 auto; padding: 40px 24px; }
-        .challenges-section h2 { font-size: 1.5rem; margin-bottom: 8px; display: flex; align-items: center; gap: 12px; }
-        .diff-badge { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 50px; font-size: 0.8rem; font-weight: 600; }
-        .diff-badge.easy { background: rgba(26,188,156,0.15); color: var(--accent-green); }
-        .diff-badge.medium { background: rgba(243,156,18,0.15); color: var(--accent-orange); }
-        .diff-badge.hard { background: rgba(231,76,60,0.15); color: var(--accent-red); }
-        .section-desc { color: var(--text-secondary); margin-bottom: 24px; }
-        .challenges-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 20px; }
-        .challenge-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 28px; transition: all var(--transition-normal); }
-        .challenge-card:hover { border-color: rgba(0,212,255,0.2); }
-        .challenge-header { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
-        .challenge-num { font-family: var(--font-mono); font-weight: 800; color: var(--accent-primary); font-size: 1.1rem; }
-        .challenge-diff { font-size: 0.8rem; font-weight: 600; display: flex; align-items: center; gap: 4px; }
-        .challenge-diff.easy { color: var(--accent-green); }
-        .challenge-diff.medium { color: var(--accent-orange); }
-        .challenge-diff.hard { color: var(--accent-red); }
-        .challenge-card h3 { font-size: 1.1rem; margin-bottom: 8px; }
-        .challenge-card p { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 14px; }
-        .challenge-meta { display: flex; gap: 14px; margin-bottom: 16px; font-size: 0.8rem; color: var(--text-muted); }
-        .challenge-meta span { display: flex; align-items: center; gap: 4px; }
-        .comparison-section { max-width: 1280px; margin: 0 auto; padding: 40px 24px; }
-        .comparison-section h2 { font-size: 1.5rem; margin-bottom: 24px; }
-        .table-wrapper { overflow-x: auto; border: 1px solid var(--border-color); border-radius: var(--radius-lg); }
-        .comparison-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
-        .comparison-table th { padding: 14px 16px; background: var(--bg-tertiary); text-align: left; font-weight: 600; color: var(--accent-primary); border-bottom: 1px solid var(--border-color); }
-        .comparison-table td { padding: 12px 16px; border-bottom: 1px solid var(--border-color); color: var(--text-secondary); }
-        .comparison-table tr:hover td { background: rgba(0,212,255,0.03); }
-        @media (max-width: 768px) { .tools-grid-full, .challenges-grid { grid-template-columns: 1fr; } .page-hero .hero-stats { flex-direction: column; gap: 16px; } }
-    </style>
+    <link rel="stylesheet" href="assets/css/subpages.css">
 </head>
 <body>
     <!-- NAVBAR -->
