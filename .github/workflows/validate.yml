@@ -50,13 +50,17 @@ jobs:
       - name: Check for duplicate scripts (i18n.js was duplicated historically)
         run: |
           echo "🔁 Checking for duplicate script tags..."
-          for html in docs/*.html; do
-            count=$(grep -c 'src="assets/js/i18n.js"' "$html")
-            if [ "$count" -gt 1 ]; then
+          failed=0
+          for html in docs/*.html docs/modules/*/index.html; do
+            [ -f "$html" ] || continue
+            # `|| true` because grep -c exits 1 when count is 0, and bash -e would kill the step
+            count=$(grep -c 'src="[^"]*i18n\.js"' "$html" || true)
+            if [ "${count:-0}" -gt 1 ]; then
               echo "❌ $html has $count occurrences of i18n.js"
-              exit 1
+              failed=1
             fi
           done
+          if [ "$failed" -ne 0 ]; then exit 1; fi
           echo "✅ No duplicate scripts"
 
       - name: Validate robots.txt
