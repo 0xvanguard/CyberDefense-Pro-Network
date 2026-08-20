@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>03 - AI Agents & Tools | CDPN</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/global.css">
+    <link rel="stylesheet" href="../../assets/css/module.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="../../index.html" class="nav-logo"><i class="fas fa-shield-halved"></i> CDPN</a>
+            <ul class="nav-menu">
+                <li><a href="../../index.html"><i class="fas fa-home"></i> Inicio</a></li>
+                <li class="nav-dropdown">
+                    <a href="#"><i class="fas fa-layer-group"></i> Módulos <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../introduccion/"><span class="dot intro"></span> Introducción</a></li>
+                        <li><a href="../red-team/"><span class="dot red"></span> Ciberseguridad Ofensiva</a></li>
+                        <li><a href="../seguridad-informacion/"><span class="dot blue"></span> Seguridad Info.</a></li>
+                        <li><a href="../ai-agents/" class="active"><span class="dot ai"></span> AI Agents</a></li>
+                        <li><a href="../blue-team/"><span class="dot blue"></span> Blue Team</a></li>
+                        <li><a href="../purple-team/"><span class="dot purple"></span> Purple Team</a></li>
+                        <li><a href="../laboratorios/"><span class="dot lab"></span> Labs</a></li>
+                        <li><a href="../recursos/"><span class="dot resources"></span> Recursos</a></li>
+                    </ul>
+                </li>
+                <li><a href="../../retos.html"><i class="fas fa-trophy"></i> Retos</a></li>
+                <li><a href="../../herramientas.html"><i class="fas fa-tools"></i> Herramientas</a></li>
+                <li><a href="../../labs.html"><i class="fas fa-flask"></i> Labs</a></li>
+                <li><a href="../../recursos.html"><i class="fas fa-book"></i> Recursos</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></button>
+                <a href="https://github.com/0xvanguard/CyberDefense-Pro-Network" class="nav-github" target="_blank"><i class="fab fa-github"></i></a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="breadcrumb">
+        <a href="../../index.html">CDPN</a><span>/</span> Módulo 03: AI Agents & Tools
+    </div>
+
+    <section class="module-hero" style="--hero-glow: rgba(233, 30, 99, 0.08);">
+        <div class="module-hero-content">
+            <span class="module-badge advanced"><i class="fas fa-robot"></i> AVANZADO</span>
+            <h1>03 — AI <span class="gradient-text">Agents</span> & Tools</h1>
+            <p>Automatización con LLMs, agentes IA y seguridad de modelos de lenguaje.</p>
+        </div>
+    </section>
+
+    <main class="module-main">
+        <div class="content-block">
+            <div class="philosophy-box">
+                <i class="fas fa-brain"></i>
+                <div><strong>Filosofía:</strong> <em>"Agency over Automation"</em> — Los agentes deben <strong>razonar</strong> sobre los hallazgos, no solo redirigir output crudo. Cada decisión lleva un <strong>confidence score</strong> y se escala a humano si baja del 85%.</div>
+            </div>
+        </div>
+
+        <div class="content-block">
+            <h3><i class="fas fa-project-diagram"></i> Subdominios</h3>
+            <div class="subdomains-list">
+                <div class="subdomain-item"><span class="subdomain-num">01</span><div><strong>Agentes OSINT</strong> — Pipelines de recolección + análisis automatizado</div></div>
+                <div class="subdomain-item"><span class="subdomain-num">02</span><div><strong>Agentes Pentest</strong> — Recon automático + generadores de reportes</div></div>
+                <div class="subdomain-item"><span class="subdomain-num">03</span><div><strong>LLM Security</strong> — Atacar y defender modelos (OWASP LLM Top 10)</div></div>
+                <div class="subdomain-item"><span class="subdomain-num">04</span><div><strong>Herramientas Trending</strong> — Tooling emergente del ecosistema agentic</div></div>
+                <div class="subdomain-item"><span class="subdomain-num">05</span><div><strong>Automatización Python</strong> — Scripts y bots utilitarios</div></div>
+            </div>
+        </div>
+
+        <div class="content-block">
+            <h3><i class="fas fa-list-ol"></i> OWASP LLM Top 10</h3>
+            <div class="owasp-llm-grid">
+                <div class="owasp-llm-item"><span class="owasp-id">LLM01</span> Prompt Injection</div>
+                <div class="owasp-llm-item"><span class="owasp-id">LLM02</span> Insecure Output Handling</div>
+                <div class="owasp-llm-item"><span class="owasp-id">LLM03</span> Training Data Poisoning</div>
+                <div class="owasp-llm-item"><span class="owasp-id">LLM04</span> Model Denial of Service</div>
+                <div class="owasp-llm-item"><span class="owasp-id">LLM05</span> Supply Chain Vulnerabilities</div>
+                <div class="owasp-llm-item"><span class="owasp-id">LLM06</span> Sensitive Information Disclosure</div>
+                <div class="owasp-llm-item"><span class="owasp-id">LLM07</span> Insecure Plugin Design</div>
+                <div class="owasp-llm-item"><span class="owasp-id">LLM08</span> Excessive Agency</div>
+                <div class="owasp-llm-item"><span class="owasp-id">LLM09</span> Overreliance</div>
+                <div class="owasp-llm-item"><span class="owasp-id">LLM10</span> Model Theft</div>
+            </div>
+        </div>
+
+        <div class="content-block">
+            <h3><i class="fas fa-briefcase"></i> Carreras Laborales (7 paths)</h3>
+            <div class="careers-grid">
+                <div class="career-item tier-s"><div class="career-tier">S</div><div class="career-info"><h4>AI Red Teamer</h4><span class="salary">$3,500 - $6,500 USD/mes</span></div></div>
+                <div class="career-item tier-s"><div class="career-tier">S</div><div class="career-info"><h4>Agentic Security Developer</h4><span class="salary">$3,500 - $7,000 USD/mes</span></div></div>
+                <div class="career-item tier-s"><div class="career-tier">S</div><div class="career-info"><h4>ML Security Engineer</h4><span class="salary">$3,000 - $6,000 USD/mes</span></div></div>
+                <div class="career-item tier-a"><div class="career-tier">A</div><div class="career-info"><h4>AI Governance Officer</h4><span class="salary">$3,000 - $6,000 USD/mes</span></div></div>
+                <div class="career-item tier-a"><div class="career-tier">A</div><div class="career-info"><h4>AI Incident Responder</h4><span class="salary">$2,800 - $5,500 USD/mes</span></div></div>
+                <div class="career-item tier-b"><div class="career-tier">B</div><div class="career-info"><h4>Prompt Engineer Security</h4><span class="salary">$2,200 - $4,500 USD/mes</span></div></div>
+                <div class="career-item tier-a"><div class="career-tier">A</div><div class="career-info"><h4>AI Supply Chain Security</h4><span class="salary">$2,500 - $4,800 USD/mes</span></div></div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-col"><h4><i class="fas fa-shield-halved"></i> CDPN</h4><p>Formando profesionales de ciberdefensa en todo el mundo.</p></div>
+                <div class="footer-col"><h4>Módulos</h4><ul><li><a href="../introduccion/">Introducción</a></li><li><a href="../red-team/">Red Team</a></li><li><a href="../blue-team/">Blue Team</a></li><li><a href="../purple-team/">Purple Team</a></li></ul></div>
+                <div class="footer-col"><h4>Secciones</h4><ul><li><a href="../../retos.html">Retos</a></li><li><a href="../../herramientas.html">Herramientas</a></li><li><a href="../../labs.html">Labs</a></li><li><a href="../../recursos.html">Recursos</a></li></ul></div>
+                <div class="footer-col"><h4>Comunidad</h4><ul><li><a href="https://github.com/0xvanguard/CyberDefense-Pro-Network" target="_blank"><i class="fab fa-github"></i> GitHub</a></li></ul></div>
+            </div>
+            <div class="footer-bottom"><p>&copy; 2026 CyberDefense Pro Network. Todos los derechos reservados.</p></div>
+        </div>
+    </footer>
+    <script src="../../assets/js/shared.js"></script>
+</body>
+</html>

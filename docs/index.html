@@ -1,46 +1,118 @@
 <!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="refresh" content="0; url=app.html">
-    <title>CyberDefense Pro Network | Redirigiendo...</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #0a0a0f;
-            color: #fff;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            gap: 20px;
-        }
-        .loader {
-            width: 60px;
-            height: 60px;
-            border: 4px solid rgba(0, 212, 255, 0.2);
-            border-top-color: #00d4ff;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-        @keyframes spin { to { transform: rotate(360deg); } }
-        h1 { font-size: 1.5rem; }
-        .gradient-text {
-            background: linear-gradient(135deg, #00d4ff, #00ff88);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        p { color: #a0a0a0; }
-        a { color: #00d4ff; text-decoration: none; }
-    </style>
-</head>
-<body>
-    <div class="loader"></div>
-    <h1>🛡️ <span class="gradient-text">CDPN</span></h1>
-    <p>Cargando plataforma interactiva...</p>
-    <p><a href="app.html">Si no redirige, haz clic aquí</a></p>
-</body>
-</html>
+<html lang="es"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CDPN - CyberDefense Pro Network</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/global.css">
+<link rel="stylesheet" href="assets/css/hub.css">
+</head><body>
+<nav class="navbar"><div class="nav-container">
+<a href="index.html" class="nav-logo"><i class="fas fa-shield-halved"></i> CDPN</a>
+<ul class="nav-menu">
+<li><a href="index.html" class="active"><i class="fas fa-home"></i> Inicio</a></li>
+<li class="nav-dropdown"><a href="#"><i class="fas fa-layer-group"></i> Módulos <i class="fas fa-chevron-down"></i></a>
+<ul class="dropdown-menu">
+<li><a href="modules/introduccion/"><span class="dot intro"></span> Introducción</a></li>
+<li><a href="modules/red-team/"><span class="dot red"></span> Ofensiva</a></li>
+<li><a href="modules/seguridad-informacion/"><span class="dot blue"></span> Seguridad Info.</a></li>
+<li><a href="modules/ai-agents/"><span class="dot ai"></span> AI Agents</a></li>
+<li><a href="modules/blue-team/"><span class="dot blue"></span> Blue Team</a></li>
+<li><a href="modules/purple-team/"><span class="dot purple"></span> Purple Team</a></li>
+<li><a href="modules/laboratorios/"><span class="dot lab"></span> Labs</a></li>
+<li><a href="modules/recursos/"><span class="dot resources"></span> Recursos</a></li>
+</ul></li>
+<li><a href="retos.html"><i class="fas fa-trophy"></i> Retos</a></li>
+<li><a href="herramientas.html"><i class="fas fa-tools"></i> Herramientas</a></li>
+<li><a href="labs.html"><i class="fas fa-flask"></i> Labs</a></li>
+<li><a href="recursos.html"><i class="fas fa-book"></i> Recursos</a></li>
+</ul>
+<div class="nav-actions">
+<button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></button>
+<a href="https://github.com/0xvanguard/CyberDefense-Pro-Network" class="nav-github" target="_blank"><i class="fab fa-github"></i></a>
+</div></div></nav>
+
+<section class="hub-hero">
+<div class="hub-hero-content">
+<div class="hub-badge"><i class="fas fa-shield-halved"></i> Plataforma #1 en Español</div>
+<h1>Domina la <span class="gradient-text">Ciberdefensa</span></h1>
+<p class="hub-subtitle">Aprende seguridad ofensiva y defensiva con labs prácticos, herramientas profesionales y casos de estudio reales.</p>
+<div class="hub-terminal">
+<div class="hub-terminal-header">
+<div class="terminal-dot r"></div><div class="terminal-dot y"></div><div class="terminal-dot g"></div>
+<span class="terminal-title">cdpn@security:~$</span>
+</div>
+<div class="hub-terminal-body"><span class="prompt">$</span> <span class="cmd" id="typewriter"></span><span class="cursor">|</span></div>
+</div>
+<div class="hub-stats">
+<div class="hub-stat"><span class="hub-stat-num" data-target="369">0</span><span class="hub-stat-label">Archivos</span></div>
+<div class="hub-stat"><span class="hub-stat-num" data-target="12">0</span><span class="hub-stat-label">Módulos</span></div>
+<div class="hub-stat"><span class="hub-stat-num" data-target="40">0</span><span class="hub-stat-label">Herramientas</span></div>
+<div class="hub-stat"><span class="hub-stat-num" data-target="9">0</span><span class="hub-stat-label">Labs</span></div>
+</div>
+</div></section>
+
+<section class="hub-section">
+<div class="hub-section-header"><h2><i class="fas fa-layer-group"></i> Módulos de Aprendizaje</h2><p>Rutas de aprendizaje diseñadas para profesionales de todos los niveles</p></div>
+<div class="module-grid">
+<a href="modules/introduccion/" class="module-card" style="--card-accent: #00d4ff">
+<div class="module-card-icon" style="background: rgba(0,212,255,0.1); color: #00d4ff"><i class="fas fa-graduation-cap"></i></div>
+<h3>00 — Introducción</h3><p>Tu punto de partida. Aprende los fundamentos desde cero: CIA, autenticación, ramas de la ciberseguridad.</p>
+<div class="module-card-meta"><span class="module-card-badge badge-beginner">Principiante</span><span class="module-card-arrow"><i class="fas fa-arrow-right"></i></span></div></a>
+<a href="modules/red-team/" class="module-card" style="--card-accent: #e74c3c">
+<div class="module-card-icon" style="background: rgba(231,76,60,0.1); color: #e74c3c"><i class="fas fa-crosshairs"></i></div>
+<h3>01 — Ciberseguridad Ofensiva</h3><p>Pentesting completo: OSINT, explotación web, post-explotación, ingeniería social, criptografía. 8 submódulos.</p>
+<div class="module-card-meta"><span class="module-card-badge badge-intermediate">Intermedio-Avanzado</span><span class="module-card-arrow"><i class="fas fa-arrow-right"></i></span></div></a>
+<a href="modules/seguridad-informacion/" class="module-card" style="--card-accent: #3498db">
+<div class="module-card-icon" style="background: rgba(52,152,219,0.1); color: #3498db"><i class="fas fa-database"></i></div>
+<h3>02 — Seguridad de la Información</h3><p>Gestión de riesgos, compliance, GRC, hardening, DevSecOps, threat intelligence.</p>
+<div class="module-card-meta"><span class="module-card-badge badge-intermediate">Intermedio</span><span class="module-card-arrow"><i class="fas fa-arrow-right"></i></span></div></a>
+<a href="modules/ai-agents/" class="module-card" style="--card-accent: #e91e63">
+<div class="module-card-icon" style="background: rgba(233,30,99,0.1); color: #e91e63"><i class="fas fa-robot"></i></div>
+<h3>03 — AI Agents & Tools</h3><p>OWASP LLM Top 10, agentes OSINT/Pentest, 7 carreras laborales con salarios.</p>
+<div class="module-card-meta"><span class="module-card-badge badge-advanced">Avanzado</span><span class="module-card-arrow"><i class="fas fa-arrow-right"></i></span></div></a>
+<a href="modules/blue-team/" class="module-card" style="--card-accent: #3498db">
+<div class="module-card-icon" style="background: rgba(52,152,219,0.1); color: #3498db"><i class="fas fa-shield-alt"></i></div>
+<h3>03 — Blue Team / Defensa</h3><p>SOC, Incident Response, Threat Hunting, Detección e Ingeniería con MITRE ATT&CK.</p>
+<div class="module-card-meta"><span class="module-card-badge badge-intermediate">Intermedio</span><span class="module-card-arrow"><i class="fas fa-arrow-right"></i></span></div></a>
+<a href="modules/purple-team/" class="module-card" style="--card-accent: #9b59b6">
+<div class="module-card-icon" style="background: rgba(155,89,182,0.1); color: #9b59b6"><i class="fas fa-users"></i></div>
+<h3>04 — Purple Team</h3><p>Pack NovaPay Labs: Login Storm, Rutas Raras. Colaboración Red + Blue.</p>
+<div class="module-card-meta"><span class="module-card-badge badge-intermediate">Intermedio</span><span class="module-card-arrow"><i class="fas fa-arrow-right"></i></span></div></a>
+<a href="modules/laboratorios/" class="module-card" style="--card-accent: #1abc9c">
+<div class="module-card-icon" style="background: rgba(26,188,156,0.1); color: #1abc9c"><i class="fas fa-flask"></i></div>
+<h3>04 — Laboratorios</h3><p>CTF Writeups, HTB, TryHackMe, Docker Labs, plantilla de writeup completa.</p>
+<div class="module-card-meta"><span class="module-card-badge badge-beginner">Práctica</span><span class="module-card-arrow"><i class="fas fa-arrow-right"></i></span></div></a>
+<a href="modules/recursos/" class="module-card" style="--card-accent: #f39c12">
+<div class="module-card-icon" style="background: rgba(243,156,18,0.1); color: #f39c12"><i class="fas fa-book"></i></div>
+<h3>05 — Recursos & Certificaciones</h3><p>Security+, eJPT, CySA+, OSCP. Herramientas por nivel. Plataformas de práctica.</p>
+<div class="module-card-meta"><span class="module-card-badge badge-resources">Recursos</span><span class="module-card-arrow"><i class="fas fa-arrow-right"></i></span></div></a>
+</div></section>
+
+<section class="hub-section">
+<div class="hub-section-header"><h2><i class="fas fa-bolt"></i> Acceso Rápido</h2><p>Explora todas las secciones de la plataforma</p></div>
+<div class="quick-links-grid">
+<a href="retos.html" class="quick-link"><i class="fas fa-trophy"></i><span>Retos Prácticos</span></a>
+<a href="herramientas.html" class="quick-link"><i class="fas fa-tools"></i><span>Herramientas Profesionales</span></a>
+<a href="labs.html" class="quick-link"><i class="fas fa-flask"></i><span>Laboratorios Docker</span></a>
+<a href="recursos.html" class="quick-link"><i class="fas fa-book"></i><span>Recursos y Certificaciones</span></a>
+</div></section>
+
+<section class="hub-cta">
+<h2>¿Listo para convertirte en experto?</h2>
+<p>Únete a la comunidad de profesionales de ciberdefensa. Acceso gratuito a todos los módulos, labs y herramientas.</p>
+<div class="hub-cta-buttons">
+<a href="modules/introduccion/" class="btn btn-primary"><i class="fas fa-play"></i> Comenzar Ahora</a>
+<a href="https://github.com/0xvanguard/CyberDefense-Pro-Network" class="btn btn-outline" target="_blank"><i class="fab fa-github"></i> Ver en GitHub</a>
+</div></section>
+
+<footer class="footer"><div class="footer-content"><div class="footer-grid">
+<div class="footer-col"><h4><i class="fas fa-shield-halved"></i> CDPN</h4><p>Formando profesionales de ciberdefensa en todo el mundo.</p></div>
+<div class="footer-col"><h4>Módulos</h4><ul><li><a href="modules/introduccion/">Introducción</a></li><li><a href="modules/red-team/">Red Team</a></li><li><a href="modules/blue-team/">Blue Team</a></li><li><a href="modules/purple-team/">Purple Team</a></li></ul></div>
+<div class="footer-col"><h4>Secciones</h4><ul><li><a href="retos.html">Retos</a></li><li><a href="herramientas.html">Herramientas</a></li><li><a href="labs.html">Labs</a></li><li><a href="recursos.html">Recursos</a></li></ul></div>
+<div class="footer-col"><h4>Comunidad</h4><ul><li><a href="https://github.com/0xvanguard/CyberDefense-Pro-Network" target="_blank"><i class="fab fa-github"></i> GitHub</a></li></ul></div>
+</div><div class="footer-bottom"><p>&copy; 2026 CyberDefense Pro Network. Todos los derechos reservados.</p><p>Hecho con <i class="fas fa-heart"></i> por profesionales, para profesionales</p></div></div></footer>
+
+<script src="assets/js/shared.js"></script>
+<script src="assets/js/hub.js"></script>
+</body></html>

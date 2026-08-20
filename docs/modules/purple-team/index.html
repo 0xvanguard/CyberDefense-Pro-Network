@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>04 - Purple Team / Colaboración | CDPN</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/global.css">
+    <link rel="stylesheet" href="../../assets/css/module.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="../../index.html" class="nav-logo"><i class="fas fa-shield-halved"></i> CDPN</a>
+            <ul class="nav-menu">
+                <li><a href="../../index.html"><i class="fas fa-home"></i> Inicio</a></li>
+                <li class="nav-dropdown">
+                    <a href="#"><i class="fas fa-layer-group"></i> Módulos <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../introduccion/"><span class="dot intro"></span> Introducción</a></li>
+                        <li><a href="../red-team/"><span class="dot red"></span> Ciberseguridad Ofensiva</a></li>
+                        <li><a href="../seguridad-informacion/"><span class="dot blue"></span> Seguridad Info.</a></li>
+                        <li><a href="../ai-agents/"><span class="dot ai"></span> AI Agents</a></li>
+                        <li><a href="../blue-team/"><span class="dot blue"></span> Blue Team</a></li>
+                        <li><a href="../purple-team/" class="active"><span class="dot purple"></span> Purple Team</a></li>
+                        <li><a href="../laboratorios/"><span class="dot lab"></span> Labs</a></li>
+                        <li><a href="../recursos/"><span class="dot resources"></span> Recursos</a></li>
+                    </ul>
+                </li>
+                <li><a href="../../retos.html"><i class="fas fa-trophy"></i> Retos</a></li>
+                <li><a href="../../herramientas.html"><i class="fas fa-tools"></i> Herramientas</a></li>
+                <li><a href="../../labs.html"><i class="fas fa-flask"></i> Labs</a></li>
+                <li><a href="../../recursos.html"><i class="fas fa-book"></i> Recursos</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></button>
+                <a href="https://github.com/0xvanguard/CyberDefense-Pro-Network" class="nav-github" target="_blank"><i class="fab fa-github"></i></a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="breadcrumb">
+        <a href="../../index.html">CDPN</a><span>/</span> Módulo 04: Purple Team
+    </div>
+
+    <section class="module-hero" style="--hero-glow: rgba(155, 89, 182, 0.08);">
+        <div class="module-hero-content">
+            <span class="module-badge intermediate"><i class="fas fa-users"></i> INTERMEDIO</span>
+            <h1>04 — Purple Team / <span class="gradient-text">Colaboración</span></h1>
+            <p>Unir Red y Blue Team para mejorar las detecciones y la seguridad real.</p>
+        </div>
+    </section>
+
+    <main class="module-main">
+        <div class="content-block">
+            <h3><i class="fas fa-flask"></i> Pack Purple Web NovaPay v1</h3>
+            <div class="labs-grid">
+                <div class="lab-card">
+                    <div class="lab-status available"><i class="fas fa-check-circle"></i> Disponible</div>
+                    <h4>Lab 01 — Login Storm Controlado</h4>
+                    <p>Simular intentos de login fallidos y ver cómo se reflejan en logs de autenticación/SOC.</p>
+                    <div class="lab-steps">
+                        <div class="guide-step"><span class="guide-num">1</span><div>Disparar patrón ofensivo (login storm)</div></div>
+                        <div class="guide-step"><span class="guide-num">2</span><div>Buscar en telemetría (logs, ELK/Wazuh)</div></div>
+                        <div class="guide-step"><span class="guide-num">3</span><div>Evaluar visibilidad de la detección</div></div>
+                        <div class="guide-step"><span class="guide-num">4</span><div>Proponer alerta/umbral para SOC</div></div>
+                    </div>
+                </div>
+                <div class="lab-card">
+                    <div class="lab-status available"><i class="fas fa-check-circle"></i> Disponible</div>
+                    <h4>Lab 02 — Rutas "Raras"</h4>
+                    <p>Exploración de rutas poco comunes (/admin, /backup, /test) y análisis en logs.</p>
+                    <div class="lab-steps">
+                        <div class="guide-step"><span class="guide-num">1</span><div>Explorar rutas no enlazadas</div></div>
+                        <div class="guide-step"><span class="guide-num">2</span><div>Analizar patrones en logs de servidor</div></div>
+                        <div class="guide-step"><span class="guide-num">3</span><div>Identificar códigos HTTP anómalos</div></div>
+                        <div class="guide-step"><span class="guide-num">4</span><div>Crear casos de hunting</div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-col"><h4><i class="fas fa-shield-halved"></i> CDPN</h4><p>Formando profesionales de ciberdefensa en todo el mundo.</p></div>
+                <div class="footer-col"><h4>Módulos</h4><ul><li><a href="../introduccion/">Introducción</a></li><li><a href="../red-team/">Red Team</a></li><li><a href="../blue-team/">Blue Team</a></li><li><a href="../purple-team/">Purple Team</a></li></ul></div>
+                <div class="footer-col"><h4>Secciones</h4><ul><li><a href="../../retos.html">Retos</a></li><li><a href="../../herramientas.html">Herramientas</a></li><li><a href="../../labs.html">Labs</a></li><li><a href="../../recursos.html">Recursos</a></li></ul></div>
+                <div class="footer-col"><h4>Comunidad</h4><ul><li><a href="https://github.com/0xvanguard/CyberDefense-Pro-Network" target="_blank"><i class="fab fa-github"></i> GitHub</a></li></ul></div>
+            </div>
+            <div class="footer-bottom"><p>&copy; 2026 CyberDefense Pro Network. Todos los derechos reservados.</p></div>
+        </div>
+    </footer>
+    <script src="../../assets/js/shared.js"></script>
+</body>
+</html>

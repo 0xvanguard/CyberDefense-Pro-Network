@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>00 - Introducción | CDPN</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/css/global.css">
+<link rel="stylesheet" href="../../assets/css/module.css">
+</head><body>
+<nav class="navbar"><div class="nav-container">
+<a href="../../index.html" class="nav-logo"><i class="fas fa-shield-halved"></i> CDPN</a>
+<ul class="nav-menu">
+<li><a href="../../index.html"><i class="fas fa-home"></i> Inicio</a></li>
+<li class="nav-dropdown"><a href="#"><i class="fas fa-layer-group"></i> Módulos <i class="fas fa-chevron-down"></i></a>
+<ul class="dropdown-menu"><li><a href="../introduccion/" class="active"><span class="dot intro"></span> Introducción</a></li>
+<li><a href="../red-team/"><span class="dot red"></span> Ofensiva</a></li>
+<li><a href="../seguridad-informacion/"><span class="dot blue"></span> Seguridad Info.</a></li>
+<li><a href="../ai-agents/"><span class="dot ai"></span> AI Agents</a></li>
+<li><a href="../blue-team/"><span class="dot blue"></span> Blue Team</a></li>
+<li><a href="../purple-team/"><span class="dot purple"></span> Purple Team</a></li>
+<li><a href="../laboratorios/"><span class="dot lab"></span> Labs</a></li>
+<li><a href="../recursos/"><span class="dot resources"></span> Recursos</a></li>
+</ul></li>
+<li><a href="../../retos.html"><i class="fas fa-trophy"></i> Retos</a></li>
+<li><a href="../../herramientas.html"><i class="fas fa-tools"></i> Herramientas</a></li>
+<li><a href="../../labs.html"><i class="fas fa-flask"></i> Labs</a></li>
+<li><a href="../../recursos.html"><i class="fas fa-book"></i> Recursos</a></li>
+</ul>
+<div class="nav-actions">
+<button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></button>
+<a href="https://github.com/0xvanguard/CyberDefense-Pro-Network" class="nav-github" target="_blank"><i class="fab fa-github"></i></a>
+</div></div></nav>
+<div class="breadcrumb"><a href="../../index.html">CDPN</a><span>/</span> Módulo 00: Introducción</div>
+<section class="module-hero" style="--hero-glow: rgba(0, 212, 255, 0.08);"><div class="module-hero-content">
+<span class="module-badge beginner"><i class="fas fa-graduation-cap"></i> PRINCIPIANTE</span>
+<h1>00 — Introducción a la <span class="gradient-text">Ciberseguridad</span></h1><p>Tu punto de partida. Aprende los fundamentos desde cero.</p></div></section>
+<main class="module-main">
+<div class="content-block"><h3><i class="fas fa-question-circle"></i> ¿Qué es la Ciberseguridad?</h3>
+<p>La <strong>ciberseguridad</strong> es la práctica de proteger sistemas, redes y programas de ataques digitales.</p>
+<div class="info-box"><div class="info-title"><i class="fas fa-info-circle"></i> En palabras simples</div>
+<div class="info-grid"><div class="info-col"><h4><i class="fas fa-shield-alt"></i> Proteger:</h4><ul><li><i class="fas fa-mobile-alt"></i> Tus dispositivos</li><li><i class="fas fa-globe"></i> Tus datos</li><li><i class="fas fa-user-lock"></i> Tus cuentas</li><li><i class="fas fa-building"></i> Las empresas</li></ul></div>
+<div class="info-col"><h4><i class="fas fa-exclamation-triangle"></i> Contra:</h4><ul><li><i class="fas fa-bug"></i> Virus y malware</li><li><i class="fas fa-fish"></i> Phishing</li><li><i class="fas fa-user-secret"></i> Hackers</li><li><i class="fas fa-bomb"></i> Ataques cibernéticos</li></ul></div></div></div></div>
+
+<div class="content-block"><h3><i class="fas fa-chart-bar"></i> ¿Por Qué es Importante?</h3>
+<div class="stats-grid">
+<div class="stat-card"><div class="stat-icon"><i class="fas fa-envelope"></i></div><div><div class="stat-value">3.5 mil millones</div><div class="stat-desc">Correos maliciosos diariamente</div></div></div>
+<div class="stat-card"><div class="stat-icon"><i class="fas fa-dollar-sign"></i></div><div><div class="stat-value">$10.5 billones</div><div class="stat-desc">Costo anual ciberdelincuencia</div></div></div>
+<div class="stat-card"><div class="stat-icon"><i class="fas fa-user-tie"></i></div><div><div class="stat-value">3.5 millones</div><div class="stat-desc">Empleos vacantes mundialmente</div></div></div>
+<div class="stat-card"><div class="stat-icon"><i class="fas fa-clock"></i></div><div><div class="stat-value">Cada 39 seg</div><div class="stat-desc">Ocurre un ataque cibernético</div></div></div>
+</div></div>
+
+<div class="content-block"><h3><i class="fas fa-code-branch"></i> Ramas de la Ciberseguridad</h3>
+<div class="branches-grid">
+<div class="branch-card"><div class="branch-icon"><i class="fas fa-crosshairs"></i></div><h4>Red Team</h4><p>Atacar sistemas para encontrar vulnerabilidades.</p><div class="branch-quote">"El Bueno que se hace pasar por el Malo"</div><div class="branch-tools"><strong>Tools:</strong> Nmap, Burp Suite, Metasploit</div></div>
+<div class="branch-card"><div class="branch-icon"><i class="fas fa-shield-alt"></i></div><h4>Blue Team</h4><p>Proteger sistemas y detectar ataques.</p><div class="branch-quote">"El Guardián que protege el castillo"</div><div class="branch-tools"><strong>Tools:</strong> Wazuh, ELK Stack, Wireshark</div></div>
+<div class="branch-card"><div class="branch-icon"><i class="fas fa-users"></i></div><h4>Purple Team</h4><p>Red + Blue Team para mejorar defensas.</p><div class="branch-quote">"El Equipo completo"</div></div>
+<div class="branch-card"><div class="branch-icon"><i class="fas fa-cloud"></i></div><h4>Cloud Security</h4><p>Proteger servicios en la nube.</p><div class="branch-quote">"Cielo digital"</div></div>
+<div class="branch-card"><div class="branch-icon"><i class="fas fa-virus"></i></div><h4>Malware Analysis</h4><p>Estudiar virus y software malicioso.</p><div class="branch-quote">"El doctor de la enfermedad"</div></div>
+<div class="branch-card"><div class="branch-icon"><i class="fas fa-search"></i></div><h4>Forense Digital</h4><p>Investigar crímenes digitales.</p><div class="branch-quote">"El detective digital"</div></div>
+</div></div>
+
+<div class="content-block"><h3><i class="fas fa-key"></i> Conceptos Básicos</h3>
+<div class="concepts-grid">
+<div class="concept-card"><h4><i class="fas fa-fingerprint"></i> Auth vs Authorization</h4>
+<table class="concept-table"><thead><tr><th>Concepto</th><th>Pregunta</th><th>Ejemplo</th></tr></thead><tbody>
+<tr><td><strong>Autenticación</strong></td><td>¿Quién eres?</td><td>Login</td></tr>
+<tr><td><strong>Autorización</strong></td><td>¿Qué puedes hacer?</td><td>Permisos admin</td></tr></tbody></table></div>
+<div class="concept-card"><h4><i class="fas fa-shield-alt"></i> Triada CIA</h4>
+<div class="cia-triad">
+<div class="cia-pillar confidentiality"><i class="fas fa-lock"></i><strong>Confidencialidad</strong><span>¿Quién ve la info?</span></div>
+<div class="cia-pillar integrity"><i class="fas fa-check-circle"></i><strong>Integridad</strong><span>¿La info es correcta?</span></div>
+<div class="cia-pillar availability"><i class="fas fa-server"></i><strong>Disponibilidad</strong><span>¿Se puede acceder?</span></div>
+</div></div>
+<div class="concept-card"><h4><i class="fas fa-key"></i> Factores de Auth</h4>
+<div class="factors-list">
+<div class="factor"><span class="factor-num">1</span> <strong>SABES</strong> → Contraseña, PIN</div>
+<div class="factor"><span class="factor-num">2</span> <strong>TIENES</strong> → Teléfono, tarjeta</div>
+<div class="factor"><span class="factor-num">3</span> <strong>ERES</strong> → Huella, rostro</div>
+</div><div class="mfa-badge"><i class="fas fa-mobile-alt"></i> MFA = 2+ factores</div></div>
+</div></div>
+
+<div class="content-block"><h3><i class="fas fa-calendar-week"></i> Tu Primera Semana</h3>
+<div class="week-timeline">
+<div class="day-card"><div class="day-header"><span class="day-num">1-2</span> Preparar Entorno</div><div class="day-content">
+<div class="step"><span class="step-num">1</span><span>Descargar <a href="https://www.virtualbox.org/">VirtualBox</a></span></div>
+<div class="step"><span class="step-num">2</span><span>Descargar <a href="https://ubuntu.com/download/desktop">Ubuntu</a></span></div>
+<div class="step"><span class="step-num">3</span><span>Crear VM: 4GB RAM, 50GB disco</span></div>
+<div class="step"><span class="step-num">4</span><span>Instalar Ubuntu</span></div></div></div>
+<div class="day-card"><div class="day-header"><span class="day-num">3-4</span> Linux Básico</div><div class="day-content"><div class="code-block"><div class="code-header"><span class="code-lang">Terminal</span></div><pre><code>pwd ls cd mkdir touch nano sudo apt update</code></pre></div></div></div>
+<div class="day-card"><div class="day-header"><span class="day-num">5</span> Redes</div><div class="day-content"><ul class="factors-list"><li class="factor"><i class="fas fa-network-wired"></i> <strong>IP</strong> - Dirección en la red</li><li class="factor"><i class="fas fa-globe"></i> <strong>DNS</strong> - Nombres a IPs</li><li class="factor"><i class="fas fa-lock"></i> <strong>HTTPS</strong> - Web seguro</li><li class="factor"><i class="fas fa-plug"></i> <strong>Ports</strong> - Puertos</li></ul></div></div>
+<div class="day-card"><div class="day-header"><span class="day-num">6</span> Primer Nmap</div><div class="day-content"><div class="code-block"><div class="code-header"><span class="code-lang">Terminal</span></div><pre><code>sudo apt install nmap
+nmap localhost
+nmap scanme.nmap.org</code></pre></div></div></div>
+<div class="day-card"><div class="day-header"><span class="day-num">7</span> Plataformas</div><div class="day-content"><div class="platform-links">
+<a href="https://tryhackme.com" class="platform-link"><i class="fas fa-play"></i> TryHackMe</a>
+<a href="https://hackthebox.com" class="platform-link"><i class="fas fa-box"></i> HackTheBox</a>
+<a href="https://picoctf.org" class="platform-link"><i class="fas fa-flag"></i> PicoCTF</a>
+<a href="https://overthewire.org" class="platform-link"><i class="fas fa-terminal"></i> OverTheWire</a>
+</div></div></div>
+</div></div>
+</main>
+<footer class="footer"><div class="footer-content"><div class="footer-grid">
+<div class="footer-col"><h4><i class="fas fa-shield-halved"></i> CDPN</h4><p>Formando profesionales de ciberdefensa.</p></div>
+<div class="footer-col"><h4>Módulos</h4><ul><li><a href="../introduccion/">Intro</a></li><li><a href="../red-team/">Red Team</a></li><li><a href="../blue-team/">Blue Team</a></li><li><a href="../purple-team/">Purple</a></li></ul></div>
+<div class="footer-col"><h4>Secciones</h4><ul><li><a href="../../retos.html">Retos</a></li><li><a href="../../herramientas.html">Tools</a></li><li><a href="../../labs.html">Labs</a></li><li><a href="../../recursos.html">Recursos</a></li></ul></div>
+<div class="footer-col"><h4>GitHub</h4><ul><li><a href="https://github.com/0xvanguard/CyberDefense-Pro-Network"><i class="fab fa-github"></i> Repo</a></li></ul></div>
+</div><div class="footer-bottom"><p>&copy; 2026 CDPN. All rights reserved.</p></div></div></footer>
+<script src="../../assets/js/shared.js"></script></body></html>

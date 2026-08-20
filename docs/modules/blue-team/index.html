@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>03 - Blue Team / Defensa | CDPN</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/global.css">
+    <link rel="stylesheet" href="../../assets/css/module.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="../../index.html" class="nav-logo"><i class="fas fa-shield-halved"></i> CDPN</a>
+            <ul class="nav-menu">
+                <li><a href="../../index.html"><i class="fas fa-home"></i> Inicio</a></li>
+                <li class="nav-dropdown">
+                    <a href="#"><i class="fas fa-layer-group"></i> Módulos <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../introduccion/"><span class="dot intro"></span> Introducción</a></li>
+                        <li><a href="../red-team/"><span class="dot red"></span> Ciberseguridad Ofensiva</a></li>
+                        <li><a href="../seguridad-informacion/"><span class="dot blue"></span> Seguridad Info.</a></li>
+                        <li><a href="../ai-agents/"><span class="dot ai"></span> AI Agents</a></li>
+                        <li><a href="../blue-team/" class="active"><span class="dot blue"></span> Blue Team</a></li>
+                        <li><a href="../purple-team/"><span class="dot purple"></span> Purple Team</a></li>
+                        <li><a href="../laboratorios/"><span class="dot lab"></span> Labs</a></li>
+                        <li><a href="../recursos/"><span class="dot resources"></span> Recursos</a></li>
+                    </ul>
+                </li>
+                <li><a href="../../retos.html"><i class="fas fa-trophy"></i> Retos</a></li>
+                <li><a href="../../herramientas.html"><i class="fas fa-tools"></i> Herramientas</a></li>
+                <li><a href="../../labs.html"><i class="fas fa-flask"></i> Labs</a></li>
+                <li><a href="../../recursos.html"><i class="fas fa-book"></i> Recursos</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></button>
+                <a href="https://github.com/0xvanguard/CyberDefense-Pro-Network" class="nav-github" target="_blank"><i class="fab fa-github"></i></a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="breadcrumb">
+        <a href="../../index.html">CDPN</a><span>/</span> Módulo 03: Blue Team / Defensa
+    </div>
+
+    <section class="module-hero" style="--hero-glow: rgba(52, 152, 219, 0.08);">
+        <div class="module-hero-content">
+            <span class="module-badge intermediate"><i class="fas fa-shield-alt"></i> INTERMEDIO</span>
+            <h1>03 — Blue Team / <span class="gradient-text">Defensa</span></h1>
+            <p>Detectar, investigar y responder a ataques en entornos reales.</p>
+        </div>
+    </section>
+
+    <main class="module-main">
+        <div class="content-block">
+            <h3><i class="fas fa-crosshairs"></i> Rutas y Roles</h3>
+            <div class="routes-grid">
+                <div class="route-card">
+                    <div class="route-icon"><i class="fas fa-desktop"></i></div>
+                    <h4>SOC Analyst (Nivel 1-2)</h4>
+                    <p>Flujo de alertas, triage, dashboards y queries en SIEM.</p>
+                    <div class="route-modules"><span>Introducción a SOC y SIEM</span><span>Revisión de alertas</span><span>Clasificación de eventos</span></div>
+                </div>
+                <div class="route-card">
+                    <div class="route-icon"><i class="fas fa-first-aid"></i></div>
+                    <h4>Incident Responder</h4>
+                    <p>Contención, erradicación, recuperación y lecciones aprendidas.</p>
+                    <div class="route-modules"><span>Fases NIST de respuesta</span><span>Análisis de artefactos</span><span>Informes de incidente</span></div>
+                </div>
+                <div class="route-card">
+                    <div class="route-icon"><i class="fas fa-binoculars"></i></div>
+                    <h4>Threat Hunter</h4>
+                    <p>Búsqueda proactiva de amenazas con hipótesis y datos.</p>
+                    <div class="route-modules"><span>Hipótesis basadas en ATT&CK</span><span>Queries y visualizaciones</span><span>Playbooks de hunting</span></div>
+                </div>
+                <div class="route-card">
+                    <div class="route-icon"><i class="fas fa-cogs"></i></div>
+                    <h4>Detección e Ingeniería</h4>
+                    <p>Crear y ajustar reglas de detección en Wazuh/SIEM.</p>
+                    <div class="route-modules"><span>Mapeo MITRE ATT&CK</span><span>Creación de reglas Sigma</span><span>Validación Purple Team</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-block">
+            <h3><i class="fas fa-list-check"></i> Áreas Clave</h3>
+            <div class="areas-grid">
+                <div class="area-card"><i class="fas fa-heartbeat"></i><h4>Fundamentos de Defensa</h4><p>Blue Team, SOC, NOC, CSIRT, CERT, telemetría.</p></div>
+                <div class="area-card"><i class="fas fa-tv"></i><h4>SOC Analyst</h4><p>Operaciones de SOC, turnos, niveles, priorización.</p></div>
+                <div class="area-card"><i class="fas fa-bolt"></i><h4>Incident Response</h4><p>Fases NIST: preparación, identificación, contención.</p></div>
+                <div class="area-card"><i class="fas fa-search-plus"></i><h4>Threat Hunting</h4><p>Búsqueda proactiva vs detección reactiva.</p></div>
+                <div class="area-card"><i class="fas fa-fingerprint"></i><h4>MITRE ATT&CK</h4><p>Mapeo de tácticas/técnicas a detecciones.</p></div>
+                <div class="area-card"><i class="fas fa-tools"></i><h4>Herramientas SOC</h4><p>Wazuh, ELK, Wireshark, Sysmon, Suricata.</p></div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-col"><h4><i class="fas fa-shield-halved"></i> CDPN</h4><p>Formando profesionales de ciberdefensa en todo el mundo.</p></div>
+                <div class="footer-col"><h4>Módulos</h4><ul><li><a href="../introduccion/">Introducción</a></li><li><a href="../red-team/">Red Team</a></li><li><a href="../blue-team/">Blue Team</a></li><li><a href="../purple-team/">Purple Team</a></li></ul></div>
+                <div class="footer-col"><h4>Secciones</h4><ul><li><a href="../../retos.html">Retos</a></li><li><a href="../../herramientas.html">Herramientas</a></li><li><a href="../../labs.html">Labs</a></li><li><a href="../../recursos.html">Recursos</a></li></ul></div>
+                <div class="footer-col"><h4>Comunidad</h4><ul><li><a href="https://github.com/0xvanguard/CyberDefense-Pro-Network" target="_blank"><i class="fab fa-github"></i> GitHub</a></li></ul></div>
+            </div>
+            <div class="footer-bottom"><p>&copy; 2026 CyberDefense Pro Network. Todos los derechos reservados.</p></div>
+        </div>
+    </footer>
+    <script src="../../assets/js/shared.js"></script>
+</body>
+</html>
