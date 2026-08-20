@@ -133,4 +133,4 @@ Para considerar el lab como completado, deberás entregar (o dejar listos en tu 
 
 ---
 
-**[⬅ Volver al README del módulo 01](../README.md)**
+**[⬅ Volver al README del módulo 01](../../README.md)**

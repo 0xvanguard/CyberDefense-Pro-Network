@@ -128,7 +128,7 @@ ollama run llama3
 - **EU AI Act** — regulación europea
 - **ISO/IEC 42001** — gestión de IA
 
-Más detalles en [`../../02-SEGURIDAD-INFORMACION/06-compliance-normativas/`](../../02-SEGURIDAD-INFORMACION/06-compliance-normativas/) y [`../../02-SEGURIDAD-INFORMACION/ai-governance-officer/`](../../02-SEGURIDAD-INFORMACION/ai-governance-officer/) si existe.
+Más detalles en [`../../02-SEGURIDAD-INFORMACION/06-compliance-normativas/`](../../02-SEGURIDAD-INFORMACION/06-compliance-normativas/).
 
 ## Paso 7 — Habilidades concretas que desarrollan
 

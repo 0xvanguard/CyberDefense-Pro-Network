@@ -157,4 +157,4 @@ Opcionalmente, si las normas del curso lo permiten, puedes conservar capturas de
 
 ---
 
-**[⬅ Volver al README del módulo 01](../README.md)**
+**[⬅ Volver al README del módulo 01](../../README.md)**

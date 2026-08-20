@@ -53,7 +53,7 @@
 
 ### Fase A (Semana 1–3): Reconocimiento y análisis
 - 📖 [Metodología PTES](01-CIBERSEGURIDAD/02-pentesting-red-team/teoria/01-metodologia-ptes.md)
-- 📖 [Pentest vs Red Team](01-CIBERSEGURIDAD/02-pentesting-red-team/teoria/01-metodologia-pentest-vs-red-team.md)
+- 📖 [Pentest vs Red Team](01-CIBERSEGURIDAD/pentester-red-team/README.md)
 - 📖 [Módulo 01 — Reconocimiento OSINT](01-CIBERSEGURIDAD/01-reconocimiento-osint/README.md) (profundización)
 - 📖 [Módulo 03 — Análisis de Vulnerabilidades](01-CIBERSEGURIDAD/03-analisis-vulnerabilidades/README.md)
 - 🧪 Escaneo y enumeración sobre tu lab local

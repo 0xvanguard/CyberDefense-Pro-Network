@@ -39,7 +39,7 @@ python3 recon_automatizado.py -d ejemplo.com -w subdominios.txt
 python3 recon_automatizado.py -d ejemplo.com -w subdominios.txt -o resultados.json
 ```
 
-📖 [Documentación completa](docs/RECON-AUTOMATIZADO.md)
+📖 [Código fuente](./recon_automatizado.py)
 
 ---
 
@@ -214,7 +214,7 @@ cat recon.json | python3 -c "import sys,json; d=json.load(sys.stdin); [print(f'{
 3. Pruebas de seguridad
 ```
 
-📖 [Tutorial completo](docs/TUTORIAL-RECON-OSINT.md)
+📖 [Tutorial completo](../../../docs/TUTORIAL-RECON-OSINT.md)
 
 ---
 
@@ -297,7 +297,6 @@ app.${EMPRESA}.com
 EOF
 ```
 
-📖 [Tutorial completo](docs/TUTORIAL-WORDLISTS.md)
 
 ---
 
@@ -505,4 +504,4 @@ python3 recon_automatizado.py -d ejemplo.com -t 15
 
 ---
 
-*Directorio mantenido por la comunidad • [Contribuir](../../../../CONTRIBUTING.md)*
+*Directorio mantenido por la comunidad • [Contribuir](../../../CONTRIBUTING.md)*
