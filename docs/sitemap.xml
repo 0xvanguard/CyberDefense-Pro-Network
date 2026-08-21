@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
-  <!-- Top-level pages -->
+  <!-- ═══════════════════════════════════════ -->
+  <!-- Top-level pages                         -->
+  <!-- ═══════════════════════════════════════ -->
   <url>
     <loc>https://0xvanguard.github.io/CyberDefense-Pro-Network/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://0xvanguard.github.io/CyberDefense-Pro-Network/app.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
   <url>
     <loc>https://0xvanguard.github.io/CyberDefense-Pro-Network/retos.html</loc>
@@ -33,42 +40,181 @@
     <priority>0.7</priority>
   </url>
 
-  <!-- Modules -->
+  <!-- ═══════════════════════════════════════ -->
+  <!-- Módulo: Introducción                    -->
+  <!-- ═══════════════════════════════════════ -->
   <url>
     <loc>https://0xvanguard.github.io/CyberDefense-Pro-Network/modules/introduccion/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- Módulo: Fundamentos (12 páginas)        -->
+  <!-- ═══════════════════════════════════════ -->
   <url>
-    <loc>https://0xvanguard.github.io/CyberDefense-Pro-Network/modules/red-team/</loc>
+    <loc>https://0xvanguard.github.io/CyberDefense-Pro-Network/modules/fundamentos/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://0xvanguard.github.io/CyberDefense-Pro-Network/modules/fundamentos/01-que-es-ciberseguridad.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://0xvanguard.github.io/CyberDefense-Pro-Network/modules/fundamentos/02-glosario.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://0xvanguard.github.io/CyberDefense-Pro-Network/modules/fundamentos/03-internet-y-redes.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://0xvanguard.github.io/CyberDefense-Pro-Network/modules/fundamentos/04-sistema-operativo-y-terminal.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://0xvanguard.github.io/CyberDefense-Pro-Network/modules/fundamentos/05-criptografia-basica.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://0xvanguard.github.io/CyberDefense-Pro-Network/modules/fundamentos/06-vulnerabilidades.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://0xvanguard.github.io/CyberDefense-Pro-Network/modules/fundamentos/07-etica-y-leyes.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://0xvanguard.github.io/CyberDefense-Pro-Network/modules/fundamentos/08-herramientas-esenciales.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://0xvanguard.github.io/CyberDefense-Pro-Network/modules/fundamentos/09-como-seguir-este-repo.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://0xvanguard.github.io/CyberDefense-Pro-Network/modules/fundamentos/rutas/ruta-ai-security.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://0xvanguard.github.io/CyberDefense-Pro-Network/modules/fundamentos/rutas/ruta-atacante.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://0xvanguard.github.io/CyberDefense-Pro-Network/modules/fundamentos/rutas/ruta-defensor.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- Módulo: Seguridad de la Información     -->
+  <!-- ═══════════════════════════════════════ -->
   <url>
     <loc>https://0xvanguard.github.io/CyberDefense-Pro-Network/modules/seguridad-informacion/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- Módulo: Red Team (9 páginas)            -->
+  <!-- ═══════════════════════════════════════ -->
   <url>
-    <loc>https://0xvanguard.github.io/CyberDefense-Pro-Network/modules/ai-agents/</loc>
+    <loc>https://0xvanguard.github.io/CyberDefense-Pro-Network/modules/red-team/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://0xvanguard.github.io/CyberDefense-Pro-Network/modules/red-team/01-reconocimiento-osint.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://0xvanguard.github.io/CyberDefense-Pro-Network/modules/red-team/02-pentesting-red-team.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://0xvanguard.github.io/CyberDefense-Pro-Network/modules/red-team/03-analisis-vulnerabilidades.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://0xvanguard.github.io/CyberDefense-Pro-Network/modules/red-team/04-explotacion-web.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://0xvanguard.github.io/CyberDefense-Pro-Network/modules/red-team/05-post-explotacion.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://0xvanguard.github.io/CyberDefense-Pro-Network/modules/red-team/06-forense-digital.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://0xvanguard.github.io/CyberDefense-Pro-Network/modules/red-team/07-ingenieria-social.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://0xvanguard.github.io/CyberDefense-Pro-Network/modules/red-team/08-criptografia.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- Módulo: Blue Team                       -->
+  <!-- ═══════════════════════════════════════ -->
   <url>
     <loc>https://0xvanguard.github.io/CyberDefense-Pro-Network/modules/blue-team/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- Módulo: Purple Team                     -->
+  <!-- ═══════════════════════════════════════ -->
   <url>
     <loc>https://0xvanguard.github.io/CyberDefense-Pro-Network/modules/purple-team/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- Módulo: Laboratorios                    -->
+  <!-- ═══════════════════════════════════════ -->
   <url>
     <loc>https://0xvanguard.github.io/CyberDefense-Pro-Network/modules/laboratorios/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- Módulo: AI Agents                       -->
+  <!-- ═══════════════════════════════════════ -->
+  <url>
+    <loc>https://0xvanguard.github.io/CyberDefense-Pro-Network/modules/ai-agents/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- Módulo: Recursos                        -->
+  <!-- ═══════════════════════════════════════ -->
   <url>
     <loc>https://0xvanguard.github.io/CyberDefense-Pro-Network/modules/recursos/</loc>
     <changefreq>monthly</changefreq>
