@@ -98,8 +98,9 @@ const CDPN_i18n = {
             const res = await fetch('https://ipapi.co/json/', { signal: AbortSignal.timeout(3000) });
             if (!res.ok) return null;
             const data = await res.json();
+            // SECURITY: Validate and sanitize response
             const country = data.country_code;
-            if (country) {
+            if (country && /^[A-Z]{2}$/.test(country)) {
                 localStorage.setItem('cdpn-country', country);
                 return this.countryLang[country] || null;
             }
@@ -153,11 +154,16 @@ const CDPN_i18n = {
             }
         });
 
-        // HTML content (for elements with links inside)
+        // HTML content (for elements with links inside) - SECURITY: sanitized
         document.querySelectorAll('[data-i18n-html]').forEach(el => {
             const key = el.getAttribute('data-i18n-html');
             if (dict[key]) {
-                el.innerHTML = dict[key];
+                // Sanitize: only allow safe HTML tags
+                const sanitized = dict[key]
+                    .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '')
+                    .replace(/on\w+\s*=/gi, 'data-blocked=')
+                    .replace(/javascript:/gi, 'data-blocked:');
+                el.innerHTML = sanitized;
             }
         });
 
@@ -200,7 +206,11 @@ const CDPN_i18n = {
         if (btn) {
             const flag = this.getFlag(this.current);
             const name = this.langNames[this.current] || this.current;
-            btn.innerHTML = `<span class="lang-flag">${flag}</span> <span class="lang-name">${name}</span>`;
+            // SECURITY: Use textContent for safe rendering
+        const flagSpan = btn.querySelector('.lang-flag');
+        const nameSpan = btn.querySelector('.lang-name');
+        if (flagSpan) flagSpan.textContent = flag;
+        if (nameSpan) nameSpan.textContent = name;
         }
         // Update active state in dropdown
         const dropdown = document.getElementById('langDropdown');
