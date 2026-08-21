@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  forensics:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: forensics-station
+    hostname: forensics
+    networks:
+      forensics-net:
+        ipv4_address: 10.0.7.10
+    volumes:
+      - ./evidence:/evidence
+      - ./output:/output
+    stdin_open: true
+    tty: true
+
+networks:
+  forensics-net:
+    driver: bridge
+    internal: true
+    ipam:
+      config:
+        - subnet: 10.0.7.0/24

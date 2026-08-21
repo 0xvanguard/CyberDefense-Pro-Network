@@ -1,0 +1,27 @@
+FROM ubuntu:22.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get install -y \
+    openssh-server \
+    apache2 \
+    sudo \
+    net-tools \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN useradd -m -s /bin/bash webuser && \
+    echo "webuser:webuser123" | chpasswd
+
+RUN mkdir /var/run/sshd
+
+# Flag
+RUN echo "FLAG{s3rv3r_h0p_c0mpl3t3}" > /home/webuser/flag.txt && \
+    chown webuser:webuser /home/webuser/flag.txt
+
+# Expose db creds
+RUN echo "dbuser:dbuser123" > /home/webuser/.db.conf && \
+    chown webuser:webuser /home/webuser/.db.conf
+
+EXPOSE 22 80
+
+CMD service apache2 start && /usr/sbin/sshd -D

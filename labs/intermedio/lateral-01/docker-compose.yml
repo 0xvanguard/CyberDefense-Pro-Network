@@ -1,0 +1,58 @@
+version: '3.8'
+
+services:
+  kali:
+    build:
+      context: .
+      dockerfile: Dockerfile.kali
+    container_name: lateral-attacker
+    hostname: kali
+    networks:
+      lateral-net:
+        ipv4_address: 10.0.6.100
+    volumes:
+      - ./solutions:/solutions:ro
+      - ./scripts:/scripts:ro
+    stdin_open: true
+    tty: true
+    depends_on:
+      - jumpbox
+      - webserver
+      - dbserver
+
+  jumpbox:
+    build:
+      context: .
+      dockerfile: Dockerfile.target
+    container_name: lateral-jumpbox
+    hostname: jumpbox
+    networks:
+      lateral-net:
+        ipv4_address: 10.0.6.10
+
+  webserver:
+    build:
+      context: .
+      dockerfile: Dockerfile.web
+    container_name: lateral-webserver
+    hostname: webserver
+    networks:
+      lateral-net:
+        ipv4_address: 10.0.6.20
+
+  dbserver:
+    build:
+      context: .
+      dockerfile: Dockerfile.db
+    container_name: lateral-dbserver
+    hostname: dbserver
+    networks:
+      lateral-net:
+        ipv4_address: 10.0.6.30
+
+networks:
+  lateral-net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.0.6.0/24

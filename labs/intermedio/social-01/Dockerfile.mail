@@ -1,0 +1,19 @@
+FROM ubuntu:22.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get install -y \
+    postfix \
+    mailutils \
+    && rm -rf /var/lib/apt/lists/*
+
+# Configure postfix
+RUN postconf -e "myhostname = phishing-sim.local" && \
+    postconf -e "mydomain = phishing-sim.local" && \
+    postconf -e "myorigin = \$mydomain" && \
+    postconf -e "inet_interfaces = all" && \
+    postconf -e "mydestination = \$myhostname, localhost.\$mydomain, localhost, \$mydomain"
+
+EXPOSE 25
+
+CMD service postfix start && tail -f /var/log/mail.log

@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  mailserver:
+    build:
+      context: .
+      dockerfile: Dockerfile.mail
+    container_name: social-mail
+    hostname: mailserver
+    ports:
+      - "25:25"
+    networks:
+      social-net:
+        ipv4_address: 10.0.8.10
+
+  landing:
+    build:
+      context: .
+      dockerfile: Dockerfile.landing
+    container_name: social-landing
+    hostname: landing
+    ports:
+      - "8080:80"
+    networks:
+      social-net:
+        ipv4_address: 10.0.8.20
+
+  harvester:
+    build:
+      context: .
+      dockerfile: Dockerfile.harvester
+    container_name: social-harvester
+    hostname: harvester
+    ports:
+      - "8081:8080"
+    networks:
+      social-net:
+        ipv4_address: 10.0.8.30
+
+networks:
+  social-net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.0.8.0/24

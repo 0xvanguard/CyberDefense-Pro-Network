@@ -1,0 +1,24 @@
+FROM kalilinux/kali-rolling
+
+RUN apt-get update && apt-get install -y \
+    nmap \
+    netcat-openbsd \
+    ssh \
+    proxychains4 \
+    chisel \
+    curl \
+    wget \
+    john \
+    hashcat \
+    net-tools \
+    iputils-ping \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN useradd -m -s /bin/bash student && \
+    echo "student:student123" | chpasswd
+
+WORKDIR /home/student
+
+ENV PS1='\[\033[1;31m\][\u@lateral \W]\$\[\033[0m\] '
+
+CMD ["/bin/bash"]

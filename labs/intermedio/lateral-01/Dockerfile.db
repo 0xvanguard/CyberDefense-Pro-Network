@@ -1,0 +1,43 @@
+FROM ubuntu:22.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get install -y \
+    openssh-server \
+    mysql-server \
+    sudo \
+    gcc \
+    net-tools \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN useradd -m -s /bin/bash dbuser && \
+    echo "dbuser:dbuser123" | chpasswd
+
+RUN mkdir /var/run/sshd
+
+# Create SUID privesc binary
+RUN cat > /tmp/db-admin.c << 'C'
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+int main() {
+    setuid(0);
+    setgid(0);
+    system("/bin/bash");
+    return 0;
+}
+C
+RUN gcc /tmp/db-admin.c -o /usr/local/bin/db-admin && \
+    chmod +s /usr/local/bin/db-admin && \
+    rm /tmp/db-admin.c
+
+# Flags
+RUN echo "FLAG{l4t3r4l_m0v3m3nt_pwn3d}" > /home/dbuser/flag.txt && \
+    chown dbuser:dbuser /home/dbuser/flag.txt
+
+RUN echo "FLAG{r00t_4cc3ss_4ch13v3d}" > /root/flag.txt && \
+    chmod 600 /root/flag.txt
+
+EXPOSE 22
+
+CMD ["/usr/sbin/sshd", "-D"]

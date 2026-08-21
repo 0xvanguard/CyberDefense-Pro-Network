@@ -1,0 +1,38 @@
+FROM ubuntu:22.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get install -y \
+    openssh-server \
+    sudo \
+    cron \
+    systemctl \
+    curl \
+    wget \
+    net-tools \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create user
+RUN useradd -m -s /bin/bash lowuser && \
+    echo "lowuser:lowuser123" | chpasswd && \
+    echo "lowuser ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+
+# Setup SSH
+RUN mkdir /var/run/sshd && \
+    mkdir -p /home/lowuser/.ssh && \
+    echo "lowuser:lowuser123" | chpasswd
+
+# Create flag
+RUN echo "FLAG{pr3s1st3nc3_m4st3r}" > /root/flag.txt && \
+    chmod 600 /root/flag.txt
+
+# Create suspicious files to find
+RUN echo "#!/bin/bash" > /opt/.hidden-script && \
+    echo "echo 'suspicious' >> /tmp/.activity.log" >> /opt/.hidden-script && \
+    chmod +x /opt/.hidden-script
+
+RUN echo "* * * * * root /opt/.hidden-script" > /etc/cron.d/.suspicious
+
+EXPOSE 22
+
+CMD ["/usr/sbin/sshd", "-D"]

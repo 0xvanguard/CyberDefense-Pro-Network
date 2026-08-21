@@ -27,7 +27,11 @@ Proporcionar un entorno de aprendizaje práctico y medible para ciberseguridad, 
 | [webapp-01](intermedio/webapp-01/) | Explotación Web (OWASP) | 04 - Explotación Web | 90 min | 400 | CEH |
 | [privesc-01](intermedio/privesc-01/) | Linux Privilege Escalation | 05 - Post-Explotación | 60 min | 300 | eJPT |
 | [privesc-02](intermedio/privesc-02/) | Windows Privilege Escalation | 05 - Post-Explotación | 60 min | 300 | eJPT |
+| [persist-01](intermedio/persist-01/) | Técnicas de Persistencia | 05 - Post-Explotación | 60 min | 350 | OSCP |
+| [lateral-01](intermedio/lateral-01/) | Movimiento Lateral | 05 - Post-Explotación | 60 min | 350 | OSCP |
 | [web-01](intermedio/web-01/) | Web Application Security (OWASP) | 04 - Explotación Web | 90 min | 400 | CEH |
+| [disk-forensics-01](intermedio/disk-forensics-01/) | Análisis Forense de Disco | 06 - Forense Digital | 60 min | 300 | GCFE |
+| [social-01](intermedio/social-01/) | Ingeniería Social — Phishing | 07 - Ingeniería Social | 60 min | 300 | CEH |
 | [crypto-01](intermedio/crypto-01/) | Cryptography Challenges | 08 - Criptografía | 90 min | 400 | CEH |
 
 ### 🔴 Nivel Avanzado
@@ -93,6 +97,10 @@ linux-01 (Linux)    ──────▶   pentest-01 (Pentesting)
 script-01 (Python)  ──────▶   vulnscan-01 (Análisis Vulns)
                                webapp-01 (Explotación Web)
                                privesc-01 (Post-Explotación)
+                               persist-01 (Persistencia)
+                               lateral-01 (Movimiento Lateral)
+                               disk-forensics-01 (Forense Digital)
+                               social-01 (Ingeniería Social)
                                crypto-01 (Criptografía)
                                     │
                                     ▼
