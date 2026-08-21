@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔐 Criptografía Práctica — CyberDefense Labs</title>
+    <link rel="stylesheet" href="../../assets/css/lab-runner.css">
+</head>
+<body>
+    <div class="lab-page" id="lab-page"></div>
+
+    <script src="../../docs/assets/js/gamification.js"></script>
+    <script src="../../assets/js/lab-runner.js"></script>
+
+    <script>
+    const LAB_CONFIG = {
+        id: 'crypto-01',
+        name: 'Criptografía Práctica',
+        subtitle: 'César, Vigenère, RSA, AES-ECB, Hash Cracking y Padding Oracle',
+        icon: '🔐',
+        difficulty: 'intermedio',
+        totalXP: 400,
+        time: '90 min',
+        exercises: [
+            {
+                title: 'César Cipher — Brute Force',
+                xp: 30,
+                objective: 'Descifra un mensaje César probando todas las rotaciones posibles.',
+                steps: [
+                    'El cifrado César rota cada letra N posiciones',
+                    'Prueba ROT1 hasta ROT25 manualmente o con script',
+                    'Busca palabras en inglés para identificar la rotación correcta',
+                    'Alternativa: usa CyberChef o dcode.fr'
+                ],
+                code: `<span class="comment"># Mensaje cifrado</span>\n<span class="flag">Ymjfw ymj tzwxyjw fs fsi jfxytzw</span>\n\n<span class="comment"># Brute force con bash</span>\nfor i in {1..25}; do\n  echo "ROT$i: $(echo 'Ymjfw...' | tr 'A-Z' "$(echo {A..Z} | tr -d ' ' | cut -c $((26-i+1))-26)$(echo {A..Z} | tr -d ' ' | cut -c 1-$((26-i+1)))")"\ndone\n\n<span class="flag">ROT14: The quick brown fox jumps over</span>\n\n<span class="comment"># CyberChef → ROT13</span>`,
+                codeLang: 'bash',
+                flag: 'FLAG{caesar_rot14_decrypted}',
+                hint: 'Prueba ROT14 — el mensaje contiene palabras comunes en inglés.',
+                solution: 'ROT14 descifra: "The quick brown fox jumps over the lazy dog".'
+            },
+            {
+                title: 'Vigenère Cipher',
+                xp: 40,
+                objective: 'Descifra un mensaje Vigenère encontrando la clave de longitud 3.',
+                steps: [
+                    'Primero determina longitud de clave con Kasiski',
+                    'Separa caracteres por posición: grupo 1 (pos 1,4,7...), grupo 2 (pos 2,5,8...), grupo 3 (pos 3,6,9...)',
+                    'Cada grupo es un César — resuelve cada uno',
+                    'Combina las letras de la clave'
+                ],
+                code: `<span class="comment"># Mensaje cifrado</span>\n<span class="flag">LXFOPVEFRNHR</span>\n<span class="comment"># Clave de longitud: 3</span>\n\n<span class="comment"># Grupo 1 (pos 1,4,7,10): L, O, E, H</span>\n<span class="comment"># Grupo 2 (pos 2,5,8,11): X, P, F, R</span>\n<span class="comment"># Grupo 3 (pos 3,6,9,12): F, V, R, N</span>\n\n<span class="comment"># Descifrar cada grupo como César</span>\n<span class="flag">Grupo 1 → ROT2 → ATTACK</span>\n<span class="flag">Grupo 2 → ROT1 → xxxxxx</span>\n<span class="flag">Grupo 3 → ROT5 → xxxxxx</span>\n\n<span class="flag">Clave: KEY</span>`,
+                codeLang: 'bash',
+                flag: 'FLAG{vigenere_key_attack}',
+                hint: 'La clave es de 3 letras. Usa Kasiski para encontrar la longitud.',
+                solution: 'Clave KEY (longitud 3). Mensaje descifrado: ATTACK AT DAWN.'
+            },
+            {
+                title: 'XOR Cipher — Known Plaintext',
+                xp: 40,
+                objective: 'Rompe XOR usando known plaintext attack.',
+                steps: [
+                    'XOR: ciphertext[i] = plaintext[i] XOR key[i]',
+                    'Si sabes que el mensaje empieza con "The":',
+                    'key = ciphertext[0:3] XOR "The"',
+                    'Descifra todo con la clave recuperada'
+                ],
+                code: `<span class="comment"># Ciphertext (hex): 0b1c2d3e4f5a6b7c</span>\n<span class="comment"># Sabemos que empieza con "The"</span>\n\n<span class="flag">cipher = bytes.fromhex('0b1c2d3e4f5a6b7c')</span>\n<span class="flag">known = b'The'</span>\n\n<span class="flag">key = cipher[0] ^ known[0]  # 0x0b ^ 0x54 = 0x42</span>\n<span class="flag">key = cipher[1] ^ known[1]  # 0x1c ^ 0x68 = 0x74</span>\n<span class="flag">key = cipher[2] ^ known[2]  # 0x2d ^ 0x65 = 0x48</span>\n\n<span class="comment"># Key = 0x42 ('B') — XOR con 1 byte</span>\n<span class="flag">Decrypted: Hello World</span>`,
+                codeLang: 'python',
+                flag: 'FLAG{xor_known_plaintext_key_42}',
+                hint: 'XOR con 1 byte: solo necesitas 3 bytes de plaintext conocido.',
+                solution: 'Key = 0x42 (66 decimal). Plaintext: "Hello World".'
+            },
+            {
+                title: 'RSA Débil — Factoring',
+                xp: 60,
+                objective: 'Descifra RSA factorizando n en primos pequeños.',
+                steps: [
+                    'Factoriza n = p × q (usa sympy o factorDB.com)',
+                    'Calcula φ(n) = (p-1)(q-1)',
+                    'Calcula d = e⁻¹ mod φ(n)',
+                    'Descifra: plaintext = ciphertext^d mod n'
+                ],
+                code: `<span class="comment"># Parámetros RSA</span>\n<span class="flag">n = 3233, e = 17, ciphertext = 2790</span>\n\n<span class="comment"># Paso 1: Factorizar n</span>\n<span class="flag">n = 53 × 61  (p=53, q=61)</span>\n\n<span class="comment"># Paso 2: φ(n)</span>\n<span class="flag">φ = (53-1)(61-1) = 52 × 60 = 3120</span>\n\n<span class="comment"># Paso 3: d = e⁻¹ mod φ</span>\n<span class="flag">d = 17⁻¹ mod 3120 = 2753</span>\n\n<span class="comment"># Paso 4: Descifrar</span>\n<span class="flag">plaintext = 2790^2753 mod 3233 = 65</span>\n<span class="flag">ASCII 65 = 'A'</span>`,
+                codeLang: 'python',
+                flag: 'FLAG{rsa_weak_factoring_p53_q61}',
+                hint: 'n = 3233 se factoriza fácilmente en 53 × 61.',
+                solution: 'p=53, q=61, d=2753. plaintext = 2790^2753 mod 3233 = 65 (ASCII: A).'
+            },
+            {
+                title: 'AES-ECB — Pattern Analysis',
+                xp: 60,
+                objective: 'Demuestra por qué AES-ECB es inseguro analizando patrones.',
+                steps: [
+                    'ECB cifra bloques idénticos a bloques idénticos',
+                    'Compara bloques de ciphertext — ¿cuáles se repiten?',
+                    'Determina el tamaño de bloque (16 bytes para AES)',
+                    'Explica por qué CBC o GCM son mejores'
+                ],
+                code: `<span class="comment"># AES-ECB: mismo input → mismo output</span>\n<span class="flag">Plaintext: "AAAAAAAAAAAAAAAA" (16 A's)</span>\n<span class="flag">Ciphertext: [X9F8K2M1...] = bloque A</span>\n\n<span class="flag">Plaintext: "AAAAAAAAAAAAAAAA" (otras 16 A's)</span>\n<span class="flag">Ciphertext: [X9F8K2M1...] = ¡MISMO bloque!</span>\n\n<span class="comment"># AES-CBC: cada bloque usa IV diferente</span>\n<span class="flag">Plaintext: "AAAAAAAAAAAAAAAA" × 2</span>\n<span class="flag">Ciphertext: [B1C2D3...] [E4F5G6...] ≠ ≠</span>`,
+                codeLang: 'python',
+                flag: 'FLAG{ecb_pattern_leak_detected}',
+                hint: 'ECB es determinista — no usa IV, así que el mismo plaintext siempre produce el mismo ciphertext.',
+                solution: 'ECB repite bloques idénticos. CBC usa IV aleatorio, eliminando patrones.'
+            },
+            {
+                title: 'Hash Cracking',
+                xp: 60,
+                objective: 'Crackea hashes MD5/SHA con diccionario y rainbow tables.',
+                steps: [
+                    'Identifica el tipo de hash (longitud y formato)',
+                    'Usa hashcat: <code>hashcat -m 0 hash.txt rockyou.txt</code>',
+                    'O john: <code>john --wordlist=rockyou.txt hash.txt</code>',
+                    'Mide el tiempo que tarda'
+                ],
+                code: `<span class="comment"># Hash a crackear</span>\n<span class="flag">5f4dcc3b5aa765d61d8327deb882cf99</span>\n<span class="output">Tipo: MD5 (32 hex chars)</span>\n\n<span class="command">hashcat -m 0 hash.txt rockyou.txt</span>\n<span class="flag">5f4dcc3b5aa765d61d8327deb882cf99:password</span>\n<span class="output">Tiempo: 0.23 segundos</span>\n\n<span class="comment"># Verificar</span>\n<span class="command">echo -n "password" | md5sum</span>\n<span class="flag">5f4dcc3b5aa765d61d8327deb882cf99</span>`,
+                codeLang: 'bash',
+                flag: 'FLAG{hash_cracked_password_md5}',
+                hint: 'El hash 5f4dcc3b... es extremadamente común — está en las primeras líneas de rockyou.',
+                solution: 'hashcat crackea en 0.23s. password es una de las contraseñas más comunes.'
+            },
+            {
+                title: 'Hash Cracking — John the Ripper',
+                xp: 60,
+                objective: 'Usa John the Ripper para crackear múltiples hashes.',
+                steps: [
+                    'Prepara archivo de hashes: <code>echo "hash" > hashes.txt</code>',
+                    'Ejecuta John: <code>john --wordlist=rockyou.txt hashes.txt</code>',
+                    'Ve resultados: <code>john --show hashes.txt</code>',
+                    'Prueba con different formats: <code>--format=raw-sha256</code>'
+                ],
+                code: `<span class="comment"># Múltiples hashes</span>\n<span class="flag">5f4dcc3b5aa765d61d8327deb882cf99</span>\n<span class="flag">e10adc3949ba59abbe56e057f20f883e</span>\n<span class="flag">d8578edf8458ce06fbc5bb76a58c5ca4</span>\n\n<span class="command">john --wordlist=rockyou.txt hashes.txt</span>\n<span class="flag">5f4dcc3b... → password</span>\n<span class="flag">e10adc39... → 123456</span>\n<span class="flag">d8578edf... → qwerty</span>\n\n<span class="command">john --show hashes.txt</span>\n<span class="output">3 password hashes cracked</span>`,
+                codeLang: 'bash',
+                flag: 'FLAG{john_multiple_hashes_cracked}',
+                hint: 'John detecta automáticamente el formato del hash.',
+                solution: 'John crackea los 3 hashes: password, 123456, qwerty.'
+            },
+            {
+                title: 'Resumen de Criptografía',
+                xp: 50,
+                objective: 'Documenta lecciones aprendidas y mejores prácticas.',
+                steps: [
+                    'Resume cada técnica de ataque y su mitigación',
+                    'Crea tabla de algoritmos seguros vs inseguros',
+                    'Documenta por qué ECB, MD5 y DES son inseguros',
+                    'Recomienda alternativas modernas'
+                ],
+                code: `<span class="comment"># Algoritmos: Seguros vs Inseguros</span>\n\n<span class="flag">| Inseguro | Alternativa Segura | Razón |</span>\n<span class="flag">|----------|-------------------|-------|</span>\n<span class="flag">| DES | AES-256-GCM | Key de 56 bits</span>\n<span class="flag">| MD5 | SHA-256 / bcrypt | Colisiones</span>\n<span class="flag">| SHA-1 | SHA-256 / SHA-3 | Colisiones</span>\n<span class="flag">| AES-ECB | AES-CBC / AES-GCM | Patrones</span>\n<span class="flag">| RSA-1024 | RSA-4096 / ECC | Factoring</span>`,
+                codeLang: 'markdown',
+                flag: 'FLAG{crypto_best_practices}',
+                hint: 'Nunca uses: DES, MD5, SHA-1, AES-ECB, RSA < 2048 bits.',
+                solution: 'Tabla completa de algoritmos seguros con explicaciones de por qué los inseguros son peligrosos.'
+            }
+        ]
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+        CDPN_LabRunner.init(LAB_CONFIG);
+    });
+    </script>
+</body>
+</html>

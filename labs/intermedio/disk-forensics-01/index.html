@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💾 Forense de Disco — CyberDefense Labs</title>
+    <link rel="stylesheet" href="../../assets/css/lab-runner.css">
+</head>
+<body>
+    <div class="lab-page" id="lab-page"></div>
+
+    <script src="../../docs/assets/js/gamification.js"></script>
+    <script src="../../assets/js/lab-runner.js"></script>
+
+    <script>
+    const LAB_CONFIG = {
+        id: 'disk-forensics-01',
+        name: 'Forense de Disco',
+        subtitle: 'Análisis de imagen forense: hashes, archivos eliminados, logs y timeline',
+        icon: '💾',
+        difficulty: 'intermedio',
+        totalXP: 300,
+        time: '55 min',
+        exercises: [
+            {
+                title: 'Verificar Integridad de Evidencia',
+                xp: 40,
+                objective: 'Confirma que la imagen forense no fue alterada calculando y comparando hashes.',
+                steps: [
+                    'Calcula SHA256: <code>sha256sum /evidence/disk.img</code>',
+                    'Compara con hash esperado: <code>cat /evidence/hashes.txt</code>',
+                    'Identifica tipo de archivo: <code>file /evidence/disk.img</code>',
+                    'Información de particiones: <code>fdisk -l /evidence/disk.img</code>'
+                ],
+                code: `<span class="command">sha256sum /evidence/disk.img</span>\n<span class="flag">a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2</span>\n\n<span class="command">cat /evidence/hashes.txt</span>\n<span class="flag">a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2</span>\n<span class="flag">✓ Hash VERIFICADO — evidencia íntegra</span>\n\n<span class="command">file /evidence/disk.img</span>\n<span class="output">DOS/MBR boot sector, 2 partitions</span>`,
+                codeLang: 'bash',
+                flag: 'FLAG{integrity_verified_sha256}',
+                hint: 'Si el hash calculado coincide con el esperado, la evidencia no fue modificada.',
+                solution: 'SHA256 coincide. Imagen de 2 particiones, tipo MBR.'
+            },
+            {
+                title: 'Montar y Explorar la Imagen',
+                xp: 50,
+                objective: 'Monta la imagen forense y explora su estructura de archivos.',
+                steps: [
+                    'Usa sleuthkit: <code>fls /evidence/disk.img</code>',
+                    'Extrae archivos con icat: <code>icat /evidence/disk.img [inode]</code>',
+                    'Monta con loop: <code>mount -o loop,ro /evidence/disk.img /mnt/evidence</code>',
+                    'Explora directorios: <code>home, var/log, tmp</code>'
+                ],
+                code: `<span class="command">fls /evidence/disk.img</span>\n<span class="flag">r/r 3: home/</span>\n<span class="flag">r/r 5: var/log/</span>\n<span class="flag">r/r 8: tmp/</span>\n<span class="flag">r/r 12: etc/</span>\n\n<span class="command">ls -la /mnt/evidence/home/</span>\n<span class="output">drwxr-xr-x  jane.doe/</span>\n\n<span class="command">ls -la /mnt/evidence/tmp/</span>\n<span class="flag">-rwxr-xr-x  update (sospechoso!)</span>\n<span class="flag">drwxr-xr-x  exfil/ (¿exfiltración?)</span>`,
+                codeLang: 'bash',
+                flag: 'FLAG{forensic_mount_exploration_done}',
+                hint: 'Sleuthkit puede leer imágenes sin montarlas. /tmp tiene archivos sospechosos.',
+                solution: 'fls lista inodes. /tmp/update y /tmp/exfil/ son sospechosos.'
+            },
+            {
+                title: 'Recuperar Archivos Eliminados',
+                xp: 50,
+                objective: 'Recupera archivos borrados del disco usando foremost y strings.',
+                steps: [
+                    'Foremost: <code>foremost -i /evidence/disk.img -o /output/recovered/</code>',
+                    'Strings: <code>strings /evidence/disk.img | grep -i "password\|secret\|flag"</code>',
+                    'Binwalk: <code>binwalk /evidence/disk.img</code>',
+                    'Busca archivos por tipo: <code>find -name "*.jpg" -o -name "*.pdf"</code>'
+                ],
+                code: `<span class="command">foremost -i /evidence/disk.img -o /output/recovered/</span>\n<span class="flag">15 files recovered</span>\n<span class="flag">3 jpg, 2 pdf, 4 txt, 6 sh</span>\n\n<span class="command">strings /evidence/disk.img | grep -i "password"</span>\n<span class="flag">DB_PASSWORD=s3cr3t_p@ss</span>\n<span class="flag">SSH_KEY=-----BEGIN RSA PRIVATE KEY-----</span>\n\n<span class="command">ls /output/recovered/</span>\n<span class="flag">backdoor.sh, reverse_shell.py, credentials.txt</span>`,
+                codeLang: 'bash',
+                flag: 'FLAG{deleted_files_recovered_15}',
+                hint: 'foremost recupera archivos eliminados por tipo. strings encuentra datos en binarios.',
+                solution: '15 archivos recuperados: backdoor.sh, reverse_shell.py, credentials.txt, fotos, docs.'
+            },
+            {
+                title: 'Analizar Logs del Sistema',
+                xp: 60,
+                objective: 'Identifica eventos sospechosos en auth.log y syslog.',
+                steps: [
+                    'Auth logs: <code>grep -i "failed\|success\|accepted" /mnt/evidence/var/log/auth.log</code>',
+                    'Busca IPs: <code>grep -oE "[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+"</code>',
+                    'Conexiones: <code>grep "ESTABLISHED\|SYN" /var/log/</code>',
+                    'Comandos ejecutados: <code>grep "command\|exec\|bash" auth.log</code>'
+                ],
+                code: `<span class="command">grep -i "failed\|success" /mnt/evidence/var/log/auth.log</span>\n<span class="output">08:30 Accepted password for jane.doe from 192.168.1.50</span>\n<span class="flag">09:15 Failed password for root from 192.168.1.100</span>\n<span class="flag">09:16 Failed password for root from 192.168.1.100</span>\n<span class="flag">09:17 Accepted password for root from 192.168.1.100</span>\n<span class="output">14:00 session closed for user jane.doe</span>`,
+                codeLang: 'bash',
+                flag: 'FLAG{brute_force_detected_192_168_1_100}',
+                hint: 'Busca patrones de "Failed password" seguidos de "Accepted password" = brute force exitoso.',
+                solution: 'IP 192.168.1.100 hizo brute force contra root (2 fallos, luego éxito).'
+            },
+            {
+                title: 'Metadatos y Evidencia Oculta',
+                xp: 50,
+                objective: 'Extrae metadatos de archivos y busca datos ocultos.',
+                steps: [
+                    'Exiftool: <code>exiftool /mnt/evidence/home/user/Documents/*.jpg</code>',
+                    'Binwalk (stego): <code>binwalk /mnt/evidence/home/user/Images/photo.jpg</code>',
+                    'SUID: <code>find /mnt/evidence -perm -4000</code>',
+                    'Archivos grandes: <code>find /mnt/evidence -size +1M</code>'
+                ],
+                code: `<span class="command">exiftool /mnt/evidence/home/user/Documents/*.jpg</span>\n<span class="flag">GPS Latitude: 40.7128° N</span>\n<span class="flag">GPS Longitude: 74.0060° W</span>\n<span class="flag">Camera: Canon EOS R5</span>\n\n<span class="command">binwalk /mnt/evidence/home/user/Images/photo.jpg</span>\n<span class="flag">256000 bytes hidden data at offset 0x1000</span>\n<span class="flag">→ ¡Esteganografía detectada!</span>`,
+                codeLang: 'bash',
+                flag: 'FLAG{metadata_stego_evidence_found}',
+                hint: 'exiftool extrae GPS, cámara, fecha. binwalk detecta datos ocultos en imágenes.',
+                solution: 'GPS coordinates, cámara Canon. binwalk encuentra 256KB de datos ocultos (esteganografía).'
+            },
+            {
+                title: 'Timeline y Reporte Forense',
+                xp: 50,
+                objective: 'Reconstruye la cronología del ataque y genera reporte profesional.',
+                steps: [
+                    'Timeline: <code>fls -r -m "/" /evidence/disk.img > timeline.body</code>',
+                    'Mactime: <code>mactime -b timeline.body -d > timeline.csv</code>',
+                    'Crea <code>forensic_report.md</code> con cadena de custodia',
+                    'Documenta: hallazgos, timeline, evidencia, conclusiones'
+                ],
+                code: `<span class="comment"># Timeline del ataque reconstruida</span>\n\n<span class="flag">08:30 - Login exitoso (jane.doe desde 192.168.1.50)</span>\n<span class="flag">09:15 - Brute force contra root desde 192.168.1.100</span>\n<span class="flag">09:17 - Root comprometido desde 192.168.1.100</span>\n<span class="flag">09:20 - Descarga de malware (/tmp/update)</span>\n<span class="flag">09:22 - Instalación de backdoor (SUID root)</span>\n<span class="flag">10:00 - Exfiltración de 15 documentos (/tmp/exfil/)</span>\n<span class="flag">14:00 - Última actividad — atacante desconectado</span>`,
+                codeLang: 'markdown',
+                flag: 'FLAG{forensic_timeline_complete}',
+                hint: 'La timeline reconstruye todo el ataque desde el primer login.',
+                solution: 'Timeline completa: login → brute force → malware → backdoor → exfiltración → desconexión.'
+            }
+        ]
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+        CDPN_LabRunner.init(LAB_CONFIG);
+    });
+    </script>
+</body>
+</html>

