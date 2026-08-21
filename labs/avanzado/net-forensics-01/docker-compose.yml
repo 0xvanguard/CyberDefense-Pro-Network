@@ -1,0 +1,77 @@
+version: '3.8'
+
+services:
+  net-forensics:
+    build: .
+    container_name: net-forensics
+    hostname: forensics
+    networks:
+      forensics-net:
+        ipv4_address: 10.0.9.10
+    volumes:
+      - ./captures:/captures:ro
+      - ./output:/output
+      - ./tools:/tools
+      - ./reports:/reports
+    stdin_open: true
+    tty: true
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    command: /bin/bash
+
+  # Simulated network for live capture practice
+  target-web:
+    image: nginx:alpine
+    container_name: target-web
+    hostname: target-web
+    networks:
+      forensics-net:
+        ipv4_address: 10.0.9.20
+    ports:
+      - "8080:80"
+
+  target-db:
+    image: mysql:5.7
+    container_name: target-db
+    hostname: target-db
+    networks:
+      forensics-net:
+        ipv4_address: 10.0.9.30
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=testdb
+    volumes:
+      - ./data/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  attacker:
+    image: ubuntu:22.04
+    container_name: attacker-sim
+    hostname: attacker
+    networks:
+      forensics-net:
+        ipv4_address: 10.0.9.100
+    volumes:
+      - ./tools:/tools
+      - ./output:/output
+    stdin_open: true
+    tty: true
+    command: >
+      bash -c "
+        apt-get update && apt-get install -y \
+          nmap \
+          curl \
+          wget \
+          netcat \
+          hydra \
+          sqlmap \
+        && echo '[+] Attacker tools ready' \
+        && /bin/bash
+      "
+
+networks:
+  forensics-net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.0.9.0/24

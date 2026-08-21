@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  re-workstation:
+    build: .
+    container_name: re-workstation
+    hostname: re-lab
+    networks:
+      re-net:
+        ipv4_address: 10.0.8.10
+    volumes:
+      - ./targets:/targets:ro
+      - ./output:/output
+      - ./tools:/tools
+      - ./projects:/projects
+    stdin_open: true
+    tty: true
+    cap_add:
+      - SYS_PTRACE
+    security_opt:
+      - seccomp:unconfined
+    command: /bin/bash
+
+networks:
+  re-net:
+    driver: bridge
+    internal: true
+    ipam:
+      config:
+        - subnet: 10.0.8.0/24
