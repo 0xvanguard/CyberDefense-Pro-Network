@@ -8,10 +8,10 @@ hero:
   actions:
     - theme: brand
       text: "🚀 Empezar a Aprender"
-      link: /campus/modules/fundamentos/
+      link: /modules/fundamentos/
     - theme: alt
       text: "🧪 Labs Prácticos"
-      link: /campus/labs/
+      link: /labs/
     - theme: alt
       text: "✏️ Editor de Contenido"
       link: /CyberDefense-Pro-Network/admin.html
@@ -20,19 +20,19 @@ features:
   - icon: "🔴"
     title: "Red Team / Ofensiva"
     details: "Pentesting completo - OSINT, explotación web, post-explotación, ingeniería social, criptografía. 8 submódulos alineados a MITRE ATT&CK."
-    link: /campus/modules/red-team/
+    link: /modules/red-team/
   - icon: "🔵"
     title: "Blue Team / Defensa"
     details: "SOC, Incident Response, Threat Hunting, Detección e Ingeniería con MITRE ATT&CK."
-    link: /campus/modules/blue-team/
+    link: /modules/blue-team/
   - icon: "🤖"
     title: "AI Agents & Tools"
     details: "OWASP LLM Top 10, agentes OSINT/Pentest, MLSecOps, 7 carreras laborales con salarios."
-    link: /campus/modules/ai-agents/
+    link: /modules/ai-agents/
   - icon: "🧪"
     title: "Labs Interactivos"
     details: "20 laboratorios con gamificación, XP, badges y progreso. Aprende haciendo con Docker."
-    link: /campus/labs/
+    link: /labs/
   - icon: "✏️"
     title: "Editor Web"
     details: "Edita contenido directamente desde el navegador. Sin necesidad de terminal. Los cambios se despliegan automáticamente."
@@ -79,6 +79,6 @@ features:
 
 <div align="center">
 
-**[🚀 Empezar](/CyberDefense-Pro-Network/campus/modules/fundamentos/)** · **[✏️ Editar](/CyberDefense-Pro-Network/admin.html)** · **[📦 GitHub](https://github.com/0xvanguard/CyberDefense-Pro-Network)**
+**[🚀 Empezar](/modules/fundamentos/)** · **[✏️ Editar](/CyberDefense-Pro-Network/admin.html)** · **[📦 GitHub](https://github.com/0xvanguard/CyberDefense-Pro-Network)**
 
 </div>
