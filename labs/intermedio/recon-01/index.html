@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔍 Reconocimiento y OSINT — CyberDefense Labs</title>
+    <link rel="stylesheet" href="../../assets/css/lab-runner.css">
+</head>
+<body>
+    <div class="lab-page" id="lab-page">
+        <!-- Rendered by lab-runner.js -->
+    </div>
+
+    <!-- Gamification System -->
+    <script src="../../docs/assets/js/gamification.js"></script>
+    <!-- Lab Runner Engine -->
+    <script src="../../assets/js/lab-runner.js"></script>
+
+    <script>
+    // ===== LAB CONFIG: recon-01 =====
+    const LAB_CONFIG = {
+        id: 'recon-01',
+        name: 'Reconocimiento y OSINT',
+        subtitle: 'Mapea la superficie de ataque completa de un entorno empresarial',
+        icon: '🔍',
+        difficulty: 'intermedio',
+        totalXP: 250,
+        time: '45 min',
+        exercises: [
+            {
+                title: 'Reconocimiento Pasivo — WHOIS',
+                xp: 30,
+                objective: 'Obtén información del dominio corporativo sin tocar los servidores.',
+                steps: [
+                    'Ejecuta <code>whois corpnet.local</code> en tu terminal Kali',
+                    'Identifica el registrante del dominio',
+                    'Anota la fecha de registro',
+                    'Lista los nameservers configurados'
+                ],
+                code: `<span class="command">whois corpnet.local</span>\n\n<span class="output"># Respuesta esperada:</span>\n<span class="output"># Registrant: CorpNet Security Labs</span>\n<span class="output"># Registro: 2024-01-15</span>\n<span class="output"># Nameservers: ns1.corpnet.local, ns2.corpnet.local</span>`,
+                codeLang: 'bash',
+                flag: 'FLAG{coronet_registrant_2024}',
+                hint: 'El registrante contiene "Security Labs" y el año de registro es 2024.',
+                solution: 'whois corpnet.local muestra: Registrant: CorpNet Security Labs, Registro: 2024-01-15, Nameservers: ns1.corpnet.local, ns2.corpnet.local'
+            },
+            {
+                title: 'Enumeración DNS',
+                xp: 40,
+                objective: 'Descubre todos los registros DNS del dominio y sus subdominios.',
+                steps: [
+                    'Consulta registros A: <code>dig corpnet.local A +short</code>',
+                    'Consulta registros MX: <code>dig corpnet.local MX +short</code>',
+                    'Consulta registros TXT: <code>dig corpnet.local TXT +short</code>',
+                    'Enumera subdominios: <code>dig mail.corpnet.local A +short</code>',
+                    'Verifica ftp, db e intranet'
+                ],
+                code: `<span class="command">dig corpnet.local A +short</span>\n<span class="output">10.0.1.10</span>\n\n<span class="command">dig corpnet.local MX +short</span>\n<span class="output">mail.corpnet.local</span>\n\n<span class="command">dig corpnet.local TXT +short</span>\n<span class="output">"v=spf1 include:_spf.google.com ~all"</span>\n\n<span class="command">dig mail.corpnet.local A +short</span>\n<span class="output">10.0.1.20</span>\n\n<span class="command">dig ftp.corpnet.local A +short</span>\n<span class="output">10.0.1.30</span>`,
+                codeLang: 'bash',
+                flag: 'FLAG{dns_enumeration_complete}',
+                hint: 'Hay 5 registros A, 1 MX (mail), y 1 TXT con SPF.',
+                solution: '4 subdominios encontrados: web (.10), mail (.20), ftp (.30), db (.40). MX apunta a mail.corpnet.local.'
+            },
+            {
+                title: 'Descubrimiento de Hosts',
+                xp: 50,
+                objective: 'Identifica todos los hosts activos en la red 10.0.1.0/24.',
+                steps: [
+                    'Realiza ping sweep: <code>nmap -sn 10.0.1.0/24</code>',
+                    'Prueba ARP discovery: <code>nmap -sn -PR 10.0.1.0/24</code>',
+                    'Intenta sin ping: <code>nmap -Pn -sn 10.0.1.0/24</code>',
+                    'Cuenta y lista todos los hosts encontrados'
+                ],
+                code: `<span class="command">nmap -sn 10.0.1.0/24</span>\n\n<span class="output">Starting Nmap 7.94 ( https://nmap.org )</span>\n<span class="output">Nmap scan report for 10.0.1.1</span>\n<span class="output">Nmap scan report for 10.0.1.10</span>\n<span class="output">Nmap scan report for 10.0.1.20</span>\n<span class="output">Nmap scan report for 10.0.1.30</span>\n<span class="output">Nmap scan report for 10.0.1.40</span>\n<span class="output">5 hosts up</span>`,
+                codeLang: 'bash',
+                flag: 'FLAG{5_hosts_discovered}',
+                hint: 'Cuenta los hosts que responden. Deberías encontrar exactamente 5.',
+                solution: '5 hosts activos: 10.0.1.1 (router), .10 (web), .20 (mail), .30 (ftp), .40 (db)'
+            },
+            {
+                title: 'Escaneo de Puertos y Servicios',
+                xp: 60,
+                objective: 'Enumera servicios y versiones en todos los hosts descubiertos.',
+                steps: [
+                    'Ejecuta escaneo completo: <code>nmap -sV -sC 10.0.1.0/24</code>',
+                    'Escanea puertos comunes específicos',
+                    'Haz banner grabbing manual con netcat',
+                    'Documenta cada servicio y versión encontrada'
+                ],
+                code: `<span class="command">nmap -sV -sC -oN scan.txt 10.0.1.0/24</span>\n\n<span class="output">10.0.1.10:80  → Apache/2.4.52</span>\n<span class="output">10.0.1.20:25 → Postfix SMTP</span>\n<span class="output">10.0.1.30:21 → vsftpd 3.0.3</span>\n<span class="output">10.0.1.40:3306 → MySQL 8.0.31</span>\n\n<span class="command">nc -v 10.0.1.10 80</span>\n<span class="output">HTTP/1.1 200 OK</span>`,
+                codeLang: 'bash',
+                flag: 'FLAG{services_enumerated_apache_postfix}',
+                hint: '4 puertos principales: 80 (HTTP/Apache), 25 (SMTP), 21 (FTP), 3306 (MySQL).',
+                solution: '| IP | Puerto | Servicio | Versión |\n|----|--------|----------|---------|\n| .10 | 80 | HTTP | Apache 2.4.52 |\n| .20 | 25 | SMTP | Postfix |\n| .30 | 21 | FTP | vsftpd 3.0.3 |\n| .40 | 3306 | MySQL | 8.0.31 |'
+            },
+            {
+                title: 'Enumeración Detallada',
+                xp: 40,
+                objective: 'Obtén información detallada de cada servicio descubierto.',
+                steps: [
+                    'Enumera HTTP: <code>nmap --script http-enum -p 80 10.0.1.10</span>',
+                    'Enumera FTP: <code>nmap --script ftp-anon,ftp-syst -p 21 10.0.1.30</span>',
+                    'Enumera SMTP: <code>nmap --script smtp-enum-users -p 25 10.0.1.20</span>',
+                    'Verifica si FTP permite acceso anónimo',
+                    'Lista directorios HTTP expuestos'
+                ],
+                code: `<span class="command">nmap --script http-enum -p 80 10.0.1.10</span>\n<span class="output">/admin/ (200)</span>\n<span class="output">/backup/ (403)</span>\n<span class="output">/images/ (200)</span>\n\n<span class="command">nmap --script ftp-anon -p 21 10.0.1.30</span>\n<span class="flag">FTP Anon: ENABLED</span>\n\n<span class="command">nmap --script smtp-enum-users -p 25 10.0.1.20</span>\n<span class="output">admin, postmaster</span>`,
+                codeLang: 'bash',
+                flag: 'FLAG{ftp_anonymous_enabled}',
+                hint: 'El FTP tiene acceso anónimo habilitado. HTTP expone /admin y /backup.',
+                solution: 'FTP anónimo: SÍ habilitado. SMTP users: admin, postmaster. HTTP dirs: /admin, /backup, /images.'
+            },
+            {
+                title: 'Informe de Reconocimiento',
+                xp: 30,
+                objective: 'Documenta todos los hallazgos en un informe estructurado.',
+                steps: [
+                    'Crea archivo <code>recon_report.md</code>',
+                    'Documenta el alcance del reconocimiento',
+                    'Enumera hallazgos DNS y hosts activos',
+                    'Detalla servicios, versiones y vulnerabilidades potenciales',
+                    'Incluye recomendaciones de seguridad'
+                ],
+                code: `<span class="comment"># Informe de Reconocimiento — CorpNet.local</span>\n\n<span class="comment">## 1. Alcance</span>\n- Dominio: corpnet.local\n- Rango IP: 10.0.1.0/24\n\n<span class="comment">## 2. Hallazgos DNS</span>\n- 4 subdominios (web, mail, ftp, db)\n- SPF configured\n\n<span class="comment">## 3. Hosts Activos (5)</span>\n- .1 (Router), .10 (Web), .20 (Mail)\n- .30 (FTP), .40 (MySQL)`,
+                codeLang: 'markdown',
+                flag: 'FLAG{recon_report_complete}',
+                hint: 'El informe debe incluir: alcance, DNS, hosts, servicios, vulnerabilidades, recomendaciones.',
+                solution: 'Crea recon_report.md con las 6 secciones: alcance, DNS, hosts, servicios, vulns potenciales, recomendaciones.'
+            }
+        ]
+    };
+
+    // ===== INIT =====
+    document.addEventListener('DOMContentLoaded', () => {
+        CDPN_LabRunner.init(LAB_CONFIG);
+    });
+    </script>
+</body>
+</html>

@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📊 Mi Progreso — CyberDefense Labs</title>
+    <style>
+        :root {
+            --bg: #0a0a1a;
+            --surface: #111128;
+            --card: #1a1a3e;
+            --border: rgba(255,255,255,0.08);
+            --text: #e0e0ff;
+            --dim: #8888aa;
+            --green: #2ecc71;
+            --blue: #3498db;
+            --purple: #9b59b6;
+            --orange: #e67e22;
+            --red: #e74c3c;
+            --gold: #f1c40f;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        .bg-grid {
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(46, 204, 113, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(46, 204, 113, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* ===== HEADER ===== */
+        .dash-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .dash-header h1 {
+            font-size: 2.2rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--green), var(--blue), var(--purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .dash-header p {
+            color: var(--dim);
+            font-size: 1rem;
+        }
+
+        /* ===== STAT CARDS ===== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .stat-card:hover { transform: translateY(-3px); }
+
+        .stat-card .icon { font-size: 2rem; margin-bottom: 0.5rem; }
+
+        .stat-card .value {
+            font-size: 2rem;
+            font-weight: 900;
+        }
+
+        .stat-card .label {
+            font-size: 0.85rem;
+            color: var(--dim);
+            margin-top: 0.25rem;
+        }
+
+        .stat-card.gold .value { color: var(--gold); }
+        .stat-card.green .value { color: var(--green); }
+        .stat-card.blue .value { color: var(--blue); }
+        .stat-card.purple .value { color: var(--purple); }
+        .stat-card.orange .value { color: var(--orange); }
+
+        /* ===== LEVEL BAR ===== */
+        .level-section {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .level-circle {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--gold), #ffaa00);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            color: #1a1a2e;
+            box-shadow: 0 0 30px rgba(241, 196, 15, 0.3);
+        }
+
+        .level-circle .num { font-size: 2.2rem; line-height: 1; }
+        .level-circle .lbl { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; }
+
+        .level-info .rank-name {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .level-info .xp-text {
+            color: var(--dim);
+            font-size: 0.9rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .level-bar {
+            height: 12px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .level-bar .fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--green), var(--blue));
+            border-radius: 12px;
+            transition: width 1s ease;
+        }
+
+        .level-next {
+            font-size: 0.85rem;
+            color: var(--dim);
+            margin-top: 0.5rem;
+        }
+
+        .rank-badge {
+            padding: 0.75rem 1.5rem;
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .rank-badge .rank-icon { font-size: 2rem; }
+        .rank-badge .rank-label { font-size: 0.85rem; color: var(--dim); }
+
+        /* ===== BADGES GRID ===== */
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .badges-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+        }
+
+        .badge-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .badge-card.earned {
+            border-color: rgba(255, 215, 0, 0.4);
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.08), var(--card));
+        }
+
+        .badge-card.locked {
+            opacity: 0.35;
+            filter: grayscale(0.8);
+        }
+
+        .badge-card .badge-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+        .badge-card .badge-name { font-size: 0.8rem; font-weight: 700; }
+        .badge-card .badge-status { font-size: 0.7rem; color: var(--dim); margin-top: 0.25rem; }
+        .badge-card.earned .badge-status { color: var(--gold); }
+
+        /* ===== LAB PROGRESS ===== */
+        .lab-progress-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+        }
+
+        .lab-progress-item {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .lab-progress-item .lab-icon { font-size: 1.5rem; }
+
+        .lab-progress-item .lab-info { flex: 1; }
+
+        .lab-progress-item .lab-name {
+            font-weight: 700;
+            font-size: 0.95rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .lab-progress-item .lab-diff {
+            font-size: 0.8rem;
+            color: var(--dim);
+        }
+
+        .lab-progress-item .lab-bar {
+            width: 150px;
+            height: 6px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .lab-progress-item .lab-bar .fill {
+            height: 100%;
+            border-radius: 6px;
+            transition: width 0.5s;
+        }
+
+        .lab-progress-item .lab-percent {
+            font-size: 0.85rem;
+            font-weight: 700;
+            min-width: 40px;
+            text-align: right;
+        }
+
+        .lab-progress-item.completed .lab-percent { color: var(--green); }
+
+        /* ===== STREAK ===== */
+        .streak-section {
+            background: linear-gradient(135deg, rgba(255, 107, 0, 0.1), rgba(255, 165, 0, 0.05));
+            border: 1px solid rgba(255, 107, 0, 0.3);
+            border-radius: 16px;
+            padding: 1.5rem 2rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .streak-section .fire { font-size: 3rem; }
+
+        .streak-section .streak-info .count {
+            font-size: 2rem;
+            font-weight: 900;
+            color: #ff6b00;
+        }
+
+        .streak-section .streak-info .label {
+            font-size: 0.9rem;
+            color: var(--dim);
+        }
+
+        /* ===== HISTORY ===== */
+        .history-list {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .history-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.85rem;
+        }
+
+        .history-item .xp-amount {
+            font-weight: 700;
+            color: var(--gold);
+            min-width: 60px;
+        }
+
+        .history-item .reason { flex: 1; color: var(--dim); }
+        .history-item .time { color: var(--dim); font-size: 0.75rem; }
+
+        /* ===== ACTIONS ===== */
+        .actions-bar {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .action-btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+        }
+
+        .action-btn.primary {
+            background: linear-gradient(135deg, var(--green), #27ae60);
+            color: white;
+        }
+
+        .action-btn.secondary {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border);
+            color: var(--text);
+        }
+
+        .action-btn.danger {
+            background: rgba(231, 76, 60, 0.1);
+            border: 1px solid rgba(231, 76, 60, 0.3);
+            color: var(--red);
+        }
+
+        .action-btn:hover { transform: translateY(-2px); }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .container { padding: 1rem; }
+            .dash-header h1 { font-size: 1.6rem; }
+            .level-section { grid-template-columns: 1fr; text-align: center; }
+            .level-circle { margin: 0 auto; }
+            .rank-badge { margin-top: 1rem; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .badges-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-grid"></div>
+
+    <div class="container">
+        <!-- HEADER -->
+        <div class="dash-header">
+            <h1>📊 Mi Progreso</h1>
+            <p>Tu journey en CyberDefense Labs</p>
+        </div>
+
+        <!-- LEVEL -->
+        <div class="level-section" id="level-section">
+            <div class="level-circle">
+                <span class="num" id="dash-level">1</span>
+                <span class="lbl">Nivel</span>
+            </div>
+            <div class="level-info">
+                <div class="rank-name" id="dash-rank">🌱 Newcomer</div>
+                <div class="xp-text"><span id="dash-xp">0</span> XP acumulados</div>
+                <div class="level-bar">
+                    <div class="fill" id="dash-level-fill" style="width: 0%"></div>
+                </div>
+                <div class="level-next" id="dash-next">0 XP para nivel 2</div>
+            </div>
+            <div class="rank-badge">
+                <div class="rank-icon" id="dash-rank-icon">🌱</div>
+                <div class="rank-label" id="dash-rank-label">Newcomer</div>
+            </div>
+        </div>
+
+        <!-- STATS -->
+        <div class="stats-grid">
+            <div class="stat-card gold">
+                <div class="icon">⚡</div>
+                <div class="value" id="stat-xp">0</div>
+                <div class="label">XP Total</div>
+            </div>
+            <div class="stat-card green">
+                <div class="icon">🧪</div>
+                <div class="value" id="stat-labs">0</div>
+                <div class="label">Labs Completados</div>
+            </div>
+            <div class="stat-card blue">
+                <div class="icon">🏆</div>
+                <div class="value" id="stat-badges">0</div>
+                <div class="label">Badges</div>
+            </div>
+            <div class="stat-card orange">
+                <div class="icon">🔥</div>
+                <div class="value" id="stat-streak">0</div>
+                <div class="label">Racha (días)</div>
+            </div>
+            <div class="stat-card purple">
+                <div class="icon">📝</div>
+                <div class="value" id="stat-exercises">0</div>
+                <div class="label">Ejercicios</div>
+            </div>
+        </div>
+
+        <!-- STREAK -->
+        <div class="streak-section">
+            <span class="fire">🔥</span>
+            <div class="streak-info">
+                <div class="count" id="streak-count">0 días</div>
+                <div class="label">Racha actual — ¡Mantén el hábito!</div>
+            </div>
+        </div>
+
+        <!-- BADGES -->
+        <h2 class="section-title">🏆 Badges</h2>
+        <div class="badges-grid" id="badges-grid">
+            <!-- Filled by JS -->
+        </div>
+
+        <!-- LAB PROGRESS -->
+        <h2 class="section-title">🧪 Progreso por Lab</h2>
+        <div class="lab-progress-list" id="lab-progress-list">
+            <!-- Filled by JS -->
+        </div>
+
+        <!-- HISTORY -->
+        <h2 class="section-title">📜 Historial Reciente</h2>
+        <div class="history-list card" style="background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 1rem 1.5rem;">
+            <div id="history-list">
+                <p style="color: var(--dim); text-align: center; padding: 2rem;">Empieza un lab para ver tu historial</p>
+            </div>
+        </div>
+
+        <!-- ACTIONS -->
+        <div class="actions-bar">
+            <button class="action-btn primary" onclick="CDPN_Gamification.exportData()">📤 Exportar Progreso</button>
+            <label class="action-btn secondary" style="cursor: pointer;">
+                📥 Importar Progreso
+                <input type="file" accept=".json" style="display: none;" onchange="CDPN_Gamification.importData(this.files[0])">
+            </label>
+            <a href="index.html" class="action-btn secondary">⬅️ Volver al Catálogo</a>
+            <button class="action-btn danger" onclick="CDPN_Gamification.resetProgress()">🔄 Resetear</button>
+        </div>
+    </div>
+
+    <!-- Gamification System -->
+    <script src="../docs/assets/js/gamification.js"></script>
+
+    <script>
+    // All badges
+    const ALL_BADGES = [
+        { id: 'first-lab', icon: '🎯', name: 'Primer Lab' },
+        { id: 'lab-master-5', icon: '🔬', name: 'Lab Enthusiast' },
+        { id: 'lab-master-10', icon: '🏆', name: 'Lab Expert' },
+        { id: 'lab-master-16', icon: '👑', name: 'Lab Legend' },
+        { id: 'streak-3', icon: '🔥', name: 'En Racha' },
+        { id: 'streak-7', icon: '⚡', name: 'Semana Perfecta' },
+        { id: 'streak-30', icon: '💎', name: 'Mes Imparable' },
+        { id: 'first-writeup', icon: '📝', name: 'Primer Writeup' },
+        { id: 'writeup-master', icon: '📚', name: 'Writeup Master' },
+        { id: 'helper', icon: '🤝', name: 'Ayudante' },
+        { id: 'mentor', icon: '🎓', name: 'Mentor' },
+        { id: 'level-5', icon: '🥉', name: 'Bronze' },
+        { id: 'level-10', icon: '🥈', name: 'Silver' },
+        { id: 'level-20', icon: '🥇', name: 'Gold' },
+        { id: 'level-30', icon: '💎', name: 'Diamond' },
+        { id: 'level-50', icon: '🌟', name: 'Legend' },
+        { id: 'night-owl', icon: '🦉', name: 'Búho Nocturno' },
+        { id: 'speed-demon', icon: '⚡', name: 'Velocista' },
+        { id: 'perfectionist', icon: '✨', name: 'Perfeccionista' }
+    ];
+
+    // All labs for progress display
+    const LAB_LIST = [
+        { id: 'net-01', name: 'Redes y Protocolos', icon: '🌐', diff: 'Fundamentos', color: '#3498db' },
+        { id: 'recon-01', name: 'Reconocimiento y OSINT', icon: '🔍', diff: 'Intermedio', color: '#f1c40f' },
+        { id: 'pentest-01', name: 'Pentesting Básico', icon: '🔓', diff: 'Intermedio', color: '#f1c40f' },
+        { id: 'vulnscan-01', name: 'Escaneo de Vulnerabilidades', icon: '🛡️', diff: 'Intermedio', color: '#f1c40f' },
+        { id: 'web-01', name: 'Web Security', icon: '🌍', diff: 'Intermedio', color: '#f1c40f' },
+        { id: 'webapp-01', name: 'Explotación Web OWASP', icon: '💉', diff: 'Intermedio', color: '#f1c40f' },
+        { id: 'privesc-01', name: 'Escalada de Privilegios', icon: '👑', diff: 'Intermedio', color: '#f1c40f' },
+        { id: 'persist-01', name: 'Persistencia', icon: '🔄', diff: 'Intermedio', color: '#f1c40f' },
+        { id: 'social-01', name: 'Ingeniería Social', icon: '🎭', diff: 'Intermedio', color: '#f1c40f' },
+        { id: 'lateral-01', name: 'Movimiento Lateral', icon: '🕸️', diff: 'Intermedio', color: '#f1c40f' },
+        { id: 'crypto-01', name: 'Criptografía Práctica', icon: '🔐', diff: 'Intermedio', color: '#f1c40f' },
+        { id: 'disk-forensics-01', name: 'Forense de Disco', icon: '💾', diff: 'Intermedio', color: '#f1c40f' },
+        { id: 'ad-01', name: 'Active Directory', icon: '🏢', diff: 'Avanzado', color: '#e67e22' },
+        { id: 'malware-01', name: 'Análisis de Malware', icon: '🦠', diff: 'Avanzado', color: '#e67e22' },
+        { id: 'cloud-01', name: 'Cloud Security', icon: '☁️', diff: 'Avanzado', color: '#e67e22' },
+        { id: 'forensics-01', name: 'Forense Avanzado', icon: '🔬', diff: 'Avanzado', color: '#e67e22' },
+        { id: 'reverse-eng-01', name: 'Reverse Engineering', icon: '⚙️', diff: 'Avanzado', color: '#e67e22' },
+        { id: 'net-forensics-01', name: 'Forense de Red', icon: '📡', diff: 'Avanzado', color: '#e67e22' },
+        { id: 'incident-01', name: 'Respuesta a Incidentes', icon: '🚨', diff: 'Expert', color: '#e74c3c' },
+        { id: 'malware-expert-01', name: 'Malware Expert', icon: '🧬', diff: 'Expert', color: '#e74c3c' }
+    ];
+
+    function renderDashboard() {
+        const stats = CDPN_Gamification.getStats();
+        const data = CDPN_Gamification.data;
+
+        // Level section
+        document.getElementById('dash-level').textContent = stats.level;
+        document.getElementById('dash-rank').textContent = `${stats.rank.icon} ${stats.rank.name}`;
+        document.getElementById('dash-xp').textContent = stats.xp.toLocaleString();
+        document.getElementById('dash-level-fill').style.width = `${stats.levelProgress}%`;
+        document.getElementById('dash-next').textContent = `${stats.xpForNextLevel} XP para nivel ${stats.level + 1}`;
+        document.getElementById('dash-rank-icon').textContent = stats.rank.icon;
+        document.getElementById('dash-rank-label').textContent = stats.rank.name;
+
+        // Stats
+        document.getElementById('stat-xp').textContent = stats.xp.toLocaleString();
+        document.getElementById('stat-labs').textContent = stats.labsCompleted;
+        document.getElementById('stat-badges').textContent = `${stats.badges}/${ALL_BADGES.length}`;
+        document.getElementById('stat-streak').textContent = stats.streak;
+
+        // Count exercises
+        let totalExercises = 0;
+        try {
+            const allProgress = JSON.parse(localStorage.getItem('cdpn_lab_progress') || '{}');
+            Object.values(allProgress).forEach(lab => {
+                if (lab.exercises) {
+                    totalExercises += Object.values(lab.exercises).filter(e => e.completed).length;
+                }
+            });
+        } catch(e) {}
+        document.getElementById('stat-exercises').textContent = totalExercises;
+
+        // Streak
+        document.getElementById('streak-count').textContent = `${stats.streak} día${stats.streak !== 1 ? 's' : ''}`;
+
+        // Badges
+        const badgesGrid = document.getElementById('badges-grid');
+        const earned = data.badges || [];
+        badgesGrid.innerHTML = ALL_BADGES.map(b => `
+            <div class="badge-card ${earned.includes(b.id) ? 'earned' : 'locked'}">
+                <div class="badge-icon">${b.icon}</div>
+                <div class="badge-name">${b.name}</div>
+                <div class="badge-status">${earned.includes(b.id) ? '✅ Desbloqueado' : '🔒 Bloqueado'}</div>
+            </div>
+        `).join('');
+
+        // Lab progress
+        const labList = document.getElementById('lab-progress-list');
+        const completedLabs = data.labsCompleted || [];
+        labList.innerHTML = LAB_LIST.map(lab => {
+            const isCompleted = completedLabs.includes(lab.id);
+            const percent = isCompleted ? 100 : 0;
+            return `
+                <div class="lab-progress-item ${isCompleted ? 'completed' : ''}">
+                    <span class="lab-icon">${lab.icon}</span>
+                    <div class="lab-info">
+                        <div class="lab-name">${lab.name}</div>
+                        <div class="lab-diff">${lab.diff}</div>
+                    </div>
+                    <div class="lab-bar">
+                        <div class="fill" style="width: ${percent}%; background: ${lab.color}"></div>
+                    </div>
+                    <span class="lab-percent" style="color: ${isCompleted ? 'var(--green)' : 'var(--dim)'}">
+                        ${isCompleted ? '✅' : '0%'}
+                    </span>
+                </div>
+            `;
+        }).join('');
+
+        // History
+        const historyList = document.getElementById('history-list');
+        if (data.history && data.history.length > 0) {
+            const recent = data.history.slice(-10).reverse();
+            historyList.innerHTML = recent.map(h => {
+                const timeAgo = getTimeAgo(h.timestamp);
+                return `
+                    <div class="history-item">
+                        <span class="xp-amount">+${h.amount} XP</span>
+                        <span class="reason">${h.reason}</span>
+                        <span class="time">${timeAgo}</span>
+                    </div>
+                `;
+            }).join('');
+        }
+    }
+
+    function getTimeAgo(timestamp) {
+        const diff = Date.now() - timestamp;
+        const minutes = Math.floor(diff / 60000);
+        const hours = Math.floor(diff / 3600000);
+        const days = Math.floor(diff / 86400000);
+
+        if (minutes < 1) return 'ahora';
+        if (minutes < 60) return `hace ${minutes}m`;
+        if (hours < 24) return `hace ${hours}h`;
+        return `hace ${days}d`;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        CDPN_Gamification.init();
+        renderDashboard();
+    });
+    </script>
+</body>
+</html>

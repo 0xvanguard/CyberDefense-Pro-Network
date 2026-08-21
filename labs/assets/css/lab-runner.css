@@ -1,0 +1,696 @@
+/* ========================================
+   CDPN Lab Runner — Interactive Lab Styles
+   ======================================== */
+
+:root {
+    --lab-bg: #0a0a1a;
+    --lab-surface: #111128;
+    --lab-card: #1a1a3e;
+    --lab-border: rgba(255,255,255,0.08);
+    --lab-text: #e0e0ff;
+    --lab-text-dim: #8888aa;
+    --lab-green: #2ecc71;
+    --lab-blue: #3498db;
+    --lab-purple: #9b59b6;
+    --lab-orange: #e67e22;
+    --lab-red: #e74c3c;
+    --lab-gold: #f1c40f;
+}
+
+/* ===== LAB PAGE LAYOUT ===== */
+.lab-page {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--lab-bg);
+    color: var(--lab-text);
+    min-height: 100vh;
+    padding: 0;
+}
+
+/* ===== LAB HEADER ===== */
+.lab-header {
+    background: linear-gradient(135deg, rgba(46, 204, 113, 0.1), rgba(52, 152, 219, 0.1));
+    border-bottom: 1px solid var(--lab-border);
+    padding: 1.5rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.lab-header .lab-title-section {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.lab-header .lab-icon {
+    font-size: 2.5rem;
+}
+
+.lab-header .lab-title {
+    font-size: 1.8rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--lab-green), var(--lab-blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.lab-header .lab-subtitle {
+    font-size: 0.95rem;
+    color: var(--lab-text-dim);
+}
+
+.lab-header .lab-meta-tags {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.lab-header .meta-tag {
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.meta-tag.difficulty {
+    background: rgba(241, 196, 15, 0.15);
+    color: var(--lab-gold);
+    border: 1px solid rgba(241, 196, 15, 0.3);
+}
+
+.meta-tag.xp {
+    background: rgba(46, 204, 113, 0.15);
+    color: var(--lab-green);
+    border: 1px solid rgba(46, 204, 113, 0.3);
+}
+
+.meta-tag.time {
+    background: rgba(52, 152, 219, 0.15);
+    color: var(--lab-blue);
+    border: 1px solid rgba(52, 152, 219, 0.3);
+}
+
+.meta-tag.flags {
+    background: rgba(155, 89, 182, 0.15);
+    color: var(--lab-purple);
+    border: 1px solid rgba(155, 89, 182, 0.3);
+}
+
+/* ===== PROGRESS STRIP ===== */
+.lab-progress-strip {
+    background: var(--lab-surface);
+    border-bottom: 1px solid var(--lab-border);
+    padding: 0.75rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.progress-strip .xp-live {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--lab-gold);
+}
+
+.progress-strip .xp-live .xp-icon {
+    font-size: 1.3rem;
+}
+
+.progress-strip .bar-wrapper {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.progress-strip .bar-label {
+    font-size: 0.85rem;
+    color: var(--lab-text-dim);
+    white-space: nowrap;
+}
+
+.progress-strip .bar-track {
+    flex: 1;
+    height: 8px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.progress-strip .bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--lab-green), var(--lab-blue));
+    border-radius: 8px;
+    transition: width 0.5s ease;
+    width: 0%;
+}
+
+.progress-strip .bar-percent {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--lab-green);
+    min-width: 35px;
+}
+
+.progress-strip .exercises-count {
+    font-size: 0.85rem;
+    color: var(--lab-text-dim);
+    white-space: nowrap;
+}
+
+/* ===== EXERCISE CARD ===== */
+.exercise-card {
+    background: var(--lab-card);
+    border: 1px solid var(--lab-border);
+    border-radius: 12px;
+    margin: 1rem 2rem;
+    overflow: hidden;
+    transition: all 0.3s;
+}
+
+.exercise-card:hover {
+    border-color: rgba(46, 204, 113, 0.2);
+}
+
+.exercise-card.completed {
+    border-color: rgba(46, 204, 113, 0.4);
+    background: linear-gradient(135deg, rgba(46, 204, 113, 0.05), rgba(26, 26, 62, 1));
+}
+
+.exercise-card.locked {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.exercise-header {
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    border-bottom: 1px solid var(--lab-border);
+    cursor: pointer;
+    user-select: none;
+}
+
+.exercise-header:hover {
+    background: rgba(255,255,255,0.02);
+}
+
+.exercise-checkbox {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 2px solid var(--lab-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    flex-shrink: 0;
+    font-size: 0.9rem;
+}
+
+.exercise-checkbox:hover {
+    border-color: var(--lab-green);
+    background: rgba(46, 204, 113, 0.1);
+}
+
+.exercise-card.completed .exercise-checkbox {
+    background: var(--lab-green);
+    border-color: var(--lab-green);
+    color: #fff;
+}
+
+.exercise-number {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--lab-text-dim);
+    padding: 0.2rem 0.5rem;
+    background: rgba(255,255,255,0.05);
+    border-radius: 4px;
+}
+
+.exercise-title {
+    flex: 1;
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+.exercise-xp {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--lab-green);
+    padding: 0.25rem 0.75rem;
+    background: rgba(46, 204, 113, 0.1);
+    border-radius: 15px;
+}
+
+.exercise-card.completed .exercise-xp {
+    background: rgba(46, 204, 113, 0.2);
+}
+
+.exercise-expand-icon {
+    font-size: 1.2rem;
+    color: var(--lab-text-dim);
+    transition: transform 0.3s;
+}
+
+.exercise-card.open .exercise-expand-icon {
+    transform: rotate(180deg);
+}
+
+/* ===== EXERCISE BODY ===== */
+.exercise-body {
+    padding: 1.5rem;
+    display: none;
+    border-top: 1px solid var(--lab-border);
+}
+
+.exercise-card.open .exercise-body {
+    display: block;
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.exercise-objective {
+    font-size: 0.95rem;
+    color: var(--lab-text);
+    margin-bottom: 1rem;
+    padding: 0.75rem 1rem;
+    background: rgba(52, 152, 219, 0.1);
+    border-left: 3px solid var(--lab-blue);
+    border-radius: 0 8px 8px 0;
+}
+
+.exercise-steps {
+    margin-bottom: 1.5rem;
+}
+
+.exercise-steps h4 {
+    font-size: 0.85rem;
+    color: var(--lab-text-dim);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.75rem;
+}
+
+.step-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.5rem 0;
+    font-size: 0.9rem;
+    color: var(--lab-text);
+}
+
+.step-item .step-num {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--lab-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+    flex-shrink: 0;
+    color: var(--lab-text-dim);
+}
+
+.step-item .step-text {
+    flex: 1;
+    line-height: 1.5;
+}
+
+.step-item .step-text code {
+    background: rgba(0,0,0,0.3);
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    font-family: 'Fira Code', 'Consolas', monospace;
+    font-size: 0.85rem;
+    color: var(--lab-green);
+}
+
+/* ===== CODE BLOCK ===== */
+.code-block {
+    background: #0d0d20;
+    border: 1px solid var(--lab-border);
+    border-radius: 8px;
+    margin: 0.75rem 0;
+    overflow: hidden;
+}
+
+.code-block-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 1rem;
+    background: rgba(255,255,255,0.03);
+    border-bottom: 1px solid var(--lab-border);
+}
+
+.code-block-header .lang {
+    font-size: 0.75rem;
+    color: var(--lab-text-dim);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.code-block-header .copy-btn {
+    padding: 0.25rem 0.5rem;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--lab-border);
+    border-radius: 4px;
+    color: var(--lab-text-dim);
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.code-block-header .copy-btn:hover {
+    background: rgba(46, 204, 113, 0.1);
+    color: var(--lab-green);
+    border-color: rgba(46, 204, 113, 0.3);
+}
+
+.code-block pre {
+    padding: 1rem;
+    overflow-x: auto;
+    font-family: 'Fira Code', 'Consolas', monospace;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: #c8d6e5;
+    margin: 0;
+}
+
+.code-block pre .comment { color: #636e72; }
+.code-block pre .command { color: var(--lab-green); }
+.code-block pre .output { color: var(--lab-text-dim); }
+.code-block pre .flag { color: var(--lab-gold); font-weight: 700; }
+
+/* ===== FLAG INPUT ===== */
+.flag-input-group {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.flag-input {
+    flex: 1;
+    padding: 0.75rem 1rem;
+    background: rgba(0,0,0,0.3);
+    border: 2px solid var(--lab-border);
+    border-radius: 8px;
+    color: var(--lab-text);
+    font-family: 'Fira Code', monospace;
+    font-size: 0.9rem;
+    transition: border-color 0.3s;
+}
+
+.flag-input:focus {
+    outline: none;
+    border-color: var(--lab-gold);
+    box-shadow: 0 0 0 3px rgba(241, 196, 15, 0.1);
+}
+
+.flag-input::placeholder {
+    color: var(--lab-text-dim);
+    opacity: 0.5;
+}
+
+.flag-submit-btn {
+    padding: 0.75rem 1.5rem;
+    background: linear-gradient(135deg, var(--lab-gold), #e6a800);
+    border: none;
+    border-radius: 8px;
+    color: #1a1a2e;
+    font-weight: 800;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    white-space: nowrap;
+}
+
+.flag-submit-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 20px rgba(241, 196, 15, 0.4);
+}
+
+.flag-submit-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.flag-result {
+    margin-top: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: none;
+}
+
+.flag-result.correct {
+    display: block;
+    background: rgba(46, 204, 113, 0.15);
+    color: var(--lab-green);
+    border: 1px solid rgba(46, 204, 113, 0.3);
+}
+
+.flag-result.incorrect {
+    display: block;
+    background: rgba(231, 76, 60, 0.15);
+    color: var(--lab-red);
+    border: 1px solid rgba(231, 76, 60, 0.3);
+}
+
+/* ===== HINT SYSTEM ===== */
+.hint-btn {
+    padding: 0.4rem 0.8rem;
+    background: rgba(155, 89, 182, 0.1);
+    border: 1px solid rgba(155, 89, 182, 0.3);
+    border-radius: 6px;
+    color: var(--lab-purple);
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 0.5rem;
+}
+
+.hint-btn:hover {
+    background: rgba(155, 89, 182, 0.2);
+}
+
+.hint-text {
+    display: none;
+    margin-top: 0.5rem;
+    padding: 0.75rem 1rem;
+    background: rgba(155, 89, 182, 0.08);
+    border-left: 3px solid var(--lab-purple);
+    border-radius: 0 8px 8px 0;
+    font-size: 0.85rem;
+    color: var(--lab-text);
+    line-height: 1.5;
+}
+
+.hint-text.visible {
+    display: block;
+    animation: slideDown 0.3s ease;
+}
+
+/* ===== SOLUTION TOGGLE ===== */
+.solution-toggle {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--lab-border);
+}
+
+.solution-toggle summary {
+    font-size: 0.85rem;
+    color: var(--lab-orange);
+    cursor: pointer;
+    user-select: none;
+    padding: 0.5rem;
+    border-radius: 6px;
+    transition: background 0.2s;
+}
+
+.solution-toggle summary:hover {
+    background: rgba(230, 126, 34, 0.1);
+}
+
+.solution-content {
+    margin-top: 0.75rem;
+    padding: 1rem;
+    background: rgba(0,0,0,0.2);
+    border-radius: 8px;
+    font-size: 0.85rem;
+    line-height: 1.6;
+}
+
+/* ===== COMPLETE BUTTON ===== */
+.complete-exercise-btn {
+    display: block;
+    width: 100%;
+    padding: 0.75rem;
+    margin-top: 1rem;
+    background: linear-gradient(135deg, var(--lab-green), #27ae60);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.complete-exercise-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(46, 204, 113, 0.4);
+}
+
+.complete-exercise-btn:disabled {
+    background: rgba(255,255,255,0.1);
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.exercise-card.completed .complete-exercise-btn {
+    background: rgba(46, 204, 113, 0.2);
+    cursor: default;
+}
+
+/* ===== LAB COMPLETION BANNER ===== */
+.lab-complete-banner {
+    display: none;
+    margin: 2rem;
+    padding: 2rem;
+    background: linear-gradient(135deg, rgba(46, 204, 113, 0.15), rgba(52, 152, 219, 0.15));
+    border: 2px solid var(--lab-green);
+    border-radius: 16px;
+    text-align: center;
+    animation: celebrateBanner 0.5s ease;
+}
+
+.lab-complete-banner.visible {
+    display: block;
+}
+
+@keyframes celebrateBanner {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.lab-complete-banner .trophy { font-size: 3rem; }
+.lab-complete-banner h2 {
+    font-size: 1.5rem;
+    margin: 0.5rem 0;
+    background: linear-gradient(135deg, var(--lab-green), var(--lab-gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.lab-complete-banner .xp-earned {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--lab-gold);
+    margin: 0.5rem 0;
+}
+.lab-complete-banner .time-spent {
+    color: var(--lab-text-dim);
+    font-size: 0.9rem;
+}
+
+.lab-complete-banner .actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.lab-complete-banner .actions button {
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.lab-complete-banner .actions .primary-action {
+    background: linear-gradient(135deg, var(--lab-green), #27ae60);
+    border: none;
+    color: white;
+}
+
+.lab-complete-banner .actions .secondary-action {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--lab-border);
+    color: var(--lab-text);
+}
+
+/* ===== XP NOTIFICATION (OVERLAY) ===== */
+.xp-popup {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 9999;
+    padding: 1rem 1.5rem;
+    background: linear-gradient(135deg, rgba(26, 26, 62, 0.95), rgba(17, 17, 40, 0.95));
+    border: 1px solid rgba(241, 196, 15, 0.5);
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    transform: translateX(120%);
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+}
+
+.xp-popup.show {
+    transform: translateX(0);
+}
+
+.xp-popup .xp-amount {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--lab-gold);
+}
+
+.xp-popup .xp-reason {
+    font-size: 0.85rem;
+    color: var(--lab-text);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .lab-header { padding: 1rem; }
+    .lab-header .lab-title { font-size: 1.3rem; }
+    .lab-progress-strip { padding: 0.5rem 1rem; flex-wrap: wrap; }
+    .exercise-card { margin: 0.75rem 1rem; }
+    .exercise-header { padding: 0.75rem 1rem; }
+    .exercise-body { padding: 1rem; }
+    .flag-input-group { flex-direction: column; }
+    .flag-submit-btn { width: 100%; }
+    .lab-complete-banner { margin: 1rem; }
+}
