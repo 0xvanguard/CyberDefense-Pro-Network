@@ -1183,8 +1183,16 @@
         container.innerHTML = html;
     }
 
+    // Labs with interactive versions
+    const INTERACTIVE_LABS = ['recon-01', 'pentest-01', 'webapp-01', 'privesc-01'];
+
     function openLab(path) {
-        window.open(`${path}/README.md`, '_blank');
+        const labId = path.split('/').pop();
+        if (INTERACTIVE_LABS.includes(labId)) {
+            window.open(`${path}/index.html`, '_blank');
+        } else {
+            window.open(`${path}/README.md`, '_blank');
+        }
     }
 
     // ===== FILTERS =====
