@@ -1,0 +1,94 @@
+version: '3.8'
+
+services:
+  kali:
+    image: kalilinux/kali-rolling
+    container_name: purple-kali
+    hostname: kali
+    networks:
+      purple_net:
+        ipv4_address: 10.0.2.100
+    volumes:
+      - ./scripts:/scripts
+    tty: true
+    stdin_open: true
+    command: >
+      bash -c "
+        apt-get update && apt-get install -y \
+          nmap \
+          netcat \
+          curl \
+          python3 \
+          bloodhound \
+          crackmapexec \
+          impacket-scripts \
+          && bash
+      "
+
+  wazuh-manager:
+    image: wazuh/wazuh-manager:4.7.0
+    container_name: purple-wazuh
+    hostname: wazuh-manager
+    networks:
+      purple_net:
+        ipv4_address: 10.0.2.150
+    ports:
+      - "55000:55000"
+      - "5601:5601"
+
+  windows-target:
+    image: vulnerabilities/windows-7-patch497
+    container_name: purple-windows
+    hostname: windows-target
+    networks:
+      purple_net:
+        ipv4_address: 10.0.2.10
+
+  linux-target:
+    image: ubuntu:20.04
+    container_name: purple-linux
+    hostname: linux-target
+    networks:
+      purple_net:
+        ipv4_address: 10.0.2.20
+    volumes:
+      - ./scripts:/scripts
+    tty: true
+    command: >
+      bash -c "
+        apt-get update && apt-get install -y \
+          openssh-server \
+          auditd \
+          && mkdir /var/run/sshd \
+            && echo 'admin:admin123' | chpasswd \
+            && useradd -m -s /bin/bash admin \
+            && echo 'FLAG{purple_t34m_d3t3ct3d}' > /home/admin/flag.txt \
+            && /usr/sbin/sshd -D
+      "
+
+  blue-defender:
+    image: ubuntu:20.04
+    container_name: purple-blue
+    hostname: blue-defender
+    networks:
+      purple_net:
+        ipv4_address: 10.0.2.200
+    volumes:
+      - ./scripts:/scripts
+    tty: true
+    command: >
+      bash -c "
+        apt-get update && apt-get install -y \
+          nmap \
+          netcat \
+          curl \
+          python3 \
+          && bash
+      "
+
+networks:
+  purple_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.0.2.0/24
