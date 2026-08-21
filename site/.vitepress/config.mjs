@@ -208,6 +208,7 @@ export default defineConfig({
             { text: '05 — Hardening', link: '/modules/seguridad-informacion/05-hardening-seg-info' },
             { text: '06 — Compliance y Normativas', link: '/modules/seguridad-informacion/06-compliance-normativas' },
             { text: '07 — Threat Intelligence', link: '/modules/seguridad-informacion/07-threat-intelligence-seg-info' },
+            { text: '16 — Cloud Security', link: '/modules/seguridad-informacion/16-cloud-security' },
           ]
         }
       ],

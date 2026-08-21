@@ -46,6 +46,10 @@ const labs = ref([
   { id: 'purple-01', name: 'Purple Team Operations', category: 'purple-team', difficulty: 'intermediate', xp: 600, exercises: 10, time: '120 min', status: 'available', isNew: true },
   { id: 'adversary-01', name: 'Adversary Emulation', category: 'purple-team', difficulty: 'intermediate', xp: 450, exercises: 8, time: '90 min', status: 'available', isNew: true },
   { id: 'detection-01', name: 'Detection Engineering', category: 'purple-team', difficulty: 'intermediate', xp: 400, exercises: 6, time: '75 min', status: 'available', isNew: true },
+  // AI Agents
+  { id: 'ai-recon-01', name: 'Agentes OSINT', category: 'ai-agents', difficulty: 'intermediate', xp: 450, exercises: 8, time: '90 min', status: 'available', isNew: true },
+  { id: 'ai-pentest-01', name: 'Agentes Pentest', category: 'ai-agents', difficulty: 'intermediate', xp: 450, exercises: 8, time: '90 min', status: 'available', isNew: true },
+  { id: 'ai-security-01', name: 'Seguridad de IA', category: 'ai-agents', difficulty: 'intermediate', xp: 450, exercises: 8, time: '90 min', status: 'available', isNew: true },
 ])
 
 const badges = ref([
@@ -295,6 +299,32 @@ Aprende ciberseguridad haciendo. Cada lab incluye ejercicios reales, flags por c
   </div>
   <div style="margin-top: 1rem;">
     <a :href="'/campus/labs/purple-team/' + lab.id + '/'" style="display: block; background: linear-gradient(135deg, #6f42c1 0%, #9b59b6 100%); color: white; text-decoration: none; padding: 10px; border-radius: 8px; text-align: center; font-weight: bold;">🚀 Iniciar Lab</a>
+  </div>
+</div>
+
+</div>
+
+---
+
+## 🤖 AI Agents
+
+<div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin: 1rem 0;">
+
+<div v-for="lab in labs.filter(l => l.category === 'ai-agents')" :key="lab.id" style="background: white; border: 2px solid #17a2b8; border-radius: 12px; padding: 1.5rem; transition: transform 0.2s, box-shadow 0.2s; cursor: pointer;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 30px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+  <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.5rem;">
+    <div style="font-weight: bold; font-size: 1.1rem; color: #333;">
+      <span style="margin-right: 0.5rem;">🤖</span>
+      {{ lab.name }}
+      <span v-if="lab.isNew" style="background: #17a2b8; color: white; padding: 2px 8px; border-radius: 12px; font-size: 0.7rem; margin-left: 0.5rem;">NUEVO</span>
+    </div>
+    <div style="background: #d1ecf1; color: #0c5460; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: bold;">{{ lab.xp }} XP</div>
+  </div>
+  <div style="display: flex; gap: 1rem; margin-top: 0.5rem;">
+    <span style="color: #666; font-size: 0.9rem;">📝 {{ lab.exercises }} ejercicios</span>
+    <span style="color: #666; font-size: 0.9rem;">⏱️ {{ lab.time }}</span>
+  </div>
+  <div style="margin-top: 1rem;">
+    <a :href="'/campus/labs/ai-agents/' + lab.id + '/'" style="display: block; background: linear-gradient(135deg, #17a2b8 0%, #138496 100%); color: white; text-decoration: none; padding: 10px; border-radius: 8px; text-align: center; font-weight: bold;">🚀 Iniciar Lab</a>
   </div>
 </div>
 

@@ -1,0 +1,81 @@
+version: '3.8'
+
+services:
+  kali:
+    image: kalilinux/kali-rolling
+    container_name: ai-kali
+    hostname: kali
+    networks:
+      ai_net:
+        ipv4_address: 10.0.2.100
+    volumes:
+      - ./scripts:/scripts
+    tty: true
+    stdin_open: true
+    command: >
+      bash -c "
+        apt-get update && apt-get install -y \
+          python3-pip \
+          nmap \
+          subfinder \
+          amass \
+          theharvester \
+          curl \
+          jq \
+          && pip3 install openai requests beautifulsoup4 \
+          && bash
+      "
+
+  target-web:
+    image: vulnerables/web-dvwa
+    container_name: ai-target
+    hostname: target
+    networks:
+      ai_net:
+        ipv4_address: 10.0.2.10
+    ports:
+      - "80:80"
+    environment:
+      - MYSQL_PASSWD=password
+
+  target-api:
+    image: ubuntu:20.04
+    container_name: ai-api
+    hostname: api-target
+    networks:
+      ai_net:
+        ipv4_address: 10.0.2.20
+    tty: true
+    command: >
+      bash -c "
+        apt-get update && apt-get install -y \
+          python3 \
+          python3-pip \
+          && pip3 install flask \
+            && cat > /app.py << 'PYEOF'
+            from flask import Flask, jsonify
+            app = Flask(__name__)
+            
+            @app.route('/api/users')
+            def users():
+                return jsonify([
+                    {'id': 1, 'name': 'admin', 'role': 'admin'},
+                    {'id': 2, 'name': 'user', 'role': 'user'}
+                ])
+            
+            @app.route('/api/health')
+            def health():
+                return jsonify({'status': 'ok'})
+            
+            if __name__ == '__main__':
+                app.run(host='0.0.0.0', port=5000)
+            PYEOF
+            && python3 /app.py
+      "
+
+networks:
+  ai_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.0.2.0/24
