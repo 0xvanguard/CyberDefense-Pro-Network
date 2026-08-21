@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  forensics:
+    build: .
+    container_name: forensics-workstation
+    hostname: forensics
+    networks:
+      forensics-net:
+        ipv4_address: 10.0.4.10
+    volumes:
+      - ./evidence:/evidence
+      - ./output:/output
+      - ./tools:/tools
+    stdin_open: true
+    tty: true
+    cap_add:
+      - ALL
+
+  evidence-server:
+    image: nginx:alpine
+    container_name: evidence-server
+    hostname: evidence-server
+    ports:
+      - "8080:80"
+    networks:
+      forensics-net:
+        ipv4_address: 10.0.4.20
+    volumes:
+      - ./evidence/public:/usr/share/nginx/html:ro
+
+networks:
+  forensics-net:
+    driver: bridge
+    internal: true
+    ipam:
+      config:
+        - subnet: 10.0.4.0/24

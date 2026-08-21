@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  crypto-lab:
+    build: .
+    container_name: crypto-challenges
+    hostname: crypto
+    networks:
+      crypto-net:
+        ipv4_address: 10.0.5.10
+    volumes:
+      - ./challenges:/challenges
+      - ./solutions:/solutions:ro
+      - ./output:/output
+    stdin_open: true
+    tty: true
+
+networks:
+  crypto-net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.0.5.0/24

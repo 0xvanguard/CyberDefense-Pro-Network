@@ -1,0 +1,66 @@
+version: '3.8'
+
+services:
+  webapp:
+    build: .
+    container_name: vulnerable-webapp
+    hostname: vulnerable-app
+    ports:
+      - "8080:80"
+      - "8443:443"
+    networks:
+      web-net:
+        ipv4_address: 10.0.3.10
+    volumes:
+      - ./evidence:/evidence
+      - ./solutions:/solutions:ro
+    depends_on:
+      - database
+      - api
+
+  database:
+    image: mysql:8.0
+    container_name: webapp-db
+    hostname: database
+    networks:
+      web-net:
+        ipv4_address: 10.0.3.20
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass123
+      MYSQL_DATABASE: vulnerable_db
+      MYSQL_USER: webapp
+      MYSQL_PASSWORD: webapp123
+    volumes:
+      - ./data/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    container_name: vulnerable-api
+    hostname: api
+    ports:
+      - "3000:3000"
+    networks:
+      web-net:
+        ipv4_address: 10.0.3.30
+
+  attacker:
+    image: kalilinux/kali-rolling
+    container_name: web-attacker
+    hostname: kali
+    networks:
+      web-net:
+        ipv4_address: 10.0.3.100
+    volumes:
+      - ./tools:/tools
+    stdin_open: true
+    tty: true
+    command: /bin/bash
+
+networks:
+  web-net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.0.3.0/24

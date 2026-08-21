@@ -1,0 +1,73 @@
+version: '3.8'
+
+services:
+  kali:
+    build:
+      context: .
+      dockerfile: Dockerfile.kali
+    container_name: kali-attacker
+    hostname: kali
+    networks:
+      lab-net:
+        ipv4_address: 10.10.10.100
+    volumes:
+      - ./solutions:/solutions:ro
+      - ./scripts:/scripts:ro
+      - ./validation:/validation
+    stdin_open: true
+    tty: true
+    depends_on:
+      - router
+      - webserver
+      - database
+      - ftpserver
+
+  router:
+    image: networkboot/dhcpd
+    container_name: lab-router
+    hostname: router
+    networks:
+      lab-net:
+        ipv4_address: 10.10.10.1
+    cap_add:
+      - NET_ADMIN
+
+  webserver:
+    image: httpd:2.4
+    container_name: lab-webserver
+    hostname: webserver
+    networks:
+      lab-net:
+        ipv4_address: 10.10.10.10
+    volumes:
+      - ./assets/webserver:/usr/local/apache2/htdocs/
+
+  database:
+    image: mysql:8.0
+    container_name: lab-database
+    hostname: database
+    networks:
+      lab-net:
+        ipv4_address: 10.10.10.20
+    environment:
+      MYSQL_ROOT_PASSWORD: labpassword123
+      MYSQL_DATABASE: testdb
+
+  ftpserver:
+    image: stilliard/pure-ftpd
+    container_name: lab-ftpserver
+    hostname: ftpserver
+    networks:
+      lab-net:
+        ipv4_address: 10.10.10.30
+    environment:
+      PUBLICHOST: "10.10.10.30"
+      FTP_USER_NAME: labuser
+      FTP_USER_PASS: labpass123
+
+networks:
+  lab-net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.10.10.0/24

@@ -1,0 +1,31 @@
+FROM kalilinux/kali-rolling
+
+# Actualizar e instalar herramientas básicas
+RUN apt-get update && apt-get install -y \
+    nmap \
+    netcat \
+    wireshark-common \
+    tcpdump \
+    net-tools \
+    iputils-ping \
+    curl \
+    wget \
+    nano \
+    vim \
+    && rm -rf /var/lib/apt/lists/*
+
+# Crear usuario no-root
+RUN useradd -m -s /bin/bash student && \
+    echo "student:student123" | chpasswd
+
+# Copiar scripts de ayuda
+COPY scripts/ /home/student/scripts/
+RUN chmod +x /home/student/scripts/*
+
+# Working directory
+WORKDIR /home/student
+
+# Configurar entorno
+ENV PS1='\[\033[1;32m\][\u@\h \W]\$\[\033[0m\] '
+
+CMD ["/bin/bash"]

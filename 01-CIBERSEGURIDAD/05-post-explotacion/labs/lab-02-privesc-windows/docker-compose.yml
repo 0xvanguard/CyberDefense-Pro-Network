@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  windows-lab:
+    image: lscr.io/linuxserver/windows-engine:latest
+    container_name: windows-lab
+    hostname: vulnerable-windows
+    ports:
+      - "3389:3389"
+      - "5985:5985"
+    volumes:
+      - ./solutions:/solutions:ro
+      - ./scripts:/scripts:ro
+    networks:
+      - lab-network
+    cap_add:
+      - ALL
+    privileged: false
+    restart: unless-stopped
+
+networks:
+  lab-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.21.0.0/16

@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  cloud-lab:
+    image: amazon/aws-cli:latest
+    container_name: cloud-security-lab
+    hostname: cloud-lab
+    networks:
+      cloud-net:
+        ipv4_address: 10.0.6.10
+    volumes:
+      - ./config:/root/.aws:ro
+      - ./scripts:/scripts
+      - ./output:/output
+    environment:
+      - AWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE
+      - AWS_SECRET_ACCESS_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+      - AWS_DEFAULT_REGION=us-east-1
+    stdin_open: true
+    tty: true
+    command: /bin/bash
+
+  localstack:
+    image: localstack/localstack:latest
+    container_name: localstack-aws
+    hostname: localstack
+    ports:
+      - "4566:4566"
+    networks:
+      cloud-net:
+        ipv4_address: 10.0.6.20
+    environment:
+      - SERVICES=s3,iam,sts,cloudtrail,guardduty,secretsmanager
+      - DEFAULT_REGION=us-east-1
+
+networks:
+  cloud-net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.0.6.0/24

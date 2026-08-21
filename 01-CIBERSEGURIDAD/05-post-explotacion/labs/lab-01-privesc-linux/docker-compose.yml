@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  privesc-lab:
+    build: .
+    container_name: privesc-lab
+    hostname: vulnerable-lab
+    user: lowuser
+    ports:
+      - "2222:22"
+    volumes:
+      - ./solutions:/solutions:ro
+      - ./scripts:/scripts:ro
+    networks:
+      - lab-network
+    cap_add:
+      - ALL
+    privileged: false
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+
+networks:
+  lab-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
