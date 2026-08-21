@@ -8,6 +8,9 @@ export default defineConfig({
   // Base URL for GitHub Pages
   base: '/CyberDefense-Pro-Network/campus/',
   
+  // Clean URLs — remove .html from links (postbuild handles file conversion)
+  cleanUrls: true,
+  
   // Build output to docs/campus/ — keeps existing docs/ files intact
   // When running from site/content/, this resolves to ../../docs/campus
   outDir: '../../docs/campus',
@@ -151,6 +154,7 @@ export default defineConfig({
           text: '🔵 Blue Team / Defensa',
           items: [
             { text: 'Visión General', link: '/modules/blue-team/' },
+            { text: '01 — Fundamentos Blue Team y SOC', link: '/modules/blue-team/01-fundamentos-blue-team-y-soc' },
           ]
         }
       ],
@@ -159,6 +163,9 @@ export default defineConfig({
           text: '🟣 Purple Team',
           items: [
             { text: 'Visión General', link: '/modules/purple-team/' },
+            { text: '01 — Endpoint Procesos y Telemetría', link: '/modules/purple-team/01-purple-endpoint-procesos-telemetria' },
+            { text: '02 — Detection Engineering', link: '/modules/purple-team/02-detection-engineering' },
+            { text: '03 — Adversary Emulation', link: '/modules/purple-team/03-adversary-emulation' },
           ]
         }
       ],
@@ -167,6 +174,11 @@ export default defineConfig({
           text: '🤖 AI Agents & Tools',
           items: [
             { text: 'Visión General', link: '/modules/ai-agents/' },
+            { text: '01 — Agentes OSINT', link: '/modules/ai-agents/01-agentes-osint' },
+            { text: '02 — Agentes Pentest', link: '/modules/ai-agents/02-agentes-pentest' },
+            { text: '03 — LLM Security', link: '/modules/ai-agents/03-llm-security' },
+            { text: '04 — MLSecOps', link: '/modules/ai-agents/04-mlsecops' },
+            { text: '05 — Automatización Python', link: '/modules/ai-agents/05-automatizacion-python' },
           ]
         }
       ],
@@ -276,6 +288,31 @@ export default defineConfig({
             { text: '🚨 AI Incident Responder', link: '/roles/ai-security/ai-incident-responder' },
             { text: '📦 AI Supply Chain', link: '/roles/ai-security/ai-supply-chain-security' },
             { text: '🤖 Agentic Security Dev', link: '/roles/ai-security/agentic-security-developer' },
+          ]
+        }
+      ],
+      '/blog/': [
+        {
+          text: '📝 Blog CDPN',
+          items: [
+            { text: '📋 Todos los artículos', link: '/blog/' },
+            { text: '─────────', link: 'noop' },
+            { text: '🚀 ¿Por qué ciberseguridad?', link: '/blog/01-porque-ciberseguridad' },
+            { text: '🌐 TCP/IP explicado', link: '/blog/02-tcp-ip-simplificado' },
+            { text: '🔍 Nmap guía definitiva', link: '/blog/03-nmap-guia-definitiva' },
+            { text: '💉 SQL Injection', link: '/blog/04-sql-injection' },
+            { text: '🏆 Mi primer CTF', link: '/blog/05-mi-primer-ctf' },
+            { text: '💼 Primer empleo', link: '/blog/06-primer-empleo' },
+            { text: '🧪 Lab casero', link: '/blog/07-laboratorio-casero' },
+            { text: '🤝 Mejores comunidades', link: '/blog/08-comunidades' },
+            { text: '🔬 Reverse Engineering', link: '/blog/09-reverse-engineering' },
+            { text: '🎣 Phishing y Social Engineering', link: '/blog/10-phishing-ingenieria-social' },
+            { text: '🐳 Docker para ciberseguridad', link: '/blog/11-docker-ciberseguridad' },
+            { text: '🛡️ OWASP Top 10', link: '/blog/12-owasp-top10' },
+            { text: '🔑 Hashing y Cracking', link: '/blog/13-hashing-cracking' },
+            { text: '📡 Wi-Fi Hacking', link: '/blog/14-wifi-hacking' },
+            { text: '💰 Bug Bounty', link: '/blog/15-bug-bounty' },
+            { text: '☁️ Cloud Security', link: '/blog/16-cloud-security' },
           ]
         }
       ],
