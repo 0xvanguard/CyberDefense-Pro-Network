@@ -155,6 +155,11 @@ export default defineConfig({
           items: [
             { text: 'Visión General', link: '/modules/blue-team/' },
             { text: '01 — Fundamentos Blue Team y SOC', link: '/modules/blue-team/01-fundamentos-blue-team-y-soc' },
+            { text: '02 — Análisis de Incidentes', link: '/modules/blue-team/02-analisis-incidentes' },
+            { text: '03 — Threat Hunting', link: '/modules/blue-team/03-threat-hunting' },
+            { text: '04 — SIEM y Monitoreo', link: '/modules/blue-team/04-siem-monitoreo' },
+            { text: '05 — Hardening y Seguridad', link: '/modules/blue-team/05-hardening' },
+            { text: '06 — Forense de Endpoint', link: '/modules/blue-team/06-forense-endpoint' },
           ]
         }
       ],
@@ -166,6 +171,10 @@ export default defineConfig({
             { text: '01 — Endpoint Procesos y Telemetría', link: '/modules/purple-team/01-purple-endpoint-procesos-telemetria' },
             { text: '02 — Detection Engineering', link: '/modules/purple-team/02-detection-engineering' },
             { text: '03 — Adversary Emulation', link: '/modules/purple-team/03-adversary-emulation' },
+            { text: '04 — Tabletop Exercises', link: '/modules/purple-team/04-tabletop-exercises' },
+            { text: '05 — Breach & Attack Simulation', link: '/modules/purple-team/05-breach-attack-simulation' },
+            { text: '06 — Automated Compliance', link: '/modules/purple-team/06-automated-compliance' },
+            { text: '07 — Threat Intelligence Purple Team', link: '/modules/purple-team/07-threat-intelligence' },
           ]
         }
       ],
