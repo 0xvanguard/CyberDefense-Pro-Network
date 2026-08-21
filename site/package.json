@@ -5,12 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "vitepress dev content",
-    "build": "node sync.js build",
-    "pull": "node sync.js pull",
-    "status": "node sync.js status",
+    "build": "cd content && cp -r ../.vitepress . && npx vitepress build && cd .. && node postbuild.cjs",
+    "pull": "node sync.cjs pull",
+    "status": "node sync.cjs status",
     "preview": "vitepress preview content",
-    "sync:pull": "node sync.js pull",
-    "sync:status": "node sync.js status"
+    "sync:pull": "node sync.cjs pull",
+    "sync:status": "node sync.cjs status"
   },
   "devDependencies": {
     "vitepress": "^1.6.3"

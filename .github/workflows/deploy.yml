@@ -46,6 +46,9 @@ jobs:
           cp -r .vitepress content/
           cd content && npx vitepress build
 
+      - name: Convert to clean URLs (GitHub Pages)
+        run: cd site && node postbuild.cjs
+
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
