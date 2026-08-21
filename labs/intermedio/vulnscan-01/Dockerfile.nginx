@@ -1,0 +1,78 @@
+FROM ubuntu:22.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get install -y \
+    nginx \
+    nodejs \
+    npm \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create vulnerable Node.js app
+RUN mkdir -p /var/www/app
+
+RUN cat > /var/www/app/server.js << 'JS'
+const http = require('http');
+const url = require('url');
+const fs = require('fs');
+
+const server = http.createServer((req, res) => {
+    const parsed = url.parse(req.url, true);
+
+    if (parsed.pathname === '/') {
+        res.writeHead(200, {'Content-Type': 'text/html'});
+        res.end('<h1>Node.js App v4.17.1</h1><p>Running vulnerable version</p><a href="/api/users">Users API</a>');
+    }
+    else if (parsed.pathname === '/api/users') {
+        // IDOR vulnerability
+        const id = parsed.query.id || '1';
+        res.writeHead(200, {'Content-Type': 'application/json'});
+        res.end(JSON.stringify({id: id, name: 'User ' + id, email: 'user'+id+'@corp.net'}));
+    }
+    else if (parsed.pathname === '/api/eval') {
+        // Command injection
+        const cmd = parsed.query.cmd || 'id';
+        const { execSync } = require('child_process');
+        try {
+            const output = execSync(cmd).toString();
+            res.writeHead(200, {'Content-Type': 'text/plain'});
+            res.end(output);
+        } catch(e) {
+            res.writeHead(500);
+            res.end('Error');
+        }
+    }
+    else {
+        res.writeHead(404);
+        res.end('Not Found');
+    }
+});
+
+server.listen(80, () => console.log('Node.js app on port 80'));
+JS
+
+RUN cat > /etc/nginx/sites-available/default << 'NGINX'
+server {
+    listen 80;
+    server_name _;
+    root /var/www/app;
+
+    location / {
+        proxy_pass http://127.0.0.1:8080;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+
+    # Exposed .git
+    location /.git {
+        allow all;
+    }
+}
+NGINX
+
+# Expose nginx version
+RUN sed -i 's/server_tokens off/server_tokens on/' /etc/nginx/nginx.conf 2>/dev/null || true
+
+EXPOSE 80
+
+CMD service nginx start && node /var/www/app/server.js

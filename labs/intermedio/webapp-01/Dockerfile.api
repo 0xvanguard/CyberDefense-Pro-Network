@@ -1,0 +1,65 @@
+FROM node:18-slim
+
+RUN mkdir -p /app
+WORKDIR /app
+
+RUN cat > package.json << 'JSON'
+{
+  "name": "vuln-api",
+  "version": "1.0.0",
+  "dependencies": {
+    "express": "^4.18.0",
+    "mysql2": "^3.0.0"
+  }
+}
+JSON
+
+RUN npm install
+
+RUN cat > server.js << 'JS'
+const express = require('express');
+const mysql = require('mysql2');
+const app = express();
+
+const db = mysql.createConnection({
+  host: 'database',
+  user: 'webapp',
+  password: 'webapp123',
+  database: 'app_db'
+});
+
+db.connect();
+
+// VULNERABLE: IDOR — no auth check
+app.get('/api/users/:id', (req, res) => {
+  db.query('SELECT id, username, email, role, bio FROM users WHERE id = ?', [req.params.id], (err, results) => {
+    if (err) return res.status(500).json({error: err.message});
+    if (results.length === 0) return res.status(404).json({error: 'User not found'});
+    res.json(results[0]);
+  });
+});
+
+// VULNERABLE: IDOR — predictable invoice IDs
+app.get('/api/invoices/:id', (req, res) => {
+  db.query('SELECT * FROM invoices WHERE id = ?', [req.params.id], (err, results) => {
+    if (err) return res.status(500).json({error: err.message});
+    res.json(results[0] || {error: 'Not found'});
+  });
+});
+
+// Info disclosure
+app.get('/api/config', (req, res) => {
+  res.json({
+    db_host: 'database',
+    db_user: 'webapp',
+    db_pass: 'webapp123',
+    api_key: 'sk-1234567890abcdef'
+  });
+});
+
+app.listen(3000, () => console.log('API running on port 3000'));
+JS
+
+EXPOSE 3000
+
+CMD ["node", "server.js"]

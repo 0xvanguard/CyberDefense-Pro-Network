@@ -1,0 +1,224 @@
+FROM ubuntu:22.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get install -y \
+    apache2 \
+    php \
+    libapache2-mod-php \
+    php-mysql \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Exposed .env file
+RUN echo "DB_HOST=database" > /var/www/html/.env && \
+    echo "DB_USER=webapp" >> /var/www/html/.env && \
+    echo "DB_PASS=webapp123" >> /var/www/html/.env && \
+    echo "API_KEY=sk-1234567890abcdef" >> /var/www/html/.env && \
+    echo "AWS_SECRET=wJalrXUtnFEMI" >> /var/www/html/.env
+
+# Index
+RUN cat > /var/www/html/index.php << 'PHP'
+<?php
+$conn = new mysqli("database", "webapp", "webapp123", "app_db");
+?>
+<!DOCTYPE html>
+<html>
+<head><title>VulnShop</title></head>
+<body>
+<h1>VulnShop — Tienda Vulnerable</h1>
+<ul>
+  <li><a href="/login.php">Login</a></li>
+  <li><a href="/search.php">Buscar Productos</a></li>
+  <li><a href="/forum.php">Foro</a></li>
+  <li><a href="/profile.php?id=1">Mi Perfil</a></li>
+  <li><a href="/upload.php">Subir Avatar</a></li>
+  <li><a href="/fetch.php">Fetch URL</a></li>
+  <li><a href="/api.php">API</a></li>
+</ul>
+<!-- Config: /var/www/html/.env -->
+</body>
+</html>
+PHP
+
+# Login with SQL Injection
+RUN cat > /var/www/html/login.php << 'PHP'
+<?php
+$conn = new mysqli("database", "webapp", "webapp123", "app_db");
+$error = "";
+if(isset($_POST['user'])) {
+    $user = $_POST['user'];
+    $pass = $_POST['pass'];
+    // VULNERABLE: SQL Injection
+    $sql = "SELECT * FROM users WHERE username='$user' AND password='$pass'";
+    $result = $conn->query($sql);
+    if($result && $result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        session_start();
+        $_SESSION['user'] = $row['username'];
+        $_SESSION['role'] = $row['role'];
+        header("Location: dashboard.php");
+        exit;
+    } else {
+        $error = "Invalid credentials";
+    }
+}
+?>
+<!DOCTYPE html>
+<html><head><title>Login</title></head>
+<body>
+<h1>Login</h1>
+<?php if($error) echo "<p style='color:red'>$error</p>"; ?>
+<form method="POST">
+  User: <input name="user"><br>
+  Pass: <input name="pass" type="password"><br>
+  <button>Login</button>
+</form>
+<p>Hint: SQL Injection 😉</p>
+</body></html>
+PHP
+
+# Search with SQL Injection + XSS
+RUN cat > /var/www/html/search.php << 'PHP'
+<?php
+$conn = new mysqli("database", "webapp", "webapp123", "app_db");
+if(isset($_GET['q'])) {
+    $q = $_GET['q'];
+    // VULNERABLE: SQL Injection
+    $sql = "SELECT * FROM products WHERE name LIKE '%$q%'";
+    $result = $conn->query($sql);
+}
+?>
+<!DOCTYPE html>
+<html><head><title>Search</title></head>
+<body>
+<h1>Buscar Productos</h1>
+<form><input name="q" placeholder="Search..."><button>Go</button></form>
+<?php if(isset($result)): ?>
+  <h2>Results:</h2>
+  <ul>
+  <?php while($row = $result->fetch_assoc()): ?>
+    <!-- VULNERABLE: XSS (no sanitization) -->
+    <li><?= $row['name'] ?> - $<?= $row['price'] ?></li>
+  <?php endwhile; ?>
+  </ul>
+  <p>You searched for: <?= $q ?></p>
+<?php endif; ?>
+</body></html>
+PHP
+
+# Forum with Stored XSS
+RUN cat > /var/www/html/forum.php << 'PHP'
+<?php
+$conn = new mysqli("database", "webapp", "webapp123", "app_db");
+if(isset($_POST['msg'])) {
+    $msg = $_POST['msg'];
+    // VULNERABLE: Stored XSS (no sanitization)
+    $conn->query("INSERT INTO comments (message) VALUES ('$msg')");
+}
+$comments = $conn->query("SELECT * FROM comments ORDER BY id DESC");
+?>
+<!DOCTYPE html>
+<html><head><title>Foro</title></head>
+<body>
+<h1>Foro — Comentarios</h1>
+<form method="POST">
+  <textarea name="msg" placeholder="Escribe un comentario..."></textarea><br>
+  <button>Publicar</button>
+</form>
+<h2>Comentarios:</h2>
+<?php while($c = $comments->fetch_assoc()): ?>
+  <!-- VULNERABLE: Stored XSS -->
+  <div class="comment"><?= $c['message'] ?></div>
+  <hr>
+<?php endwhile; ?>
+</body></html>
+PHP
+
+# Profile with IDOR
+RUN cat > /var/www/html/profile.php << 'PHP'
+<?php
+$conn = new mysqli("database", "webapp", "webapp123", "app_db");
+// VULNERABLE: IDOR — no authorization check
+$id = isset($_GET['id']) ? $_GET['id'] : 1;
+$result = $conn->query("SELECT * FROM users WHERE id=$id");
+$user = $result->fetch_assoc();
+?>
+<!DOCTYPE html>
+<html><head><title>Profile</title></head>
+<body>
+<h1>Perfil: <?= $user['username'] ?></h1>
+<p>Email: <?= $user['email'] ?></p>
+<p>Role: <?= $user['role'] ?></p>
+<p>Bio: <?= $user['bio'] ?></p>
+<!-- Hint: try /profile.php?id=2, /profile.php?id=3 -->
+</body></html>
+PHP
+
+# SSRF
+RUN cat > /var/www/html/fetch.php << 'PHP'
+<?php
+if(isset($_GET['url'])) {
+    // VULNERABLE: SSRF
+    $content = @file_get_contents($_GET['url']);
+    echo "<pre>" . htmlspecialchars($content) . "</pre>";
+}
+?>
+<!DOCTYPE html>
+<html><head><title>Fetch URL</title></head>
+<body>
+<h1>Fetch URL</h1>
+<form><input name="url" size="50" placeholder="http://..."><button>Fetch</button></form>
+</body></html>
+PHP
+
+# Dashboard
+RUN cat > /var/www/html/dashboard.php << 'PHP'
+<!DOCTYPE html>
+<html><head><title>Dashboard</title></head>
+<body>
+<h1>Dashboard</h1>
+<p>Welcome! You are logged in.</p>
+<p><a href="/admin/">Admin Panel</a></p>
+</body></html>
+PHP
+
+# Admin panel (no auth)
+RUN mkdir -p /var/www/html/admin
+RUN cat > /var/www/html/admin/index.php << 'PHP'
+<!DOCTYPE html>
+<html><head><title>Admin</title></head>
+<body>
+<h1>Admin Panel</h1>
+<p>Users: admin, user1, user2</p>
+<p>Database: app_db</p>
+<p>Flag: FLAG{admin_panel_accessed}</p>
+</body></html>
+PHP
+
+# Upload vulnerable
+RUN mkdir -p /var/www/html/uploads
+RUN cat > /var/www/html/upload.php << 'PHP'
+<?php
+if(isset($_FILES['avatar'])) {
+    $target = "uploads/" . basename($_FILES["avatar"]["name"]);
+    // VULNERABLE: No file type validation
+    move_uploaded_file($_FILES["avatar"]["tmp_name"], $target);
+    echo "Uploaded: <a href='$target'>$target</a>";
+}
+?>
+<!DOCTYPE html>
+<html><head><title>Upload</title></head>
+<body>
+<h1>Subir Avatar</h1>
+<form method="POST" enctype="multipart/form-data">
+  <input type="file" name="avatar"><button>Upload</button>
+</form>
+</body></html>
+PHP
+
+RUN chown -R www-data:www-data /var/www/html/uploads
+
+EXPOSE 80
+
+CMD ["apachectl", "-D", "FOREGROUND"]

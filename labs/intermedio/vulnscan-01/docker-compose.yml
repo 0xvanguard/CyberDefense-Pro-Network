@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  kali:
+    build:
+      context: .
+      dockerfile: Dockerfile.kali
+    container_name: vulnscan-attacker
+    hostname: kali
+    networks:
+      vulnscan-net:
+        ipv4_address: 10.0.3.100
+    volumes:
+      - ./solutions:/solutions:ro
+      - ./scripts:/scripts:ro
+    stdin_open: true
+    tty: true
+    depends_on:
+      - webapache
+      - webnginx
+      - database
+
+  webapache:
+    build:
+      context: .
+      dockerfile: Dockerfile.apache
+    container_name: vulnscan-apache
+    hostname: webapache
+    networks:
+      vulnscan-net:
+        ipv4_address: 10.0.3.10
+
+  webnginx:
+    build:
+      context: .
+      dockerfile: Dockerfile.nginx
+    container_name: vulnscan-nginx
+    hostname: webnginx
+    networks:
+      vulnscan-net:
+        ipv4_address: 10.0.3.20
+
+  database:
+    image: mysql:5.7
+    container_name: vulnscan-mysql
+    hostname: database
+    networks:
+      vulnscan-net:
+        ipv4_address: 10.0.3.30
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: testdb
+
+networks:
+  vulnscan-net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.0.3.0/24

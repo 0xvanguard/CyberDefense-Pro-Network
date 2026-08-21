@@ -1,0 +1,74 @@
+version: '3.8'
+
+services:
+  kali:
+    build:
+      context: .
+      dockerfile: Dockerfile.kali
+    container_name: recon-attacker
+    hostname: kali
+    networks:
+      recon-net:
+        ipv4_address: 10.0.1.100
+    volumes:
+      - ./solutions:/solutions:ro
+      - ./scripts:/scripts:ro
+      - ./validation:/validation
+    stdin_open: true
+    tty: true
+    depends_on:
+      - webserver
+      - mailserver
+      - ftpserver
+      - database
+
+  webserver:
+    build:
+      context: .
+      dockerfile: Dockerfile.web
+    container_name: recon-webserver
+    hostname: webserver
+    networks:
+      recon-net:
+        ipv4_address: 10.0.1.10
+
+  mailserver:
+    image: namshi/smtp:latest
+    container_name: recon-mailserver
+    hostname: mailserver
+    networks:
+      recon-net:
+        ipv4_address: 10.0.1.20
+
+  ftpserver:
+    image: stilliard/pure-ftpd:hardened
+    container_name: recon-ftpserver
+    hostname: ftpserver
+    networks:
+      recon-net:
+        ipv4_address: 10.0.1.30
+    environment:
+      PUBLICHOST: "10.0.1.30"
+      FTP_USER_NAME: labuser
+      FTP_USER_PASS: labpass123
+      FTP_USER_HOME: /home/labuser
+
+  database:
+    image: mysql:8.0
+    container_name: recon-database
+    hostname: database
+    networks:
+      recon-net:
+        ipv4_address: 10.0.1.40
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass123
+      MYSQL_DATABASE: corpnet_db
+      MYSQL_USER: webapp
+      MYSQL_PASSWORD: webapp123
+
+networks:
+  recon-net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.0.1.0/24

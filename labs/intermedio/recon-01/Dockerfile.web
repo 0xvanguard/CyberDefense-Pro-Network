@@ -1,0 +1,61 @@
+FROM ubuntu:22.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get install -y \
+    apache2 \
+    php \
+    libapache2-mod-php \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create corporate website with info leaks
+RUN mkdir -p /var/www/html/corpnet
+
+RUN cat > /var/www/html/corpnet/index.html << 'HTML'
+<!DOCTYPE html>
+<html lang="es">
+<head><title>CorpNet - Intranet</title></head>
+<body>
+<h1>Bienvenido a CorpNet Intranet</h1>
+<p>Sistema interno de la empresa.</p>
+<ul>
+  <li><a href="/admin/">Panel de Administración</a></li>
+  <li><a href="/backup/">Copias de Seguridad</a></li>
+  <li><a href="/images/">Galería</a></li>
+  <li><a href="/server-status">Apache Status</a></li>
+</ul>
+<!-- TODO: Eliminar antes de producción - DB: corpnet_db / webapp:webapp123 -->
+</body>
+</html>
+HTML
+
+# Exposed admin panel
+RUN mkdir -p /var/www/html/corpnet/admin
+RUN cat > /var/www/html/corpnet/admin/index.html << 'HTML'
+<!DOCTYPE html>
+<html><head><title>Admin Panel</title></head>
+<body>
+<h1>Panel de Administración</h1>
+<p>Usuario: admin@corpent.local</p>
+<p>Contraseña temporal: CorpNet2024!</p>
+</body></html>
+HTML
+
+# Backup directory with sensitive files
+RUN mkdir -p /var/www/html/corpnet/backup
+RUN echo "DB_PASSWORD=rootpass123" > /var/www/html/corpnet/backup/config.bak
+RUN echo "AWS_ACCESS_KEY=AKIAIOSFODNN7EXAMPLE" >> /var/www/html/corpnet/backup/config.bak
+
+# Images directory
+RUN mkdir -p /var/www/html/corpnet/images
+RUN echo "placeholder" > /var/www/html/corpnet/images/.gitkeep
+
+# Server-status (information disclosure)
+RUN cat > /var/www/html/.htaccess << 'HTA'
+ServerSignature On
+ServerTokens Full
+HTA
+
+EXPOSE 80
+
+CMD ["apachectl", "-D", "FOREGROUND"]

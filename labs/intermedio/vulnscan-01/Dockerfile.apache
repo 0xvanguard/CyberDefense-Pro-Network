@@ -1,0 +1,87 @@
+FROM ubuntu:22.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get install -y \
+    apache2 \
+    php \
+    libapache2-mod-php \
+    php-mysql \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create vulnerable web app
+RUN mkdir -p /var/www/html/vuln
+
+# Index page with tech disclosure
+RUN cat > /var/www/html/vuln/index.html << 'HTML'
+<!DOCTYPE html>
+<html>
+<head><title>Corporate Portal</title></head>
+<body>
+<h1>Welcome to CorpNet Portal</h1>
+<p>Powered by Apache/2.4.49 PHP/7.2.34</p>
+<ul>
+  <li><a href="/vuln/login.php">Login</a></li>
+  <li><a href="/vuln/search.php">Search</a></li>
+  <li><a href="/vuln/upload.php">Upload</a></li>
+  <li><a href="/server-status">Server Status</a></li>
+  <li><a href="/vuln/phpinfo.php">PHP Info</a></li>
+</ul>
+</body>
+</html>
+HTML
+
+# SQL Injection vulnerable login
+RUN cat > /var/www/html/vuln/login.php << 'PHP'
+<?php
+$conn = new mysqli("database", "root", "root123", "testdb");
+if(isset($_POST['user'])) {
+    $sql = "SELECT * FROM users WHERE username='{$_POST['user']}' AND password='{$_POST['pass']}'";
+    $result = $conn->query($sql);
+    if($result->num_rows > 0) { echo "Login OK!"; }
+    else { echo "Invalid credentials"; }
+}
+?>
+<form method="POST">User: <input name="user"> Pass: <input name="pass"><button>Login</button></form>
+PHP
+
+# XSS vulnerable search
+RUN cat > /var/www/html/vuln/search.php << 'PHP'
+<?php if(isset($_GET['q'])) { echo "Results for: " . $_GET['q']; } ?>
+<form><input name="q" placeholder="Search..."><button>Go</button></form>
+PHP
+
+# File upload vulnerable
+RUN mkdir -p /var/www/html/vuln/uploads
+RUN cat > /var/www/html/vuln/upload.php << 'PHP'
+<?php
+if(isset($_FILES['file'])) {
+    move_uploaded_file($_FILES['file']['tmp_name'], "uploads/" . $_FILES['file']['name']);
+    echo "Uploaded: uploads/" . $_FILES['file']['name'];
+}
+?>
+<form method="POST" enctype="multipart/form-data"><input type="file" name="file"><button>Upload</button></form>
+PHP
+
+# phpinfo
+RUN cat > /var/www/html/vuln/phpinfo.php << 'PHP'
+<?php phpinfo(); ?>
+PHP
+
+# Exposed config
+RUN cat > /var/www/html/vuln/config.php << 'PHP'
+<?php
+$db_host = "database";
+$db_user = "root";
+$db_pass = "root123";
+$api_key = "sk-1234567890abcdef";
+?>
+PHP
+
+# Enable server-status
+RUN echo "ExtendedStatus On" >> /etc/apache2/apache2.conf
+RUN echo "<Location /server-status>\n    SetHandler server-status\n    Require all granted\n</Location>" >> /etc/apache2/sites-available/000-default.conf
+
+EXPOSE 80
+
+CMD ["apachectl", "-D", "FOREGROUND"]

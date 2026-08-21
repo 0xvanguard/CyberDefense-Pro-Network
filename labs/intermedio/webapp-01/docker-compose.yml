@@ -1,0 +1,71 @@
+version: '3.8'
+
+services:
+  kali:
+    build:
+      context: .
+      dockerfile: Dockerfile.kali
+    container_name: webapp-attacker
+    hostname: kali
+    networks:
+      webapp-net:
+        ipv4_address: 10.0.4.100
+    volumes:
+      - ./solutions:/solutions:ro
+      - ./scripts:/scripts:ro
+    stdin_open: true
+    tty: true
+    depends_on:
+      - webapp
+      - api
+      - database
+
+  webapp:
+    build:
+      context: .
+      dockerfile: Dockerfile.webapp
+    container_name: vulnerable-webapp
+    hostname: webapp
+    ports:
+      - "8080:80"
+    networks:
+      webapp-net:
+        ipv4_address: 10.0.4.10
+    depends_on:
+      - database
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    container_name: vulnerable-api
+    hostname: api
+    ports:
+      - "3000:3000"
+    networks:
+      webapp-net:
+        ipv4_address: 10.0.4.20
+    depends_on:
+      - database
+
+  database:
+    image: mysql:8.0
+    container_name: webapp-db
+    hostname: database
+    networks:
+      webapp-net:
+        ipv4_address: 10.0.4.30
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass123
+      MYSQL_DATABASE: app_db
+      MYSQL_USER: webapp
+      MYSQL_PASSWORD: webapp123
+    volumes:
+      - ./data/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+networks:
+  webapp-net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.0.4.0/24

@@ -19,13 +19,16 @@ Proporcionar un entorno de aprendizaje práctico y medible para ciberseguridad, 
 
 ### 🟡 Nivel Intermedio
 
-| Lab | Tema | Duración | XP | Certificación |
-|-----|------|----------|-----|---------------|
-| [privesc-01](intermedio/privesc-01/) | Linux Privilege Escalation | 60 min | 300 | eJPT |
-| [privesc-02](intermedio/privesc-02/) | Windows Privilege Escalation | 60 min | 300 | eJPT |
-| [web-01](intermedio/web-01/) | Web Application Security (OWASP) | 90 min | 400 | CEH |
-| [crypto-01](intermedio/crypto-01/) | Cryptography Challenges | 90 min | 400 | CEH |
-| [recon-01](intermedio/recon-01/) | Reconnaissance & OSINT | 45 min | 250 | eJPT |
+| Lab | Tema | Módulo | Duración | XP | Certificación |
+|-----|------|--------|----------|-----|---------------|
+| [recon-01](intermedio/recon-01/) | Reconocimiento y OSINT | 01 - Reconocimiento | 45 min | 250 | eJPT |
+| [pentest-01](intermedio/pentest-01/) | Pentesting — Ciclo PTES | 02 - Pentesting | 90 min | 400 | eJPT/OSCP |
+| [vulnscan-01](intermedio/vulnscan-01/) | Análisis de Vulnerabilidades | 03 - Análisis Vulns | 60 min | 300 | CEH |
+| [webapp-01](intermedio/webapp-01/) | Explotación Web (OWASP) | 04 - Explotación Web | 90 min | 400 | CEH |
+| [privesc-01](intermedio/privesc-01/) | Linux Privilege Escalation | 05 - Post-Explotación | 60 min | 300 | eJPT |
+| [privesc-02](intermedio/privesc-02/) | Windows Privilege Escalation | 05 - Post-Explotación | 60 min | 300 | eJPT |
+| [web-01](intermedio/web-01/) | Web Application Security (OWASP) | 04 - Explotación Web | 90 min | 400 | CEH |
+| [crypto-01](intermedio/crypto-01/) | Cryptography Challenges | 08 - Criptografía | 90 min | 400 | CEH |
 
 ### 🔴 Nivel Avanzado
 
@@ -50,17 +53,21 @@ Proporcionar un entorno de aprendizaje práctico y medible para ciberseguridad, 
 
 ```bash
 # Clonar el repositorio
-git clone https://github.com/your-org/cyberdefense-labs.git
-cd cyberdefense-labs
-
-# Verificar requisitos
-./scripts/check-requirements.sh
+git clone https://github.com/0xvanguard/CyberDefense-Pro-Network.git
+cd CyberDefense-Pro-Network
 
 # Ejecutar un lab específico
-./scripts/run-lab.sh fundamentos/net-01
+cd labs/intermedio/recon-01
+docker compose up -d
+
+# Obtener shell del atacante
+docker compose exec kali bash
 
 # Verificar solución
-./scripts/validate-lab.sh fundamentos/net-01
+./scripts/validate.sh
+
+# Parar el entorno
+docker compose down
 ```
 
 ## 📊 Sistema de Progresión
@@ -74,6 +81,27 @@ cd cyberdefense-labs
 │  🔴 Avanzado:   3,000 - 7,000 XP  →  Security Engineer     │
 │  🏆 Expert:     7,000+ XP         →  Security Expert       │
 └─────────────────────────────────────────────────────────────┘
+```
+
+## 🗺️ Ruta de Aprendizaje Recomendada
+
+```
+Fundamentos                    Red Team (Módulos 01-08)
+─────────────                  ─────────────────────────
+net-01 (Redes)      ──────▶   recon-01 (Reconocimiento)
+linux-01 (Linux)    ──────▶   pentest-01 (Pentesting)
+script-01 (Python)  ──────▶   vulnscan-01 (Análisis Vulns)
+                               webapp-01 (Explotación Web)
+                               privesc-01 (Post-Explotación)
+                               crypto-01 (Criptografía)
+                                    │
+                                    ▼
+                               Nivel Avanzado
+                               ad-01, forensics-01, cloud-01
+                                    │
+                                    ▼
+                               Nivel Expert
+                               apt-01, incident-01, malware-01
 ```
 
 ## 🏅 Logros Desbloqueables
@@ -94,39 +122,20 @@ cd cyberdefense-labs
 lab-name/
 ├── README.md              # Instrucciones y objetivos
 ├── docker-compose.yml     # Entorno Docker
-├── Dockerfile             # Configuración del contenedor
-├── challenge.yml          # Metadatos del challenge
-├── validation/
-│   ├── check.sh           # Script de validación
-│   └── expected.txt       # Resultados esperados
-├── hints/
-│   ├── hint-01.md         # Pista nivel 1
-│   ├── hint-02.md         # Pista nivel 2
-│   └── hint-03.md         # Pista nivel 3 (spoiler)
+├── Dockerfile*            # Configuración de contenedores
+├── scripts/
+│   └── validate.sh        # Script de validación
 ├── solutions/
 │   └── solution.md        # Solución completa
-└── assets/
-    ├── topology.svg       # Diagrama de red
-    └── flags.txt          # Flags a encontrar
+└── data/                  # Datos iniciales (si aplica)
 ```
-
-## 📈 Métricas de Aprendizaje
-
-Cada lab trackea:
-- **Tiempo de resolución**
-- **Número de intentos**
-- **Hints utilizados**
-- **Comandos ejecutados**
-- **Errores encontrados**
 
 ## 🔧 Herramientas Requeridas
 
 ```bash
-# Verificar todas las herramientas
-./scripts/check-requirements.sh
-
-# Instalar dependencias
-./scripts/install-deps.sh
+# Solo necesitas Docker
+docker --version
+docker compose version
 ```
 
 ### Dependencias por Nivel
@@ -134,19 +143,20 @@ Cada lab trackea:
 | Nivel | Herramientas |
 |-------|--------------|
 | Fundamentos | Docker, curl, netcat |
-| Intermedio | + nmap, hydra, gobuster, sqlmap |
-| Avanzado | + impacket, mimikatz, bloodhound, evil-winrm |
-| Expert | + metasploit, burp suite, wireshark, vol3 |
+| Intermedio | + nmap, hydra, sqlmap, nuclei |
+| Avanzado | + impacket, mimikatz, bloodhound |
+| Expert | + metasploit, burp suite, vol3 |
 
 ## 📚 Recursos Adicionales
 
-- [Documentación de Labs](./docs/)
-- [Guía de Contribución](./CONTRIBUTING.md)
-- [Changelog](./CHANGELOG.md)
-- [Discord Community](https://discord.gg/cyberdefense)
+- [OWASP Top 10](https://owasp.org/www-project-top-ten/)
+- [MITRE ATT&CK](https://attack.mitre.org/)
+- [GTFOBins](https://gtfobins.github.io/)
+- [HackTheBox](https://www.hackthebox.com/)
+- [TryHackMe](https://tryhackme.com/)
 
 ---
 
-**¿Listo para empezar?** Selecciona un lab de nivel Fundamentos y comienza tu journey en ciberseguridad.
+**¿Listo para empezar?** Selecciona un lab y comienza tu journey en ciberseguridad.
 
 *Última actualización: Agosto 2024*
