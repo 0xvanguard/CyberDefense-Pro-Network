@@ -99,7 +99,8 @@ export default defineConfig({
           { text: '🤖 AI Security', link: '/roles/ai-security/' },
         ]
       },
-      // Admin link removed for security — access via direct URL only
+      { text: '📝 Blog', link: '/blog/' },
+      { text: '🏆 Leaderboard', link: '/leaderboard' },
     ],
 
     // Sidebar
