@@ -147,6 +147,7 @@ export default defineConfig({
             { text: '06 — Forense Digital', link: '/modules/red-team/06-forense-digital' },
             { text: '07 — Ingeniería Social', link: '/modules/red-team/07-ingenieria-social' },
             { text: '08 — Criptografía', link: '/modules/red-team/08-criptografia' },
+            { text: '11 — Introducción a Red Team', link: '/modules/red-team/11-introduccion-red-team' },
           ]
         }
       ],
