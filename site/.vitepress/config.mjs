@@ -29,6 +29,11 @@ export default defineConfig({
     ['meta', { property: 'og:title', content: 'CDPN - CyberDefense Pro Network' }],
     ['meta', { property: 'og:description', content: 'Plataforma #1 en español para aprender ciberseguridad' }],
     ['meta', { property: 'og:image', content: '/CyberDefense-Pro-Network/assets/og-image.png' }],
+    // Security headers (meta tags - limited, prefer Cloudflare Worker)
+    ['meta', { 'http-equiv': 'X-Content-Type-Options', content: 'nosniff' }],
+    ['meta', { 'http-equiv': 'X-Frame-Options', content: 'DENY' }],
+    ['meta', { name: 'referrer', content: 'strict-origin-when-cross-origin' }],
+    ['meta', { 'http-equiv': 'Content-Security-Policy', content: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdnjs.cloudflare.com https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https: blob:; connect-src 'self' https://api.github.com; frame-ancestors 'none'; upgrade-insecure-requests" }],
   ],
 
   markdown: {
