@@ -14,6 +14,10 @@ const articles = [
   { emoji: '💼', title: 'Cómo conseguí mi primer empleo en ciberseguridad', path: '06-primer-empleo', week: 6, desc: 'Camino personal, certificaciones y tips de entrevista.', tags: ['Carrera', 'Certificaciones'], readTime: '5 min' },
   { emoji: '🧪', title: 'Cómo crear tu laboratorio de ciberseguridad', path: '07-laboratorio-casero', week: 7, desc: 'Hardware, software, Docker y presupuesto.', tags: ['Labs', 'Docker'], readTime: '4 min' },
   { emoji: '🤝', title: 'Las 10 mejores comunidades de ciberseguridad', path: '08-comunidades', week: 8, desc: 'Discords, foros, redes sociales y eventos.', tags: ['Comunidad', 'Networking'], readTime: '3 min' },
+  { emoji: '🔬', title: 'Reverse Engineering: desensamblar binarios sin morir', path: '09-reverse-engineering', week: 9, desc: 'Introducción práctica a RE con Ghidra, radare2 y ejemplos reales.', tags: ['RE', 'Ghidra'], readTime: '6 min' },
+  { emoji: '🎣', title: 'Phishing: cómo detectar y prevenir el ataque más efectivo', path: '10-phishing-ingenieria-social', week: 10, desc: 'Tipos de phishing, técnicas de detección y herramientas.', tags: ['Phishing', 'Social'], readTime: '5 min' },
+  { emoji: '🐳', title: 'Docker para ciberseguridad: monta tu lab en minutos', path: '11-docker-ciberseguridad', week: 11, desc: 'Containers, DVWA, vulnerable apps y laboratorio completo.', tags: ['Docker', 'Labs'], readTime: '5 min' },
+  { emoji: '🛡️', title: 'OWASP Top 10: las 10 vulnerabilidades web más peligrosas', path: '12-owasp-top10', week: 12, desc: 'Explicación práctica de cada vulnerabilidad con ejemplos.', tags: ['OWASP', 'Web'], readTime: '7 min' },
 ]
 </script>
 
