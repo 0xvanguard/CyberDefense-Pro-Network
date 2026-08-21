@@ -105,11 +105,62 @@ No necesitas:
 | Labs para practicar | [`04-LABORATORIOS/`](../04-LABORATORIOS/) |
 | Certificaciones recomendadas | [`05-RECURSOS/certificaciones/`](../05-RECURSOS/certificaciones/) |
 
-## ✏️ Ejercicio para ti
+## ✏️ Ejercicios prácticos
+
+### Ejercicio 1: Exploración de roles (15 min)
 
 1. Escoge **uno** de los equipos (Red / Blue / Purple / AI).
 2. Escribe en tu libreta: ¿qué hace una persona en ese equipo un lunes cualquiera?
 3. Busca en [`01-CIBERSEGURIDAD/`](../01-CIBERSEGURIDAD/) una subcarpeta que se llame como un rol de ese equipo.
 4. Léela y compara con lo que tú escribiste.
+
+### Ejercicio 2: Mapa de amenazas de tu empresa (20 min)
+
+Piensa en la empresa donde trabajas (o una ficticia) y responde:
+
+```markdown
+## Mapa de Amenazas
+
+### Activos digitales
+- [ ] Sitio web principal
+- [ ] Base de datos de clientes
+- [ ] Email corporativo
+- [ ] Código fuente (repos)
+- [ ] Red interna
+
+### Amenazas potenciales
+| Activo | Amenaza | Probabilidad | Impacto |
+|--------|---------|--------------|----------|
+| Web | SQL Injection | Alta | Crítico |
+| Email | Phishing | Alta | Alto |
+| BD | Ransomware | Media | Crítico |
+| Repos | Leaking secrets | Media | Alto |
+
+### Controles actuales
+- ¿Tienen firewall? ¿Cuál?
+- ¿Tienen antivirus? ¿En todos los equipos?
+- ¿Tienen MFA? ¿Dónde?
+- ¿Hacen backups? ¿Con qué frecuencia?
+```
+
+### Ejercicio 3: CTF introductorio (30 min)
+
+1. Crea una cuenta gratuita en [TryHackMe.com](https://tryhackme.com/)
+2. Completa la sala **"Introduction to Cyber Security"** (gratis)
+3. Anota 3 cosas que aprendiste
+
+### Ejercicio 4: Calcula tu superficie de ataque (15 min)
+
+```bash
+# En Linux - ver tu IP pública
+curl ifconfig.me
+
+# Ver puertos abiertos en tu máquina
+ss -tuln          # Linux
+netstat -an       # Windows
+
+# Contar dispositivos en tu red
+curl -s https://api.ipify.org | xargs -I {} nmap -sn 192.168.1.0/24 | grep "Nmap scan report" | wc -l
+```
 
 > ⏭️ **Siguiente:** [`02-glosario.md`](./02-glosario.md) — los términos que verás en todos los archivos de este repo.

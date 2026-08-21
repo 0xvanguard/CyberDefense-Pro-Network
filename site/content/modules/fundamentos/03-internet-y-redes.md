@@ -155,11 +155,113 @@ sudo tcpdump -i eth0 -c 10
 | Blue team / detección | [`02-SEGURIDAD-INFORMACION/02-blue-team-defensa/`](../02-SEGURIDAD-INFORMACION/02-blue-team-defensa/) |
 | Cheatsheets de redes | [`05-RECURSOS/cheatsheets/`](../05-RECURSOS/cheatsheets/) |
 
-## ✏️ Ejercicios
+## ✏️ Ejercicios prácticos
 
-1. **Haz un traceroute** desde tu casa a `github.com`. ¿Cuántos saltos? ¿En qué país pasan?
-2. **Mira tu propio router.** Entra a `192.168.1.1` (o `192.168.0.1`) y mira qué dispositivos hay conectados.
-3. **Prueba DNS:** `dig +trace google.com`. Verás todos los servidores consultados.
-4. **Mira los headers HTTP:** abre las DevTools del navegador, pestaña *Network*, recarga una página, mira los *Request Headers*.
+### Ejercicio 1: Análisis de tu red local (15 min)
+
+```bash
+# 1. Descubre tu rango de red
+ip a | grep inet | grep -v 127.0.0.1
+# Ejemplo: 192.168.1.105/24 → tu rango es 192.168.1.0/24
+
+# 2. Escanea todos los dispositivos
+nmap -sn 192.168.1.0/24
+# Nota cuántos dispositivos hay: router, celular, smart TV, etc.
+
+# 3. Identifica qué corre en tu router
+nmap -sV 192.168.1.1
+# ¿Qué puertos están abiertos? ¿HTTP? ¿HTTPS?
+```
+
+**Preguntas:**
+- ¿Cuántos dispositivos encontraste?
+- ¿Algún dispositivo tiene puertos inesperados abiertos?
+- ¿Tu router usa la IP por defecto del fabricante?
+
+### Ejercicio 2: DNS en acción (10 min)
+
+```bash
+# 1. Resolución básica
+dig google.com
+# Mira la sección ANSWER: ¿qué IP devuelve?
+
+# 2. Trazar la ruta completa
+dig +trace github.com
+# Verás: raíz → .com → github.com → IP final
+
+# 3. Consultar tipos de registro
+dig MX google.com    # ¿qué servidores de email usa?
+dig NS google.com    # ¿qué servidores DNS usa?
+dig TXT google.com   # ¿qué registros TXT tiene? (SPF, DKIM)
+
+# 4. Ver tu propio DNS
+cat /etc/resolv.conf   # Linux
+ipconfig /displaydns    # Windows
+```
+
+**Preguntas:**
+- ¿Qué IP tiene google.com en tu país?
+- ¿Cuántos saltos hay desde tu DNS hasta google.com?
+
+### Ejercicio 3: Captura y análisis de tráfico (20 min)
+
+```bash
+# 1. Captura 30 segundos de tráfico DNS
+sudo tcpdump -i eth0 port 53 -w dns_capture.pcap -c 100
+
+# 2. Abre con tshark y analiza
+tshark -r dns_capture.pcap -T fields -e dns.qry.name | sort | uniq -c | sort -rn
+# Verás qué dominios resuelve tu equipo más frecuentemente
+
+# 3. Captura solo HTTP
+sudo tcpdump -i eth0 port 80 -A | head -50
+# Verás headers HTTP en texto plano (¡sin cifrar!)
+```
+
+**Preguntas:**
+- ¿Qué dominios aparecen más? ¿Son legítimos?
+- ¿Viste contraseñas o datos sensibles en el tráfico HTTP?
+
+### Ejercicio 4: Test de puertos remotos (10 min)
+
+```bash
+# 1. Escanea scanme.nmap.org (legal para practicar)
+nmap -sV scanme.nmap.org
+
+# 2. Mira los servicios y versiones
+# ¿Qué software corren? ¿Está actualizado?
+
+# 3. Escanea solo puertos comunes
+nmap -p 21,22,25,53,80,443,3306,3389,8080 scanme.nmap.org
+```
+
+### Ejercicio 5: Construye tu propia cheatsheet de red (10 min)
+
+Crea un archivo `red-cheatsheet.md` con:
+
+```markdown
+# Mi Cheatsheet de Redes
+
+## IPs y subredes
+- Mi IP: ___
+- Mi gateway: ___
+- Mi DNS: ___
+- Rango de red: ___/24
+
+## Puertos comunes que memorizo
+| Puerto | Servicio | Riesgo si abierto |
+|--------|----------|-------------------|
+| 22 | SSH | Bajo si autorizado |
+| 80 | HTTP | Medio |
+| 443 | HTTPS | Bajo |
+| 3389 | RDP | ALTO - ransomware |
+| 445 | SMB | ALTO - EternalBlue |
+
+## Comandos que uso siempre
+- `nmap -sV IP` → escaneo con versiones
+- `dig dominio` → resolución DNS
+- `traceroute IP` → ruta de paquetes
+- `tcpdump -i eth0 port 80` → capturar HTTP
+```
 
 > ⏭️ **Siguiente:** [`04-sistema-operativo-y-terminal.md`](./04-sistema-operativo-y-terminal.md) — Linux y Windows desde la perspectiva defensiva.

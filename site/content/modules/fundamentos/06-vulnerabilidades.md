@@ -194,11 +194,146 @@ Considera: ¿está expuesto a internet? ¿hay exploit público? ¿afecta datos s
 | Análisis de vulnerabilidades | [`01-CIBERSEGURIDAD/03-analisis-vulnerabilidades/`](../01-CIBERSEGURIDAD/03-analisis-vulnerabilidades/) |
 | Bug bounty hunting | [`01-CIBERSEGURIDAD/bug-bounty-hunting/`](../01-CIBERSEGURIDAD/bug-bounty-hunting/) |
 
-## ✏️ Ejercicios
+## ✏️ Ejercicios prácticos
 
-1. **Busca un CVE nuevo:** entra a [cve.mitre.org](https://cve.mitre.org/) o [nvd.nist.gov](https://nvd.nist.gov/) y encuentra un CVE de la última semana. Lee la descripción y clasifica por OWASP.
-2. **OWASP WebGoat:** corre WebGoat localmente (`docker run -p 8080:8080 webgoat/webgoat`) y resuelve 3 lecciones.
-3. **CVSS Calculator:** entra a [first.org/cvss/calculator/3.1](https://www.first.org/cvss/calculator/3.1) y experimenta hasta que entiendas qué cambia cada métrica.
-4. **CVEs recientes en tu stack:** si usas WordPress, busca CVEs de plugins que tengas instalados.
+### Ejercicio 1: Investiga un CVE (15 min)
+
+1. Ve a [nvd.nist.gov](https://nvd.nist.gov/) y busca un CVE de la última semana
+2. Rellena esta ficha:
+
+```markdown
+## Ficha CVE
+
+- **CVE ID:** CVE-XXXX-XXXX
+- **Descripción corta:** ___
+- **CWE asociado:** CWE-___
+- **CVSS Score:** ___/10
+- **Vector CVSS:** AV:___/AC:___/PR:___/UI:___/S:___/C:___/I:___/A:___
+- **Categoría OWASP:** A___ - ___
+- **¿Está expuesto a internet?** Sí/No
+- **¿Hay exploit público?** Sí/No
+- **Remediación:** ___
+```
+
+### Ejercicio 2: Escaneo con Nmap (20 min)
+
+```bash
+# 1. Escanea scanme.nmap.org (legal)
+nmap -sV scanme.nmap.org
+
+# 2. Escaneo de vulnerabilidades
+nmap --script=vuln scanme.nmap.org
+
+# 3. Escaneo completo de tu red local (SOLO tu red)
+nmap -sV -O 192.168.1.0/24
+
+# 4. Analiza los resultados
+# ¿Qué versiones de software encontraste?
+# ¿Alguna tiene CVEs conocidos?
+```
+
+**Preguntas:**
+- ¿Qué servicios están corriendo versiones viejas?
+- Si encuentras Apache 2.4.49, ¿qué CVE tiene? (busca en NVD)
+
+### Ejercicio 3: DVWA - vulnerable web app (30 min)
+
+```bash
+# 1. Corre DVWA en Docker
+docker run -d -p 8080:80 vulnerables/web-dvwa
+
+# 2. Abre http://localhost:8080
+# Usuario: admin | Contraseña: password
+
+# 3. Completa estos módulos (en orden de dificultad):
+- [ ] Reflected XSS (nivel low)
+- [ ] SQL Injection (nivel low)
+- [ ] Command Injection (nivel low)
+- [ ] File Upload (nivel low)
+- [ ] Brute Force (nivel low)
+
+# 4. Para cada uno, documenta:
+- El payload que usaste
+- Por qué funciona
+- Cómo se mitiga
+```
+
+### Ejercicio 4: SQL Injection manual (15 min)
+
+En DVWA, selecciona SQL Injection y prueba:
+
+```sql
+-- 1. Input normal
+1
+
+-- 2. Forzar error
+1'
+
+-- 3. Bypass de autenticación
+' OR '1'='1
+
+-- 4. Unión de tablas
+' UNION SELECT 1,2,3--
+
+-- 5. Extraer datos
+' UNION SELECT user(), password, 3 FROM users--
+
+-- 6. Extraer version de DB
+' UNION SELECT version(),2,3--
+```
+
+**Pregunta:** ¿Qué información extraíste? ¿Es sensible?
+
+### Ejercicio 5: CVSS Calculator (10 min)
+
+1. Ve a [first.org/cvss/calculator/3.1](https://www.first.org/cvss/calculator/3.1)
+2. Configura este escenario:
+   - Vulnerabilidad en panel de admin
+   - Accesible solo desde red interna
+   - Requiere autenticación
+   - No afecta disponibilidad
+3. Anota el score y explica por qué sube o baja
+
+### Ejercicio 6: Escáner de vulnerabilidades con OpenVAS (20 min)
+
+```bash
+# 1. Instala OpenVAS (Docker)
+docker run -d -p 443:443 -p 9392:9392 --name openvas mikesplain/openvas
+
+# 2. Abre https://localhost:9392
+# Credenciales: admin/admin
+
+# 3. Crea un target para tu red local
+# 4. Lanza un scan completo
+# 5. Revisa los resultados:
+- ¿Cuántos vulnerabilities encontró?
+- ¿Cuántas son críticas?
+- ¿Cuántas son de configuración?
+```
+
+### Ejercicio 7: Build your own vulnerability report (10 min)
+
+```markdown
+# Reporte de Vulnerabilidades - [Nombre del sistema]
+
+## Resumen
+- **Fecha:** YYYY-MM-DD
+- **Alcance:** [qué se escaneó]
+- **Total hallazgos:** X (Críticos: X, Altos: X, Medios: X, Bajos: X)
+
+## Hallazgos Críticos
+
+### 1. [Nombre de la vulnerabilidad]
+- **CVE:** CVE-XXXX-XXXX
+- **CVSS:** 9.8 (Crítico)
+- **Descripción:** [qué hace]
+- **Evidencia:** [request/response o screenshot]
+- **Remediación:** [cómo arreglar]
+
+## Recomendaciones generales
+1. [ ] Actualizar dependencias
+2. [ ] Implementar MFA
+3. [ ] Configurar WAF
+```
 
 > ⏭️ **Siguiente:** [`07-etica-y-leyes.md`](./07-etica-y-leyes.md) — los límites que todo profesional debe respetar.
