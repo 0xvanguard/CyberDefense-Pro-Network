@@ -32,8 +32,17 @@ export default defineConfig({
   ],
 
   markdown: {
-    lineNumbers: true,
+    lineNumbers: false,
     math: false,
+    // Optimize markdown rendering
+    anchor: {
+      permalink: false
+    }
+  },
+
+  // Sitemap for SEO
+  sitemap: {
+    hostname: 'https://0xvanguard.github.io/CyberDefense-Pro-Network/'
   },
 
   themeConfig: {
@@ -359,6 +368,10 @@ export default defineConfig({
 
   // Build configuration
   vite: {
+    // Optimize build
+    build: {
+      cssMinify: true
+    },
     // Custom CSS
     css: {
       preprocessorOptions: {}
@@ -366,6 +379,12 @@ export default defineConfig({
     // Resolve aliases
     resolve: {
       alias: {}
+    },
+    // Optimize dev server
+    server: {
+      fs: {
+        allow: ['..']
+      }
     }
   }
 })
