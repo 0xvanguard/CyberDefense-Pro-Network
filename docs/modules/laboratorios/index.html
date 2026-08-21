@@ -1,246 +1,1314 @@
 <!DOCTYPE html>
-<html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>04 - Laboratorios | CDPN | CyberDefense Pro Network</title>
-<link rel="icon" type="image/svg+xml" href="../../favicon.svg">
-<link rel="icon" type="image/png" sizes="32x32" href="../../assets/icons/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="../../assets/icons/favicon-16x16.png">
-<link rel="apple-touch-icon" sizes="180x180" href="../../assets/icons/apple-touch-icon.png">
-<link rel="manifest" href="../../manifest.webmanifest">
-<meta name="description" content="CTF writeups, HackTheBox, TryHackMe, Docker Labs y plantilla completa de writeup.">
-<meta name="theme-color" content="#0a0e1a">
-<meta name="color-scheme" content="dark light">
-<meta property="og:type" content="website">
-<meta property="og:title" content="04 - Laboratorios | CDPN">
-<meta property="og:description" content="CTF writeups, HackTheBox, TryHackMe, Docker Labs y plantilla completa de writeup.">
-<meta property="og:url" content="https://0xvanguard.github.io/CyberDefense-Pro-Network/modules/laboratorios/">
-<meta property="og:image" content="https://0xvanguard.github.io/CyberDefense-Pro-Network/assets/og/og-image.png">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="04 - Laboratorios | CDPN">
-<meta name="twitter:description" content="CTF writeups, HackTheBox, TryHackMe, Docker Labs y plantilla completa de writeup.">
-<meta name="twitter:image" content="https://0xvanguard.github.io/CyberDefense-Pro-Network/assets/og/og-image.png">
-<link rel="canonical" href="https://0xvanguard.github.io/CyberDefense-Pro-Network/modules/laboratorios/">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../assets/css/global.css">
-<link rel="stylesheet" href="../../assets/css/module.css">
-<link rel="stylesheet" href="../../assets/css/a11y.css"></head><body>
-<a href="#main" class="skip-link">Saltar al contenido principal</a><nav class="navbar" role="navigation" aria-label="Navegación principal"><div class="nav-container">
-<a href="../../index.html" class="nav-logo"><i class="fas fa-shield-halved"></i> CDPN</a>
-<ul class="nav-menu">
-<li><a href="../../index.html"><i class="fas fa-home"></i> Inicio</a></li>
-<li class="nav-dropdown"><a href="#"><i class="fas fa-layer-group"></i> Mods <i class="fas fa-chevron-down"></i></a>
-<ul class="dropdown-menu">
-<li><a href="../introduccion/"><span class="dot intro"></span> Intro</a></li>
-<li><a href="../red-team/"><span class="dot red"></span> Ofensiva</a></li>
-<li><a href="../seguridad-informacion/"><span class="dot blue"></span> Seg Info</a></li>
-<li><a href="../ai-agents/"><span class="dot ai"></span> AI</a></li>
-<li><a href="../blue-team/"><span class="dot blue"></span> Blue Team</a></li>
-<li><a href="../purple-team/"><span class="dot purple"></span> Purple</a></li>
-<li><a href="../laboratorios/" class="active" aria-current="page"><span class="dot lab"></span> Labs</a></li>
-<li><a href="../recursos/"><span class="dot resources"></span> Recursos</a></li>
-</ul></li>
-<li><a href="../../retos.html"><i class="fas fa-trophy"></i> Retos</a></li>
-<li><a href="../../herramientas.html"><i class="fas fa-tools"></i> Tools</a></li>
-<li><a href="../../labs.html"><i class="fas fa-flask"></i> Labs</a></li>
-<li><a href="../../recursos.html"><i class="fas fa-book"></i> Recursos</a></li>
-</ul>
-<div class="nav-actions">                <div class="lang-switcher" id="langSwitcher">
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laboratorios Interactivos | CDPN | CyberDefense Pro Network</title>
+    <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../assets/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../../assets/icons/favicon-16-16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../../assets/icons/apple-touch-icon.png">
+    <link rel="manifest" href="../../manifest.webmanifest">
+    <meta name="description" content="Laboratorios prácticos de ciberseguridad con Docker. Entornos vulnerables reproducibles para practicar hacking ético de forma segura.">
+    <meta name="theme-color" content="#0a0e1a">
+    <meta name="color-scheme" content="dark light">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Laboratorios | CDPN">
+    <meta property="og:description" content="Labs Docker interactivos con sistema de XP y leaderboard.">
+    <meta property="og:url" content="https://0xvanguard.github.io/CyberDefense-Pro-Network/modules/laboratorios/">
+    <meta property="og:image" content="https://0xvanguard.github.io/CyberDefense-Pro-Network/assets/og/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="canonical" href="https://0xvanguard.github.io/CyberDefense-Pro-Network/modules/laboratorios/">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/global.css">
+    <link rel="stylesheet" href="../../assets/css/module.css">
+    <link rel="stylesheet" href="../../assets/css/subpages.css">
+    <link rel="stylesheet" href="../../assets/css/a11y.css">
+    <style>
+        :root {
+            --xp-gold: #ffd700;
+            --xp-green: #2ecc71;
+            --xp-blue: #3498db;
+            --xp-purple: #9b59b6;
+            --xp-red: #e74c3c;
+            --card-bg: rgba(255,255,255,0.03);
+            --card-border: rgba(255,255,255,0.08);
+            --glow-blue: 0 0 30px rgba(52,152,219,0.3);
+            --glow-green: 0 0 30px rgba(46,204,113,0.3);
+        }
+        
+        .labs-hero {
+            background: linear-gradient(135deg, #0a0e1a 0%, #1a1a2e 50%, #16213e 100%);
+            padding: 80px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .labs-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(52,152,219,0.1) 0%, transparent 50%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 1; }
+        }
+        
+        .labs-hero h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .labs-hero p {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-number {
+            display: block;
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--xp-gold), var(--xp-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+        
+        /* Leaderboard Section */
+        .leaderboard-section {
+            padding: 60px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .leaderboard-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .leaderboard-header h2 {
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .leaderboard-header h2 i {
+            color: var(--xp-gold);
+        }
+        
+        .leaderboard-tabs {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .leaderboard-tab {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            background: transparent;
+            color: inherit;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+        
+        .leaderboard-tab.active {
+            background: linear-gradient(135deg, var(--xp-blue), var(--xp-purple));
+            border-color: transparent;
+            color: white;
+        }
+        
+        .leaderboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .leader-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .leader-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--xp-gold), var(--xp-green));
+        }
+        
+        .leader-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--glow-blue);
+            border-color: var(--xp-blue);
+        }
+        
+        .leader-rank {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 2rem;
+            font-weight: 800;
+            opacity: 0.2;
+        }
+        
+        .leader-rank.gold { color: var(--xp-gold); opacity: 1; }
+        .leader-rank.silver { color: #c0c0c0; opacity: 0.8; }
+        .leader-rank.bronze { color: #cd7f32; opacity: 0.7; }
+        
+        .leader-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .leader-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--xp-blue), var(--xp-purple));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        
+        .leader-name {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        
+        .leader-level {
+            font-size: 0.85rem;
+            opacity: 0.7;
+        }
+        
+        .leader-xp {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--xp-gold);
+            margin-bottom: 0.5rem;
+        }
+        
+        .leader-progress {
+            height: 8px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 0.5rem;
+        }
+        
+        .leader-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--xp-green), var(--xp-blue));
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+        
+        .leader-badges {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .badge {
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .badge-gold { background: rgba(255,215,0,0.2); color: var(--xp-gold); }
+        .badge-green { background: rgba(46,204,113,0.2); color: var(--xp-green); }
+        .badge-blue { background: rgba(52,152,219,0.2); color: var(--xp-blue); }
+        
+        /* Labs Grid */
+        .labs-section {
+            padding: 60px 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .labs-section h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .section-desc {
+            opacity: 0.7;
+            margin-bottom: 2rem;
+            max-width: 600px;
+        }
+        
+        .labs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .lab-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .lab-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--glow-green);
+            border-color: var(--xp-green);
+        }
+        
+        .lab-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+        
+        .lab-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.3rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .lab-status.available {
+            background: rgba(46,204,113,0.15);
+            color: var(--xp-green);
+        }
+        
+        .lab-status.advanced {
+            background: rgba(231,76,60,0.15);
+            color: var(--xp-red);
+        }
+        
+        .lab-status.coming {
+            background: rgba(241,196,15,0.15);
+            color: #f1c40f;
+        }
+        
+        .lab-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .lab-card h3 i {
+            color: var(--xp-green);
+        }
+        
+        .lab-card > p {
+            opacity: 0.7;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+        
+        .lab-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
+        }
+        
+        .lab-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            opacity: 0.7;
+        }
+        
+        .lab-meta .xp {
+            color: var(--xp-gold);
+            font-weight: 700;
+        }
+        
+        .lab-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .lab-tag {
+            padding: 0.3rem 0.6rem;
+            background: rgba(255,255,255,0.05);
+            border-radius: 6px;
+            font-size: 0.8rem;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .lab-actions {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: auto;
+        }
+        
+        .btn-lab {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--xp-green), #27ae60);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: scale(1.02);
+            box-shadow: var(--glow-green);
+        }
+        
+        .btn-secondary {
+            background: rgba(255,255,255,0.05);
+            color: inherit;
+            border: 1px solid var(--card-border);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.1);
+        }
+        
+        /* Filter Bar */
+        .filter-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background: var(--card-bg);
+            border-radius: 12px;
+            border: 1px solid var(--card-border);
+        }
+        
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--card-border);
+            background: transparent;
+            color: inherit;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+        
+        .filter-btn.active {
+            background: var(--xp-blue);
+            border-color: var(--xp-blue);
+            color: white;
+        }
+        
+        .filter-btn:hover:not(.active) {
+            background: rgba(255,255,255,0.05);
+        }
+        
+        /* Stats Bar */
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+        
+        .stat-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+        
+        .stat-card .stat-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-card .stat-value {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--xp-green), var(--xp-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .stat-card .stat-name {
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+        
+        /* Learning Path */
+        .path-section {
+            padding: 60px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .path-timeline {
+            position: relative;
+            padding-left: 3rem;
+        }
+        
+        .path-timeline::before {
+            content: '';
+            position: absolute;
+            left: 1rem;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--xp-green), var(--xp-blue), var(--xp-purple));
+        }
+        
+        .path-item {
+            position: relative;
+            margin-bottom: 2rem;
+            padding-left: 2rem;
+        }
+        
+        .path-item::before {
+            content: '';
+            position: absolute;
+            left: -2.5rem;
+            top: 0.5rem;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--xp-green);
+            border: 2px solid var(--card-bg);
+        }
+        
+        .path-item.completed::before {
+            background: var(--xp-green);
+            box-shadow: 0 0 10px var(--xp-green);
+        }
+        
+        .path-item.current::before {
+            background: var(--xp-blue);
+            box-shadow: 0 0 10px var(--xp-blue);
+            animation: pulse 2s infinite;
+        }
+        
+        .path-item.locked::before {
+            background: rgba(255,255,255,0.2);
+        }
+        
+        .path-content {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+        
+        .path-content h4 {
+            margin-bottom: 0.5rem;
+        }
+        
+        .path-content p {
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .labs-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-stats {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            
+            .leaderboard-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .filter-bar {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="#main" class="skip-link">Saltar al contenido principal</a>
+    
+    <nav class="navbar" role="navigation" aria-label="Navegación principal">
+        <div class="nav-container">
+            <a href="../../index.html" class="nav-logo"><i class="fas fa-shield-halved"></i> CDPN</a>
+            <ul class="nav-menu">
+                <li><a href="../../index.html"><i class="fas fa-home"></i> Inicio</a></li>
+                <li class="nav-dropdown">
+                    <a href="#"><i class="fas fa-layer-group"></i> Módulos <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../introduccion/"><span class="dot intro"></span> Introducción</a></li>
+                        <li><a href="../red-team/"><span class="dot red"></span> Ofensiva</a></li>
+                        <li><a href="../seguridad-informacion/"><span class="dot blue"></span> Seguridad Info.</a></li>
+                        <li><a href="../ai-agents/"><span class="dot ai"></span> AI Agents</a></li>
+                        <li><a href="../blue-team/"><span class="dot blue"></span> Blue Team</a></li>
+                        <li><a href="../purple-team/"><span class="dot purple"></span> Purple Team</a></li>
+                        <li><a href="../laboratorios/" class="active" aria-current="page"><span class="dot lab"></span> Labs</a></li>
+                        <li><a href="../recursos/"><span class="dot resources"></span> Recursos</a></li>
+                    </ul>
+                </li>
+                <li><a href="../../retos.html"><i class="fas fa-trophy"></i> Retos</a></li>
+                <li><a href="../../herramientas.html"><i class="fas fa-tools"></i> Herramientas</a></li>
+                <li><a href="../../labs.html"><i class="fas fa-flask"></i> Labs</a></li>
+                <li><a href="../../recursos.html"><i class="fas fa-book"></i> Recursos</a></li>
+            </ul>
+            <div class="nav-actions">
+                <div class="lang-switcher" id="langSwitcher">
                     <button class="lang-toggle" id="langToggle">
                         <span class="lang-flag">🇪🇸</span> <span class="lang-name">Español</span>
                     </button>
-                    <div class="lang-dropdown" id="langDropdown">
+                    <div class="lang-dropdown" id="langDropdown" hidden>
                         <button data-lang="es"><span class="lang-flag">🇪🇸</span> Español</button>
                         <button data-lang="en"><span class="lang-flag">🇺🇸</span> English</button>
-                        <button data-lang="zh"><span class="lang-flag">🇨🇳</span> 中文</button>
-                        <button data-lang="pt"><span class="lang-flag">🇧🇷</span> Português</button>
-                        <button data-lang="fr"><span class="lang-flag">🇫🇷</span> Français</button>
-                        <button data-lang="ar"><span class="lang-flag">🇸🇦</span> العربية</button>
-                        <button data-lang="ja"><span class="lang-flag">🇯🇵</span> 日本語</button>
-                        <button data-lang="ko"><span class="lang-flag">🇰🇷</span> 한국어</button>
-                        <button data-lang="ru"><span class="lang-flag">🇷🇺</span> Русский</button>
-                        <button data-lang="de"><span class="lang-flag">🇩🇪</span> Deutsch</button>
                     </div>
                 </div>
                 <button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></button>
-<a href="https://github.com/0xvanguard/CyberDefense-Pro-Network" class="nav-github" target="_blank"><i class="fab fa-github"></i></a>
-</div></div></nav><div class="breadcrumb"><a href="../../index.html">CDPN</a><span>/</span> Modulo 04: Laboratorios</div>
-<section class="module-hero" style="--hero-glow: rgba(26,188,156,0.08);">
-<div class="module-hero-content"><span class="module-badge beginner"><i class="fas fa-flask"></i> PRACTICA</span>
-<h1>04 - <span class="gradient-text">Laboratorios</span></h1>
-<p>Practica controlada: CTFs, HTB, TryHackMe y labs Docker.</p></div></section>
-<main id="main" class="module-main"><div class="content-block"><h3><i class="fas fa-box-open"></i> Estructura de Labs</h3>
-<div class="labs-structure">
-<div class="lab-type"><i class="fas fa-flag"></i><h4>CTF Writeups</h4><p>picoCTF, HTB CTF, BSides</p></div>
-<div class="lab-type"><i class="fas fa-box"></i><h4>HTB / TryHackMe</h4><p>Maquinas y rooms</p></div>
-<div class="lab-type"><i class="fas fa-hammer"></i><h4>Labs Propios</h4><p>Entornos vulnerables</p></div>
-<div class="lab-type"><i class="fab fa-docker"></i><h4>Docker Labs</h4><p>docker-compose listos</p></div>
-</div></div><div class="content-block"><h3><i class="fab fa-docker"></i> Guia: Tu Primer Lab con Docker</h3>
-<div class="step-guide">
-<div class="guide-step"><span class="guide-num">1</span><div><code>curl -fsSL https://get.docker.com | sh</code></div></div>
-<div class="guide-step"><span class="guide-num">2</span><div><code>sudo apt install docker-compose</code></div></div>
-<div class="guide-step"><span class="guide-num">3</span><div><code>mkdir ~/labs/vuln-web && cd ~/labs/vuln-web</code></div></div>
-<div class="guide-step"><span class="guide-num">4</span><div>Crear docker-compose.yml (abajo)</div></div>
-<div class="guide-step"><span class="guide-num">5</span><div><code>docker-compose up -d</code></div></div>
-<div class="guide-step"><span class="guide-num">6</span><div><code>http://localhost:8080</code> (admin/password)</div></div>
-</div>
-<div class="code-block"><div class="code-header"><span class="code-lang">docker-compose.yml - DVWA + WebGoat</span></div>
-<pre><code>version: '3.8'
-services:
-  dvwa:
-    image: vulnerables/web-dvwa
-    container_name: dvwa
-    ports: ["8080:80"]
-    depends_on: [db]
-    networks: [vuln-net]
+                <a href="https://github.com/0xvanguard/CyberDefense-Pro-Network" class="nav-github" target="_blank"><i class="fab fa-github"></i></a>
+            </div>
+        </div>
+    </nav>
 
-  db:
-    image: mysql:5.7
-    environment:
-      MYSQL_ROOT_PASSWORD: dvwa
-      MYSQL_DATABASE: dvwa
-    volumes: [db-data:/var/lib/mysql]
-    networks: [vuln-net]
+    <div class="breadcrumb"><a href="../../index.html">CDPN</a><span>/</span> Laboratorios Interactivos</div>
 
-  webgoat:
-    image: webgoat/webgoat
-    ports: ["8081:8080", "9090:9090"]
-    networks: [vuln-net]
+    <!-- HERO -->
+    <section class="labs-hero">
+        <div class="page-hero-content">
+            <span class="page-badge"><i class="fas fa-flask"></i> ENTORNOS DE PRÁCTICA</span>
+            <h1>Laboratorios <span class="gradient-text">Interactivos</span></h1>
+            <p>Practica en entornos seguros y reproducibles. Cada lab incluye instrucciones paso a paso, soluciones y lecciones defensivas.</p>
+            <div class="hero-stats">
+                <div class="stat">
+                    <span class="stat-number">15</span>
+                    <span class="stat-label">Labs Disponibles</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">6,750</span>
+                    <span class="stat-label">XP Total</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">Docker</span>
+                    <span class="stat-label">Reproducibles</span>
+                </div>
+            </div>
+        </div>
+    </section>
 
-networks:
-  vuln-net: {driver: bridge}
-volumes:
-  db-data:</code></pre></div>
-<div class="code-block"><div class="code-header"><span class="code-lang">Comandos Esenciales</span></div>
-<pre><code>docker-compose up -d        # Levantar
-docker ps                    # Ver contenedores
-docker logs -f dvwa          # Ver logs
-docker exec -it dvwa bash    # Entrar al contenedor
-docker-compose down          # Detener
-docker-compose down -v       # Limpiar todo</code></pre></div></div><div class="content-block"><h3><i class="fas fa-flag"></i> Metodologia CTF</h3>
-<div class="concepts-grid">
-<div class="concept-card"><h4><i class="fas fa-search"></i> Fase 1: Recon</h4>
-<div class="step-guide">
-<div class="guide-step"><span class="guide-num">1</span><div><code>nmap -sV -sC target</code></div></div>
-<div class="guide-step"><span class="guide-num">2</span><div><code>gobuster dir -u http://target -w wordlist.txt</code></div></div>
-<div class="guide-step"><span class="guide-num">3</span><div>Identificar tecnologias</div></div>
-<div class="guide-step"><span class="guide-num">4</span><div><code>subfinder -d target</code></div></div>
-</div></div>
-<div class="concept-card"><h4><i class="fas fa-bug"></i> Fase 2: Explotacion</h4>
-<div class="step-guide">
-<div class="guide-step"><span class="guide-num">1</span><div>Buscar CVEs para servicios</div></div>
-<div class="guide-step"><span class="guide-num">2</span><div>OWASP Top 10 en web apps</div></div>
-<div class="guide-step"><span class="guide-num">3</span><div>Metasploit o exploit manual</div></div>
-<div class="guide-step"><span class="guide-num">4</span><div>Shell reversa</div></div>
-</div></div>
-<div class="concept-card"><h4><i class="fas fa-crown"></i> Fase 3: Privesc</h4>
-<div class="step-guide">
-<div class="guide-step"><span class="guide-num">1</span><div>Linux: <code>sudo -l && find / -perm -4000</code></div></div>
-<div class="guide-step"><span class="guide-num">2</span><div>Windows: <code>whoami /priv && systeminfo</code></div></div>
-<div class="guide-step"><span class="guide-num">3</span><div>Kernel exploits con searchsploit</div></div>
-<div class="guide-step"><span class="guide-num">4</span><div>GTFOBins para SUID</div></div>
-</div></div></div></div><div class="content-block"><h3><i class="fas fa-gamepad"></i> Plataformas de Practica</h3>
-<div class="labs-grid">
-<div class="lab-card"><div class="lab-status available"><i class="fas fa-check-circle"></i> Principiante</div>
-<h4>TryHackMe</h4><p>Rooms guiados paso a paso.</p>
-<div class="lab-steps">
-<div class="guide-step"><span class="guide-num">1</span><div>Crear cuenta gratuita</div></div>
-<div class="guide-step"><span class="guide-num">2</span><div>Pre-Security Path</div></div>
-<div class="guide-step"><span class="guide-num">3</span><div>Complete Beginner Path</div></div>
-<div class="guide-step"><span class="guide-num">4</span><div>Jr Penetration Tester</div></div>
-</div></div>
-<div class="lab-card"><div class="lab-status available"><i class="fas fa-check-circle"></i> Intermedio</div>
-<h4>HackTheBox</h4><p>Maquinas activas mas dificiles.</p>
-<div class="lab-steps">
-<div class="guide-step"><span class="guide-num">1</span><div>Empezar con Easy</div></div>
-<div class="guide-step"><span class="guide-num">2</span><div>Proceder a Medium</div></div>
-<div class="guide-step"><span class="guide-num">3</span><div>Participar en CTFs mensuales</div></div>
-</div></div>
-<div class="lab-card"><div class="lab-status available"><i class="fas fa-check-circle"></i> Gratis</div>
-<h4>PicoCTF</h4><p>CTFs educativos de Carnegie Mellon.</p>
-<div class="lab-steps">
-<div class="guide-step"><span class="guide-num">1</span><div>Categorias: Web, Crypto, Forensics, RE</div></div>
-<div class="guide-step"><span class="guide-num">2</span><div>Empezar 100-200 pts</div></div>
-</div></div></div></div><div class="content-block"><h3><i class="fas fa-clipboard-list"></i> Plantilla Writeup</h3>
-<div class="code-block"><div class="code-header"><span class="code-lang">writeup-template.md</span></div>
-<pre><code># [Nombre]
+    <main id="main">
+        
+        <!-- STATS BAR -->
+        <section class="labs-section">
+            <div class="stats-bar">
+                <div class="stat-card">
+                    <div class="stat-icon">🟢</div>
+                    <div class="stat-value">11</div>
+                    <div class="stat-name">Labs Intermedios</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🔴</div>
+                    <div class="stat-value">3</div>
+                    <div class="stat-name">Labs Avanzados</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">⏱️</div>
+                    <div class="stat-value">15h+</div>
+                    <div class="stat-name">Tiempo Estimado</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🏆</div>
+                    <div class="stat-value">50+</div>
+                    <div class="stat-name">Exercicios</div>
+                </div>
+            </div>
+        </section>
 
-| Campo | Valor |
-|-------|-------|
-| Plataforma | HTB / THM / picoCTF |
-| Dificultad | Easy / Medium / Hard |
-| Categoria | Web / AD / Linux / Crypto |
+        <!-- LEADERBOARD -->
+        <section class="leaderboard-section">
+            <div class="leaderboard-header">
+                <h2><i class="fas fa-trophy"></i> Leaderboard Global</h2>
+                <div class="leaderboard-tabs">
+                    <button class="leaderboard-tab active" data-period="all">Todos</button>
+                    <button class="leaderboard-tab" data-period="month">Este Mes</button>
+                    <button class="leaderboard-tab" data-period="week">Esta Semana</button>
+                </div>
+            </div>
+            
+            <div class="leaderboard-grid">
+                <div class="leader-card">
+                    <div class="leader-rank gold">#1</div>
+                    <div class="leader-info">
+                        <div class="leader-avatar">🎯</div>
+                        <div>
+                            <div class="leader-name">ShadowByte</div>
+                            <div class="leader-level">Nivel 12 • Red Team Master</div>
+                        </div>
+                    </div>
+                    <div class="leader-xp">4,850 XP</div>
+                    <div class="leader-progress">
+                        <div class="leader-progress-bar" style="width: 72%"></div>
+                    </div>
+                    <div class="leader-badges">
+                        <span class="badge badge-gold">👑 Top 1</span>
+                        <span class="badge badge-green">🔓 12 Labs</span>
+                        <span class="badge badge-blue">⚡ Speedrun</span>
+                    </div>
+                </div>
+                
+                <div class="leader-card">
+                    <div class="leader-rank silver">#2</div>
+                    <div class="leader-info">
+                        <div class="leader-avatar">🛡️</div>
+                        <div>
+                            <div class="leader-name">CyberNinja</div>
+                            <div class="leader-level">Nivel 10 • Pentester</div>
+                        </div>
+                    </div>
+                    <div class="leader-xp">3,920 XP</div>
+                    <div class="leader-progress">
+                        <div class="leader-progress-bar" style="width: 58%"></div>
+                    </div>
+                    <div class="leader-badges">
+                        <span class="badge badge-gold">🥈 Top 2</span>
+                        <span class="badge badge-green">🔓 10 Labs</span>
+                    </div>
+                </div>
+                
+                <div class="leader-card">
+                    <div class="leader-rank bronze">#3</div>
+                    <div class="leader-info">
+                        <div class="leader-avatar">🔐</div>
+                        <div>
+                            <div class="leader-name">ZeroDay</div>
+                            <div class="leader-level">Nivel 8 • Security Analyst</div>
+                        </div>
+                    </div>
+                    <div class="leader-xp">3,150 XP</div>
+                    <div class="leader-progress">
+                        <div class="leader-progress-bar" style="width: 47%"></div>
+                    </div>
+                    <div class="leader-badges">
+                        <span class="badge badge-gold">🥉 Top 3</span>
+                        <span class="badge badge-green">🔓 8 Labs</span>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-## Resumen
-TL;DR en una linea.
+        <!-- LABS CATALOG -->
+        <section class="labs-section">
+            <h2><i class="fas fa-flask"></i> Catálogo de Labs</h2>
+            <p class="section-desc">Explora nuestros laboratorios interactivos organizados por nivel de dificultad y tema.</p>
+            
+            <!-- Filter Bar -->
+            <div class="filter-bar">
+                <button class="filter-btn active" data-filter="all">Todos</button>
+                <button class="filter-btn" data-filter="fundamentos">🚀 Fundamentos</button>
+                <button class="filter-btn" data-filter="intermedio">🟡 Intermedio</button>
+                <button class="filter-btn" data-filter="avanzado">🔴 Avanzado</button>
+                <button class="filter-btn" data-filter="red-team">⚔️ Red Team</button>
+                <button class="filter-btn" data-filter="blue-team">🛡️ Blue Team</button>
+                <button class="filter-btn" data-filter="forensics">🔍 Forense</button>
+            </div>
+            
+            <div class="labs-grid">
+                <!-- Fundamentals Labs -->
+                <div class="lab-card" data-category="fundamentos" data-level="fundamentos">
+                    <div class="lab-card-header">
+                        <span class="lab-status available"><i class="fas fa-check-circle"></i> Disponible</span>
+                    </div>
+                    <h3><i class="fas fa-network-wired"></i> net-01: Redes</h3>
+                    <p>Aprende conceptos fundamentales de redes, protocolos TCP/IP, y configuración de firewalls.</p>
+                    <div class="lab-meta">
+                        <span><i class="fas fa-clock"></i> 2 horas</span>
+                        <span><i class="fas fa-signal"></i> Principiante</span>
+                        <span class="xp"><i class="fas fa-star"></i> 200 XP</span>
+                    </div>
+                    <div class="lab-tags">
+                        <span class="lab-tag">TCP/IP</span>
+                        <span class="lab-tag">DNS</span>
+                        <span class="lab-tag">Firewall</span>
+                    </div>
+                    <div class="lab-actions">
+                        <a href="../../labs/fundamentos/net-01/" class="btn-lab btn-primary">Iniciar Lab</a>
+                        <a href="../../labs/fundamentos/net-01/README.md" class="btn-lab btn-secondary">Instrucciones</a>
+                    </div>
+                </div>
 
-## Reconocimiento
-nmap -sV -sC -oA scan target
-- Puerto 22: OpenSSH 8.2
-- Puerto 80: Apache 2.4.41
+                <div class="lab-card" data-category="fundamentos" data-level="fundamentos">
+                    <div class="lab-card-header">
+                        <span class="lab-status available"><i class="fas fa-check-circle"></i> Disponible</span>
+                    </div>
+                    <h3><i class="fab fa-linux"></i> linux-01: Linux</h3>
+                    <p>Domina la línea de comandos de Linux, permisos, procesos y administración del sistema.</p>
+                    <div class="lab-meta">
+                        <span><i class="fas fa-clock"></i> 3 horas</span>
+                        <span><i class="fas fa-signal"></i> Principiante</span>
+                        <span class="xp"><i class="fas fa-star"></i> 250 XP</span>
+                    </div>
+                    <div class="lab-tags">
+                        <span class="lab-tag">Bash</span>
+                        <span class="lab-tag">Permisos</span>
+                        <span class="lab-tag">Procesos</span>
+                    </div>
+                    <div class="lab-actions">
+                        <a href="../../labs/fundamentos/linux-01/" class="btn-lab btn-primary">Iniciar Lab</a>
+                        <a href="../../labs/fundamentos/linux-01/README.md" class="btn-lab btn-secondary">Instrucciones</a>
+                    </div>
+                </div>
 
-## Explotacion
-Vuln: SQL Injection en /login
-Payload: admin' --
-Result: Acceso admin sin pass
+                <div class="lab-card" data-category="fundamentos" data-level="fundamentos">
+                    <div class="lab-card-header">
+                        <span class="lab-status available"><i class="fas fa-check-circle"></i> Disponible</span>
+                    </div>
+                    <h3><i class="fab fa-python"></i> script-01: Python</h3>
+                    <p>Escribe scripts de automatización, análisis de datos y herramientas de seguridad.</p>
+                    <div class="lab-meta">
+                        <span><i class="fas fa-clock"></i> 3 horas</span>
+                        <span><i class="fas fa-signal"></i> Principiante</span>
+                        <span class="xp"><i class="fas fa-star"></i> 250 XP</span>
+                    </div>
+                    <div class="lab-tags">
+                        <span class="lab-tag">Python</span>
+                        <span class="lab-tag">Scripting</span>
+                        <span class="lab-tag">Automatización</span>
+                    </div>
+                    <div class="lab-actions">
+                        <a href="../../labs/fundamentos/script-01/" class="btn-lab btn-primary">Iniciar Lab</a>
+                        <a href="../../labs/fundamentos/script-01/README.md" class="btn-lab btn-secondary">Instrucciones</a>
+                    </div>
+                </div>
 
-## Privesc
-SUID: /usr/bin/python3
-GTFOBins: python3 -c 'import os;os.execl("/bin/sh","sh","-p")'
+                <!-- Intermediate Labs -->
+                <div class="lab-card" data-category="red-team" data-level="intermedio">
+                    <div class="lab-card-header">
+                        <span class="lab-status available"><i class="fas fa-check-circle"></i> Disponible</span>
+                    </div>
+                    <h3><i class="fas fa-search"></i> recon-01: Reconocimiento</h3>
+                    <p>WHOIS, DNS enumeration, host discovery, port scanning y banner grabbing.</p>
+                    <div class="lab-meta">
+                        <span><i class="fas fa-clock"></i> 45 min</span>
+                        <span><i class="fas fa-signal"></i> Intermedio</span>
+                        <span class="xp"><i class="fas fa-star"></i> 250 XP</span>
+                    </div>
+                    <div class="lab-tags">
+                        <span class="lab-tag">Nmap</span>
+                        <span class="lab-tag">WHOIS</span>
+                        <span class="lab-tag">DNS</span>
+                        <span class="lab-tag">OSINT</span>
+                    </div>
+                    <div class="lab-actions">
+                        <a href="../../labs/intermedio/recon-01/" class="btn-lab btn-primary">Iniciar Lab</a>
+                        <a href="../../labs/intermedio/recon-01/README.md" class="btn-lab btn-secondary">Instrucciones</a>
+                    </div>
+                </div>
 
-## Flags
-- User: flag{xxxxx}
-- Root: flag{xxxxx}
+                <div class="lab-card" data-category="red-team" data-level="intermedio">
+                    <div class="lab-card-header">
+                        <span class="lab-status available"><i class="fas fa-check-circle"></i> Disponible</span>
+                    </div>
+                    <h3><i class="fas fa-bug"></i> pentest-01: Pentesting</h3>
+                    <p>Ciclo completo: Nmap, SQLi, XSS, reverse shells, privesc y reporte PTES.</p>
+                    <div class="lab-meta">
+                        <span><i class="fas fa-clock"></i> 90 min</span>
+                        <span><i class="fas fa-signal"></i> Intermedio</span>
+                        <span class="xp"><i class="fas fa-star"></i> 400 XP</span>
+                    </div>
+                    <div class="lab-tags">
+                        <span class="lab-tag">Nmap</span>
+                        <span class="lab-tag">SQLi</span>
+                        <span class="lab-tag">XSS</span>
+                        <span class="lab-tag">Reverse Shell</span>
+                    </div>
+                    <div class="lab-actions">
+                        <a href="../../labs/intermedio/pentest-01/" class="btn-lab btn-primary">Iniciar Lab</a>
+                        <a href="../../labs/intermedio/pentest-01/README.md" class="btn-lab btn-secondary">Instrucciones</a>
+                    </div>
+                </div>
 
-## Lecciones Defensivas
-- Deteccion: Alerta SIEM por SQLi
-- Prevencion: WAF + validacion inputs
-- MITRE: T1190 Exploit Public-Facing App</code></pre></div></div><div class="content-block"><h3><i class="fas fa-clipboard-check"></i> Checklist Pre-Lab</h3>
-<div class="concepts-grid">
-<div class="concept-card"><h4><i class="fas fa-laptop-code"></i> Entorno</h4>
-<ul class="factors-list">
-<li class="factor"><i class="fas fa-check"></i> VirtualBox/VMware instalado</li>
-<li class="factor"><i class="fas fa-check"></i> Kali Linux como VM</li>
-<li class="factor"><i class="fas fa-check"></i> Red Host-Only configurada</li>
-<li class="factor"><i class="fas fa-check"></i> Snapshots creados</li>
-<li class="factor"><i class="fas fa-check"></i> Docker instalado</li>
-</ul></div>
-<div class="concept-card"><h4><i class="fas fa-tools"></i> Herramientas</h4>
-<ul class="factors-list">
-<li class="factor"><i class="fas fa-check"></i> Nmap actualizado</li>
-<li class="factor"><i class="fas fa-check"></i> Burp Suite Community</li>
-<li class="factor"><i class="fas fa-check"></i> Metasploit Framework</li>
-<li class="factor"><i class="fas fa-check"></i> SQLMap</li>
-<li class="factor"><i class="fas fa-check"></i> Gobuster/ffuf</li>
-</ul></div>
-<div class="concept-card"><h4><i class="fas fa-book"></i> Metodologia</h4>
-<ul class="factors-list">
-<li class="factor"><i class="fas fa-check"></i> Plantilla writeup lista</li>
-<li class="factor"><i class="fas fa-check"></i> Notas organizadas</li>
-<li class="factor"><i class="fas fa-check"></i> Cuenta en THM/HTB</li>
-<li class="factor"><i class="fas fa-check"></i> Wordlists descargadas</li>
-<li class="factor"><i class="fas fa-check"></i> Proxy Burp configurado</li>
-</ul></div></div></div><div class="content-block"><h3><i class="fas fa-hammer"></i> Reto: Crea Tu Propio Lab</h3>
-<div class="step-guide">
-<div class="guide-step"><span class="guide-num">1</span><div><code>mkdir my-vuln-app && cd my-vuln-app</code></div></div>
-<div class="guide-step"><span class="guide-num">2</span><div>Crear docker-compose.yml con PHP+MySQL</div></div>
-<div class="guide-step"><span class="guide-num">3</span><div>Implementar: SQLi, XSS, IDOR, Broken Auth</div></div>
-<div class="guide-step"><span class="guide-num">4</span><div>Agregar 5 retos de dificultad creciente</div></div>
-<div class="guide-step"><span class="guide-num">5</span><div>Documentar cada vulnerabilidad con solucion</div></div>
-<div class="guide-step"><span class="guide-num">6</span><div>Compartir en GitHub</div></div>
-</div>
-<div class="code-block"><div class="code-header"><span class="code-lang">login.php - Vulnerable vs Seguro</span></div>
-<pre><code>&lt;?php
-// VULNERABLE (para practica)
-$query = "SELECT * FROM users WHERE username='$user' AND pass='$pass'";
+                <div class="lab-card" data-category="red-team" data-level="intermedio">
+                    <div class="lab-card-header">
+                        <span class="lab-status available"><i class="fas fa-check-circle"></i> Disponible</span>
+                    </div>
+                    <h3><i class="fas fa-exclamation-triangle"></i> vulnscan-01: Análisis Vulns</h3>
+                    <p>Nmap NSE, Nuclei, searchsploit, CVSS/CIA scoring y validación.</p>
+                    <div class="lab-meta">
+                        <span><i class="fas fa-clock"></i> 60 min</span>
+                        <span><i class="fas fa-signal"></i> Intermedio</span>
+                        <span class="xp"><i class="fas fa-star"></i> 300 XP</span>
+                    </div>
+                    <div class="lab-tags">
+                        <span class="lab-tag">Nuclei</span>
+                        <span class="lab-tag">CVSS</span>
+                        <span class="lab-tag">searchsploit</span>
+                    </div>
+                    <div class="lab-actions">
+                        <a href="../../labs/intermedio/vulnscan-01/" class="btn-lab btn-primary">Iniciar Lab</a>
+                        <a href="../../labs/intermedio/vulnscan-01/README.md" class="btn-lab btn-secondary">Instrucciones</a>
+                    </div>
+                </div>
 
-// SEGURO (produccion)
-$stmt = $conn->prepare("SELECT * FROM users WHERE username=? AND pass=?");
-$stmt->bind_param("ss", $user, $pass);
-$stmt->execute();
-?&gt;</code></pre></div></div></main><footer class="footer"><div class="footer-content"><div class="footer-grid">
-<div class="footer-col"><h4><i class="fas fa-shield-halved"></i> CDPN</h4><p>Ciberdefensa profesional.</p></div>
-<div class="footer-col"><h4>Mods</h4><ul><li><a href="../introduccion/">Intro</a></li><li><a href="../red-team/">Red Team</a></li><li><a href="../blue-team/">Blue</a></li><li><a href="../purple-team/">Purple</a></li></ul></div>
-<div class="footer-col"><h4>Secciones</h4><ul><li><a href="../fundamentos/" data-i18n="nav_fundamentos">🚀 Base para principiantes</a></li><li><a href="../../retos.html" data-i18n="nav_retos">Retos</a></li><li><a href="../../herramientas.html">Tools</a></li><li><a href="../../labs.html" data-i18n="nav_labs">Labs</a></li><li><a href="../../recursos.html" data-i18n="nav_resources">Recursos</a></li></ul></div>
-<div class="footer-col"><h4>GitHub</h4><ul><li><a href="https://github.com/0xvanguard/CyberDefense-Pro-Network"><i class="fab fa-github"></i> Repo</a></li></ul></div>
-</div><div class="footer-bottom"><p>&copy; 2026 CDPN.</p></div></div></footer>
-<script src="../../assets/js/shared.js"></script></body></html>
+                <div class="lab-card" data-category="red-team" data-level="intermedio">
+                    <div class="lab-card-header">
+                        <span class="lab-status available"><i class="fas fa-check-circle"></i> Disponible</span>
+                    </div>
+                    <h3><i class="fas fa-globe"></i> webapp-01: Explotación Web</h3>
+                    <p>SQLi login/búsqueda, XSS reflejado/almacenado, IDOR, SSRF y hardening.</p>
+                    <div class="lab-meta">
+                        <span><i class="fas fa-clock"></i> 90 min</span>
+                        <span><i class="fas fa-signal"></i> Intermedio</span>
+                        <span class="xp"><i class="fas fa-star"></i> 400 XP</span>
+                    </div>
+                    <div class="lab-tags">
+                        <span class="lab-tag">OWASP</span>
+                        <span class="lab-tag">SQLi</span>
+                        <span class="lab-tag">XSS</span>
+                        <span class="lab-tag">IDOR</span>
+                    </div>
+                    <div class="lab-actions">
+                        <a href="../../labs/intermedio/webapp-01/" class="btn-lab btn-primary">Iniciar Lab</a>
+                        <a href="../../labs/intermedio/webapp-01/README.md" class="btn-lab btn-secondary">Instrucciones</a>
+                    </div>
+                </div>
+
+                <div class="lab-card" data-category="red-team" data-level="intermedio">
+                    <div class="lab-card-header">
+                        <span class="lab-status available"><i class="fas fa-check-circle"></i> Disponible</span>
+                    </div>
+                    <h3><i class="fas fa-user-shield"></i> privesc-01: Linux Privesc</h3>
+                    <p>Escalada de privilegios en Linux: SUID, sudo, kernel exploits, cron jobs.</p>
+                    <div class="lab-meta">
+                        <span><i class="fas fa-clock"></i> 60 min</span>
+                        <span><i class="fas fa-signal"></i> Intermedio</span>
+                        <span class="xp"><i class="fas fa-star"></i> 300 XP</span>
+                    </div>
+                    <div class="lab-tags">
+                        <span class="lab-tag">SUID</span>
+                        <span class="lab-tag">Sudo</span>
+                        <span class="lab-tag">Kernel</span>
+                    </div>
+                    <div class="lab-actions">
+                        <a href="../../labs/intermedio/privesc-01/" class="btn-lab btn-primary">Iniciar Lab</a>
+                        <a href="../../labs/intermedio/privesc-01/README.md" class="btn-lab btn-secondary">Instrucciones</a>
+                    </div>
+                </div>
+
+                <div class="lab-card" data-category="red-team" data-level="intermedio">
+                    <div class="lab-card-header">
+                        <span class="lab-status available"><i class="fas fa-check-circle"></i> Disponible</span>
+                    </div>
+                    <h3><i class="fas fa-lock"></i> persist-01: Persistencia</h3>
+                    <p>SSH keys, cron jobs, systemd, bashrc injection, Registry Run keys, WMI.</p>
+                    <div class="lab-meta">
+                        <span><i class="fas fa-clock"></i> 60 min</span>
+                        <span><i class="fas fa-signal"></i> Intermedio</span>
+                        <span class="xp"><i class="fas fa-star"></i> 350 XP</span>
+                    </div>
+                    <div class="lab-tags">
+                        <span class="lab-tag">SSH</span>
+                        <span class="lab-tag">Cron</span>
+                        <span class="lab-tag">Systemd</span>
+                        <span class="lab-tag">WMI</span>
+                    </div>
+                    <div class="lab-actions">
+                        <a href="../../labs/intermedio/persist-01/" class="btn-lab btn-primary">Iniciar Lab</a>
+                        <a href="../../labs/intermedio/persist-01/README.md" class="btn-lab btn-secondary">Instrucciones</a>
+                    </div>
+                </div>
+
+                <div class="lab-card" data-category="red-team" data-level="intermedio">
+                    <div class="lab-card-header">
+                        <span class="lab-status available"><i class="fas fa-check-circle"></i> Disponible</span>
+                    </div>
+                    <h3><i class="fas fa-arrows-alt"></i> lateral-01: Movimiento Lateral</h3>
+                    <p>SSH pivot, credential reuse, hash extraction, proxychains, multi-hop privesc.</p>
+                    <div class="lab-meta">
+                        <span><i class="fas fa-clock"></i> 60 min</span>
+                        <span><i class="fas fa-signal"></i> Intermedio</span>
+                        <span class="xp"><i class="fas fa-star"></i> 350 XP</span>
+                    </div>
+                    <div class="lab-tags">
+                        <span class="lab-tag">SSH</span>
+                        <span class="lab-tag">ProxyChains</span>
+                        <span class="lab-tag">Pivot</span>
+                    </div>
+                    <div class="lab-actions">
+                        <a href="../../labs/intermedio/lateral-01/" class="btn-lab btn-primary">Iniciar Lab</a>
+                        <a href="../../labs/intermedio/lateral-01/README.md" class="btn-lab btn-secondary">Instrucciones</a>
+                    </div>
+                </div>
+
+                <div class="lab-card" data-category="forensics" data-level="intermedio">
+                    <div class="lab-card-header">
+                        <span class="lab-status available"><i class="fas fa-check-circle"></i> Disponible</span>
+                    </div>
+                    <h3><i class="fas fa-search"></i> disk-forensics-01: Forense Digital</h3>
+                    <p>Hash verification, disk mounting, file recovery, log analysis, metadata, timeline.</p>
+                    <div class="lab-meta">
+                        <span><i class="fas fa-clock"></i> 60 min</span>
+                        <span><i class="fas fa-signal"></i> Intermedio</span>
+                        <span class="xp"><i class="fas fa-star"></i> 300 XP</span>
+                    </div>
+                    <div class="lab-tags">
+                        <span class="lab-tag">Sleuth Kit</span>
+                        <span class="lab-tag">Foremost</span>
+                        <span class="lab-tag">ExifTool</span>
+                    </div>
+                    <div class="lab-actions">
+                        <a href="../../labs/intermedio/disk-forensics-01/" class="btn-lab btn-primary">Iniciar Lab</a>
+                        <a href="../../labs/intermedio/disk-forensics-01/README.md" class="btn-lab btn-secondary">Instrucciones</a>
+                    </div>
+                </div>
+
+                <div class="lab-card" data-category="red-team" data-level="intermedio">
+                    <div class="lab-card-header">
+                        <span class="lab-status available"><i class="fas fa-check-circle"></i> Disponible</span>
+                    </div>
+                    <h3><i class="fas fa-user-secret"></i> social-01: Ingeniería Social</h3>
+                    <p>Mail server, phishing landing page, credential harvester, campaign metrics, defense.</p>
+                    <div class="lab-meta">
+                        <span><i class="fas fa-clock"></i> 60 min</span>
+                        <span><i class="fas fa-signal"></i> Intermedio</span>
+                        <span class="xp"><i class="fas fa-star"></i> 300 XP</span>
+                    </div>
+                    <div class="lab-tags">
+                        <span class="lab-tag">Phishing</span>
+                        <span class="lab-tag">OSINT</span>
+                        <span class="lab-tag">Defense</span>
+                    </div>
+                    <div class="lab-actions">
+                        <a href="../../labs/intermedio/social-01/" class="btn-lab btn-primary">Iniciar Lab</a>
+                        <a href="../../labs/intermedio/social-01/README.md" class="btn-lab btn-secondary">Instrucciones</a>
+                    </div>
+                </div>
+
+                <div class="lab-card" data-category="red-team" data-level="intermedio">
+                    <div class="lab-card-header">
+                        <span class="lab-status available"><i class="fas fa-check-circle"></i> Disponible</span>
+                    </div>
+                    <h3><i class="fas fa-lock"></i> crypto-01: Criptografía</h3>
+                    <p>Cifrado simétrico/asimétrico, hashing, PKI, y ataques criptográficos.</p>
+                    <div class="lab-meta">
+                        <span><i class="fas fa-clock"></i> 60 min</span>
+                        <span><i class="fas fa-signal"></i> Intermedio</span>
+                        <span class="xp"><i class="fas fa-star"></i> 400 XP</span>
+                    </div>
+                    <div class="lab-tags">
+                        <span class="lab-tag">AES</span>
+                        <span class="lab-tag">RSA</span>
+                        <span class="lab-tag">Hashing</span>
+                        <span class="lab-tag">PKI</span>
+                    </div>
+                    <div class="lab-actions">
+                        <a href="../../labs/intermedio/crypto-01/" class="btn-lab btn-primary">Iniciar Lab</a>
+                        <a href="../../labs/intermedio/crypto-01/README.md" class="btn-lab btn-secondary">Instrucciones</a>
+                    </div>
+                </div>
+
+                <!-- Advanced Labs -->
+                <div class="lab-card" data-category="red-team" data-level="avanzado">
+                    <div class="lab-card-header">
+                        <span class="lab-status advanced"><i class="fas fa-fire"></i> Avanzado</span>
+                    </div>
+                    <h3><i class="fas fa-building"></i> ad-01: Active Directory</h3>
+                    <p>Kerberoasting, AS-REP Roasting, Pass-the-Hash, DCSync, Golden Ticket.</p>
+                    <div class="lab-meta">
+                        <span><i class="fas fa-clock"></i> 120 min</span>
+                        <span><i class="fas fa-signal"></i> Avanzado</span>
+                        <span class="xp"><i class="fas fa-star"></i> 500 XP</span>
+                    </div>
+                    <div class="lab-tags">
+                        <span class="lab-tag">AD</span>
+                        <span class="lab-tag">Kerberos</span>
+                        <span class="lab-tag">NTLM</span>
+                        <span class="lab-tag">DCSync</span>
+                    </div>
+                    <div class="lab-actions">
+                        <a href="../../labs/avanzado/ad-01/" class="btn-lab btn-primary">Iniciar Lab</a>
+                        <a href="../../labs/avanzado/ad-01/README.md" class="btn-lab btn-secondary">Instrucciones</a>
+                    </div>
+                </div>
+
+                <div class="lab-card" data-category="red-team" data-level="avanzado">
+                    <div class="lab-card-header">
+                        <span class="lab-status advanced"><i class="fas fa-fire"></i> Avanzado</span>
+                    </div>
+                    <h3><i class="fas fa-cloud"></i> cloud-01: Cloud Security</h3>
+                    <p>IAM audit, S3 security, encryption, CloudTrail, GuardDuty, Secrets Manager.</p>
+                    <div class="lab-meta">
+                        <span><i class="fas fa-clock"></i> 120 min</span>
+                        <span><i class="fas fa-signal"></i> Avanzado</span>
+                        <span class="xp"><i class="fas fa-star"></i> 500 XP</span>
+                    </div>
+                    <div class="lab-tags">
+                        <span class="lab-tag">AWS</span>
+                        <span class="lab-tag">IAM</span>
+                        <span class="lab-tag">S3</span>
+                        <span class="lab-tag">CloudTrail</span>
+                    </div>
+                    <div class="lab-actions">
+                        <a href="../../labs/avanzado/cloud-01/" class="btn-lab btn-primary">Iniciar Lab</a>
+                        <a href="../../labs/avanzado/cloud-01/README.md" class="btn-lab btn-secondary">Instrucciones</a>
+                    </div>
+                </div>
+
+                <div class="lab-card" data-category="forensics" data-level="avanzado">
+                    <div class="lab-card-header">
+                        <span class="lab-status advanced"><i class="fas fa-fire"></i> Avanzado</span>
+                    </div>
+                    <h3><i class="fas fa-microscope"></i> forensics-01: Digital Forensics</h3>
+                    <p>Disk imaging, memory analysis, file recovery, timeline reconstruction, reporting.</p>
+                    <div class="lab-meta">
+                        <span><i class="fas fa-clock"></i> 120 min</span>
+                        <span><i class="fas fa-signal"></i> Avanzado</span>
+                        <span class="xp"><i class="fas fa-star"></i> 500 XP</span>
+                    </div>
+                    <div class="lab-tags">
+                        <span class="lab-tag">Autopsy</span>
+                        <span class="lab-tag">Volatility</span>
+                        <span class="lab-tag">Timeline</span>
+                    </div>
+                    <div class="lab-actions">
+                        <a href="../../labs/avanzado/forensics-01/" class="btn-lab btn-primary">Iniciar Lab</a>
+                        <a href="../../labs/avanzado/forensics-01/README.md" class="btn-lab btn-secondary">Instrucciones</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- LEARNING PATH -->
+        <section class="path-section">
+            <h2><i class="fas fa-route"></i> Ruta de Aprendizaje</h2>
+            <p class="section-desc">Sigue esta ruta para dominar cada habilidad progresivamente.</p>
+            
+            <div class="path-timeline">
+                <div class="path-item completed">
+                    <div class="path-content">
+                        <h4>🚀 Fundamentos</h4>
+                        <p>net-01 → linux-01 → script-01 (700 XP)</p>
+                    </div>
+                </div>
+                <div class="path-item completed">
+                    <div class="path-content">
+                        <h4>🔍 Reconocimiento</h4>
+                        <p>recon-01: WHOIS, DNS, Nmap (250 XP)</p>
+                    </div>
+                </div>
+                <div class="path-item current">
+                    <div class="path-content">
+                        <h4>⚔️ Pentesting</h4>
+                        <p>pentest-01 → vulnscan-01 (700 XP)</p>
+                    </div>
+                </div>
+                <div class="path-item">
+                    <div class="path-content">
+                        <h4>🌐 Explotación Web</h4>
+                        <p>webapp-01: OWASP Top 10 (400 XP)</p>
+                    </div>
+                </div>
+                <div class="path-item">
+                    <div class="path-content">
+                        <h4>🚀 Post-Explotación</h4>
+                        <p>privesc-01 → persist-01 → lateral-01 (1,000 XP)</p>
+                    </div>
+                </div>
+                <div class="path-item">
+                    <div class="path-content">
+                        <h4>🔍 Forense & Cripto</h4>
+                        <p>disk-forensics-01 → crypto-01 (700 XP)</p>
+                    </div>
+                </div>
+                <div class="path-item">
+                    <div class="path-content">
+                        <h4>🏢 Nivel Avanzado</h4>
+                        <p>ad-01 → cloud-01 → forensics-01 (1,500 XP)</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- QUICK START -->
+        <section class="labs-section">
+            <h2><i class="fas fa-rocket"></i> Inicio Rápido</h2>
+            <p class="section-desc">Levanta cualquier lab en menos de 2 minutos.</p>
+            
+            <div class="code-block large">
+                <div class="code-header"><span class="code-lang">Terminal</span></div>
+                <pre><code># 1. Clonar el repositorio
+git clone https://github.com/0xvanguard/CyberDefense-Pro-Network.git
+cd CyberDefense-Pro-Network
+
+# 2. Navegar al lab deseado
+cd labs/intermedio/pentest-01  # Ejemplo: Pentesting
+
+# 3. Levantar el entorno
+docker compose up -d
+
+# 4. Verificar servicios
+docker compose ps
+
+# 5. Obtener shell en el contenedor atacante
+docker compose exec kali bash
+
+# 6. ¡A practicar!
+# Sigue las instrucciones del README.md
+
+# 7. Validar progreso
+./scripts/validate.sh
+
+# 8. Detener el lab
+docker compose down</code></pre>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4><i class="fas fa-shield-halved"></i> CDPN</h4>
+                    <p>Formando profesionales de ciberdefensa en todo el mundo.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Módulos</h4>
+                    <ul>
+                        <li><a href="../introduccion/">Introducción</a></li>
+                        <li><a href="../red-team/">Ciberseguridad Ofensiva</a></li>
+                        <li><a href="../blue-team/">Blue Team</a></li>
+                        <li><a href="../purple-team/">Purple Team</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Secciones</h4>
+                    <ul>
+                        <li><a href="../fundamentos/">🚀 Fundamentos</a></li>
+                        <li><a href="../../retos.html">Retos</a></li>
+                        <li><a href="../../herramientas.html">Herramientas</a></li>
+                        <li><a href="../laboratorios/">Labs</a></li>
+                        <li><a href="../recursos/">Recursos</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>GitHub</h4>
+                    <ul>
+                        <li><a href="https://github.com/0xvanguard/CyberDefense-Pro-Network"><i class="fab fa-github"></i> Repo</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 CDPN. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../assets/js/shared.js"></script>
+    <script>
+        // Filter functionality
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const filter = btn.dataset.filter;
+                
+                document.querySelectorAll('.lab-card').forEach(card => {
+                    if (filter === 'all' || card.dataset.category === filter || card.dataset.level === filter) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Leaderboard tabs
+        document.querySelectorAll('.leaderboard-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.leaderboard-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+            });
+        });
+
+        // Animate progress bars on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.querySelectorAll('.leader-progress-bar').forEach(bar => {
+                        bar.style.width = bar.style.width;
+                    });
+                }
+            });
+        }, { threshold: 0.5 });
+
+        document.querySelectorAll('.leaderboard-grid').forEach(grid => observer.observe(grid));
+    </script>
+</body>
+</html>

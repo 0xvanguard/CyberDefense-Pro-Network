@@ -1,0 +1,123 @@
+version: '3.8'
+
+services:
+  # Domain Controller - Windows Server
+  dc01:
+    build:
+      context: .
+      dockerfile: Dockerfile.dc
+    container_name: dc01
+    hostname: dc01
+    privileged: true
+    networks:
+      ad-net:
+        ipv4_address: 10.0.1.10
+    ports:
+      - "3389:3389"
+    volumes:
+      - ./data/dc:/data
+      - ./scripts:/scripts
+    environment:
+      - DOMAIN=corp.local
+      - HOSTNAME=DC01
+    stdin_open: true
+    tty: true
+
+  # File Server
+  fs01:
+    build:
+      context: .
+      dockerfile: Dockerfile.fs
+    container_name: fs01
+    hostname: fs01
+    networks:
+      ad-net:
+        ipv4_address: 10.0.1.20
+    volumes:
+      - ./data/fs:/data
+    stdin_open: true
+    tty: true
+
+  # Workstation 1
+  ws01:
+    build:
+      context: .
+      dockerfile: Dockerfile.ws
+    container_name: ws01
+    hostname: ws01
+    networks:
+      ad-net:
+        ipv4_address: 10.0.1.100
+    volumes:
+      - ./data/ws:/data
+    stdin_open: true
+    tty: true
+
+  # Workstation 2
+  ws02:
+    build:
+      context: .
+      dockerfile: Dockerfile.ws
+    container_name: ws02
+    hostname: ws02
+    networks:
+      ad-net:
+        ipv4_address: 10.0.1.101
+    volumes:
+      - ./data/ws:/data
+    stdin_open: true
+    tty: true
+
+  # Kali Linux - Attacker
+  kali:
+    image: kalilinux/kali-rolling:latest
+    container_name: kali-ad
+    hostname: kali
+    privileged: true
+    networks:
+      dmz-net:
+        ipv4_address: 10.0.0.100
+      ad-net:
+        ipv4_address: 10.0.1.200
+    ports:
+      - "4444:4444"
+      - "8080:8080"
+    volumes:
+      - ./scripts:/scripts
+      - ./output:/output
+    environment:
+      - DEBIAN_FRONTEND=noninteractive
+    stdin_open: true
+    tty: true
+    command: >
+      bash -c "
+        apt-get update &&
+        apt-get install -y kali-linux-large impacket-scripts bloodhound john smbclient enum4linux kerbrute evil-winrm crackmapexec &&
+        echo '[+] Kali ready for AD attacks' &&
+        /bin/bash
+      "
+
+  # Web Server (DMZ)
+  web01:
+    image: httpd:2.4
+    container_name: web01
+    hostname: web01
+    networks:
+      dmz-net:
+        ipv4_address: 10.0.0.10
+    ports:
+      - "80:80"
+    volumes:
+      - ./data/web:/usr/local/apache2/htdocs
+
+networks:
+  dmz-net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.0.0.0/24
+  ad-net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.0.1.0/24

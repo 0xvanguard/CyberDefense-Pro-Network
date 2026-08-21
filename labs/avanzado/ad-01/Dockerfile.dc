@@ -1,0 +1,33 @@
+FROM ubuntu:22.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install Samba AD DC and dependencies
+RUN apt-get update && apt-get install -y \
+    samba \
+    samba-dsdb-modules \
+    samba-vfs-modules \
+    krb5-user \
+    krb5-kdc \
+    winbind \
+    smbclient \
+    ldap-utils \
+    dnsutils \
+    iputils-ping \
+    net-tools \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy Samba AD configuration
+COPY config/smb.conf /etc/samba/smb.conf
+COPY config/krb5.conf /etc/krb5.conf
+
+# Copy initialization script
+COPY scripts/init-dc.sh /scripts/init-dc.sh
+RUN chmod +x /scripts/init-dc.sh
+
+# Create directories
+RUN mkdir -p /data/shared /data/scripts
+
+EXPOSE 53 88 135 139 389 445 464 636 3268 3269 3389
+
+CMD ["/scripts/init-dc.sh"]
