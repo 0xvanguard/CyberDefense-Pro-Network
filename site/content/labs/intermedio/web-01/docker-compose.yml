@@ -1,0 +1,65 @@
+version: '3.8'
+
+services:
+  kali:
+    image: kalilinux/kali-rolling
+    container_name: web-kali
+    hostname: kali
+    networks:
+      red_at:
+        ipv4_address: 10.0.2.100
+    volumes:
+      - ./scripts:/scripts
+    tty: true
+    stdin_open: true
+    command: >
+      bash -c "
+        apt-get update && apt-get install -y \
+          nmap \
+          sqlmap \
+          nikto \
+          gobuster \
+          burpsuite \
+          curl \
+          python3 \
+          && bash
+      "
+
+  dvwa:
+    image: vulnerables/web-dvwa
+    container_name: web-dvwa
+    hostname: dvwa
+    networks:
+      red_at:
+        ipv4_address: 10.0.2.10
+    ports:
+      - "80:80"
+    environment:
+      - MYSQL_PASSWD=password
+
+  juice-shop:
+    image: bkimminich/juice-shop
+    container_name: web-juice
+    hostname: juice-shop
+    networks:
+      red_at:
+        ipv4_address: 10.0.2.20
+    ports:
+      - "3000:3000"
+
+  webgoat:
+    image: webgoat/webgoat
+    container_name: web-webgoat
+    hostname: webgoat
+    networks:
+      red_at:
+        ipv4_address: 10.0.2.30
+    ports:
+      - "8080:8080"
+
+networks:
+  red_at:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.0.2.0/24

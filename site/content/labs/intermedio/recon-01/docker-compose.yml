@@ -1,0 +1,83 @@
+version: '3.8'
+
+services:
+  kali:
+    image: kalilinux/kali-rolling
+    container_name: recon-kali
+    hostname: kali
+    networks:
+      red_at:
+        ipv4_address: 10.0.2.100
+    volumes:
+      - ./scripts:/scripts
+    tty: true
+    stdin_open: true
+    command: >
+      bash -c "
+        apt-get update && apt-get install -y \
+          nmap \
+          subfinder \
+          amass \
+          theharvester \
+          recon-ng \
+          nikto \
+          gobuster \
+          whatweb \
+          net-tools \
+          iputils-ping \
+          curl \
+          && bash
+      "
+
+  web-server:
+    image: vulnerables/web-dvwa
+    container_name: recon-web
+    hostname: web-server
+    networks:
+      red_at:
+        ipv4_address: 10.0.2.10
+    ports:
+      - "80:80"
+    environment:
+      - MYSQL_PASSWD=password
+
+  ftp-server:
+    image: fauria/vsftpd
+    container_name: recon-ftp
+    hostname: ftp-server
+    networks:
+      red_at:
+        ipv4_address: 10.0.2.20
+    environment:
+      - FTP_USER=anonymous
+      - FTP_PASS=anonymous
+      - PASV_ADDRESS=10.0.2.20
+      - PASV_MIN_PORT=21100
+      - PASV_MAX_PORT=21110
+
+  ssh-server:
+    image: ubuntu:20.04
+    container_name: recon-ssh
+    hostname: ssh-server
+    networks:
+      red_at:
+        ipv4_address: 10.0.2.30
+    tty: true
+    command: >
+      bash -c "
+        apt-get update && apt-get install -y \
+          openssh-server \
+          && mkdir /var/run/sshd \
+            && echo 'root:password' | chpasswd \
+            && echo 'admin:admin123' | chpasswd \
+            && useradd -m -s /bin/bash admin \
+            && echo 'FLAG{ssh_3num3r4t10n}' > /home/admin/flag.txt \
+            && /usr/sbin/sshd -D
+      "
+
+networks:
+  red_at:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.0.2.0/24

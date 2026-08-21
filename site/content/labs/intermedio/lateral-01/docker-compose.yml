@@ -1,0 +1,105 @@
+version: '3.8'
+
+services:
+  kali:
+    image: kalilinux/kali-rolling
+    container_name: lateral-kali
+    hostname: kali
+    networks:
+      red_at:
+        ipv4_address: 10.0.2.100
+    volumes:
+      - ./scripts:/scripts
+    tty: true
+    stdin_open: true
+    command: >
+      bash -c "
+        apt-get update && apt-get install -y \
+          nmap \
+          netcat \
+          crackmapexec \
+          impacket-scripts \
+          evil-winrm \
+          ssh \
+          curl \
+          python3 \
+          && bash
+      "
+
+  web-server:
+    image: ubuntu:20.04
+    container_name: lateral-web
+    hostname: web-server
+    networks:
+      red_at:
+        ipv4_address: 10.0.2.10
+    volumes:
+      - ./scripts:/scripts
+    tty: true
+    command: >
+      bash -c "
+        apt-get update && apt-get install -y \
+          openssh-server \
+          && mkdir /var/run/sshd \
+            && echo 'admin:admin123' | chpasswd \
+            && useradd -m -s /bin/bash admin \
+            && echo 'FLAG{l4t3r4l_1n1t14l}' > /home/admin/flag.txt \
+            && /usr/sbin/sshd -D
+      "
+
+  database:
+    image: ubuntu:20.04
+    container_name: lateral-db
+    hostname: database
+    networks:
+      red_at:
+        ipv4_address: 10.0.2.20
+    volumes:
+      - ./scripts:/scripts
+    tty: true
+    command: >
+      bash -c "
+        apt-get update && apt-get install -y \
+          openssh-server \
+          mysql-server \
+          && mkdir /var/run/sshd \
+            && echo 'dba:dba123' | chpasswd \
+            && useradd -m -s /bin/bash dba \
+            && echo 'FLAG{l4t3r4l_d4t4b4s3}' > /home/dba/flag.txt \
+            && service mysql start \
+            && mysql -e \"CREATE DATABASE IF NOT EXISTS secrets;\" \
+            && mysql -e \"USE secrets; CREATE TABLE IF NOT EXISTS data (id INT, value VARCHAR(100));\" \
+            && mysql -e \"USE secrets; INSERT INTO data VALUES (1, 'FLAG{mysql_d4t4}');\" \
+            && /usr/sbin/sshd -D
+      "
+
+  file-server:
+    image: ubuntu:20.04
+    container_name: lateral-files
+    hostname: file-server
+    networks:
+      red_at:
+        ipv4_address: 10.0.2.30
+    volumes:
+      - ./scripts:/scripts
+    tty: true
+    command: >
+      bash -c "
+        apt-get update && apt-get install -y \
+          openssh-server \
+          samba \
+          && mkdir /var/run/sshd \
+            && echo 'root:root123' | chpasswd \
+            && echo 'FLAG{l4t3r4l_f1l3s3rv3r}' > /root/flag.txt \
+            && mkdir -p /srv/share \
+            && echo 'FLAG{smb_sh4r3}' > /srv/share/secret.txt \
+            && chmod 777 /srv/share \
+            && /usr/sbin/sshd -D
+      "
+
+networks:
+  red_at:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.0.2.0/24
