@@ -179,6 +179,7 @@ export default defineConfig({
             { text: '05 — Breach & Attack Simulation', link: '/modules/purple-team/05-breach-attack-simulation' },
             { text: '06 — Automated Compliance', link: '/modules/purple-team/06-automated-compliance' },
             { text: '07 — Threat Intelligence Purple Team', link: '/modules/purple-team/07-threat-intelligence' },
+            { text: '15 — Purple Team Operations', link: '/modules/purple-team/15-purple-team-operations' },
           ]
         }
       ],
