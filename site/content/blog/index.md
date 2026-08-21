@@ -18,6 +18,10 @@ const articles = [
   { emoji: '🎣', title: 'Phishing: cómo detectar y prevenir el ataque más efectivo', path: '10-phishing-ingenieria-social', week: 10, desc: 'Tipos de phishing, técnicas de detección y herramientas.', tags: ['Phishing', 'Social'], readTime: '5 min' },
   { emoji: '🐳', title: 'Docker para ciberseguridad: monta tu lab en minutos', path: '11-docker-ciberseguridad', week: 11, desc: 'Containers, DVWA, vulnerable apps y laboratorio completo.', tags: ['Docker', 'Labs'], readTime: '5 min' },
   { emoji: '🛡️', title: 'OWASP Top 10: las 10 vulnerabilidades web más peligrosas', path: '12-owasp-top10', week: 12, desc: 'Explicación práctica de cada vulnerabilidad con ejemplos.', tags: ['OWASP', 'Web'], readTime: '7 min' },
+  { emoji: '🔑', title: 'Hashing y cracking de contraseñas', path: '13-hashing-cracking', week: 13, desc: 'Cómo funciona el hashing, John the Ripper y Hashcat.', tags: ['Hashing', 'Cracking'], readTime: '5 min' },
+  { emoji: '📡', title: 'Wi-Fi hacking: auditar redes inalámbricas', path: '14-wifi-hacking', week: 14, desc: 'Aircrack-ng, handshake captures, Evil Twin y defensa WiFi.', tags: ['Wi-Fi', 'Wireless'], readTime: '5 min' },
+  { emoji: '💰', title: 'Bug Bounty: gana dinero encontrando vulnerabilidades', path: '15-bug-bounty', week: 15, desc: 'Plataformas, metodología y tips para tu primer bounty.', tags: ['Bug Bounty', 'HackerOne'], readTime: '5 min' },
+  { emoji: '☁️', title: 'Seguridad en la nube: AWS, Azure y GCP', path: '16-cloud-security', week: 16, desc: 'Errores comunes, configuración segura y mejores prácticas.', tags: ['Cloud', 'DevSecOps'], readTime: '6 min' },
 ]
 </script>
 
