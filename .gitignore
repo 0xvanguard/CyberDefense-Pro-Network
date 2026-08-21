@@ -39,3 +39,10 @@ bookmarks-*.txt
 token*.txt
 token/
 0xvkrad-evolution-academy.html
+
+# Site build
+site/node_modules/
+site/content/.vitepress/
+site/docs/
+site/content/assets/css/
+site/content/assets/js/

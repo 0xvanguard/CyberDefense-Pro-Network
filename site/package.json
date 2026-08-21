@@ -1,0 +1,18 @@
+{
+  "name": "cdpn-site",
+  "version": "1.0.0",
+  "description": "CDPN - CyberDefense Pro Network Website",
+  "type": "module",
+  "scripts": {
+    "dev": "vitepress dev content",
+    "build": "node sync.js build",
+    "pull": "node sync.js pull",
+    "status": "node sync.js status",
+    "preview": "vitepress preview content",
+    "sync:pull": "node sync.js pull",
+    "sync:status": "node sync.js status"
+  },
+  "devDependencies": {
+    "vitepress": "^1.6.3"
+  }
+}

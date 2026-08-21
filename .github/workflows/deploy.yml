@@ -5,7 +5,6 @@ on:
     branches: [main]
   workflow_dispatch:
 
-# Permite que un job posterior ("deploy") haga deploy sin esperar approvals de forks
 concurrency:
   group: pages
   cancel-in-progress: false
@@ -16,7 +15,7 @@ permissions:
   id-token: write
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
     environment:
       name: github-pages
@@ -28,11 +27,27 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: site/package-lock.json
+
+      - name: Install dependencies
+        run: cd site && npm ci
+
+      - name: Sync READMEs → Web content
+        run: cd site && node sync.cjs pull
+
+      - name: Build VitePress campus
+        run: |
+          cd site
+          cp -r .vitepress content/
+          cd content && npx vitepress build
+
       - name: Setup Pages
         uses: actions/configure-pages@v4
-
-      - name: Add .nojekyll (sirve la carpeta docs/ tal cual)
-        run: touch docs/.nojekyll
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
@@ -51,4 +66,9 @@ jobs:
           echo "🌐 URL: ${{ steps.deployment.outputs.page_url }}" >> $GITHUB_STEP_SUMMARY
           echo "📅 Date: $(date -u '+%Y-%m-%d %H:%M:%S UTC')" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "CyberDefense Pro Network is live! 🛡️" >> $GITHUB_STEP_SUMMARY
+          echo "## Estructura desplegada:" >> $GITHUB_STEP_SUMMARY
+          echo "- Landing: /\\" >> $GITHUB_STEP_SUMMARY
+          echo "- Campus: /campus/ (36 páginas desde READMEs)" >> $GITHUB_STEP_SUMMARY
+          echo "- Admin: /admin.html (editor web)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Cualquier push a main despliega automáticamente. 🛡️" >> $GITHUB_STEP_SUMMARY
