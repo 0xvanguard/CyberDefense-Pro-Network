@@ -149,6 +149,7 @@ export default defineConfig({
             { text: '08 — Criptografía', link: '/modules/red-team/08-criptografia' },
             { text: '11 — Introducción a Red Team', link: '/modules/red-team/11-introduccion-red-team' },
             { text: '12 — Post-Exploación Avanzada', link: '/modules/red-team/12-post-exploacion-avanzada' },
+            { text: '14 — Active Directory Hacking', link: '/modules/red-team/14-active-directory-hacking' },
           ]
         }
       ],
