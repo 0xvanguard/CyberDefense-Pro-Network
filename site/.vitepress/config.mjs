@@ -148,6 +148,7 @@ export default defineConfig({
             { text: '07 — Ingeniería Social', link: '/modules/red-team/07-ingenieria-social' },
             { text: '08 — Criptografía', link: '/modules/red-team/08-criptografia' },
             { text: '11 — Introducción a Red Team', link: '/modules/red-team/11-introduccion-red-team' },
+            { text: '12 — Post-Exploación Avanzada', link: '/modules/red-team/12-post-exploacion-avanzada' },
           ]
         }
       ],
