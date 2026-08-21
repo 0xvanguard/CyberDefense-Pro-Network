@@ -1,242 +1,923 @@
 <!DOCTYPE html>
-<html lang="es"><head>
+<html lang="es">
+<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fundamentos — Base para principiantes | CDPN | CyberDefense Pro Network</title>
+<title>Fundamentos de Ciberseguridad — Curso Completo desde Cero | CDPN</title>
 <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="../../assets/icons/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="../../assets/icons/favicon-16x16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="../../assets/icons/apple-touch-icon.png">
 <link rel="manifest" href="../../manifest.webmanifest">
-<meta name="description" content="Base pequeña pero completa para principiantes en ciberseguridad: 9 temas fundamentales + 3 rutas de aprendizaje (Blue, Red, AI Security).">
+<meta name="description" content="Curso completo y gratuito de fundamentos de ciberseguridad. 9 módulos prácticos + 3 rutas especializadas. De cero a profesional en 35 horas.">
 <meta name="theme-color" content="#0a0e1a">
 <meta name="color-scheme" content="dark light">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Fundamentos — Base para principiantes | CDPN">
-<meta property="og:description" content="Base pequeña pero completa para principiantes en ciberseguridad.">
+<meta property="og:title" content="Fundamentos de Ciberseguridad — Curso Completo | CDPN">
+<meta property="og:description" content="Curso gratuito de ciberseguridad: fundamentos, redes, Linux, criptografía, vulnerabilidades y más.">
 <meta property="og:url" content="https://0xvanguard.github.io/CyberDefense-Pro-Network/modules/fundamentos/">
 <meta property="og:image" content="https://0xvanguard.github.io/CyberDefense-Pro-Network/assets/og/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Fundamentos — Base para principiantes | CDPN">
-<meta name="twitter:description" content="Base pequeña pero completa para principiantes en ciberseguridad.">
-<meta name="twitter:image" content="https://0xvanguard.github.io/CyberDefense-Pro-Network/assets/og/og-image.png">
 <link rel="canonical" href="https://0xvanguard.github.io/CyberDefense-Pro-Network/modules/fundamentos/">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../assets/css/global.css">
 <link rel="stylesheet" href="../../assets/css/module.css">
 <link rel="stylesheet" href="../../assets/css/a11y.css">
+<style>
+    :root {
+        --green: #2ecc71;
+        --blue: #3498db;
+        --red: #e74c3c;
+        --purple: #9b59b6;
+        --orange: #f39c12;
+        --dark: #0a0e1a;
+        --card-bg: rgba(255,255,255,0.03);
+        --card-border: rgba(255,255,255,0.08);
+    }
+
+    /* Hero Section */
+    .hero-section {
+        background: linear-gradient(135deg, #0a0e1a 0%, #0d1117 50%, #161b22 100%);
+        padding: 80px 20px 60px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(circle at 30% 50%, rgba(46,204,113,0.08) 0%, transparent 50%),
+                    radial-gradient(circle at 70% 50%, rgba(52,152,219,0.08) 0%, transparent 50%);
+        pointer-events: none;
+    }
+
+    .hero-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 1;
+    }
+
+    .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        background: rgba(46,204,113,0.15);
+        border: 1px solid rgba(46,204,113,0.3);
+        border-radius: 20px;
+        font-size: 0.85rem;
+        color: var(--green);
+        margin-bottom: 1.5rem;
+    }
+
+    .hero-title {
+        font-size: clamp(2.5rem, 5vw, 4rem);
+        font-weight: 800;
+        line-height: 1.1;
+        margin-bottom: 1rem;
+    }
+
+    .hero-title .highlight {
+        background: linear-gradient(135deg, var(--green), var(--blue));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .hero-subtitle {
+        font-size: 1.25rem;
+        opacity: 0.8;
+        max-width: 700px;
+        margin-bottom: 2rem;
+        line-height: 1.6;
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .stat-card {
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 12px;
+        padding: 1.25rem;
+        text-align: center;
+    }
+
+    .stat-icon {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .stat-value {
+        font-size: 1.75rem;
+        font-weight: 800;
+        background: linear-gradient(135deg, var(--green), var(--blue));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .stat-label {
+        font-size: 0.85rem;
+        opacity: 0.7;
+    }
+
+    /* Progress Section */
+    .progress-section {
+        padding: 40px 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .progress-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 1.5rem;
+    }
+
+    .progress-bar-container {
+        background: rgba(255,255,255,0.1);
+        border-radius: 10px;
+        height: 12px;
+        overflow: hidden;
+        margin-bottom: 0.5rem;
+    }
+
+    .progress-bar-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--green), var(--blue));
+        border-radius: 10px;
+        transition: width 0.5s ease;
+    }
+
+    /* Modules Grid */
+    .modules-section {
+        padding: 40px 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .section-header {
+        margin-bottom: 2rem;
+    }
+
+    .section-header h2 {
+        font-size: 1.75rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .section-header p {
+        opacity: 0.7;
+    }
+
+    .modules-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        gap: 1.5rem;
+    }
+
+    .module-card {
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 16px;
+        padding: 1.5rem;
+        transition: all 0.3s;
+        text-decoration: none;
+        color: inherit;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .module-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, var(--green), var(--blue));
+        opacity: 0;
+        transition: opacity 0.3s;
+    }
+
+    .module-card:hover {
+        transform: translateY(-4px);
+        border-color: var(--green);
+        box-shadow: 0 10px 40px rgba(46,204,113,0.1);
+    }
+
+    .module-card:hover::before {
+        opacity: 1;
+    }
+
+    .module-card-header {
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .module-number {
+        width: 48px;
+        height: 48px;
+        background: linear-gradient(135deg, var(--green), var(--blue));
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.25rem;
+        font-weight: 800;
+        color: white;
+        flex-shrink: 0;
+    }
+
+    .module-info h3 {
+        font-size: 1.1rem;
+        margin-bottom: 0.25rem;
+    }
+
+    .module-info .module-subtitle {
+        font-size: 0.9rem;
+        opacity: 0.7;
+    }
+
+    .module-description {
+        font-size: 0.95rem;
+        opacity: 0.8;
+        line-height: 1.5;
+        margin-bottom: 1rem;
+    }
+
+    .module-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        font-size: 0.85rem;
+    }
+
+    .module-meta span {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        opacity: 0.7;
+    }
+
+    .module-meta .time {
+        color: var(--green);
+        font-weight: 600;
+    }
+
+    .module-meta .difficulty {
+        padding: 0.2rem 0.6rem;
+        background: rgba(46,204,113,0.15);
+        border-radius: 4px;
+        color: var(--green);
+    }
+
+    .module-topics {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 1rem;
+    }
+
+    .topic-tag {
+        padding: 0.25rem 0.5rem;
+        background: rgba(255,255,255,0.05);
+        border-radius: 4px;
+        font-size: 0.8rem;
+        border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    /* Routes Section */
+    .routes-section {
+        padding: 60px 20px;
+        background: linear-gradient(180deg, transparent 0%, rgba(46,204,113,0.02) 100%);
+    }
+
+    .routes-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .route-card {
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 16px;
+        padding: 2rem;
+        text-decoration: none;
+        color: inherit;
+        transition: all 0.3s;
+        position: relative;
+    }
+
+    .route-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    }
+
+    .route-card.red { border-top: 4px solid var(--red); }
+    .route-card.blue { border-top: 4px solid var(--blue); }
+    .route-card.ai { border-top: 4px solid var(--purple); }
+
+    .route-icon {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .route-card h3 {
+        font-size: 1.3rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .route-card p {
+        opacity: 0.8;
+        line-height: 1.5;
+        margin-bottom: 1rem;
+    }
+
+    .route-modules {
+        font-size: 0.9rem;
+        opacity: 0.7;
+    }
+
+    .route-arrow {
+        position: absolute;
+        bottom: 1.5rem;
+        right: 1.5rem;
+        font-size: 1.25rem;
+        opacity: 0.5;
+        transition: all 0.3s;
+    }
+
+    .route-card:hover .route-arrow {
+        opacity: 1;
+        transform: translateX(4px);
+    }
+
+    /* What You'll Learn */
+    .learn-section {
+        padding: 60px 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .learn-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+    }
+
+    .learn-card {
+        background: var(--card-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 12px;
+        padding: 1.5rem;
+    }
+
+    .learn-card h4 {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .learn-card ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .learn-card li {
+        padding: 0.5rem 0;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+        font-size: 0.95rem;
+        display: flex;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .learn-card li:last-child {
+        border-bottom: none;
+    }
+
+    .learn-card li i {
+        color: var(--green);
+        margin-top: 0.25rem;
+    }
+
+    /* CTA Section */
+    .cta-section {
+        padding: 60px 20px;
+        text-align: center;
+        background: linear-gradient(135deg, rgba(46,204,113,0.05) 0%, rgba(52,152,219,0.05) 100%);
+    }
+
+    .cta-section h2 {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+    }
+
+    .cta-section p {
+        opacity: 0.8;
+        max-width: 600px;
+        margin: 0 auto 2rem;
+    }
+
+    .cta-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .btn-cta {
+        padding: 1rem 2rem;
+        border-radius: 8px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s;
+    }
+
+    .btn-primary-cta {
+        background: linear-gradient(135deg, var(--green), #27ae60);
+        color: white;
+    }
+
+    .btn-primary-cta:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 30px rgba(46,204,113,0.3);
+    }
+
+    .btn-secondary-cta {
+        background: rgba(255,255,255,0.05);
+        border: 1px solid var(--card-border);
+        color: inherit;
+    }
+
+    .btn-secondary-cta:hover {
+        background: rgba(255,255,255,0.1);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .modules-grid {
+            grid-template-columns: 1fr;
+        }
+        .stats-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+</style>
 </head>
 <body>
 <a href="#main" class="skip-link">Saltar al contenido principal</a>
 
 <nav class="navbar" role="navigation" aria-label="Navegación principal">
 <div class="nav-container">
-<a href="../../index.html" class="nav-logo"><i class="fas fa-shield-halved"></i> CDPN</a>
-<button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false">
-<i class="fas fa-bars" aria-hidden="true"></i>
-</button>
-<ul class="nav-menu" id="navMenu">
-<li><a href="../../index.html" data-i18n="nav_home">Inicio</a></li>
-<li><a href="../introduccion/" data-i18n="nav_intro">Introducción</a></li>
-<li><a href="../red-team/" data-i18n="nav_red">Red Team</a></li>
-<li><a href="../blue-team/" data-i18n="nav_blue">Blue Team</a></li>
-<li><a href="../purple-team/" data-i18n="nav_purple">Purple Team</a></li>
-<li><a href="../ai-agents/" data-i18n="nav_ai">AI Security</a></li>
-<li><a href="../laboratorios/" data-i18n="nav_labs">Labs</a></li>
-<li><a href="../recursos/" data-i18n="nav_resources">Recursos</a></li>
-<li><a href="../../retos.html" data-i18n="nav_retos">Retos</a></li>
-<li><a href="../../herramientas.html" data-i18n="nav_tools">Herramientas</a></li>
-</ul>
-<div class="nav-actions">
-<div class="lang-switcher" id="langSwitcher">
-<button class="lang-btn" id="langBtn" aria-label="Cambiar idioma" aria-haspopup="true" aria-expanded="false">
-  <i class="fas fa-globe" aria-hidden="true"></i> <span id="langLabel">ES</span>
-</button>
-<div class="lang-dropdown" id="langDropdown" role="menu">
-  <button class="lang-option" data-lang="es" role="menuitem">Español</button>
-  <button class="lang-option" data-lang="en" role="menuitem">English</button>
-</div>
-</div>
-<a href="https://github.com/0xvanguard/CyberDefense-Pro-Network" class="nav-github" target="_blank" rel="noopener"><i class="fab fa-github"></i></a>
-</div>
+    <a href="../../index.html" class="nav-logo"><i class="fas fa-shield-halved"></i> CDPN</a>
+    <ul class="nav-menu">
+        <li><a href="../../index.html"><i class="fas fa-home"></i> Inicio</a></li>
+        <li class="nav-dropdown">
+            <a href="#"><i class="fas fa-layer-group"></i> Módulos <i class="fas fa-chevron-down"></i></a>
+            <ul class="dropdown-menu">
+                <li><a href="../introduccion/"><span class="dot intro"></span> Introducción</a></li>
+                <li><a href="../red-team/"><span class="dot red"></span> Ofensiva</a></li>
+                <li><a href="../seguridad-informacion/"><span class="dot blue"></span> Seguridad Info.</a></li>
+                <li><a href="../ai-agents/"><span class="dot ai"></span> AI Agents</a></li>
+                <li><a href="../blue-team/"><span class="dot blue"></span> Blue Team</a></li>
+                <li><a href="../purple-team/"><span class="dot purple"></span> Purple Team</a></li>
+                <li><a href="../laboratorios/"><span class="dot lab"></span> Labs</a></li>
+                <li><a href="../recursos/"><span class="dot resources"></span> Recursos</a></li>
+            </ul>
+        </li>
+        <li><a href="../../retos.html"><i class="fas fa-trophy"></i> Retos</a></li>
+        <li><a href="../../herramientas.html"><i class="fas fa-tools"></i> Herramientas</a></li>
+        <li><a href="../../labs.html"><i class="fas fa-flask"></i> Labs</a></li>
+        <li><a href="../../recursos.html"><i class="fas fa-book"></i> Recursos</a></li>
+    </ul>
+    <div class="nav-actions">
+        <button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></button>
+        <a href="https://github.com/0xvanguard/CyberDefense-Pro-Network" class="nav-github" target="_blank"><i class="fab fa-github"></i></a>
+    </div>
 </div>
 </nav>
 
 <main id="main">
-<div class="breadcrumb">
-  <a href="../../index.html">CDPN</a><span>/</span>
-  <a href="../introduccion/">Módulos</a><span>/</span>
-  <span>Fundamentos</span>
-</div>
 
-<section class="module-hero" style="--hero-glow: rgba(46, 204, 113, 0.10);">
-  <div class="module-hero-content">
-    <h1><span class="gradient-text">Fundamentos</span> — Base para principiantes</h1>
-    <p>Si estás empezando desde cero, empieza aquí. Una base pequeña pero completa antes de saltar a los módulos especializados.</p>
-  </div>
+<!-- HERO -->
+<section class="hero-section">
+<div class="hero-content">
+    <div class="hero-badge">
+        <i class="fas fa-graduation-cap"></i>
+        CURSO COMPLETO Y GRATUITO
+    </div>
+    <h1 class="hero-title">
+        Domina los <span class="highlight">Fundamentos</span> de Ciberseguridad
+    </h1>
+    <p class="hero-subtitle">
+        Desde cero hasta tener una base sólida para especializarte en Red Team, Blue Team o AI Security. 
+        9 módulos prácticos, 35+ horas de contenido, 100% gratuito.
+    </p>
+    
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon">📚</div>
+            <div class="stat-value">9</div>
+            <div class="stat-label">Módulos</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">⏱️</div>
+            <div class="stat-value">35h</div>
+            <div class="stat-label">Contenido</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">🎯</div>
+            <div class="stat-value">100+</div>
+            <div class="stat-label">Temas</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">🛤️</div>
+            <div class="stat-value">3</div>
+            <div class="stat-label">Rutas</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">💰</div>
+            <div class="stat-value">$0</div>
+            <div class="stat-label">Gratis</div>
+        </div>
+    </div>
+</div>
 </section>
 
-<div class="content-block">
-  <h3><i class="fas fa-rocket"></i> 🚀 Tu puerta de entrada</h3>
-  <p>Este módulo es la <strong>base común</strong> del repo. Está pensado para que cualquier persona, sin experiencia previa, pueda construir una base sólida antes de leer pentesting, blue team, IA ofensiva o criptografía aplicada. Cada archivo es autónomo y enlaza con el resto del repo cuando llega el momento.</p>
-  <div class="info-box" style="background: linear-gradient(135deg, rgba(46,204,113,0.10), rgba(52,152,219,0.10)); border-left-color: #2ecc71;">
-    <div class="info-title"><i class="fas fa-lightbulb"></i> Consejo antes de empezar</div>
-    <ul>
-      <li><strong>No te apures.</strong> Mejor 1 archivo por día que tragarte 9 en una noche.</li>
-      <li><strong>Toma notas en papel.</strong> Las bases se olvidan rápido si no las escribes a mano al menos una vez.</li>
-      <li><strong>Practica después de leer.</strong> La teoría sin práctica no entra.</li>
-      <li><strong>Pregunta sin miedo.</strong> Edita lo que creas que falta; este repo mejora con la comunidad.</li>
-    </ul>
-  </div>
+<!-- WHAT YOU'LL LEARN -->
+<section class="learn-section">
+<div class="section-header">
+    <h2><i class="fas fa-graduation-cap"></i> Lo que aprenderás</h2>
+    <p>Al completar esta base, tendrás los conocimientos para empezar cualquier especialidad</p>
+</div>
+<div class="learn-grid">
+    <div class="learn-card">
+        <h4><i class="fas fa-brain"></i> Conceptos Fundamentales</h4>
+        <ul>
+            <li><i class="fas fa-check"></i> Qué es la ciberseguridad y por qué importa</li>
+            <li><i class="fas fa-check"></i> Los 3 equipos: Red, Blue, Purple</li>
+            <li><i class="fas fa-check"></i> Roles profesionales y salarios</li>
+            <li><i class="fas fa-check"></i> Glosario de 100+ términos</li>
+        </ul>
+    </div>
+    <div class="learn-card">
+        <h4><i class="fas fa-network-wired"></i> Redes e Internet</h4>
+        <ul>
+            <li><i class="fas fa-check"></i> Modelo TCP/IP y OSI</li>
+            <li><i class="fas fa-check"></i> DNS, HTTP/HTTPS, puertos</li>
+            <li><i class="fas fa-check"></i> Firewalls y segmentación</li>
+            <li><i class="fas fa-check"></i> Análisis de tráfico con Wireshark</li>
+        </ul>
+    </div>
+    <div class="learn-card">
+        <h4><i class="fab fa-linux"></i> Sistemas Operativos</h4>
+        <ul>
+            <li><i class="fas fa-check"></i> Linux: comandos, permisos, procesos</li>
+            <li><i class="fas fa-check"></i> Windows: registro, servicios, usuarios</li>
+            <li><i class="fas fa-check"></i> Línea de comandos profesional</li>
+            <li><i class="fas fa-check"></i> Administración básica de sistemas</li>
+        </ul>
+    </div>
+    <div class="learn-card">
+        <h4><i class="fas fa-lock"></i> Criptografía</h4>
+        <ul>
+            <li><i class="fas fa-check"></i> Hashing: MD5, SHA, bcrypt</li>
+            <li><i class="fas fa-check"></i> Cifrado simétrico: AES, DES</li>
+            <li><i class="fas fa-check"></i> Cifrado asimétrico: RSA, ECC</li>
+            <li><i class="fas fa-check"></i> PKI y certificados SSL/TLS</li>
+        </ul>
+    </div>
+    <div class="learn-card">
+        <h4><i class="fas fa-bug"></i> Vulnerabilidades</h4>
+        <ul>
+            <li><i class="fas fa-check"></i> OWASP Top 10 (edición 2021)</li>
+            <li><i class="fas fa-check"></i> CVE, CWE, CVSS</li>
+            <li><i class="fas fa-check"></i> SQL Injection, XSS, SSRF</li>
+            <li><i class="fas fa-check"></i> Cómo escribir reportes</li>
+        </ul>
+    </div>
+    <div class="learn-card">
+        <h4><i class="fas fa-tools"></i> Herramientas</h4>
+        <ul>
+            <li><i class="fas fa-check"></i> Nmap, Wireshark, Burp Suite</li>
+            <li><i class="fas fa-check"></i> Metasploit, John the Ripper</li>
+            <li><i class="fas fa-check"></i> Gobuster, Nikto, SQLMap</li>
+            <li><i class="fas fa-check"></i> Laboratorios Docker prácticos</li>
+        </ul>
+    </div>
+</div>
+</section>
+
+<!-- COURSE MODULES -->
+<section class="modules-section">
+<div class="section-header">
+    <h2><i class="fas fa-book-open"></i> Módulos del Curso</h2>
+    <p>Sigue el orden recomendado para una base sólida</p>
 </div>
 
-<div class="content-block">
-  <h3><i class="fas fa-map"></i> 🗺️ Índice de la base (en orden de lectura recomendado)</h3>
-  <div class="cards-grid">
-    <a href="01-que-es-ciberseguridad.html" class="card">
-      <span class="card-num">01</span>
-      <h4><i class="fas fa-question-circle"></i> ¿Qué es la ciberseguridad?</h4>
-      <p>El campo, los roles, las especializaciones. ~15 min.</p>
+<div class="modules-grid">
+    <a href="01-que-es-ciberseguridad.html" class="module-card">
+        <div class="module-card-header">
+            <div class="module-number">01</div>
+            <div class="module-info">
+                <h3>¿Qué es la Ciberseguridad?</h3>
+                <span class="module-subtitle">Tu punto de partida</span>
+            </div>
+        </div>
+        <p class="module-description">El campo, los roles, las especializaciones. Entiende el panorama completo antes de elegir tu camino.</p>
+        <div class="module-meta">
+            <span class="time"><i class="fas fa-clock"></i> 15 min</span>
+            <span class="difficulty">Principiante</span>
+        </div>
+        <div class="module-topics">
+            <span class="topic-tag">Roles</span>
+            <span class="topic-tag">Red Team</span>
+            <span class="topic-tag">Blue Team</span>
+            <span class="topic-tag">Certificaciones</span>
+        </div>
     </a>
-    <a href="02-glosario.html" class="card">
-      <span class="card-num">02</span>
-      <h4><i class="fas fa-book"></i> Glosario</h4>
-      <p>~70 términos que verás 1000 veces. Referencia.</p>
+
+    <a href="02-glosario.html" class="module-card">
+        <div class="module-card-header">
+            <div class="module-number">02</div>
+            <div class="module-info">
+                <h3>Glosario de Términos</h3>
+                <span class="module-subtitle">Referencia esencial</span>
+            </div>
+        </div>
+        <p class="module-description">100+ términos que verás una y otra vez. Guárdalo como referencia rápida.</p>
+        <div class="module-meta">
+            <span class="time"><i class="fas fa-clock"></i> 20 min</span>
+            <span class="difficulty">Principiante</span>
+        </div>
+        <div class="module-topics">
+            <span class="topic-tag">CIA Triad</span>
+            <span class="topic-tag">Terminología</span>
+            <span class="topic-tag">Referencia</span>
+        </div>
     </a>
-    <a href="03-internet-y-redes.html" class="card">
-      <span class="card-num">03</span>
-      <h4><i class="fas fa-globe"></i> Internet y redes</h4>
-      <p>Cómo funciona internet, TCP/IP, DNS, HTTP. ~30 min.</p>
+
+    <a href="03-internet-y-redes.html" class="module-card">
+        <div class="module-card-header">
+            <div class="module-number">03</div>
+            <div class="module-info">
+                <h3>Internet y Redes</h3>
+                <span class="module-subtitle">La columna vertebral</span>
+            </div>
+        </div>
+        <p class="module-description">TCP/IP, DNS, HTTP/HTTPS, puertos. Cómo viajan los datos y dónde se pueden interceptar.</p>
+        <div class="module-meta">
+            <span class="time"><i class="fas fa-clock"></i> 45 min</span>
+            <span class="difficulty">Principiante</span>
+        </div>
+        <div class="module-topics">
+            <span class="topic-tag">TCP/IP</span>
+            <span class="topic-tag">DNS</span>
+            <span class="topic-tag">HTTP</span>
+            <span class="topic-tag">Puertos</span>
+        </div>
     </a>
-    <a href="04-sistema-operativo-y-terminal.html" class="card">
-      <span class="card-num">04</span>
-      <h4><i class="fas fa-terminal"></i> Sistema operativo y terminal</h4>
-      <p>Linux y Windows desde una perspectiva defensiva. ~45 min.</p>
+
+    <a href="04-sistema-operativo-y-terminal.html" class="module-card">
+        <div class="module-card-header">
+            <div class="module-number">04</div>
+            <div class="module-info">
+                <h3>Sistema Operativo y Terminal</h3>
+                <span class="module-subtitle">Tu caja de herramientas</span>
+            </div>
+        </div>
+        <p class="module-description">Linux y Windows desde una perspectiva de seguridad. Permisos, procesos, servicios.</p>
+        <div class="module-meta">
+            <span class="time"><i class="fas fa-clock"></i> 60 min</span>
+            <span class="difficulty">Principiante</span>
+        </div>
+        <div class="module-topics">
+            <span class="topic-tag">Linux</span>
+            <span class="topic-tag">Bash</span>
+            <span class="topic-tag">Windows</span>
+            <span class="topic-tag">CMD</span>
+        </div>
     </a>
-    <a href="05-criptografia-basica.html" class="card">
-      <span class="card-num">05</span>
-      <h4><i class="fas fa-key"></i> Criptografía básica</h4>
-      <p>Hash, cifrado simétrico/asimétrico, firmas. ~30 min.</p>
+
+    <a href="05-criptografia-basica.html" class="module-card">
+        <div class="module-card-header">
+            <div class="module-number">05</div>
+            <div class="module-info">
+                <h3>Criptografía Básica</h3>
+                <span class="module-subtitle">El arte de proteger datos</span>
+            </div>
+        </div>
+        <p class="module-description">Hash, cifrado simétrico/asimétrico, firmas digitales, PKI. La base de toda seguridad.</p>
+        <div class="module-meta">
+            <span class="time"><i class="fas fa-clock"></i> 40 min</span>
+            <span class="difficulty">Principiante-Intermedio</span>
+        </div>
+        <div class="module-topics">
+            <span class="topic-tag">Hashing</span>
+            <span class="topic-tag">AES</span>
+            <span class="topic-tag">RSA</span>
+            <span class="topic-tag">PKI</span>
+        </div>
     </a>
-    <a href="06-vulnerabilidades.html" class="card">
-      <span class="card-num">06</span>
-      <h4><i class="fas fa-bug"></i> Vulnerabilidades</h4>
-      <p>Qué es una vulnerabilidad, OWASP Top 10, CVEs. ~25 min.</p>
+
+    <a href="06-vulnerabilidades.html" class="module-card">
+        <div class="module-card-header">
+            <div class="module-number">06</div>
+            <div class="module-info">
+                <h3>Vulnerabilidades</h3>
+                <span class="module-subtitle">El objetivo del atacante</span>
+            </div>
+        </div>
+        <p class="module-description">OWASP Top 10, CVE/CWE/CVSS, ejemplos prácticos de SQLi, XSS, SSRF, IDOR.</p>
+        <div class="module-meta">
+            <span class="time"><i class="fas fa-clock"></i> 35 min</span>
+            <span class="difficulty">Intermedio</span>
+        </div>
+        <div class="module-topics">
+            <span class="topic-tag">OWASP</span>
+            <span class="topic-tag">SQLi</span>
+            <span class="topic-tag">XSS</span>
+            <span class="topic-tag">CVE</span>
+        </div>
     </a>
-    <a href="07-etica-y-leyes.html" class="card">
-      <span class="card-num">07</span>
-      <h4><i class="fas fa-balance-scale"></i> Ética y leyes</h4>
-      <p>Hacking ético, qué puedes y qué NO debes hacer. ~15 min.</p>
+
+    <a href="07-etica-y-leyes.html" class="module-card">
+        <div class="module-card-header">
+            <div class="module-number">07</div>
+            <div class="module-info">
+                <h3>Ética y Leyes</h3>
+                <span class="module-subtitle">Los límites del juego</span>
+            </div>
+        </div>
+        <p class="module-description">Hacking ético, autorización, leyes informáticas. Qué puedes y qué NO debes hacer.</p>
+        <div class="module-meta">
+            <span class="time"><i class="fas fa-clock"></i> 20 min</span>
+            <span class="difficulty">Principiante</span>
+        </div>
+        <div class="module-topics">
+            <span class="topic-tag">Ética</span>
+            <span class="topic-tag">Leyes</span>
+            <span class="topic-tag">Autorización</span>
+            <span class="topic-tag">PTES</span>
+        </div>
     </a>
-    <a href="08-herramientas-esenciales.html" class="card">
-      <span class="card-num">08</span>
-      <h4><i class="fas fa-toolbox"></i> Herramientas esenciales</h4>
-      <p>nmap, Wireshark, Burp, Metasploit y compañía. ~40 min.</p>
+
+    <a href="08-herramientas-esenciales.html" class="module-card">
+        <div class="module-card-header">
+            <div class="module-number">08</div>
+            <div class="module-info">
+                <h3>Herramientas Esenciales</h3>
+                <span class="module-subtitle">Tu arsenal técnico</span>
+            </div>
+        </div>
+        <p class="module-description">Nmap, Wireshark, Burp Suite, Metasploit, John the Ripper. Instalación y uso básico.</p>
+        <div class="module-meta">
+            <span class="time"><i class="fas fa-clock"></i> 50 min</span>
+            <span class="difficulty">Intermedio</span>
+        </div>
+        <div class="module-topics">
+            <span class="topic-tag">Nmap</span>
+            <span class="topic-tag">Wireshark</span>
+            <span class="topic-tag">Burp</span>
+            <span class="topic-tag">Metasploit</span>
+        </div>
     </a>
-    <a href="09-como-seguir-este-repo.html" class="card">
-      <span class="card-num">09</span>
-      <h4><i class="fas fa-route"></i> Cómo seguir este repo</h4>
-      <p>Rutas de aprendizaje según tu interés. ~10 min.</p>
+
+    <a href="09-como-seguir-este-repo.html" class="module-card">
+        <div class="module-card-header">
+            <div class="module-number">09</div>
+            <div class="module-info">
+                <h3>Cómo Seguir este Repo</h3>
+                <span class="module-subtitle">Tu hoja de ruta</span>
+            </div>
+        </div>
+        <p class="module-description">Rutas de aprendizaje según tu interés. Elige tu camino: Defensor, Atacante o AI Security.</p>
+        <div class="module-meta">
+            <span class="time"><i class="fas fa-clock"></i> 10 min</span>
+            <span class="difficulty">Principiante</span>
+        </div>
+        <div class="module-topics">
+            <span class="topic-tag">Rutas</span>
+            <span class="topic-tag">Planificación</span>
+            <span class="topic-tag">Carreras</span>
+        </div>
     </a>
-  </div>
+</div>
+</section>
+
+<!-- LEARNING ROUTES -->
+<section class="routes-section">
+<div class="section-header" style="max-width:1200px;margin:0 auto 2rem;">
+    <h2><i class="fas fa-route"></i> Elige tu Ruta de Especialización</h2>
+    <p>Después de los fundamentos, salta a la ruta que más te interese</p>
 </div>
 
-<div class="content-block">
-  <h3><i class="fas fa-compass"></i> 🧭 Rutas recomendadas (elige la tuya)</h3>
-  <p>Tras leer la base, salta a la ruta que más te interese. Cada una te indica las carpetas específicas del repo que necesitas abrir.</p>
-  <div class="branches-grid">
-    <a href="rutas/ruta-defensor.html" class="branch-card">
-      <div class="branch-icon" style="color: #3498db;"><i class="fas fa-shield-alt"></i></div>
-      <h4>🛡️ Ruta Defensor</h4>
-      <p>Blue Team: defender sistemas, vigilar alertas, responder incidentes.</p>
-      <div class="branch-tools"><strong>Carpetas:</strong> blue-team, info-sec/02-blue-team</div>
+<div class="routes-grid">
+    <a href="rutas/ruta-defensor.html" class="route-card blue">
+        <div class="route-icon">🛡️</div>
+        <h3>Ruta Defensor (Blue Team)</h3>
+        <p>Defiende sistemas, vigila alertas, responde incidentes. Para quienes quieren proteger.</p>
+        <div class="route-modules">
+            <strong>Módulos:</strong> SOC, Threat Hunting, Incident Response, SIEM, MITRE ATT&CK
+        </div>
+        <i class="fas fa-arrow-right route-arrow"></i>
     </a>
-    <a href="rutas/ruta-atacante.html" class="branch-card">
-      <div class="branch-icon" style="color: #e74c3c;"><i class="fas fa-crosshairs"></i></div>
-      <h4>⚔️ Ruta Atacante</h4>
-      <p>Red Team: pentesting, red team, bug bounty. Con ética firme.</p>
-      <div class="branch-tools"><strong>Carpetas:</strong> 02-pentesting-red-team, 01-red-team</div>
-    </a>
-    <a href="rutas/ruta-ai-security.html" class="branch-card">
-      <div class="branch-icon" style="color: #9b59b6;"><i class="fas fa-robot"></i></div>
-      <h4>🤖 Ruta AI Security</h4>
-      <p>Prompt injection, LLMs seguros, AI Red Teaming, governance.</p>
-      <div class="branch-tools"><strong>Carpetas:</strong> 03-IA-AGENTES-HERRAMIENTAS, 03-AI-AGENTS-TOOLS</div>
-    </a>
-  </div>
-</div>
 
-<div class="content-block">
-  <h3><i class="fas fa-sitemap"></i> 📚 Cómo está organizado este repo</h3>
-  <div class="info-box">
-    <div class="info-title"><i class="fas fa-folder-tree"></i> Mapa rápido (raíz)</div>
-    <ul style="font-family: 'JetBrains Mono', monospace; font-size: 0.9rem;">
-      <li><strong>00-FUNDAMENTOS/</strong> ← ESTÁS AQUÍ (base para principiantes)</li>
-      <li>01-CIBERSEGURIDAD/ → Roles profesionales y temas generales</li>
-      <li>02-SEGURIDAD-INFORMACION/ → GRC, riesgo, cumplimiento</li>
-      <li>02-pentesting-red-team/ → Red team + labs específicos</li>
-      <li>03-AI-AGENTS-TOOLS/ → Seguridad de IA (en inglés)</li>
-      <li>03-IA-AGENTES-HERRAMIENTAS/ → Seguridad de IA (en español)</li>
-      <li>03-blue-team-defensa/ → Defensa, SOC, fundamentos blue team</li>
-      <li>04-LABORATORIOS/ → Labs propios, CTFs, HTB/THM</li>
-      <li>04-purple-team-colaboracion/ → Colaboración red + blue</li>
-      <li>05-RECURSOS/ → Libros, certificaciones, cursos, cheatsheets</li>
-    </ul>
-  </div>
-</div>
+    <a href="rutas/ruta-atacante.html" class="route-card red">
+        <div class="route-icon">⚔️</div>
+        <h3>Ruta Atacante (Red Team)</h3>
+        <p>Pentesting, explotación, post-explotación. Para quienes quieren entender al adversario.</p>
+        <div class="route-modules">
+            <strong>Módulos:</strong> Recon, Pentesting, Explotación Web, Privilege Escalation, CTFs
+        </div>
+        <i class="fas fa-arrow-right route-arrow"></i>
+    </a>
 
-<div class="content-block">
-  <div class="info-box" style="border-left-color: #f39c12;">
-    <div class="info-title"><i class="fas fa-clock"></i> Tiempo total estimado</div>
-    <p>Lectura completa de la base: <strong>~3.5 horas</strong> distribuidas en una semana es una meta realista y saludable. No te agobies con todo de golpe.</p>
-  </div>
+    <a href="rutas/ruta-ai-security.html" class="route-card ai">
+        <div class="route-icon">🤖</div>
+        <h3>Ruta AI Security</h3>
+        <p>Prompt injection, LLM safety, AI Red Teaming. La especialidad del futuro.</p>
+        <div class="route-modules">
+            <strong>Módulos:</strong> OWASP LLM Top 10, Agentes OSINT, Prompt Injection, Governance
+        </div>
+        <i class="fas fa-arrow-right route-arrow"></i>
+    </a>
 </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+<h2>¿Listo para empezar?</h2>
+<p>Comienza con el primer módulo y construye tu base de conocimiento paso a paso.</p>
+<div class="cta-buttons">
+    <a href="01-que-es-ciberseguridad.html" class="btn-cta btn-primary-cta">
+        <i class="fas fa-play"></i> Empezar Ahora
+    </a>
+    <a href="rutas/ruta-atacante.html" class="btn-cta btn-secondary-cta">
+        <i class="fas fa-route"></i> Ver Rutas
+    </a>
+</div>
+</section>
 
 </main>
 
 <footer class="footer">
 <div class="footer-content">
-<div class="footer-grid">
-  <div class="footer-col">
-    <h4><i class="fas fa-shield-halved"></i> CDPN</h4>
-    <p>Ciberdefensa profesional.</p>
-  </div>
-  <div class="footer-col">
-    <h4>Módulos</h4>
-    <ul>
-      <li><a href="../introduccion/">Introducción</a></li>
-      <li><a href="../red-team/">Red Team</a></li>
-      <li><a href="../blue-team/">Blue Team</a></li>
-      <li><a href="../purple-team/">Purple Team</a></li>
-      <li><a href="../ai-agents/">AI Security</a></li>
-      <li><a href="index.html">Fundamentos</a></li>
-    </ul>
-  </div>
-  <div class="footer-col">
-    <h4>Secciones</h4>
-    <ul>
-      <li><a href="../../retos.html" data-i18n="nav_retos">Retos</a></li>
-      <li><a href="../../herramientas.html" data-i18n="nav_tools">Herramientas</a></li>
-      <li><a href="../../labs.html" data-i18n="nav_labs">Labs</a></li>
-      <li><a href="../../recursos.html" data-i18n="nav_resources">Recursos</a></li>
-    </ul>
-  </div>
-  <div class="footer-col">
-    <h4>GitHub</h4>
-    <ul>
-      <li><a href="https://github.com/0xvanguard/CyberDefense-Pro-Network"><i class="fab fa-github"></i> Repo</a></li>
-    </ul>
-  </div>
-</div>
-<div class="footer-bottom">
-  <p>&copy; 2026 CDPN — CyberDefense Pro Network.</p>
-</div>
+    <div class="footer-grid">
+        <div class="footer-col">
+            <h4><i class="fas fa-shield-halved"></i> CDPN</h4>
+            <p>Formando profesionales de ciberdefensa en todo el mundo.</p>
+        </div>
+        <div class="footer-col">
+            <h4>Fundamentos</h4>
+            <ul>
+                <li><a href="index.html">Índice</a></li>
+                <li><a href="01-que-es-ciberseguridad.html">01 — Qué es</a></li>
+                <li><a href="02-glosario.html">02 — Glosario</a></li>
+                <li><a href="03-internet-y-redes.html">03 — Redes</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>Secciones</h4>
+            <ul>
+                <li><a href="../../retos.html">Retos</a></li>
+                <li><a href="../../herramientas.html">Herramientas</a></li>
+                <li><a href="../../labs.html">Labs</a></li>
+                <li><a href="../../recursos.html">Recursos</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>GitHub</h4>
+            <ul>
+                <li><a href="https://github.com/0xvanguard/CyberDefense-Pro-Network"><i class="fab fa-github"></i> Repo</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2026 CDPN — CyberDefense Pro Network.</p>
+    </div>
 </div>
 </footer>
 
-<script src="../../assets/js/i18n.js"></script>
-<script src="../../assets/js/i18n-lang.js"></script>
 <script src="../../assets/js/shared.js"></script>
 </body>
 </html>
