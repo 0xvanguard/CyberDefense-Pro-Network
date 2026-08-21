@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌐 Lab net-01: TCP/IP & OSI Model — CyberDefense Labs</title>
+    <link rel="stylesheet" href="../../assets/css/lab-runner.css">
+</head>
+<body>
+    <div class="lab-page" id="lab-page"></div>
+    <script src="../../docs/assets/js/gamification.js"></script>
+    <script src="../../assets/js/lab-runner.js"></script>
+    <script>
+    const LAB_CONFIG = {
+        id: 'net-01',
+        name: 'TCP/IP & OSI Model',
+        subtitle: 'Domina los fundamentos de redes para ciberseguridad',
+        icon: '🌐',
+        difficulty: 'fundamentos',
+        totalXP: 100,
+        time: '30 min',
+        exercises: [
+            {
+                title: 'Modelo OSI',
+                xp: 25,
+                objective: 'Identifica en qué capa OSI opera un firewall de estado.',
+                steps: ['Recuerda las 7 capas del modelo OSI', 'Piensa en qué capa maneja conexiones TCP/UDP', 'Un firewall de estado inspecciona paquetes a nivel de transporte'],
+                code: '## Capas OSI\n7. Aplicación → HTTP, FTP, SMTP\n6. Presentación → SSL, TLS\n5. Sesión → NetBIOS\n4. Transporte → TCP, UDP\n3. Red → IP, ICMP\n2. Enlace → Ethernet\n1. Físico → Cables',
+                codeLang: 'text',
+                flag: 'FLAG{capa_4_transport_tcp_udp}',
+                hint: 'La capa 4 es donde TCP/UDP establecen conexiones. Un firewall de estado opera aquí.',
+                solution: 'Capa 4 - Transporte. Los firewalls de estado inspeccionan paquetes TCP/UDP para determinar si pertenecen a una conexión establecida.'
+            },
+            {
+                title: 'TCP Three-Way Handshake',
+                xp: 25,
+                objective: 'Completa el flujo del handshake TCP con los valores correctos.',
+                steps: ['Observa el patrón SYN → SYN-ACK → ACK', 'SYN-ACK incrementa el seq en 1 y confirma el del cliente', 'El ACK final confirma ambos seq'],
+                code: 'Client → Server: [SYN] Seq=0\nServer → Client: [SYN-ACK] Seq=0 Ack=1\nClient → Server: [ACK] Seq=1 Ack=1',
+                codeLang: 'text',
+                flag: 'FLAG{syn_ack_seq0_ack1}',
+                hint: 'SYN-ACK: Seq=0 (del servidor), Ack=1 (confirma SYN del cliente). ACK final: Seq=1, Ack=1.',
+                solution: 'SYN-ACK: Seq=0 Ack=1. ACK final: Seq=1 Ack=1. El servidor inicia su seq en 0, el cliente confirma con Ack=1.'
+            },
+            {
+                title: 'Escaneo de Puertos con Nmap',
+                xp: 50,
+                objective: 'Identifica hosts activos, puertos abiertos y servicios.',
+                steps: ['Ejecuta nmap -sV -sC 10.10.10.0/24', 'Cuenta los hosts que responden', 'Documenta servicios y versiones'],
+                code: '$ nmap -sV -sC 10.10.10.0/24\n\nNmap scan report for 10.10.10.10\nPORT   STATE SERVICE VERSION\n80/tcp open  http    Apache/2.4.41\n\nNmap scan report for 10.10.10.30\nPORT   STATE SERVICE VERSION\n21/tcp open  ftp     vsftpd 3.0.3',
+                codeLang: 'bash',
+                flag: 'FLAG{nmap_3_hosts_80_http_21_ftp}',
+                hint: 'Hay 3 hosts activos. Web Server en puerto 80 (Apache), FTP en puerto 21 (vsftpd).',
+                solution: '3 hosts activos (10.10.10.1, .10, .30). Puerto 80: Apache/2.4.41. Puerto 21: vsftpd 3.0.3.'
+            }
+        ]
+    };
+    document.addEventListener('DOMContentLoaded', () => { CDPN_LabRunner.init(LAB_CONFIG); });
+    </script>
+</body>
+</html>

