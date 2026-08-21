@@ -1,0 +1,424 @@
+/* ========================================
+   CDPN Gamification Styles
+   Notifications, Badges, Progress, Leaderboard
+   ======================================== */
+
+/* ===== NOTIFICATIONS ===== */
+.gamification-notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    border: 1px solid rgba(46, 204, 113, 0.3);
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    z-index: 10000;
+    transform: translateX(120%);
+    transition: transform 0.3s ease;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    max-width: 300px;
+}
+
+.gamification-notification.show {
+    transform: translateX(0);
+}
+
+.notification-title {
+    font-size: 1.25rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #2ecc71, #3498db);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.25rem;
+}
+
+.notification-message {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+/* ===== BADGE NOTIFICATION ===== */
+.badge-notification {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    background: linear-gradient(135deg, #1a1a2e 0%, #0f0f23 100%);
+    border: 2px solid rgba(255, 215, 0, 0.5);
+    border-radius: 20px;
+    padding: 2rem 3rem;
+    z-index: 10001;
+    transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    box-shadow: 0 0 60px rgba(255, 215, 0, 0.3);
+    text-align: center;
+}
+
+.badge-notification.show {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.badge-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    animation: badgePulse 1s ease infinite;
+}
+
+@keyframes badgePulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+.badge-title {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #ffd700;
+    margin-bottom: 0.5rem;
+}
+
+.badge-name {
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-bottom: 0.25rem;
+}
+
+.badge-description {
+    font-size: 0.9rem;
+    opacity: 0.7;
+}
+
+/* ===== PROGRESS BAR ===== */
+.xp-progress-container {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    height: 12px;
+    overflow: hidden;
+    margin: 0.5rem 0;
+}
+
+.xp-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #2ecc71, #3498db);
+    border-radius: 10px;
+    transition: width 0.5s ease;
+    position: relative;
+}
+
+.xp-progress-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(255, 255, 255, 0.3) 50%, 
+        transparent 100%);
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+/* ===== XP DISPLAY ===== */
+.xp-display {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.xp-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #ffd700, #ffaa00);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #1a1a2e;
+}
+
+.xp-info {
+    flex: 1;
+}
+
+.xp-level {
+    font-size: 1.5rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #ffd700, #ffaa00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.xp-rank {
+    font-size: 0.9rem;
+    opacity: 0.7;
+}
+
+.xp-amount {
+    font-size: 1.25rem;
+    font-weight: 700;
+    text-align: right;
+}
+
+.xp-amount span {
+    font-size: 0.85rem;
+    opacity: 0.7;
+}
+
+/* ===== STATS GRID ===== */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1rem;
+    margin: 1rem 0;
+}
+
+.stat-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 1rem;
+    text-align: center;
+}
+
+.stat-icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.stat-value {
+    font-size: 1.5rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #2ecc71, #3498db);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.stat-label {
+    font-size: 0.8rem;
+    opacity: 0.7;
+}
+
+/* ===== BADGES GRID ===== */
+.badges-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 1rem;
+}
+
+.badge-item {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 1rem;
+    text-align: center;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.badge-item:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255, 215, 0, 0.3);
+}
+
+.badge-item.unlocked {
+    border-color: rgba(255, 215, 0, 0.5);
+    background: rgba(255, 215, 0, 0.05);
+}
+
+.badge-item.locked {
+    opacity: 0.5;
+    filter: grayscale(100%);
+}
+
+.badge-item-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.badge-item-name {
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+/* ===== LEADERBOARD ===== */
+.leaderboard {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.leaderboard-header {
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(255, 170, 0, 0.1) 100%);
+    padding: 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.leaderboard-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.leaderboard-list {
+    padding: 0.5rem 0;
+}
+
+.leaderboard-item {
+    display: flex;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    transition: background 0.3s;
+}
+
+.leaderboard-item:hover {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.leaderboard-item.current {
+    background: rgba(46, 204, 113, 0.1);
+    border-left: 3px solid #2ecc71;
+}
+
+.leaderboard-rank {
+    width: 40px;
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #ffd700;
+}
+
+.leaderboard-rank.top-3 {
+    color: #ffd700;
+}
+
+.leaderboard-user {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.leaderboard-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #2ecc71, #3498db);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+}
+
+.leaderboard-name {
+    font-weight: 600;
+}
+
+.leaderboard-level {
+    font-size: 0.8rem;
+    opacity: 0.7;
+}
+
+.leaderboard-xp {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #ffd700;
+}
+
+/* ===== LAB PROGRESS ===== */
+.lab-progress {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: rgba(46, 204, 113, 0.1);
+    border-radius: 8px;
+    font-size: 0.9rem;
+}
+
+.lab-progress.completed {
+    background: rgba(46, 204, 113, 0.2);
+    color: #2ecc71;
+}
+
+.lab-progress-icon {
+    font-size: 1.25rem;
+}
+
+/* ===== STREAK DISPLAY ===== */
+.streak-display {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    background: linear-gradient(135deg, rgba(255, 107, 0, 0.1) 0%, rgba(255, 165, 0, 0.1) 100%);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 107, 0, 0.3);
+}
+
+.streak-fire {
+    font-size: 1.5rem;
+    animation: fireGlow 1.5s ease infinite;
+}
+
+@keyframes fireGlow {
+    0%, 100% { filter: brightness(1); }
+    50% { filter: brightness(1.3); }
+}
+
+.streak-info {
+    flex: 1;
+}
+
+.streak-count {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #ff6b00;
+}
+
+.streak-label {
+    font-size: 0.8rem;
+    opacity: 0.7;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .gamification-notification {
+        right: 10px;
+        left: 10px;
+        max-width: none;
+    }
+    
+    .badge-notification {
+        width: 90%;
+        padding: 1.5rem;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .leaderboard-item {
+        padding: 0.75rem 1rem;
+    }
+    
+    .leaderboard-avatar {
+        width: 32px;
+        height: 32px;
+    }
+}

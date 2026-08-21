@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Demo Gamificación — CDPN</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/global.css">
+<link rel="stylesheet" href="assets/css/gamification.css">
+<style>
+    body { font-family: 'Inter', sans-serif; background: #0a0e1a; color: white; }
+    .demo-container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+    .demo-section { margin-bottom: 3rem; }
+    .demo-title { font-size: 2rem; font-weight: 800; margin-bottom: 1rem; }
+    .demo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+    .demo-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 1.5rem; }
+    .demo-card h3 { margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+    .btn-demo { padding: 0.75rem 1.5rem; border-radius: 8px; border: none; font-weight: 600; cursor: pointer; margin: 0.25rem; transition: all 0.3s; }
+    .btn-xp { background: linear-gradient(135deg, #2ecc71, #27ae60); color: white; }
+    .btn-badge { background: linear-gradient(135deg, #ffd700, #ffaa00); color: #1a1a2e; }
+    .btn-danger { background: linear-gradient(135deg, #e74c3c, #c0392b); color: white; }
+    .btn-demo:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(0,0,0,0.3); }
+</style>
+</head>
+<body>
+<div class="demo-container">
+    <h1 class="demo-title">🎮 Demo: Sistema de Gamificación</h1>
+    <p style="opacity:0.7; margin-bottom:2rem;">Prueba interactiva del sistema de XP, badges y progreso de CDPN.</p>
+    
+    <!-- XP Display -->
+    <div class="demo-section">
+        <div class="demo-card">
+            <h3>💰 Tu XP y Nivel</h3>
+            <div id="xp-display"></div>
+            <div id="xp-progress"></div>
+            <div id="streak-display" style="margin-top:1rem;"></div>
+        </div>
+    </div>
+    
+    <!-- Actions -->
+    <div class="demo-section">
+        <div class="demo-card">
+            <h3>🎯 Acciones (gana XP)</h3>
+            <button class="btn-demo btn-xp" onclick="CDPN_Gamification.addXP(200, 'Lab completado')">+200 XP Lab</button>
+            <button class="btn-demo btn-xp" onclick="CDPN_Gamification.addXP(100, 'Writeup compartido')">+100 XP Writeup</button>
+            <button class="btn-demo btn-xp" onclick="CDPN_Gamification.addXP(50, 'Pregunta respondida')">+50 XP Ayudar</button>
+            <button class="btn-demo btn-xp" onclick="CDPN_Gamification.addXP(30, 'Video visto')">+30 XP Video</button>
+            <button class="btn-demo btn-xp" onclick="CDPN_Gamification.addXP(10, 'Login diario')">+10 XP Login</button>
+        </div>
+    </div>
+    
+    <!-- Stats -->
+    <div class="demo-section">
+        <div class="demo-card">
+            <h3>📊 Estadísticas</h3>
+            <div id="stats-grid" class="stats-grid"></div>
+        </div>
+    </div>
+    
+    <!-- Badges -->
+    <div class="demo-section">
+        <div class="demo-card">
+            <h3>🏆 Badges</h3>
+            <div id="badges-grid" class="badges-grid"></div>
+        </div>
+    </div>
+    
+    <!-- Actions -->
+    <div class="demo-section">
+        <div class="demo-card">
+            <h3>⚙️ Acciones del Sistema</h3>
+            <button class="btn-demo btn-xp" onclick="updateUI()">🔄 Actualizar UI</button>
+            <button class="btn-demo btn-badge" onclick="CDPN_Gamification.exportData()">📥 Exportar Progreso</button>
+            <button class="btn-demo btn-danger" onclick="CDPN_Gamification.resetProgress()">🗑️ Reset Progreso</button>
+        </div>
+    </div>
+</div>
+
+<script src="assets/js/gamification.js"></script>
+<script>
+function updateUI() {
+    const stats = CDPN_Gamification.getStats();
+    
+    // XP Display
+    document.getElementById('xp-display').innerHTML = `
+        <div class="xp-display">
+            <div class="xp-icon">${stats.rank.icon}</div>
+            <div class="xp-info">
+                <div class="xp-level">Nivel ${stats.level}</div>
+                <div class="xp-rank">${stats.rank.name}</div>
+            </div>
+            <div class="xp-amount">
+                ${stats.xp.toLocaleString()} XP
+                <span>para siguiente nivel</span>
+            </div>
+        </div>
+    `;
+    
+    // Progress bar
+    document.getElementById('xp-progress').innerHTML = `
+        <div class="xp-progress-container">
+            <div class="xp-progress-fill" style="width: ${stats.levelProgress}%"></div>
+        </div>
+        <div style="text-align:center; font-size:0.9rem; opacity:0.7;">
+            ${stats.xpForNextLevel} XP para nivel ${stats.level + 1}
+        </div>
+    `;
+    
+    // Streak
+    document.getElementById('streak-display').innerHTML = `
+        <div class="streak-display">
+            <div class="streak-fire">🔥</div>
+            <div class="streak-info">
+                <div class="streak-count">${stats.streak} días</div>
+                <div class="streak-label">Racha consecutiva</div>
+            </div>
+        </div>
+    `;
+    
+    // Stats grid
+    document.getElementById('stats-grid').innerHTML = `
+        <div class="stat-card">
+            <div class="stat-icon">🎯</div>
+            <div class="stat-value">${stats.labsCompleted}</div>
+            <div class="stat-label">Labs</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">📝</div>
+            <div class="stat-value">${stats.writeupsShared}</div>
+            <div class="stat-label">Writeups</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">🤝</div>
+            <div class="stat-value">${stats.answersGiven}</div>
+            <div class="stat-label">Ayudas</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">🏆</div>
+            <div class="stat-value">${stats.badges}/${stats.totalBadges}</div>
+            <div class="stat-label">Badges</div>
+        </div>
+    `;
+    
+    // Badges
+    let badgesHtml = '';
+    for (const [id, badge] of Object.entries(CDPN_Gamification.BADGES)) {
+        const unlocked = CDPN_Gamification.data.badges.includes(id);
+        badgesHtml += `
+            <div class="badge-item ${unlocked ? 'unlocked' : 'locked'}" title="${badge.description}">
+                <div class="badge-item-icon">${badge.icon}</div>
+                <div class="badge-item-name">${badge.name}</div>
+            </div>
+        `;
+    }
+    document.getElementById('badges-grid').innerHTML = badgesHtml;
+}
+
+// Initialize UI
+document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(updateUI, 100);
+});
+</script>
+</body>
+</html>
