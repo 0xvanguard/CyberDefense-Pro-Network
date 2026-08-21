@@ -1,0 +1,68 @@
+version: '3.8'
+
+services:
+  kali:
+    image: kalilinux/kali-rolling
+    container_name: blue-kali
+    hostname: kali
+    networks:
+      blue_net:
+        ipv4_address: 10.0.2.100
+    volumes:
+      - ./scripts:/scripts
+    tty: true
+    stdin_open: true
+    command: >
+      bash -c "
+        apt-get update && apt-get install -y \
+          nmap \
+          netcat \
+          curl \
+          python3 \
+          volatility \
+          autopsy \
+          yara \
+          && bash
+      "
+
+  target-server:
+    image: ubuntu:20.04
+    container_name: blue-target
+    hostname: target
+    networks:
+      blue_net:
+        ipv4_address: 10.0.2.10
+    volumes:
+      - ./scripts:/scripts
+    tty: true
+    command: >
+      bash -c "
+        apt-get update && apt-get install -y \
+          openssh-server \
+          apache2 \
+          mysql-server \
+          && mkdir /var/run/sshd \
+            && echo 'admin:admin123' | chpasswd \
+            && useradd -m -s /bin/bash admin \
+            && echo 'FLAG{blu3_t34m靶场}' > /home/admin/flag.txt \
+            && /usr/sbin/sshd -D
+      "
+
+  web-server:
+    image: vulnerables/web-dvwa
+    container_name: blue-web
+    hostname: web-server
+    networks:
+      blue_net:
+        ipv4_address: 10.0.2.20
+    ports:
+      - "80:80"
+    environment:
+      - MYSQL_PASSWD=password
+
+networks:
+  blue_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.0.2.0/24

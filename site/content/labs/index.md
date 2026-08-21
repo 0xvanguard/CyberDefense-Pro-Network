@@ -36,6 +36,12 @@ const labs = ref([
   // Expert
   { id: 'incident-01', name: 'Incident Response', category: 'expert', difficulty: 'expert', xp: 600, exercises: 6, time: '180 min', status: 'available' },
   { id: 'malware-expert-01', name: 'Malware Expert', category: 'expert', difficulty: 'expert', xp: 700, exercises: 6, time: '210 min', status: 'available' },
+  // Blue Team
+  { id: 'soc-01', name: 'SOC Operations', category: 'blue-team', difficulty: 'intermediate', xp: 400, exercises: 8, time: '90 min', status: 'available', isNew: true },
+  { id: 'incident-02', name: 'Incident Response Blue', category: 'blue-team', difficulty: 'intermediate', xp: 500, exercises: 10, time: '120 min', status: 'available', isNew: true },
+  { id: 'siem-01', name: 'SIEM & Monitoreo', category: 'blue-team', difficulty: 'intermediate', xp: 350, exercises: 6, time: '75 min', status: 'available', isNew: true },
+  { id: 'hardening-01', name: 'Hardening & Seguridad', category: 'blue-team', difficulty: 'intermediate', xp: 300, exercises: 6, time: '60 min', status: 'available', isNew: true },
+  { id: 'forensics-02', name: 'Forensics Blue Team', category: 'blue-team', difficulty: 'intermediate', xp: 400, exercises: 8, time: '90 min', status: 'available', isNew: true },
 ])
 
 const badges = ref([
@@ -82,17 +88,17 @@ Aprende ciberseguridad haciendo. Cada lab incluye ejercicios reales, flags por c
 <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin: 2rem 0;">
 
 <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 1.5rem; border-radius: 12px; text-align: center;">
-  <div style="font-size: 2.5rem; font-weight: bold;">25</div>
+  <div style="font-size: 2.5rem; font-weight: bold;">30</div>
   <div style="opacity: 0.9;">Labs Disponibles</div>
 </div>
 
 <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; padding: 1.5rem; border-radius: 12px; text-align: center;">
-  <div style="font-size: 2.5rem; font-weight: bold;">144</div>
+  <div style="font-size: 2.5rem; font-weight: bold;">177</div>
   <div style="opacity: 0.9;">Ejercicios</div>
 </div>
 
 <div style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: white; padding: 1.5rem; border-radius: 12px; text-align: center;">
-  <div style="font-size: 2.5rem; font-weight: bold;">8,850</div>
+  <div style="font-size: 2.5rem; font-weight: bold;">10,850</div>
   <div style="opacity: 0.9;">XP Total</div>
 </div>
 
@@ -233,6 +239,32 @@ Aprende ciberseguridad haciendo. Cada lab incluye ejercicios reales, flags por c
   </div>
   <div style="margin-top: 1rem;">
     <a :href="'/campus/labs/expert/' + lab.id + '/'" style="display: block; background: linear-gradient(135deg, #6f42c1 0%, #9b59b6 100%); color: white; text-decoration: none; padding: 10px; border-radius: 8px; text-align: center; font-weight: bold;">🚀 Iniciar Lab</a>
+  </div>
+</div>
+
+</div>
+
+---
+
+## 🔵 Blue Team
+
+<div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin: 1rem 0;">
+
+<div v-for="lab in labs.filter(l => l.category === 'blue-team')" :key="lab.id" style="background: white; border: 2px solid #007bff; border-radius: 12px; padding: 1.5rem; transition: transform 0.2s, box-shadow 0.2s; cursor: pointer;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 30px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+  <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.5rem;">
+    <div style="font-weight: bold; font-size: 1.1rem; color: #333;">
+      <span style="margin-right: 0.5rem;">🔵</span>
+      {{ lab.name }}
+      <span v-if="lab.isNew" style="background: #007bff; color: white; padding: 2px 8px; border-radius: 12px; font-size: 0.7rem; margin-left: 0.5rem;">NUEVO</span>
+    </div>
+    <div style="background: #cce5ff; color: #004085; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: bold;">{{ lab.xp }} XP</div>
+  </div>
+  <div style="display: flex; gap: 1rem; margin-top: 0.5rem;">
+    <span style="color: #666; font-size: 0.9rem;">📝 {{ lab.exercises }} ejercicios</span>
+    <span style="color: #666; font-size: 0.9rem;">⏱️ {{ lab.time }}</span>
+  </div>
+  <div style="margin-top: 1rem;">
+    <a :href="'/campus/labs/blue-team/' + lab.id + '/'" style="display: block; background: linear-gradient(135deg, #007bff 0%, #0056b3 100%); color: white; text-decoration: none; padding: 10px; border-radius: 8px; text-align: center; font-weight: bold;">🚀 Iniciar Lab</a>
   </div>
 </div>
 
