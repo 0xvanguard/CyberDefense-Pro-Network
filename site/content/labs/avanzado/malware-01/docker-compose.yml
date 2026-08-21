@@ -1,0 +1,71 @@
+version: '3.8'
+
+services:
+  kali:
+    image: kalilinux/kali-rolling
+    container_name: adv-kali
+    hostname: kali
+    networks:
+      adv_net:
+        ipv4_address: 10.0.3.100
+    volumes:
+      - ./scripts:/scripts
+    tty: true
+    stdin_open: true
+    command: >
+      bash -c "
+        apt-get update && apt-get install -y \
+          nmap \
+          netcat \
+          curl \
+          python3 \
+          bloodhound \
+          crackmapexec \
+          impacket-scripts \
+          volatility \
+          yara \
+          && bash
+      "
+
+  domain-controller:
+    image: windows/servercore:ltsc2019
+    container_name: adv-dc
+    hostname: dc01
+    networks:
+      adv_net:
+        ipv4_address: 10.0.3.10
+
+  member-server:
+    image: windows/servercore:ltsc2019
+    container_name: adv-server
+    hostname: web01
+    networks:
+      adv_net:
+        ipv4_address: 10.0.3.20
+
+  linux-target:
+    image: ubuntu:20.04
+    container_name: adv-linux
+    hostname: linux-target
+    networks:
+      adv_net:
+        ipv4_address: 10.0.3.30
+    volumes:
+      - ./scripts:/scripts
+    tty: true
+    command: >
+      bash -c "
+        apt-get update && apt-get install -y \
+          openssh-server \
+          && mkdir /var/run/sshd \
+            && echo 'admin:admin123' | chpasswd \
+            && echo 'FLAG{4dv4nc3d_l4bs}' > /home/admin/flag.txt \
+            && /usr/sbin/sshd -D
+      "
+
+networks:
+  adv_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.0.3.0/24

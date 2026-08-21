@@ -193,6 +193,7 @@ export default defineConfig({
             { text: '03 — LLM Security', link: '/modules/ai-agents/03-llm-security' },
             { text: '04 — MLSecOps', link: '/modules/ai-agents/04-mlsecops' },
             { text: '05 — Automatización Python', link: '/modules/ai-agents/05-automatizacion-python' },
+            { text: '17 — AI Security', link: '/modules/ai-agents/17-ai-security' },
           ]
         }
       ],
