@@ -20,11 +20,8 @@ function convertToCleanUrls(dir) {
     const fullPath = path.join(dir, entry.name);
 
     if (entry.isDirectory()) {
-      // Skip directories that already contain index.html (like modules/)
-      const indexExists = fs.existsSync(path.join(fullPath, 'index.html'));
-      if (!indexExists) {
-        converted += convertToCleanUrls(fullPath);
-      }
+      // Always recurse into directories to convert nested .html files
+      converted += convertToCleanUrls(fullPath);
     } else if (entry.name.endsWith('.html') && entry.name !== 'index.html' && entry.name !== 'admin.html') {
       // Convert file.html → file/index.html
       const dirName = entry.name.replace('.html', '');
