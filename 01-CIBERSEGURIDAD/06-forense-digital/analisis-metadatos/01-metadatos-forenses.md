@@ -22,7 +22,7 @@
 
 ### Definición
 
-Los **metadatos** son datos sobre datos. Son información附加 que describe las características de un archivo sin ser el contenido en sí.
+Los **metadatos** son datos sobre datos. Son información adicional que describe las características de un archivo sin ser el contenido en sí.
 
 ### Tipos de metadatos
 

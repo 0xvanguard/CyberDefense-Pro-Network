@@ -369,7 +369,7 @@ print(f"e × d mod φ(n) = {(e * d) % phi_n}")  # Debe ser 1
 
 | Recurso | URL |
 |---|---|
-| **Introduction to Modern Cryptography** | [https://hash labelText.com/courses/introduction-to-modern-cryptography](https://crypto.stanford.edu/~dabo/intropml/) |
+| **Introduction to Modern Cryptography** | [https://crypto.stanford.edu/~dabo/intropml/](https://crypto.stanford.edu/~dabo/intropml/) |
 | **Handbook of Applied Cryptography** | [https://cacr.uwaterloo.ca/hac/](https://cacr.uwaterloo.ca/hac/) |
 | **CryptoHack** | [https://cryptohack.org/](https://cryptohack.org/) |
 | **NIST SP 800-57** | [https://csrc.nist.gov/publications/detail/sp/800-57-part-1/rev-5/final](https://csrc.nist.gov/publications/detail/sp/800-57-part-1/rev-5/final) |

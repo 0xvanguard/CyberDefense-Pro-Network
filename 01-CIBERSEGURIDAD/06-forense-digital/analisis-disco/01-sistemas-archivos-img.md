@@ -1,6 +1,6 @@
 # 💾 Análisis de Disco — Sistemas de Archivos e Imágenes Forenses
 
-> *"El disco duro es la memoria del sistema. Cada archivo borrado, cada movimiento, cada error留下了 rastros."*
+> *"El disco duro es la memoria del sistema. Cada archivo borrado, cada movimiento, cada error deja rastros."*
 
 ---
 

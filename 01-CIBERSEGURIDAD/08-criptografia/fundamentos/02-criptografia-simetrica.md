@@ -12,7 +12,7 @@
 4. [ChaCha20](#4-chacha20)
 5. [Modos de operación](#5-modos-de-operación)
 6. [Padding](#6-padding)
-7: [Cifrado en la práctica](#7-cifrado-en-la-práctica)
+7. [Cifrado en la práctica](#7-cifrado-en-la-práctica)
 8. [Defensa: mal uso de cifrado](#8-defensa-mal-uso-de-cifrado)
 9. [Referencias](#9-referencias)
 

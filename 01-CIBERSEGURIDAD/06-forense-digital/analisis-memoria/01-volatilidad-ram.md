@@ -522,7 +522,7 @@ HALLAZGOS:
 5. NTLM hashes extraídos (administrator, guest)
 
 CONCLUSIÓN:
-- Reverse shell activo通过 PowerShell
+- Reverse shell activo vía PowerShell
 - Conexión a C2 server (185.234.72.15)
 - DLL inyectada para persistencia en memoria
 ```
@@ -596,7 +596,7 @@ CONCLUSIÓN:
    - Hash de 3 usuarios más
 
 ## Conclusión
-- Reverse shell activo通过 PowerShell
+- Reverse shell activo vía PowerShell
 - Conexión a C2 server confirmada
 - DLL inyectada para persistencia en memoria
 
