@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>05 - Post-Explotación | CDPN | CyberDefense Pro Network</title>
+<link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="../../assets/icons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../../assets/icons/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../../assets/icons/apple-touch-icon.png">
+<link rel="manifest" href="../../manifest.webmanifest">
+<meta name="description" content="Escalada de privilegios, persistencia, movimiento lateral y exfiltración de datos.">
+<meta name="theme-color" content="#0a0e1a">
+<meta name="color-scheme" content="dark light">
+<meta property="og:type" content="website">
+<meta property="og:title" content="05 - Post-Explotación | CDPN">
+<meta property="og:description" content="Escalada de privilegios, persistencia, movimiento lateral y exfiltración de datos.">
+<meta property="og:url" content="https://0xvanguard.github.io/CyberDefense-Pro-Network/modules/red-team/05-post-explotacion.html">
+<meta property="og:image" content="https://0xvanguard.github.io/CyberDefense-Pro-Network/assets/og/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://0xvanguard.github.io/CyberDefense-Pro-Network/modules/red-team/05-post-explotacion.html">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/global.css">
+    <link rel="stylesheet" href="../../assets/css/module.css">
+<link rel="stylesheet" href="../../assets/css/a11y.css">
+</head>
+<body>
+<a href="#main" class="skip-link">Saltar al contenido principal</a>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="../../index.html" class="nav-logo"><i class="fas fa-shield-halved"></i> CDPN</a>
+            <ul class="nav-menu">
+                <li><a href="../../index.html"><i class="fas fa-home"></i> Inicio</a></li>
+                <li class="nav-dropdown">
+                    <a href="#"><i class="fas fa-layer-group"></i> Módulos <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../introduccion/"><span class="dot intro"></span> Introducción</a></li>
+                        <li><a href="../red-team/" class="active" aria-current="page"><span class="dot red"></span> Ofensiva</a></li>
+                        <li><a href="../seguridad-informacion/"><span class="dot blue"></span> Seguridad Info.</a></li>
+                        <li><a href="../ai-agents/"><span class="dot ai"></span> AI Agents</a></li>
+                        <li><a href="../blue-team/"><span class="dot blue"></span> Blue Team</a></li>
+                        <li><a href="../purple-team/"><span class="dot purple"></span> Purple Team</a></li>
+                        <li><a href="../laboratorios/"><span class="dot lab"></span> Labs</a></li>
+                        <li><a href="../recursos/"><span class="dot resources"></span> Recursos</a></li>
+                    </ul>
+                </li>
+                <li><a href="../../retos.html"><i class="fas fa-trophy"></i> Retos</a></li>
+                <li><a href="../../herramientas.html"><i class="fas fa-tools"></i> Herramientas</a></li>
+                <li><a href="../../labs.html"><i class="fas fa-flask"></i> Labs</a></li>
+                <li><a href="../../recursos.html"><i class="fas fa-book"></i> Recursos</a></li>
+            </ul>
+            <div class="nav-actions">
+                <div class="lang-switcher" id="langSwitcher">
+                    <button class="lang-toggle" id="langToggle">
+                        <span class="lang-flag">🇪🇸</span> <span class="lang-name">Español</span>
+                    </button>
+                    <div class="lang-dropdown" id="langDropdown">
+                        <button data-lang="es"><span class="lang-flag">🇪🇸</span> Español</button>
+                        <button data-lang="en"><span class="lang-flag">🇺🇸</span> English</button>
+                    </div>
+                </div>
+                <button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></button>
+                <a href="https://github.com/0xvanguard/CyberDefense-Pro-Network" class="nav-github" target="_blank"><i class="fab fa-github"></i></a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="breadcrumb">
+        <a href="../../index.html">CDPN</a><span>/</span> <a href="index.html">Red Team</a><span>/</span> 05 — Post-Explotación
+    </div>
+
+    <section class="module-hero" style="--hero-glow: rgba(231, 76, 60, 0.08);">
+        <div class="module-hero-content">
+            <span class="module-badge advanced"><i class="fas fa-user-shield"></i> INTERMEDIO-AVANZADO</span>
+            <h1>05 — <span class="gradient-text">Post-Explotación</span></h1>
+            <p>Escalada de privilegios, persistencia, movimiento lateral y exfiltración de datos.</p>
+        </div>
+    </section>
+
+    <main id="main" class="module-main">
+        <div class="content-block">
+            <h3><i class="fas fa-bullseye"></i> Objetivos de Aprendizaje</h3>
+            <div class="objectives-list">
+                <div class="objective"><i class="fas fa-check-circle"></i> Escalar privilegios de usuario a root/SYSTEM en Linux y Windows.</div>
+                <div class="objective"><i class="fas fa-check-circle"></i> Establecer persistencia que sobreviva reinicios.</div>
+                <div class="objective"><i class="fas fa-check-circle"></i> Moverte lateralmente entre sistemas de una red.</div>
+                <div class="objective"><i class="fas fa-check-circle"></i> Exfiltrar datos de forma sigilosa.</div>
+                <div class="objective"><i class="fas fa-check-circle"></i> Limpiar huellas para evadir detección.</div>
+            </div>
+        </div>
+
+        <div class="content-block">
+            <h3><i class="fas fa-sitemap"></i> Contenido del Módulo</h3>
+            
+            <div class="submodule-card expanded">
+                <div class="submodule-header">
+                    <div class="submodule-num">01</div>
+                    <div class="submodule-info">
+                        <h4><i class="fas fa-arrow-up"></i> Escalada de Privilegios Linux</h4>
+                        <span class="submodule-phase">MITRE: TA0004</span>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="submodule-content">
+                    <p>Técnicas para obtener privilegios root en sistemas Linux.</p>
+                    <div class="step-guide">
+                        <div class="guide-step"><span class="guide-num">1</span><div><strong>SUID/SGID:</strong> Buscar binarios con permisos especiales</div></div>
+                        <div class="guide-step"><span class="guide-num">2</span><div><strong>sudo:</strong> Verificar qué se puede ejecutar con sudo</div></div>
+                        <div class="guide-step"><span class="guide-num">3</span><div><strong>Cron jobs:</strong> Explotar tareas programadas</div></div>
+                        <div class="guide-step"><span class="guide-num">4</span><div><strong>Kernel:</strong> Explotar vulnerabilidades del kernel</div></div>
+                        <div class="guide-step"><span class="guide-num">5</span><div><strong>Capabilities:</strong> Explotar capacidades de Linux</div></div>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-header"><span class="code-lang">Ejemplo</span></div>
+                        <pre><code># Buscar SUID binaries
+find / -perm -4000 -type f 2>/dev/null
+
+# Verificar sudo
+sudo -l
+
+# Buscar capabilities
+getcap -r / 2>/dev/null
+
+# GTFOBins - consultar binarios explotables
+# https://gtfobins.github.io/</code></pre>
+                    </div>
+                    <div class="tools-used">
+                        <span class="tool-tag"><i class="fas fa-terminal"></i> LinPEAS</span>
+                        <span class="tool-tag"><i class="fas fa-search"></i> GTFOBins</span>
+                        <span class="tool-tag"><i class="fas fa-bug"></i> linux-exploit-suggester</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="submodule-card">
+                <div class="submodule-header">
+                    <div class="submodule-num">02</div>
+                    <div class="submodule-info">
+                        <h4><i class="fas fa-arrow-up"></i> Escalada de Privilegios Windows</h4>
+                        <span class="submodule-phase">MITRE: TA0004</span>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="submodule-content">
+                    <p>Técnicas para obtener privilegios SYSTEM en Windows.</p>
+                    <div class="step-guide">
+                        <div class="guide-step"><span class="guide-num">1</span><div><strong>Token Impersonation:</strong> Robar tokens de usuarios privilegiados</div></div>
+                        <div class="guide-step"><span class="guide-num">2</span><div><strong>Unquoted Service:</strong> Explotar servicios sin comillas</div></div>
+                        <div class="guide-step"><span class="guide-num">3</span><div><strong>AlwaysInstallElevated:</strong> Instalar MSI como SYSTEM</div></div>
+                        <div class="guide-step"><span class="guide-num">4</span><div><strong>Kernel:</strong> Explotar漏洞 del kernel</div></div>
+                    </div>
+                    <div class="tools-used">
+                        <span class="tool-tag"><i class="fas fa-windows"></i> WinPEAS</span>
+                        <span class="tool-tag"><i class="fas fa-search"></i> PowerUp</span>
+                        <span class="tool-tag"><i class="fas fa-bug"></i> Metasploit</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="submodule-card">
+                <div class="submodule-header">
+                    <div class="submodule-num">03</div>
+                    <div class="submodule-info">
+                        <h4><i class="fas fa-history"></i> Persistencia</h4>
+                        <span class="submodule-phase">MITRE: TA0003</span>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="submodule-content">
+                    <p>Mantener acceso después de reinicios del sistema.</p>
+                    <div class="step-guide">
+                        <div class="guide-step"><span class="guide-num">1</span><div><strong>Crontab:</strong> Tareas programadas en Linux</div></div>
+                        <div class="guide-step"><span class="guide-num">2</span><div><strong>Systemd:</strong> Servicios en Linux</div></div>
+                        <div class="guide-step"><span class="guide-num">3</span><div><strong>Registry Run Keys:</strong> Persistencia en Windows</div></div>
+                        <div class="guide-step"><span class="guide-num">4</span><div><strong>Scheduled Tasks:</strong> Tareas en Windows</div></div>
+                        <div class="guide-step"><span class="guide-num">5</span><div><strong>WMI:</strong> Eventos de Windows Management</div></div>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-header"><span class="code-lang">Linux</span></div>
+                        <pre><code># Crontab
+crontab -e
+@reboot /path/to/backdoor
+
+# Systemd service
+cat > /etc/systemd/system/backdoor.service << EOF
+[Unit]
+Description=System Service
+
+[Service]
+ExecStart=/path/to/backdoor
+
+[Install]
+WantedBy=multi-user.target
+EOF
+systemctl enable backdoor</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="submodule-card">
+                <div class="submodule-header">
+                    <div class="submodule-num">04</div>
+                    <div class="submodule-info">
+                        <h4><i class="fas fa-exchange-alt"></i> Movimiento Lateral</h4>
+                        <span class="submodule-phase">MITRE: TA0008</span>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="submodule-content">
+                    <p>Moverte entre sistemas de una red usando credenciales comprometidas.</p>
+                    <div class="step-guide">
+                        <div class="guide-step"><span class="guide-num">1</span><div><strong>Pass-the-Hash:</strong> Usar hashes NTLM sin descifrar</div></div>
+                        <div class="guide-step"><span class="guide-num">2</span><div><strong>Pass-the-Ticket:</strong> Usar tickets Kerberos</div></div>
+                        <div class="guide-step"><span class="guide-num">3</span><div><strong>PsExec:</strong> Ejecutar comandos remotos</div></div>
+                        <div class="guide-step"><span class="guide-num">4</span><div><strong>WMI:</strong> Gestión remota de Windows</div></div>
+                        <div class="guide-step"><span class="guide-num">5</span><div><strong>SSH:</strong> Acceso remoto en Linux</div></div>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-header"><span class="code-lang">Impacket</span></div>
+                        <pre><code># Pass-the-Hash
+psexec.py -hashes aad3b435b51404eeaad3b435b51404ee:e0fb1fb8f4... administrator@10.10.10.1
+
+# WMI
+wmiexec.py administrator:password@10.10.10.1
+
+# Kerberos
+getTGT.py domain/user:password
+export KRB5CCNAME=user.ccache
+psexec.py -k -no-pass domain/user@target</code></pre>
+                    </div>
+                    <div class="tools-used">
+                        <span class="tool-tag"><i class="fas fa-python"></i> Impacket</span>
+                        <span class="tool-tag"><i class="fas fa-terminal"></i> evil-winrm</span>
+                        <span class="tool-tag"><i class="fas fa-network-wired"></i> CrackMapExec</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="submodule-card">
+                <div class="submodule-header">
+                    <div class="submodule-num">05</div>
+                    <div class="submodule-info">
+                        <h4><i class="fas fa-upload"></i> Exfiltración de Datos</h4>
+                        <span class="submodule-phase">MITRE: TA0010</span>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="submodule-content">
+                    <p>Extraer datos de la red objetivo de forma sigilosa.</p>
+                    <div class="step-guide">
+                        <div class="guide-step"><span class="guide-num">1</span><div><strong>DNS:</strong> Exfiltración via consultas DNS</div></div>
+                        <div class="guide-step"><span class="guide-num">2</span><div><strong>HTTPS:</strong> Cifrar y enviar via HTTP</div></div>
+                        <div class="guide-step"><span class="guide-num">3</span><div><strong>ICMP:</strong> Tunneling via ping</div></div>
+                        <div class="guide-step"><span class="guide-num">4</span><div><strong>Steganography:</strong> Ocultar en imágenes</div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-block">
+            <h3><i class="fas fa-tools"></i> Herramientas Principales</h3>
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <div class="tool-icon"><i class="fas fa-python"></i></div>
+                    <h4>Impacket</h4>
+                    <p>Colección de herramientas para protocolos de red (SMB, RPC, Kerberos).</p>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-icon"><i class="fas fa-terminal"></i></div>
+                    <h4>LinPEAS / WinPEAS</h4>
+                    <p>Scripts de enumeración automatizada para escalada de privilegios.</p>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-icon"><i class="fas fa-network-wired"></i></div>
+                    <h4>CrackMapExec</h4>
+                    <p>Herramienta de post-explotación para redes Active Directory.</p>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-icon"><i class="fas fa-key"></i></div>
+                    <h4>Rubeus</h4>
+                    <p>Exploración y abuso de Kerberos en Windows.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-block">
+            <h3><i class="fas fa-flask"></i> Labs Prácticos</h3>
+            <div class="labs-grid">
+                <a href="../../labs/intermedio/privesc-01/" class="lab-card">
+                    <div class="lab-icon"><i class="fas fa-linux"></i></div>
+                    <h4>lab-01: Privesc Linux</h4>
+                    <p>5 vulnerabilidades configuradas para practicar escalada de privilegios.</p>
+                    <span class="lab-badge">⭐⭐ · 45 min</span>
+                </a>
+                <a href="../../labs/intermedio/privesc-01/" class="lab-card">
+                    <div class="lab-icon"><i class="fab fa-windows"></i></div>
+                    <h4>lab-02: Privesc Windows</h4>
+                    <p>Escalada de privilegios en entorno Windows.</p>
+                    <span class="lab-badge">⭐⭐⭐ · 60 min</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="content-block">
+            <h3><i class="fas fa-book"></i> Recursos Adicionales</h3>
+            <div class="resources-list">
+                <a href="https://gtfobins.github.io/" target="_blank" class="resource-link">
+                    <i class="fas fa-external-link-alt"></i> GTFOBins — Binarios explotables en Linux
+                </a>
+                <a href="https://lolbas-project.github.io/" target="_blank" class="resource-link">
+                    <i class="fas fa-external-link-alt"></i> LOLBAS — Binarios abusables en Windows
+                </a>
+                <a href="https://book.hacktricks.xyz/" target="_blank" class="resource-link">
+                    <i class="fas fa-external-link-alt"></i> HackTricks — Guía completa de post-explotación
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-col"><h4><i class="fas fa-shield-halved"></i> CDPN</h4><p>Formando profesionales de ciberdefensa.</p></div>
+                <div class="footer-col"><h4>Módulos</h4><ul><li><a href="../introduccion/">Introducción</a></li><li><a href="index.html">Red Team</a></li><li><a href="../blue-team/">Blue Team</a></li><li><a href="../purple-team/">Purple Team</a></li></ul></div>
+                <div class="footer-col"><h4>Secciones</h4><ul><li><a href="../fundamentos/">🚀 Base para principiantes</a></li><li><a href="../../retos.html">Retos</a></li><li><a href="../../herramientas.html">Herramientas</a></li><li><a href="../../labs.html">Labs</a></li></ul></div>
+                <div class="footer-col"><h4>GitHub</h4><ul><li><a href="https://github.com/0xvanguard/CyberDefense-Pro-Network"><i class="fab fa-github"></i> Repo</a></li></ul></div>
+            </div>
+            <div class="footer-bottom"><p>&copy; 2026 CDPN. Todos los derechos reservados.</p></div>
+        </div>
+    </footer>
+    <script src="../../assets/js/shared.js"></script>
+</body>
+</html>

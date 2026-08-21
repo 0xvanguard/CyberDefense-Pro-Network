@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>08 - Criptografía | CDPN | CyberDefense Pro Network</title>
+<link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="../../assets/icons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../../assets/icons/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../../assets/icons/apple-touch-icon.png">
+<link rel="manifest" href="../../manifest.webmanifest">
+<meta name="description" content="Cifrado, hashing, firmas digitales, criptoanalisis y PKI.">
+<meta name="theme-color" content="#0a0e1a">
+<meta name="color-scheme" content="dark light">
+<meta property="og:type" content="website">
+<meta property="og:title" content="08 - Criptografía | CDPN">
+<meta property="og:description" content="Cifrado, hashing, firmas digitales, criptoanalisis y PKI.">
+<meta property="og:url" content="https://0xvanguard.github.io/CyberDefense-Pro-Network/modules/red-team/08-criptografia.html">
+<meta property="og:image" content="https://0xvanguard.github.io/CyberDefense-Pro-Network/assets/og/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://0xvanguard.github.io/CyberDefense-Pro-Network/modules/red-team/08-criptografia.html">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/global.css">
+    <link rel="stylesheet" href="../../assets/css/module.css">
+<link rel="stylesheet" href="../../assets/css/a11y.css">
+</head>
+<body>
+<a href="#main" class="skip-link">Saltar al contenido principal</a>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="../../index.html" class="nav-logo"><i class="fas fa-shield-halved"></i> CDPN</a>
+            <ul class="nav-menu">
+                <li><a href="../../index.html"><i class="fas fa-home"></i> Inicio</a></li>
+                <li class="nav-dropdown">
+                    <a href="#"><i class="fas fa-layer-group"></i> Módulos <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../introduccion/"><span class="dot intro"></span> Introducción</a></li>
+                        <li><a href="../red-team/" class="active" aria-current="page"><span class="dot red"></span> Ofensiva</a></li>
+                        <li><a href="../seguridad-informacion/"><span class="dot blue"></span> Seguridad Info.</a></li>
+                        <li><a href="../ai-agents/"><span class="dot ai"></span> AI Agents</a></li>
+                        <li><a href="../blue-team/"><span class="dot blue"></span> Blue Team</a></li>
+                        <li><a href="../purple-team/"><span class="dot purple"></span> Purple Team</a></li>
+                        <li><a href="../laboratorios/"><span class="dot lab"></span> Labs</a></li>
+                        <li><a href="../recursos/"><span class="dot resources"></span> Recursos</a></li>
+                    </ul>
+                </li>
+                <li><a href="../../retos.html"><i class="fas fa-trophy"></i> Retos</a></li>
+                <li><a href="../../herramientas.html"><i class="fas fa-tools"></i> Herramientas</a></li>
+                <li><a href="../../labs.html"><i class="fas fa-flask"></i> Labs</a></li>
+                <li><a href="../../recursos.html"><i class="fas fa-book"></i> Recursos</a></li>
+            </ul>
+            <div class="nav-actions">
+                <div class="lang-switcher" id="langSwitcher">
+                    <button class="lang-toggle" id="langToggle">
+                        <span class="lang-flag">🇪🇸</span> <span class="lang-name">Español</span>
+                    </button>
+                    <div class="lang-dropdown" id="langDropdown">
+                        <button data-lang="es"><span class="lang-flag">🇪🇸</span> Español</button>
+                        <button data-lang="en"><span class="lang-flag">🇺🇸</span> English</button>
+                    </div>
+                </div>
+                <button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></button>
+                <a href="https://github.com/0xvanguard/CyberDefense-Pro-Network" class="nav-github" target="_blank"><i class="fab fa-github"></i></a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="breadcrumb">
+        <a href="../../index.html">CDPN</a><span>/</span> <a href="index.html">Red Team</a><span>/</span> 08 — Criptografía
+    </div>
+
+    <section class="module-hero" style="--hero-glow: rgba(0, 212, 255, 0.08);">
+        <div class="module-hero-content">
+            <span class="module-badge advanced"><i class="fas fa-lock"></i> INTERMEDIO-AVANZADO</span>
+            <h1>08 — <span class="gradient-text">Criptografía</span></h1>
+            <p>Cifrado, hashing, firmas digitales, criptoanalisis y PKI.</p>
+        </div>
+    </section>
+
+    <main id="main" class="module-main">
+        <div class="content-block">
+            <h3><i class="fas fa-bullseye"></i> Objetivos de Aprendizaje</h3>
+            <div class="objectives-list">
+                <div class="objective"><i class="fas fa-check-circle"></i> Dominar cifrado simétrico (AES, ChaCha20) y sus modos de operación.</div>
+                <div class="objective"><i class="fas fa-check-circle"></i> Comprender cifrado asimétrico (RSA, ECC, Diffie-Hellman).</div>
+                <div class="objective"><i class="fas fa-check-circle"></i> Aplicar hashing seguro (SHA-256, Argon2, bcrypt).</div>
+                <div class="objective"><i class="fas fa-check-circle"></i> Detectar y explotar implementaciones débiles (ECB, padding oracle).</div>
+            </div>
+        </div>
+
+        <div class="content-block">
+            <h3><i class="fas fa-sitemap"></i> Contenido del Módulo</h3>
+            
+            <div class="submodule-card expanded">
+                <div class="submodule-header">
+                    <div class="submodule-num">01</div>
+                    <div class="submodule-info">
+                        <h4><i class="fas fa-key"></i> Cifrado Simétrico</h4>
+                        <span class="submodule-phase">AES, ChaCha20</span>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="submodule-content">
+                    <p>Misma clave para cifrar y descifrar. Rápido pero requiere distribución segura.</p>
+                    <div class="step-guide">
+                        <div class="guide-step"><span class="guide-num">1</span><div><strong>AES:</strong> Estándar actual (128/192/256 bits)</div></div>
+                        <div class="guide-step"><span class="guide-num">2</span><div><strong>ChaCha20:</strong> Alternativa moderna (TLS 1.3, WireGuard)</div></div>
+                        <div class="guide-step"><span class="guide-num">3</span><div><strong>GCM:</strong> Modo autenticado (recomendado)</div></div>
+                        <div class="guide-step"><span class="guide-num">4</span><div><strong>ECB:</strong> ❌ NUNCA usar (patrones visibles)</div></div>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-header"><span class="code-lang">OpenSSL</span></div>
+                        <pre><code># AES-256-GCM (recomendado)
+openssl enc -aes-256-gcm -in secreto.txt -out secreto.enc -k "password123"
+
+# Descifrar
+openssl enc -aes-256-gcm -d -in secreto.enc -out secreto.txt -k "password123"</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="submodule-card">
+                <div class="submodule-header">
+                    <div class="submodule-num">02</div>
+                    <div class="submodule-info">
+                        <h4><i class="fas fa-lock"></i> Cifrado Asimétrico</h4>
+                        <span class="submodule-phase">RSA, ECC, DH</span>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="submodule-content">
+                    <p>Dos claves relacionadas: pública (cifrar) y privada (descifrar).</p>
+                    <div class="step-guide">
+                        <div class="guide-step"><span class="guide-num">1</span><div><strong>RSA:</strong> Basado en factorización de primos (≥2048 bits)</div></div>
+                        <div class="guide-step"><span class="guide-num">2</span><div><strong>ECC:</strong> Misma seguridad con claves más pequeñas</div></div>
+                        <div class="guide-step"><span class="guide-num">3</span><div><strong>Diffie-Hellman:</strong> Intercambio de claves por canal inseguro</div></div>
+                        <div class="guide-step"><span class="guide-num">4</span><div><strong>ECDHE:</strong> Perfect Forward Secrecy en TLS 1.3</div></div>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-header"><span class="code-lang">Python</span></div>
+                        <pre><code># Generar claves RSA
+from Crypto.PublicKey import RSA
+key = RSA.generate(2048)
+
+# Cifrar
+from Crypto.Cipher import PKCS1_OAEP
+cipher = PKCS1_OAEP.new(key.publickey())
+ciphertext = cipher.encrypt(b"Secret message")</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="submodule-card">
+                <div class="submodule-header">
+                    <div class="submodule-num">03</div>
+                    <div class="submodule-info">
+                        <h4><i class="fas fa-hashtag"></i> Hashing y Firmas Digitales</h4>
+                        <span class="submodule-phase">SHA-256, Argon2, PKI</span>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="submodule-content">
+                    <p>Integridad de datos, autenticación y no repudio.</p>
+                    <div class="step-guide">
+                        <div class="guide-step"><span class="guide-num">1</span><div><strong>SHA-256:</strong> Hash estándar para integridad</div></div>
+                        <div class="guide-step"><span class="guide-num">2</span><div><strong>Argon2:</strong> Hashing seguro de contraseñas</div></div>
+                        <div class="guide-step"><span class="guide-num">3</span><div><strong>HMAC:</strong> Autenticación de mensajes</div></div>
+                        <div class="guide-step"><span class="guide-num">4</span><div><strong>Firmas RSA/ECDSA:</strong> No repudio</div></div>
+                        <div class="guide-step"><span class="guide-num">5</span><div><strong>PKI:</strong> Certificados y cadena de confianza</div></div>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-header"><span class="code-lang">Bash</span></div>
+                        <pre><code># SHA-256 de archivo
+sha256sum archivo.zip
+
+# HMAC-SHA256
+echo -n "message" | openssl dgst -sha256 -hmac "secret_key"
+
+# Firmar
+openssl dgst -sha256 -sign private.pem -out firma.sig archivo.txt</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="submodule-card">
+                <div class="submodule-header">
+                    <div class="submodule-num">04</div>
+                    <div class="submodule-info">
+                        <h4><i class="fas fa-bug"></i> Criptoanalisis</h4>
+                        <span class="submodule-phase">ATAQUES</span>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="submodule-content">
+                    <p>Encontrar debilidades en implementaciones criptográficas.</p>
+                    <div class="step-guide">
+                        <div class="guide-step"><span class="guide-num">1</span><div><strong>ECB Pattern:</strong> Bloques idénticos → ciphertext idéntico</div></div>
+                        <div class="guide-step"><span class="guide-num">2</span><div><strong>Padding Oracle:</strong> Descifrar sin clave observando padding</div></div>
+                        <div class="guide-step"><span class="guide-num">3</span><div><strong>XOR:</strong> Análisis de frecuencia en cifrados débiles</div></div>
+                        <div class="guide-step"><span class="guide-num">4</span><div><strong>Timing Attack:</strong> Deducir clave por tiempos de ejecución</div></div>
+                    </div>
+                    <div class="tools-used">
+                        <span class="tool-tag"><i class="fas fa-hammer"></i> hashcat</span>
+                        <span class="tool-tag"><i class="fas fa-user"></i> John the Ripper</span>
+                        <span class="tool-tag"><i class="fas fa-utensils"></i> CyberChef</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="submodule-card">
+                <div class="submodule-header">
+                    <div class="submodule-num">05</div>
+                    <div class="submodule-info">
+                        <h4><i class="fas fa-atom"></i> Criptografía Post-Cuántica</h4>
+                        <span class="submodule-phase">Futuro</span>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="submodule-content">
+                    <p>Algoritmos resistentes a computadoras cuánticas.</p>
+                    <div class="step-guide">
+                        <div class="guide-step"><span class="guide-num">1</span><div><strong>Shor:</strong> Rompe RSA, DH y ECC en tiempo polinómico</div></div>
+                        <div class="guide-step"><span class="guide-num">2</span><div><strong>Grover:</strong> Reduce seguridad de hashes a la mitad</div></div>
+                        <div class="guide-step"><span class="guide-num">3</span><div><strong>Kyber:</strong> Key encapsulation post-cuántico (NIST)</div></div>
+                        <div class="guide-step"><span class="guide-num">4</span><div><strong>Dilithium:</strong> Firmas post-cuánticas (NIST)</div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-block">
+            <h3><i class="fas fa-tools"></i> Herramientas Principales</h3>
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <div class="tool-icon"><i class="fas fa-terminal"></i></div>
+                    <h4>OpenSSL</h4>
+                    <p>Suite completa de criptografía CLI.</p>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-icon"><i class="fas fa-hammer"></i></div>
+                    <h4>hashcat</h4>
+                    <p>Cracking de hashes con GPU.</p>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-icon"><i class="fas fa-user"></i></div>
+                    <h4>John the Ripper</h4>
+                    <p>Cracking de hashes con CPU/GPU.</p>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-icon"><i class="fas fa-utensils"></i></div>
+                    <h4>CyberChef</h4>
+                    <p>Transformaciones criptográficas online.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-block">
+            <h3><i class="fas fa-flask"></i> Labs Prácticos</h3>
+            <div class="labs-grid">
+                <a href="../../labs/intermedio/crypto-01/" class="lab-card">
+                    <div class="lab-icon"><i class="fas fa-lock"></i></div>
+                    <h4>lab-crypto-01: Cryptography Challenges</h4>
+                    <p>Desafíos de cifrado clásico y moderno: César, XOR, RSA, AES-ECB, Padding Oracle.</p>
+                    <span class="lab-badge">⭐⭐ · 90 min · 400 XP</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="content-block">
+            <h3><i class="fas fa-book"></i> Recursos Adicionales</h3>
+            <div class="resources-list">
+                <a href="https://cryptohack.org/" target="_blank" class="resource-link">
+                    <i class="fas fa-external-link-alt"></i> CryptoHack — CTF de criptografía
+                </a>
+                <a href="https://cryptopals.com/" target="_blank" class="resource-link">
+                    <i class="fas fa-external-link-alt"></i> Cryptopals — Ejercicios prácticos
+                </a>
+                <a href="https://cheatsheetseries.owasp.org/cheatsheets/Cryptographic_Cheat_Sheet.html" target="_blank" class="resource-link">
+                    <i class="fas fa-external-link-alt"></i> OWASP Crypto Cheat Sheet
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-col"><h4><i class="fas fa-shield-halved"></i> CDPN</h4><p>Formando profesionales de ciberdefensa.</p></div>
+                <div class="footer-col"><h4>Módulos</h4><ul><li><a href="../introduccion/">Introducción</a></li><li><a href="index.html">Red Team</a></li><li><a href="../blue-team/">Blue Team</a></li><li><a href="../purple-team/">Purple Team</a></li></ul></div>
+                <div class="footer-col"><h4>Secciones</h4><ul><li><a href="../fundamentos/">🚀 Base para principiantes</a></li><li><a href="../../retos.html">Retos</a></li><li><a href="../../herramientas.html">Herramientas</a></li><li><a href="../../labs.html">Labs</a></li></ul></div>
+                <div class="footer-col"><h4>GitHub</h4><ul><li><a href="https://github.com/0xvanguard/CyberDefense-Pro-Network"><i class="fab fa-github"></i> Repo</a></li></ul></div>
+            </div>
+            <div class="footer-bottom"><p>&copy; 2026 CDPN. Todos los derechos reservados.</p></div>
+        </div>
+    </footer>
+    <script src="../../assets/js/shared.js"></script>
+</body>
+</html>

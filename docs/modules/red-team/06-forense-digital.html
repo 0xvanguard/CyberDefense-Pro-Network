@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>06 - Forense Digital | CDPN | CyberDefense Pro Network</title>
+<link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="../../assets/icons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../../assets/icons/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../../assets/icons/apple-touch-icon.png">
+<link rel="manifest" href="../../manifest.webmanifest">
+<meta name="description" content="Forense digital: adquisición de evidencia, análisis de disco, memoria, red y timeline.">
+<meta name="theme-color" content="#0a0e1a">
+<meta name="color-scheme" content="dark light">
+<meta property="og:type" content="website">
+<meta property="og:title" content="06 - Forense Digital | CDPN">
+<meta property="og:description" content="Forense digital: adquisición de evidencia, análisis de disco, memoria, red y timeline.">
+<meta property="og:url" content="https://0xvanguard.github.io/CyberDefense-Pro-Network/modules/red-team/06-forense-digital.html">
+<meta property="og:image" content="https://0xvanguard.github.io/CyberDefense-Pro-Network/assets/og/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://0xvanguard.github.io/CyberDefense-Pro-Network/modules/red-team/06-forense-digital.html">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/global.css">
+    <link rel="stylesheet" href="../../assets/css/module.css">
+<link rel="stylesheet" href="../../assets/css/a11y.css">
+</head>
+<body>
+<a href="#main" class="skip-link">Saltar al contenido principal</a>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="../../index.html" class="nav-logo"><i class="fas fa-shield-halved"></i> CDPN</a>
+            <ul class="nav-menu">
+                <li><a href="../../index.html"><i class="fas fa-home"></i> Inicio</a></li>
+                <li class="nav-dropdown">
+                    <a href="#"><i class="fas fa-layer-group"></i> Módulos <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../introduccion/"><span class="dot intro"></span> Introducción</a></li>
+                        <li><a href="../red-team/" class="active" aria-current="page"><span class="dot red"></span> Ofensiva</a></li>
+                        <li><a href="../seguridad-informacion/"><span class="dot blue"></span> Seguridad Info.</a></li>
+                        <li><a href="../ai-agents/"><span class="dot ai"></span> AI Agents</a></li>
+                        <li><a href="../blue-team/"><span class="dot blue"></span> Blue Team</a></li>
+                        <li><a href="../purple-team/"><span class="dot purple"></span> Purple Team</a></li>
+                        <li><a href="../laboratorios/"><span class="dot lab"></span> Labs</a></li>
+                        <li><a href="../recursos/"><span class="dot resources"></span> Recursos</a></li>
+                    </ul>
+                </li>
+                <li><a href="../../retos.html"><i class="fas fa-trophy"></i> Retos</a></li>
+                <li><a href="../../herramientas.html"><i class="fas fa-tools"></i> Herramientas</a></li>
+                <li><a href="../../labs.html"><i class="fas fa-flask"></i> Labs</a></li>
+                <li><a href="../../recursos.html"><i class="fas fa-book"></i> Recursos</a></li>
+            </ul>
+            <div class="nav-actions">
+                <div class="lang-switcher" id="langSwitcher">
+                    <button class="lang-toggle" id="langToggle">
+                        <span class="lang-flag">🇪🇸</span> <span class="lang-name">Español</span>
+                    </button>
+                    <div class="lang-dropdown" id="langDropdown">
+                        <button data-lang="es"><span class="lang-flag">🇪🇸</span> Español</button>
+                        <button data-lang="en"><span class="lang-flag">🇺🇸</span> English</button>
+                    </div>
+                </div>
+                <button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></button>
+                <a href="https://github.com/0xvanguard/CyberDefense-Pro-Network" class="nav-github" target="_blank"><i class="fab fa-github"></i></a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="breadcrumb">
+        <a href="../../index.html">CDPN</a><span>/</span> <a href="index.html">Red Team</a><span>/</span> 06 — Forense Digital
+    </div>
+
+    <section class="module-hero" style="--hero-glow: rgba(155, 89, 182, 0.08);">
+        <div class="module-hero-content">
+            <span class="module-badge advanced"><i class="fas fa-magnifying-glass"></i> INTERMEDIO-AVANZADO</span>
+            <h1>06 — <span class="gradient-text">Forense Digital</span></h1>
+            <p>Reconstruir qué pasó en un sistema con evidencia íntegra y admisible.</p>
+        </div>
+    </section>
+
+    <main id="main" class="module-main">
+        <div class="content-block">
+            <h3><i class="fas fa-bullseye"></i> Objetivos de Aprendizaje</h3>
+            <div class="objectives-list">
+                <div class="objective"><i class="fas fa-check-circle"></i> Establecer y mantener la cadena de custodia con hashing y documentación.</div>
+                <div class="objective"><i class="fas fa-check-circle"></i> Crear imágenes bit a bit de discos y memoria RAM.</div>
+                <div class="objective"><i class="fas fa-check-circle"></i> Analizar artefactos de Windows (Prefetch, Registry, $MFT).</div>
+                <div class="objective"><i class="fas fa-check-circle"></i> Extraer procesos, conexiones y credenciales de volcados de RAM.</div>
+                <div class="objective"><i class="fas fa-check-circle"></i> Construir una línea de tiempo unificada de eventos.</div>
+            </div>
+        </div>
+
+        <div class="content-block">
+            <h3><i class="fas fa-sitemap"></i> Contenido del Módulo</h3>
+            
+            <div class="submodule-card expanded">
+                <div class="submodule-header">
+                    <div class="submodule-num">01</div>
+                    <div class="submodule-info">
+                        <h4><i class="fas fa-lock"></i> Cadena de Custodia y Adquisición</h4>
+                        <span class="submodule-phase">NIST SP 800-86</span>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="submodule-content">
+                    <p>Principios fundamentales de preservación de evidencia digital.</p>
+                    <div class="step-guide">
+                        <div class="guide-step"><span class="guide-num">1</span><div><strong>No alterar:</strong> Nunca trabajes sobre el original</div></div>
+                        <div class="guide-step"><span class="guide-num">2</span><div><strong>Cadena de custodia:</strong> Documentar quién, qué, cuándo</div></div>
+                        <div class="guide-step"><span class="guide-num">3</span><div><strong>Reproducibilidad:</strong> Otro forense debe poder repetir tu proceso</div></div>
+                        <div class="guide-step"><span class="guide-num">4</span><div><strong>Orden de volatilidad:</strong> Capturar lo más volátil primero</div></div>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-header"><span class="code-lang">Adquisición</span></div>
+                        <pre><code># Crear imagen bit a bit con hashing
+dc3dd if=/dev/sda of=/evidencia/img.dd hash=sha256 log=hash.log
+
+# Verificar integridad
+sha256sum /dev/sda
+sha256sum /evidencia/img.dd
+# Deben coincidir</code></pre>
+                    </div>
+                    <div class="tools-used">
+                        <span class="tool-tag"><i class="fas fa-hdd"></i> dc3dd</span>
+                        <span class="tool-tag"><i class="fas fa-image"></i> FTK Imager</span>
+                        <span class="tool-tag"><i class="fas fa-memory"></i> avml</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="submodule-card">
+                <div class="submodule-header">
+                    <div class="submodule-num">02</div>
+                    <div class="submodule-info">
+                        <h4><i class="fas fa-hdd"></i> Análisis de Disco</h4>
+                        <span class="submodule-phase">NTFS, EXT4, APFS</span>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="submodule-content">
+                    <p>Sistemas de archivos, artefactos de Windows y recuperación de datos.</p>
+                    <div class="step-guide">
+                        <div class="guide-step"><span class="guide-num">1</span><div><strong>$MFT:</strong> Master File Table — cada archivo registrado</div></div>
+                        <div class="guide-step"><span class="guide-num">2</span><div><strong>$UsnJrnl:</strong> Historial de cambios en archivos</div></div>
+                        <div class="guide-step"><span class="guide-num">3</span><div><strong>Prefetch:</strong> Programas ejecutados</div></div>
+                        <div class="guide-step"><span class="guide-num">4</span><div><strong>Registry:</strong> Configuración y actividad de usuario</div></div>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-header"><span class="code-lang">The Sleuth Kit</span></div>
+                        <pre><code># Ver particiones
+mmls imagen.dd
+
+# Listar archivos
+fls -r -o 2048 imagen.dd
+
+# Listar archivos borrados
+fls -d -r -o 2048 imagen.dd
+
+# Extraer archivo por inode
+icat -o 2048 imagen.dd 12345 > recuperado.pdf</code></pre>
+                    </div>
+                    <div class="tools-used">
+                        <span class="tool-tag"><i class="fas fa-search"></i> The Sleuth Kit</span>
+                        <span class="tool-tag"><i class="fas fa-desktop"></i> Autopsy</span>
+                        <span class="tool-tag"><i class="fas fa-tools"></i> Eric Zimmerman Tools</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="submodule-card">
+                <div class="submodule-header">
+                    <div class="submodule-num">03</div>
+                    <div class="submodule-info">
+                        <h4><i class="fas fa-memory"></i> Análisis de Memoria</h4>
+                        <span class="submodule-phase">Volatility 3</span>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="submodule-content">
+                    <p>Extraer evidencia de volcados de memoria RAM.</p>
+                    <div class="step-guide">
+                        <div class="guide-step"><span class="guide-num">1</span><div><strong>Procesos:</strong> pslist, pstree — detectar procesos ocultos</div></div>
+                        <div class="guide-step"><span class="guide-num">2</span><div><strong>Red:</strong> netscan — conexiones activas</div></div>
+                        <div class="guide-step"><span class="guide-num">3</span><div><strong>Código:</strong> malfind — inyecciones de código</div></div>
+                        <div class="guide-step"><span class="guide-num">4</span><div><strong>Credenciales:</strong> hashdump — hashes NTLM</div></div>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-header"><span class="code-lang">Volatility 3</span></div>
+                        <pre><code># Información del sistema
+vol -f memory.raw windows.info
+
+# Lista de procesos
+vol -f memory.raw windows.pslist
+
+# Conexiones de red
+vol -f memory.raw windows.netscan
+
+# Código inyectado
+vol -f memory.raw windows.malfind</code></pre>
+                    </div>
+                    <div class="tools-used">
+                        <span class="tool-tag"><i class="fas fa-memory"></i> Volatility 3</span>
+                        <span class="tool-tag"><i class="fas fa-linux"></i> LiME</span>
+                        <span class="tool-tag"><i class="fas fa-windows"></i> winpmem</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="submodule-card">
+                <div class="submodule-header">
+                    <div class="submodule-num">04</div>
+                    <div class="submodule-info">
+                        <h4><i class="fas fa-network-wired"></i> Forense de Red</h4>
+                        <span class="submodule-phase">Wireshark, Zeek</span>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="submodule-content">
+                    <p>Análisis de tráfico de red y logs de dispositivos.</p>
+                    <div class="step-guide">
+                        <div class="guide-step"><span class="guide-num">1</span><div><strong>PCAP:</strong> Captura y análisis de paquetes</div></div>
+                        <div class="guide-step"><span class="guide-num">2</span><div><strong>DNS:</strong> Dominios consultados</div></div>
+                        <div class="guide-step"><span class="guide-num">3</span><div><strong>C2:</strong> Detección de beaconing</div></div>
+                        <div class="guide-step"><span class="guide-num">4</span><div><strong>Exfiltración:</strong> Datos salientes</div></div>
+                    </div>
+                    <div class="tools-used">
+                        <span class="tool-tag"><i class="fas fa-network-wired"></i> Wireshark</span>
+                        <span class="tool-tag"><i class="fas fa-terminal"></i> tshark</span>
+                        <span class="tool-tag"><i class="fas fa-eye"></i> Zeek</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="submodule-card">
+                <div class="submodule-header">
+                    <div class="submodule-num">05</div>
+                    <div class="submodule-info">
+                        <h4><i class="fas fa-clock"></i> Timeline y Reporte</h4>
+                        <span class="submodule-phase">plaso, MFTECmd</span>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="submodule-content">
+                    <p>Construir línea de tiempo unificada y documentar hallazgos.</p>
+                    <div class="step-guide">
+                        <div class="guide-step"><span class="guide-num">1</span><div><strong>plaso:</strong> Super timeline desde múltiples fuentes</div></div>
+                        <div class="guide-step"><span class="guide-num">2</span><div><strong>Correlación:</strong> Conectar eventos de diferentes fuentes</div></div>
+                        <div class="guide-step"><span class="guide-num">3</span><div><strong>Reporte:</strong> Documentar hallazgos profesionalmente</div></div>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-header"><span class="code-lang">plaso</span></div>
+                        <pre><code># Crear super timeline
+log2timeline.py --storage-file timeline.plaso imagen.dd
+
+# Filtrar por fecha
+psort.py -o l2tcsv -w timeline.csv \
+    timeline.plaso "date > '2026-08-20 00:00:00'"</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-block">
+            <h3><i class="fas fa-tools"></i> Herramientas Principales</h3>
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <div class="tool-icon"><i class="fas fa-memory"></i></div>
+                    <h4>Volatility 3</h4>
+                    <p>Análisis de volcados de memoria RAM.</p>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-icon"><i class="fas fa-desktop"></i></div>
+                    <h4>Autopsy</h4>
+                    <p>Análisis forense de disco con GUI.</p>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-icon"><i class="fas fa-search"></i></div>
+                    <h4>The Sleuth Kit</h4>
+                    <p>Herramientas CLI para análisis de disco.</p>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-icon"><i class="fas fa-clock"></i></div>
+                    <h4>plaso</h4>
+                    <p>Creación de super timelines.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-block">
+            <h3><i class="fas fa-flask"></i> Labs Prácticos</h3>
+            <div class="labs-grid">
+                <a href="../../labs/avanzado/forensics-01/" class="lab-card">
+                    <div class="lab-icon"><i class="fas fa-search"></i></div>
+                    <h4>lab-forensics-01: Digital Forensics</h4>
+                    <p>Análisis completo: adquisición, disco, memoria, timeline y reporte.</p>
+                    <span class="lab-badge">⭐⭐⭐⭐ · 120 min · 500 XP</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="content-block">
+            <h3><i class="fas fa-book"></i> Recursos Adicionales</h3>
+            <div class="resources-list">
+                <a href="https://www.sleuthkit.org/" target="_blank" class="resource-link">
+                    <i class="fas fa-external-link-alt"></i> The Sleuth Kit — Análisis forense
+                </a>
+                <a href="https://github.com/volatilityfoundation/volatility3" target="_blank" class="resource-link">
+                    <i class="fas fa-external-link-alt"></i> Volatility 3 — Análisis de memoria
+                </a>
+                <a href="https://cyberdefenders.org/" target="_blank" class="resource-link">
+                    <i class="fas fa-external-link-alt"></i> CyberDefenders — CTFs forenses
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-col"><h4><i class="fas fa-shield-halved"></i> CDPN</h4><p>Formando profesionales de ciberdefensa.</p></div>
+                <div class="footer-col"><h4>Módulos</h4><ul><li><a href="../introduccion/">Introducción</a></li><li><a href="index.html">Red Team</a></li><li><a href="../blue-team/">Blue Team</a></li><li><a href="../purple-team/">Purple Team</a></li></ul></div>
+                <div class="footer-col"><h4>Secciones</h4><ul><li><a href="../fundamentos/">🚀 Base para principiantes</a></li><li><a href="../../retos.html">Retos</a></li><li><a href="../../herramientas.html">Herramientas</a></li><li><a href="../../labs.html">Labs</a></li></ul></div>
+                <div class="footer-col"><h4>GitHub</h4><ul><li><a href="https://github.com/0xvanguard/CyberDefense-Pro-Network"><i class="fab fa-github"></i> Repo</a></li></ul></div>
+            </div>
+            <div class="footer-bottom"><p>&copy; 2026 CDPN. Todos los derechos reservados.</p></div>
+        </div>
+    </footer>
+    <script src="../../assets/js/shared.js"></script>
+</body>
+</html>
