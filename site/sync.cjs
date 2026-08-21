@@ -66,6 +66,12 @@ const SYNC_MAP = {
   'labs/avanzado/forensics-01/README.md': 'labs/avanzado/forensics-01.md',
   'labs/avanzado/reverse-eng-01/README.md': 'labs/avanzado/reverse-eng-01.md',
   'labs/avanzado/net-forensics-01/README.md': 'labs/avanzado/net-forensics-01.md',
+  'labs/fundamentos/net-01/README.md': 'labs/fundamentos/net-01.md',
+  'labs/intermedio/persist-01/README.md': 'labs/intermedio/persist-01.md',
+  'labs/intermedio/social-01/README.md': 'labs/intermedio/social-01.md',
+  'labs/intermedio/lateral-01/README.md': 'labs/intermedio/lateral-01.md',
+  'labs/expert/incident-01/README.md': 'labs/expert/incident-01.md',
+  'labs/expert/malware-expert-01/README.md': 'labs/expert/malware-expert-01.md',
 
   // ============ ROLES PROFESIONALES ============
 
