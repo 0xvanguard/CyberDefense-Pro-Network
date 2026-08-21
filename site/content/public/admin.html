@@ -7,9 +7,9 @@
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <meta name="robots" content="noindex, nofollow">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
         :root {
             --bg-primary: #0a0e1a;
             --bg-secondary: #111827;
@@ -24,17 +24,73 @@
             --warning: #f59e0b;
             --danger: #ef4444;
             --border: #1e293b;
-            --border-hover: #334155;
         }
+        body { font-family: 'Inter', sans-serif; background: var(--bg-primary); color: var(--text-primary); min-height: 100vh; }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
+        /* ===== LOGIN SCREEN ===== */
+        .login-screen {
+            display: flex;
+            align-items: center;
+            justify-content: center;
             min-height: 100vh;
+            background: linear-gradient(135deg, #0a0e1a 0%, #1a1f35 100%);
+        }
+        .login-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2.5rem;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+        }
+        .login-card .logo { font-size: 2.5rem; margin-bottom: 1rem; }
+        .login-card h1 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+        .login-card p { color: var(--text-muted); font-size: 0.875rem; margin-bottom: 1.5rem; }
+        .login-input {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            outline: none;
+            text-align: center;
+            letter-spacing: 0.1em;
+        }
+        .login-input:focus { border-color: var(--accent); }
+        .login-btn {
+            width: 100%;
+            padding: 0.875rem;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .login-btn:hover { background: var(--accent-hover); }
+        .login-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .login-error {
+            color: var(--danger);
+            font-size: 0.875rem;
+            margin-top: 0.75rem;
+            display: none;
+        }
+        .login-hint {
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 0.75rem;
         }
 
-        /* Header */
+        /* ===== ADMIN PANEL ===== */
+        .admin-panel { display: none; }
         .header {
             background: var(--bg-secondary);
             border-bottom: 1px solid var(--border);
@@ -46,87 +102,20 @@
             top: 0;
             z-index: 100;
         }
-
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .logo {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--accent);
-            text-decoration: none;
-        }
-
-        .header-badge {
-            background: var(--accent);
-            color: white;
-            padding: 0.25rem 0.75rem;
-            border-radius: 999px;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .status {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.875rem;
-            color: var(--text-secondary);
-        }
-
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--success);
-        }
-
+        .header-left { display: flex; align-items: center; gap: 1rem; }
+        .logo { font-size: 1.25rem; font-weight: 700; color: var(--accent); text-decoration: none; }
+        .header-badge { background: var(--accent); color: white; padding: 0.25rem 0.75rem; border-radius: 999px; font-size: 0.75rem; font-weight: 600; }
+        .header-right { display: flex; align-items: center; gap: 1rem; }
+        .status { display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem; color: var(--text-secondary); }
+        .status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--success); }
         .status-dot.error { background: var(--danger); }
         .status-dot.loading { background: var(--warning); animation: pulse 1s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
 
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-
-        /* Layout */
-        .layout {
-            display: grid;
-            grid-template-columns: 300px 1fr;
-            min-height: calc(100vh - 60px);
-        }
-
-        /* Sidebar */
-        .sidebar {
-            background: var(--bg-secondary);
-            border-right: 1px solid var(--border);
-            overflow-y: auto;
-            padding: 1rem;
-        }
-
-        .sidebar-title {
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: var(--text-muted);
-            margin-bottom: 0.75rem;
-            padding: 0 0.5rem;
-        }
-
-        .file-tree {
-            list-style: none;
-        }
-
+        .layout { display: grid; grid-template-columns: 300px 1fr; min-height: calc(100vh - 60px); }
+        .sidebar { background: var(--bg-secondary); border-right: 1px solid var(--border); overflow-y: auto; padding: 1rem; }
+        .sidebar-title { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); margin-bottom: 0.75rem; padding: 0 0.5rem; }
+        .file-tree { list-style: none; }
         .file-item {
             padding: 0.5rem 0.75rem;
             border-radius: 6px;
@@ -139,38 +128,14 @@
             transition: all 0.15s;
             margin-bottom: 2px;
         }
-
-        .file-item:hover {
-            background: var(--bg-card);
-            color: var(--text-primary);
-        }
-
-        .file-item.active {
-            background: rgba(59, 130, 246, 0.15);
-            color: var(--accent);
-        }
-
-        .file-item i {
-            width: 16px;
-            text-align: center;
-            font-size: 0.8rem;
-        }
-
+        .file-item:hover { background: var(--bg-card); color: var(--text-primary); }
+        .file-item.active { background: rgba(59, 130, 246, 0.15); color: var(--accent); }
+        .file-item i { width: 16px; text-align: center; font-size: 0.8rem; }
         .folder { color: var(--warning); }
         .file-md { color: var(--accent); }
+        .folder-children { list-style: none; padding-left: 1.25rem; }
 
-        .folder-children {
-            list-style: none;
-            padding-left: 1.25rem;
-        }
-
-        /* Main Editor */
-        .main {
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-
+        .main { display: flex; flex-direction: column; overflow: hidden; }
         .editor-toolbar {
             background: var(--bg-secondary);
             border-bottom: 1px solid var(--border);
@@ -180,24 +145,9 @@
             justify-content: space-between;
             gap: 1rem;
         }
-
-        .editor-toolbar-left {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .file-path {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.875rem;
-            color: var(--text-secondary);
-        }
-
-        .editor-toolbar-right {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
+        .editor-toolbar-left { display: flex; align-items: center; gap: 1rem; }
+        .file-path { font-family: 'JetBrains Mono', monospace; font-size: 0.875rem; color: var(--text-secondary); }
+        .editor-toolbar-right { display: flex; align-items: center; gap: 0.75rem; }
 
         .btn {
             padding: 0.5rem 1rem;
@@ -211,77 +161,20 @@
             gap: 0.5rem;
             transition: all 0.15s;
         }
-
-        .btn-primary {
-            background: var(--accent);
-            color: white;
-        }
-
+        .btn-primary { background: var(--accent); color: white; }
         .btn-primary:hover { background: var(--accent-hover); }
-        .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
-
-        .btn-success {
-            background: var(--success);
-            color: white;
-        }
-
+        .btn-success { background: var(--success); color: white; }
         .btn-success:hover { background: #059669; }
+        .btn-ghost { background: transparent; color: var(--text-secondary); border: 1px solid var(--border); }
+        .btn-ghost:hover { background: var(--bg-card); color: var(--text-primary); }
+        .btn-danger { background: transparent; color: var(--danger); border: 1px solid rgba(239, 68, 68, 0.3); }
+        .btn-danger:hover { background: rgba(239, 68, 68, 0.1); }
+        .btn-sm { padding: 0.375rem 0.75rem; font-size: 0.8rem; }
 
-        .btn-ghost {
-            background: transparent;
-            color: var(--text-secondary);
-            border: 1px solid var(--border);
-        }
-
-        .btn-ghost:hover {
-            background: var(--bg-card);
-            color: var(--text-primary);
-        }
-
-        .btn-danger {
-            background: transparent;
-            color: var(--danger);
-            border: 1px solid rgba(239, 68, 68, 0.3);
-        }
-
-        .btn-danger:hover {
-            background: rgba(239, 68, 68, 0.1);
-        }
-
-        .btn-sm {
-            padding: 0.375rem 0.75rem;
-            font-size: 0.8rem;
-        }
-
-        /* Editor Area */
-        .editor-container {
-            flex: 1;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            overflow: hidden;
-        }
-
-        .editor-pane, .preview-pane {
-            overflow-y: auto;
-            padding: 1.5rem;
-        }
-
-        .editor-pane {
-            border-right: 1px solid var(--border);
-        }
-
-        .pane-header {
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: var(--text-muted);
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
+        .editor-container { flex: 1; display: grid; grid-template-columns: 1fr 1fr; overflow: hidden; }
+        .editor-pane, .preview-pane { overflow-y: auto; padding: 1.5rem; }
+        .editor-pane { border-right: 1px solid var(--border); }
+        .pane-header { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
         .editor-textarea {
             width: 100%;
             min-height: calc(100vh - 200px);
@@ -297,10 +190,7 @@
             outline: none;
             tab-size: 2;
         }
-
-        .editor-textarea:focus {
-            border-color: var(--accent);
-        }
+        .editor-textarea:focus { border-color: var(--accent); }
 
         .preview-content {
             background: var(--bg-input);
@@ -310,166 +200,37 @@
             min-height: calc(100vh - 200px);
             line-height: 1.7;
         }
-
         .preview-content h1 { font-size: 1.75rem; margin: 1.5rem 0 1rem; }
         .preview-content h2 { font-size: 1.5rem; margin: 1.25rem 0 0.75rem; color: var(--accent); }
         .preview-content h3 { font-size: 1.25rem; margin: 1rem 0 0.5rem; }
         .preview-content p { margin: 0.75rem 0; color: var(--text-secondary); }
-        .preview-content code {
-            background: rgba(59, 130, 246, 0.1);
-            padding: 0.125rem 0.375rem;
-            border-radius: 4px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.85em;
-            color: var(--accent);
-        }
-        .preview-content pre {
-            background: var(--bg-primary);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 1rem;
-            overflow-x: auto;
-            margin: 1rem 0;
-        }
-        .preview-content pre code {
-            background: none;
-            padding: 0;
-            color: var(--text-primary);
-        }
-        .preview-content ul, .preview-content ol {
-            margin: 0.75rem 0;
-            padding-left: 1.5rem;
-            color: var(--text-secondary);
-        }
+        .preview-content code { background: rgba(59,130,246,0.1); padding: 0.125rem 0.375rem; border-radius: 4px; font-family: 'JetBrains Mono', monospace; font-size: 0.85em; color: var(--accent); }
+        .preview-content pre { background: var(--bg-primary); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; overflow-x: auto; margin: 1rem 0; }
+        .preview-content pre code { background: none; padding: 0; color: var(--text-primary); }
+        .preview-content ul, .preview-content ol { margin: 0.75rem 0; padding-left: 1.5rem; color: var(--text-secondary); }
         .preview-content li { margin: 0.25rem 0; }
-        .preview-content table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 1rem 0;
-        }
-        .preview-content th, .preview-content td {
-            border: 1px solid var(--border);
-            padding: 0.5rem 0.75rem;
-            text-align: left;
-            font-size: 0.875rem;
-        }
-        .preview-content th {
-            background: var(--bg-card);
-            color: var(--text-primary);
-            font-weight: 600;
-        }
-        .preview-content blockquote {
-            border-left: 3px solid var(--accent);
-            padding-left: 1rem;
-            margin: 1rem 0;
-            color: var(--text-muted);
-        }
+        .preview-content table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
+        .preview-content th, .preview-content td { border: 1px solid var(--border); padding: 0.5rem 0.75rem; text-align: left; font-size: 0.875rem; }
+        .preview-content th { background: var(--bg-card); color: var(--text-primary); font-weight: 600; }
+        .preview-content blockquote { border-left: 3px solid var(--accent); padding-left: 1rem; margin: 1rem 0; color: var(--text-muted); }
 
-        /* Empty State */
-        .empty-state {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-            color: var(--text-muted);
-            text-align: center;
-            padding: 2rem;
-        }
+        .empty-state { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; color: var(--text-muted); text-align: center; padding: 2rem; }
+        .empty-state i { font-size: 3rem; margin-bottom: 1rem; opacity: 0.3; }
+        .empty-state h3 { font-size: 1.25rem; margin-bottom: 0.5rem; color: var(--text-secondary); }
 
-        .empty-state i {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            opacity: 0.3;
-        }
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); display: flex; align-items: center; justify-content: center; z-index: 200; opacity: 0; pointer-events: none; transition: opacity 0.2s; }
+        .modal-overlay.active { opacity: 1; pointer-events: all; }
+        .modal { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; width: 90%; max-width: 500px; }
+        .modal h3 { margin-bottom: 1rem; }
+        .modal-input { width: 100%; padding: 0.75rem; background: var(--bg-input); border: 1px solid var(--border); border-radius: 6px; color: var(--text-primary); font-size: 0.875rem; margin-bottom: 1rem; outline: none; }
+        .modal-input:focus { border-color: var(--accent); }
+        .modal-actions { display: flex; gap: 0.75rem; justify-content: flex-end; }
 
-        .empty-state h3 {
-            font-size: 1.25rem;
-            margin-bottom: 0.5rem;
-            color: var(--text-secondary);
-        }
-
-        /* Modal */
-        .modal-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.7);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 200;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.2s;
-        }
-
-        .modal-overlay.active {
-            opacity: 1;
-            pointer-events: all;
-        }
-
-        .modal {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 1.5rem;
-            width: 90%;
-            max-width: 500px;
-        }
-
-        .modal h3 {
-            margin-bottom: 1rem;
-        }
-
-        .modal-input {
-            width: 100%;
-            padding: 0.75rem;
-            background: var(--bg-input);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            color: var(--text-primary);
-            font-size: 0.875rem;
-            margin-bottom: 1rem;
-            outline: none;
-        }
-
-        .modal-input:focus {
-            border-color: var(--accent);
-        }
-
-        .modal-actions {
-            display: flex;
-            gap: 0.75rem;
-            justify-content: flex-end;
-        }
-
-        /* Toast */
-        .toast {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 1rem 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            z-index: 300;
-            transform: translateY(100px);
-            opacity: 0;
-            transition: all 0.3s;
-        }
-
-        .toast.show {
-            transform: translateY(0);
-            opacity: 1;
-        }
-
+        .toast { position: fixed; bottom: 2rem; right: 2rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.75rem; z-index: 300; transform: translateY(100px); opacity: 0; transition: all 0.3s; }
+        .toast.show { transform: translateY(0); opacity: 1; }
         .toast.success { border-color: var(--success); }
         .toast.error { border-color: var(--danger); }
 
-        /* Responsive */
         @media (max-width: 768px) {
             .layout { grid-template-columns: 1fr; }
             .sidebar { display: none; }
@@ -480,82 +241,98 @@
 </head>
 <body>
 
-<!-- Header -->
-<header class="header">
-    <div class="header-left">
-        <a href="/" class="logo"><i class="fas fa-shield-halved"></i> CDPN</a>
-        <span class="header-badge">Admin</span>
-    </div>
-    <div class="header-right">
-        <div class="status" id="status">
-            <span class="status-dot" id="statusDot"></span>
-            <span id="statusText">Conectado a GitHub</span>
+<!-- ===== LOGIN SCREEN ===== -->
+<div class="login-screen" id="loginScreen">
+    <div class="login-card">
+        <div class="logo">🛡️</div>
+        <h1>CDPN Admin</h1>
+        <p>Editor de contenido — Acceso restringido</p>
+        <input type="password" class="login-input" id="passwordInput" placeholder="Contraseña" autocomplete="off">
+        <button class="login-btn" id="loginBtn" onclick="attemptLogin()">
+            <i class="fas fa-lock"></i> Entrar
+        </button>
+        <div class="login-error" id="loginError">
+            <i class="fas fa-exclamation-triangle"></i> Contraseña incorrecta
         </div>
-        <a href="https://github.com/0xvanguard/CyberDefense-Pro-Network" target="_blank" class="btn btn-ghost btn-sm">
-            <i class="fab fa-github"></i> Repo
-        </a>
-    </div>
-</header>
-
-<!-- Layout -->
-<div class="layout">
-    <!-- Sidebar: File Tree -->
-    <aside class="sidebar">
-        <div class="sidebar-title">📁 Contenido</div>
-        <ul class="file-tree" id="fileTree">
-            <!-- Populated by JS -->
-        </ul>
-    </aside>
-
-    <!-- Main Editor -->
-    <main class="main">
-        <div class="editor-toolbar" id="editorToolbar" style="display: none;">
-            <div class="editor-toolbar-left">
-                <span class="file-path" id="currentFile">—</span>
-                <span id="modifiedBadge" style="display:none; color: var(--warning); font-size: 0.8rem;">
-                    <i class="fas fa-circle"></i> Modificado
-                </span>
-            </div>
-            <div class="editor-toolbar-right">
-                <button class="btn btn-ghost btn-sm" onclick="openInGitHub()" title="Abrir en GitHub">
-                    <i class="fab fa-github"></i> GitHub
-                </button>
-                <button class="btn btn-ghost btn-sm" onclick="revertChanges()" title="Deshacer cambios">
-                    <i class="fas fa-undo"></i> Revertir
-                </button>
-                <button class="btn btn-success btn-sm" onclick="saveFile()" id="saveBtn">
-                    <i class="fas fa-save"></i> Guardar
-                </button>
-            </div>
+        <div class="login-hint">
+            <i class="fas fa-shield-halved"></i> Solo usuarios autorizados pueden editar contenido
         </div>
+    </div>
+</div>
 
-        <div class="editor-container" id="editorContainer" style="display: none;">
-            <div class="editor-pane">
-                <div class="editor-header">
-                    <span class="pane-header"><i class="fas fa-edit"></i> Editor Markdown</span>
+<!-- ===== ADMIN PANEL (hidden until auth) ===== -->
+<div class="admin-panel" id="adminPanel">
+    <header class="header">
+        <div class="header-left">
+            <a href="/" class="logo"><i class="fas fa-shield-halved"></i> CDPN</a>
+            <span class="header-badge">Admin</span>
+        </div>
+        <div class="header-right">
+            <div class="status" id="status">
+                <span class="status-dot" id="statusDot"></span>
+                <span id="statusText">Conectado a GitHub</span>
+            </div>
+            <button class="btn btn-ghost btn-sm" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i> Salir
+            </button>
+            <a href="https://github.com/0xvanguard/CyberDefense-Pro-Network" target="_blank" class="btn btn-ghost btn-sm">
+                <i class="fab fa-github"></i> Repo
+            </a>
+        </div>
+    </header>
+
+    <div class="layout">
+        <aside class="sidebar">
+            <div class="sidebar-title">📁 Contenido</div>
+            <ul class="file-tree" id="fileTree"></ul>
+        </aside>
+
+        <main class="main">
+            <div class="editor-toolbar" id="editorToolbar" style="display: none;">
+                <div class="editor-toolbar-left">
+                    <span class="file-path" id="currentFile">—</span>
+                    <span id="modifiedBadge" style="display:none; color: var(--warning); font-size: 0.8rem;">
+                        <i class="fas fa-circle"></i> Modificado
+                    </span>
                 </div>
-                <textarea class="editor-textarea" id="editor" spellcheck="false" 
-                    placeholder="Selecciona un archivo para编辑ar..."></textarea>
+                <div class="editor-toolbar-right">
+                    <button class="btn btn-ghost btn-sm" onclick="openInGitHub()" title="Abrir en GitHub">
+                        <i class="fab fa-github"></i> GitHub
+                    </button>
+                    <button class="btn btn-ghost btn-sm" onclick="revertChanges()" title="Deshacer">
+                        <i class="fas fa-undo"></i> Revertir
+                    </button>
+                    <button class="btn btn-success btn-sm" onclick="saveFile()" id="saveBtn">
+                        <i class="fas fa-save"></i> Guardar
+                    </button>
+                </div>
             </div>
-            <div class="preview-pane">
-                <div class="pane-header"><i class="fas fa-eye"></i> Vista Previa</div>
-                <div class="preview-content" id="preview"></div>
-            </div>
-        </div>
 
-        <div class="empty-state" id="emptyState">
-            <i class="fas fa-file-edit"></i>
-            <h3>Selecciona un archivo</h3>
-            <p>Elige un archivo Markdown del panel izquierdo para comenzar a editar</p>
-        </div>
-    </main>
+            <div class="editor-container" id="editorContainer" style="display: none;">
+                <div class="editor-pane">
+                    <span class="pane-header"><i class="fas fa-edit"></i> Editor Markdown</span>
+                    <textarea class="editor-textarea" id="editor" spellcheck="false" placeholder="Selecciona un archivo..."></textarea>
+                </div>
+                <div class="preview-pane">
+                    <div class="pane-header"><i class="fas fa-eye"></i> Vista Previa</div>
+                    <div class="preview-content" id="preview"></div>
+                </div>
+            </div>
+
+            <div class="empty-state" id="emptyState">
+                <i class="fas fa-file-edit"></i>
+                <h3>Selecciona un archivo</h3>
+                <p>Elige un archivo Markdown del panel izquierdo para comenzar a editar</p>
+            </div>
+        </main>
+    </div>
 </div>
 
 <!-- Commit Modal -->
 <div class="modal-overlay" id="commitModal">
     <div class="modal">
         <h3><i class="fas fa-paper-plane"></i> Guardar Cambios</h3>
-        <input type="text" class="modal-input" id="commitMessage" placeholder="Mensaje del commit (ej: Actualiza módulo Red Team)">
+        <input type="text" class="modal-input" id="commitMessage" placeholder="Mensaje del commit">
         <div class="modal-actions">
             <button class="btn btn-ghost" onclick="closeModal()">Cancelar</button>
             <button class="btn btn-success" onclick="confirmSave()" id="confirmBtn">
@@ -572,19 +349,86 @@
 </div>
 
 <script>
-// ===== CONFIG =====
+// ===== AUTH CONFIG =====
+// Password: cdpn-admin-2026 (SHA-256 hashed)
+// To change password: run in console: await crypto.subtle.digest('SHA-256', new TextEncoder().encode('new-password')).then(h => Array.from(new Uint8Array(h)).map(b=>b.toString(16).padStart(2,'0')).join(''))
+const AUTH_HASH = 'e815b74fffaab8809d615029776c6fa6cfeec3154ab940c3bb4b889be64e59de';
+const SESSION_KEY = 'cdpn_admin_session';
+const SESSION_DURATION = 24 * 60 * 60 * 1000; // 24 hours
+
+// ===== AUTH FUNCTIONS =====
+async function hashPassword(password) {
+    const encoder = new TextEncoder();
+    const data = encoder.encode(password);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+function checkSession() {
+    try {
+        const session = JSON.parse(localStorage.getItem(SESSION_KEY));
+        if (session && session.hash === AUTH_HASH && Date.now() - session.timestamp < SESSION_DURATION) {
+            return true;
+        }
+    } catch (e) {}
+    return false;
+}
+
+function saveSession(hash) {
+    localStorage.setItem(SESSION_KEY, JSON.stringify({
+        hash: hash,
+        timestamp: Date.now()
+    }));
+}
+
+function logout() {
+    localStorage.removeItem(SESSION_KEY);
+    document.getElementById('adminPanel').style.display = 'none';
+    document.getElementById('loginScreen').style.display = 'flex';
+    document.getElementById('passwordInput').value = '';
+}
+
+async function attemptLogin() {
+    const password = document.getElementById('passwordInput').value;
+    if (!password) return;
+    
+    const btn = document.getElementById('loginBtn');
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Verificando...';
+    
+    const hash = await hashPassword(password);
+    
+    if (hash === AUTH_HASH) {
+        saveSession(hash);
+        showAdmin();
+    } else {
+        document.getElementById('loginError').style.display = 'block';
+        setTimeout(() => {
+            document.getElementById('loginError').style.display = 'none';
+        }, 3000);
+    }
+    
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fas fa-lock"></i> Entrar';
+}
+
+function showAdmin() {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('adminPanel').style.display = 'block';
+    renderFileTree();
+}
+
+// ===== GITHUB CONFIG =====
 const GITHUB_OWNER = '0xvanguard';
 const GITHUB_REPO = 'CyberDefense-Pro-Network';
 const BRANCH = 'main';
 
-// ===== STATE =====
-let currentFilePath = null; // GitHub path (e.g., '01-CIBERSEGURIDAD/01-reconocimiento-osint/README.md')
+let currentFilePath = null;
 let currentSha = null;
 let originalContent = '';
 let isModified = false;
 
-// ===== GITHUB PATH MAPPING =====
-// Maps display names to actual GitHub file paths
 const GITHUB_PATHS = {
     'modules/fundamentos/index.md': '00-FUNDAMENTOS/README.md',
     'modules/red-team/index.md': '01-CIBERSEGURIDAD/README.md',
@@ -619,194 +463,90 @@ const GITHUB_PATHS = {
     'labs/avanzado/forensics-01.md': 'labs/avanzado/forensics-01/README.md',
     'labs/avanzado/reverse-eng-01.md': 'labs/avanzado/reverse-eng-01/README.md',
     'labs/avanzado/net-forensics-01.md': 'labs/avanzado/net-forensics-01/README.md',
-
-    // ============ ROLES PROFESIONALES ============
-    // Red Team
     'roles/red-team/pentester-red-team.md': '01-CIBERSEGURIDAD/pentester-red-team/README.md',
-    'roles/red-team/penetration-tester-specialized.md': '01-CIBERSEGURIDAD/penetration-tester-specialized/README.md',
     'roles/red-team/threat-hunter.md': '01-CIBERSEGURIDAD/threat-hunter/README.md',
-    'roles/red-team/threat-intelligence.md': '01-CIBERSEGURIDAD/threat-intelligence/README.md',
-    'roles/red-team/bug-bounty-hunting.md': '01-CIBERSEGURIDAD/bug-bounty-hunting/README.md',
     'roles/red-team/malware-analyst.md': '01-CIBERSEGURIDAD/malware-analyst/README.md',
-    'roles/red-team/cryptographer.md': '01-CIBERSEGURIDAD/cryptographer/README.md',
-    'roles/red-team/vulnerability-manager.md': '01-CIBERSEGURIDAD/vulnerability-manager/README.md',
-    'roles/red-team/forense-digital.md': '01-CIBERSEGURIDAD/forense-digital/README.md',
-    // Blue Team
     'roles/blue-team/analista-soc.md': '01-CIBERSEGURIDAD/analista-soc/README.md',
-    'roles/blue-team/security-analyst.md': '01-CIBERSEGURIDAD/security-analyst/README.md',
     'roles/blue-team/incident-responder.md': '01-CIBERSEGURIDAD/incident-responder/README.md',
-    'roles/blue-team/seguridad-defensiva-blue-team.md': '01-CIBERSEGURIDAD/seguridad-defensiva-blue-team/README.md',
-    'roles/blue-team/seguridad-endpoint.md': '01-CIBERSEGURIDAD/seguridad-endpoint/README.md',
-    'roles/blue-team/seguridad-redes.md': '01-CIBERSEGURIDAD/seguridad-redes/README.md',
-    'roles/blue-team/seguridad-operacional.md': '01-CIBERSEGURIDAD/seguridad-operacional/README.md',
-    // Engineering
     'roles/engineering/security-engineer.md': '01-CIBERSEGURIDAD/security-engineer/README.md',
-    'roles/engineering/security-consultant.md': '01-CIBERSEGURIDAD/security-consultant/README.md',
-    'roles/engineering/arquitecto-seguridad.md': '01-CIBERSEGURIDAD/arquitecto-seguridad/README.md',
-    'roles/engineering/seguridad-nube.md': '01-CIBERSEGURIDAD/seguridad-nube/README.md',
-    'roles/engineering/seguridad-aplicaciones.md': '01-CIBERSEGURIDAD/seguridad-aplicaciones/README.md',
-    'roles/engineering/seguridad-iot-ot.md': '01-CIBERSEGURIDAD/seguridad-iot-ot/README.md',
-    'roles/engineering/seguridad-informacion-datos.md': '01-CIBERSEGURIDAD/seguridad-informacion-datos/README.md',
-    'roles/engineering/seguridad-cadena-suministro.md': '01-CIBERSEGURIDAD/seguridad-cadena-suministro/README.md',
-    'roles/engineering/ia-security.md': '01-CIBERSEGURIDAD/ia-security/README.md',
-    'roles/engineering/grc-compliance.md': '01-CIBERSEGURIDAD/grc-compliance/README.md',
-    // GRC
     'roles/grc/ciso.md': '02-SEGURIDAD-INFORMACION/ciso/README.md',
-    'roles/grc/dpo.md': '02-SEGURIDAD-INFORMACION/data-protection-officer/README.md',
-    'roles/grc/risk-manager.md': '02-SEGURIDAD-INFORMACION/risk-manager/README.md',
-    'roles/grc/auditor-seguridad.md': '02-SEGURIDAD-INFORMACION/auditor-seguridad/README.md',
-    'roles/grc/iso-27001.md': '02-SEGURIDAD-INFORMACION/iso-27001-lead-implementer/README.md',
-    'roles/grc/privacy-engineer.md': '02-SEGURIDAD-INFORMACION/privacy-engineer/README.md',
-    'roles/grc/business-continuity.md': '02-SEGURIDAD-INFORMACION/business-continuity-manager/README.md',
-    // AI Security
     'roles/ai-security/prompt-engineer-security.md': '03-AI-AGENTS-TOOLS/prompt-engineer-security/README.md',
-    'roles/ai-security/ai-red-teamer.md': '03-AI-AGENTS-TOOLS/ai-red-teamer/README.md',
-    'roles/ai-security/ml-security-engineer.md': '03-AI-AGENTS-TOOLS/ml-security-engineer/README.md',
-    'roles/ai-security/ai-governance-officer.md': '03-AI-AGENTS-TOOLS/ai-governance-officer/README.md',
-    'roles/ai-security/ai-incident-responder.md': '03-AI-AGENTS-TOOLS/ai-incident-responder/README.md',
-    'roles/ai-security/ai-supply-chain-security.md': '03-AI-AGENTS-TOOLS/ai-supply-chain-security/README.md',
-    'roles/ai-security/agentic-security-developer.md': '03-AI-AGENTS-TOOLS/agentic-security-developer/README.md',
 };
 
-// ===== FILE TREE STRUCTURE =====
 const FILE_TREE = [
-    {
-        name: '🚀 Módulos', type: 'folder', children: [
-            {
-                name: 'Fundamentos', type: 'folder', children: [
-                    { name: 'index.md', path: 'modules/fundamentos/index.md', type: 'file' },
-                ]
-            },
-            {
-                name: 'Red Team', type: 'folder', children: [
-                    { name: 'index.md', path: 'modules/red-team/index.md', type: 'file' },
-                    { name: '01-reconocimiento-osint.md', path: 'modules/red-team/01-reconocimiento-osint.md', type: 'file' },
-                    { name: '02-pentesting-red-team.md', path: 'modules/red-team/02-pentesting-red-team.md', type: 'file' },
-                    { name: '03-analisis-vulnerabilidades.md', path: 'modules/red-team/03-analisis-vulnerabilidades.md', type: 'file' },
-                    { name: '04-explotacion-web.md', path: 'modules/red-team/04-explotacion-web.md', type: 'file' },
-                    { name: '05-post-explotacion.md', path: 'modules/red-team/05-post-explotacion.md', type: 'file' },
-                    { name: '06-forense-digital.md', path: 'modules/red-team/06-forense-digital.md', type: 'file' },
-                    { name: '07-ingenieria-social.md', path: 'modules/red-team/07-ingenieria-social.md', type: 'file' },
-                    { name: '08-criptografia.md', path: 'modules/red-team/08-criptografia.md', type: 'file' },
-                ]
-            },
-            {
-                name: 'Blue Team', type: 'folder', children: [
-                    { name: 'index.md', path: 'modules/blue-team/index.md', type: 'file' },
-                ]
-            },
-            {
-                name: 'Purple Team', type: 'folder', children: [
-                    { name: 'index.md', path: 'modules/purple-team/index.md', type: 'file' },
-                ]
-            },
-            {
-                name: 'AI Agents', type: 'folder', children: [
-                    { name: 'index.md', path: 'modules/ai-agents/index.md', type: 'file' },
-                    { name: '01-agentes-osint.md', path: 'modules/ai-agents/01-agentes-osint.md', type: 'file' },
-                    { name: '02-agentes-pentest.md', path: 'modules/ai-agents/02-agentes-pentest.md', type: 'file' },
-                    { name: '03-llm-security.md', path: 'modules/ai-agents/03-llm-security.md', type: 'file' },
-                    { name: '04-mlsecops.md', path: 'modules/ai-agents/04-mlsecops.md', type: 'file' },
-                    { name: '05-automatizacion-python.md', path: 'modules/ai-agents/05-automatizacion-python.md', type: 'file' },
-                ]
-            },
-            {
-                name: 'Seguridad Info', type: 'folder', children: [
-                    { name: 'index.md', path: 'modules/seguridad-informacion/index.md', type: 'file' },
-                ]
-            },
-        ]
-    },
-    {
-        name: '🧪 Labs', type: 'folder', children: [
-            {
-                name: 'Intermedio', type: 'folder', children: [
-                    { name: 'recon-01.md', path: 'labs/intermedio/recon-01.md', type: 'file' },
-                    { name: 'pentest-01.md', path: 'labs/intermedio/pentest-01.md', type: 'file' },
-                    { name: 'webapp-01.md', path: 'labs/intermedio/webapp-01.md', type: 'file' },
-                    { name: 'privesc-01.md', path: 'labs/intermedio/privesc-01.md', type: 'file' },
-                    { name: 'vulnscan-01.md', path: 'labs/intermedio/vulnscan-01.md', type: 'file' },
-                    { name: 'web-01.md', path: 'labs/intermedio/web-01.md', type: 'file' },
-                    { name: 'crypto-01.md', path: 'labs/intermedio/crypto-01.md', type: 'file' },
-                    { name: 'disk-forensics-01.md', path: 'labs/intermedio/disk-forensics-01.md', type: 'file' },
-                ]
-            },
-            {
-                name: 'Avanzado', type: 'folder', children: [
-                    { name: 'ad-01.md', path: 'labs/avanzado/ad-01.md', type: 'file' },
-                    { name: 'malware-01.md', path: 'labs/avanzado/malware-01.md', type: 'file' },
-                    { name: 'cloud-01.md', path: 'labs/avanzado/cloud-01.md', type: 'file' },
-                    { name: 'forensics-01.md', path: 'labs/avanzado/forensics-01.md', type: 'file' },
-                    { name: 'reverse-eng-01.md', path: 'labs/avanzado/reverse-eng-01.md', type: 'file' },
-                    { name: 'net-forensics-01.md', path: 'labs/avanzado/net-forensics-01.md', type: 'file' },
-                ]
-            },
-        ]
-    },
-    {
-        name: '💼 Roles Profesionales', type: 'folder', children: [
-            {
-                name: '🔴 Red Team', type: 'folder', children: [
-                    { name: 'pentester-red-team.md', path: 'roles/red-team/pentester-red-team.md', type: 'file' },
-                    { name: 'penetration-tester.md', path: 'roles/red-team/penetration-tester-specialized.md', type: 'file' },
-                    { name: 'threat-hunter.md', path: 'roles/red-team/threat-hunter.md', type: 'file' },
-                    { name: 'threat-intelligence.md', path: 'roles/red-team/threat-intelligence.md', type: 'file' },
-                    { name: 'bug-bounty.md', path: 'roles/red-team/bug-bounty-hunting.md', type: 'file' },
-                    { name: 'malware-analyst.md', path: 'roles/red-team/malware-analyst.md', type: 'file' },
-                    { name: 'cryptographer.md', path: 'roles/red-team/cryptographer.md', type: 'file' },
-                    { name: 'vuln-manager.md', path: 'roles/red-team/vulnerability-manager.md', type: 'file' },
-                    { name: 'forense-digital.md', path: 'roles/red-team/forense-digital.md', type: 'file' },
-                ]
-            },
-            {
-                name: '🔵 Blue Team', type: 'folder', children: [
-                    { name: 'analista-soc.md', path: 'roles/blue-team/analista-soc.md', type: 'file' },
-                    { name: 'security-analyst.md', path: 'roles/blue-team/security-analyst.md', type: 'file' },
-                    { name: 'incident-responder.md', path: 'roles/blue-team/incident-responder.md', type: 'file' },
-                    { name: 'seguridad-defensiva.md', path: 'roles/blue-team/seguridad-defensiva-blue-team.md', type: 'file' },
-                    { name: 'endpoint.md', path: 'roles/blue-team/seguridad-endpoint.md', type: 'file' },
-                    { name: 'redes.md', path: 'roles/blue-team/seguridad-redes.md', type: 'file' },
-                    { name: 'operacional.md', path: 'roles/blue-team/seguridad-operacional.md', type: 'file' },
-                ]
-            },
-            {
-                name: '🔧 Engineering', type: 'folder', children: [
-                    { name: 'security-engineer.md', path: 'roles/engineering/security-engineer.md', type: 'file' },
-                    { name: 'security-consultant.md', path: 'roles/engineering/security-consultant.md', type: 'file' },
-                    { name: 'arquitecto.md', path: 'roles/engineering/arquitecto-seguridad.md', type: 'file' },
-                    { name: 'cloud.md', path: 'roles/engineering/seguridad-nube.md', type: 'file' },
-                    { name: 'appsec.md', path: 'roles/engineering/seguridad-aplicaciones.md', type: 'file' },
-                    { name: 'iot-ot.md', path: 'roles/engineering/seguridad-iot-ot.md', type: 'file' },
-                    { name: 'data.md', path: 'roles/engineering/seguridad-informacion-datos.md', type: 'file' },
-                    { name: 'supply-chain.md', path: 'roles/engineering/seguridad-cadena-suministro.md', type: 'file' },
-                    { name: 'ia-security.md', path: 'roles/engineering/ia-security.md', type: 'file' },
-                    { name: 'grc.md', path: 'roles/engineering/grc-compliance.md', type: 'file' },
-                ]
-            },
-            {
-                name: '📋 GRC', type: 'folder', children: [
-                    { name: 'ciso.md', path: 'roles/grc/ciso.md', type: 'file' },
-                    { name: 'dpo.md', path: 'roles/grc/dpo.md', type: 'file' },
-                    { name: 'risk-manager.md', path: 'roles/grc/risk-manager.md', type: 'file' },
-                    { name: 'auditor.md', path: 'roles/grc/auditor-seguridad.md', type: 'file' },
-                    { name: 'iso-27001.md', path: 'roles/grc/iso-27001.md', type: 'file' },
-                    { name: 'privacy.md', path: 'roles/grc/privacy-engineer.md', type: 'file' },
-                    { name: 'business-continuity.md', path: 'roles/grc/business-continuity.md', type: 'file' },
-                ]
-            },
-            {
-                name: '🤖 AI Security', type: 'folder', children: [
-                    { name: 'prompt-engineer.md', path: 'roles/ai-security/prompt-engineer-security.md', type: 'file' },
-                    { name: 'ai-red-teamer.md', path: 'roles/ai-security/ai-red-teamer.md', type: 'file' },
-                    { name: 'ml-security.md', path: 'roles/ai-security/ml-security-engineer.md', type: 'file' },
-                    { name: 'ai-governance.md', path: 'roles/ai-security/ai-governance-officer.md', type: 'file' },
-                    { name: 'ai-incident.md', path: 'roles/ai-security/ai-incident-responder.md', type: 'file' },
-                    { name: 'ai-supply-chain.md', path: 'roles/ai-security/ai-supply-chain-security.md', type: 'file' },
-                    { name: 'agentic-dev.md', path: 'roles/ai-security/agentic-security-developer.md', type: 'file' },
-                ]
-            },
-        ]
-    },
+    { name: '🚀 Módulos', type: 'folder', children: [
+        { name: 'Fundamentos', type: 'folder', children: [
+            { name: 'index.md', path: 'modules/fundamentos/index.md', type: 'file' },
+        ]},
+        { name: 'Red Team', type: 'folder', children: [
+            { name: 'index.md', path: 'modules/red-team/index.md', type: 'file' },
+            { name: '01-reconocimiento-osint.md', path: 'modules/red-team/01-reconocimiento-osint.md', type: 'file' },
+            { name: '02-pentesting-red-team.md', path: 'modules/red-team/02-pentesting-red-team.md', type: 'file' },
+            { name: '03-analisis-vulnerabilidades.md', path: 'modules/red-team/03-analisis-vulnerabilidades.md', type: 'file' },
+            { name: '04-explotacion-web.md', path: 'modules/red-team/04-explotacion-web.md', type: 'file' },
+            { name: '05-post-explotacion.md', path: 'modules/red-team/05-post-explotacion.md', type: 'file' },
+            { name: '06-forense-digital.md', path: 'modules/red-team/06-forense-digital.md', type: 'file' },
+            { name: '07-ingenieria-social.md', path: 'modules/red-team/07-ingenieria-social.md', type: 'file' },
+            { name: '08-criptografia.md', path: 'modules/red-team/08-criptografia.md', type: 'file' },
+        ]},
+        { name: 'Blue Team', type: 'folder', children: [
+            { name: 'index.md', path: 'modules/blue-team/index.md', type: 'file' },
+        ]},
+        { name: 'Purple Team', type: 'folder', children: [
+            { name: 'index.md', path: 'modules/purple-team/index.md', type: 'file' },
+        ]},
+        { name: 'AI Agents', type: 'folder', children: [
+            { name: 'index.md', path: 'modules/ai-agents/index.md', type: 'file' },
+            { name: '01-agentes-osint.md', path: 'modules/ai-agents/01-agentes-osint.md', type: 'file' },
+            { name: '02-agentes-pentest.md', path: 'modules/ai-agents/02-agentes-pentest.md', type: 'file' },
+            { name: '03-llm-security.md', path: 'modules/ai-agents/03-llm-security.md', type: 'file' },
+            { name: '04-mlsecops.md', path: 'modules/ai-agents/04-mlsecops.md', type: 'file' },
+            { name: '05-automatizacion-python.md', path: 'modules/ai-agents/05-automatizacion-python.md', type: 'file' },
+        ]},
+        { name: 'Seguridad Info', type: 'folder', children: [
+            { name: 'index.md', path: 'modules/seguridad-informacion/index.md', type: 'file' },
+        ]},
+    ]},
+    { name: '🧪 Labs', type: 'folder', children: [
+        { name: 'Intermedio', type: 'folder', children: [
+            { name: 'recon-01.md', path: 'labs/intermedio/recon-01.md', type: 'file' },
+            { name: 'pentest-01.md', path: 'labs/intermedio/pentest-01.md', type: 'file' },
+            { name: 'webapp-01.md', path: 'labs/intermedio/webapp-01.md', type: 'file' },
+            { name: 'privesc-01.md', path: 'labs/intermedio/privesc-01.md', type: 'file' },
+            { name: 'vulnscan-01.md', path: 'labs/intermedio/vulnscan-01.md', type: 'file' },
+            { name: 'web-01.md', path: 'labs/intermedio/web-01.md', type: 'file' },
+            { name: 'crypto-01.md', path: 'labs/intermedio/crypto-01.md', type: 'file' },
+            { name: 'disk-forensics-01.md', path: 'labs/intermedio/disk-forensics-01.md', type: 'file' },
+        ]},
+        { name: 'Avanzado', type: 'folder', children: [
+            { name: 'ad-01.md', path: 'labs/avanzado/ad-01.md', type: 'file' },
+            { name: 'malware-01.md', path: 'labs/avanzado/malware-01.md', type: 'file' },
+            { name: 'cloud-01.md', path: 'labs/avanzado/cloud-01.md', type: 'file' },
+            { name: 'forensics-01.md', path: 'labs/avanzado/forensics-01.md', type: 'file' },
+            { name: 'reverse-eng-01.md', path: 'labs/avanzado/reverse-eng-01.md', type: 'file' },
+            { name: 'net-forensics-01.md', path: 'labs/avanzado/net-forensics-01.md', type: 'file' },
+        ]},
+    ]},
+    { name: '💼 Roles', type: 'folder', children: [
+        { name: '🔴 Red Team', type: 'folder', children: [
+            { name: 'pentester-red-team.md', path: 'roles/red-team/pentester-red-team.md', type: 'file' },
+            { name: 'threat-hunter.md', path: 'roles/red-team/threat-hunter.md', type: 'file' },
+            { name: 'malware-analyst.md', path: 'roles/red-team/malware-analyst.md', type: 'file' },
+        ]},
+        { name: '🔵 Blue Team', type: 'folder', children: [
+            { name: 'analista-soc.md', path: 'roles/blue-team/analista-soc.md', type: 'file' },
+            { name: 'incident-responder.md', path: 'roles/blue-team/incident-responder.md', type: 'file' },
+        ]},
+        { name: '🔧 Engineering', type: 'folder', children: [
+            { name: 'security-engineer.md', path: 'roles/engineering/security-engineer.md', type: 'file' },
+        ]},
+        { name: '📋 GRC', type: 'folder', children: [
+            { name: 'ciso.md', path: 'roles/grc/ciso.md', type: 'file' },
+        ]},
+        { name: '🤖 AI Security', type: 'folder', children: [
+            { name: 'prompt-engineer.md', path: 'roles/ai-security/prompt-engineer-security.md', type: 'file' },
+        ]},
+    ]},
 ];
 
 // ===== GITHUB API =====
@@ -819,56 +559,34 @@ async function githubFetch(path) {
     return res.json();
 }
 
-function toGitHubPath(displayPath) {
-    return GITHUB_PATHS[displayPath] || displayPath;
-}
-
+function toGitHubPath(displayPath) { return GITHUB_PATHS[displayPath] || displayPath; }
 function toGitHubEditUrl(displayPath) {
-    const ghPath = toGitHubPath(displayPath);
-    return `https://github.com/${GITHUB_OWNER}/${GITHUB_REPO}/edit/main/${ghPath}`;
+    return `https://github.com/${GITHUB_OWNER}/${GITHUB_REPO}/edit/main/${toGitHubPath(displayPath)}`;
 }
 
 async function getFileContent(filePath) {
-    const githubPath = toGitHubPath(filePath);
-    const data = await githubFetch(githubPath);
-    const content = atob(data.content);
+    const data = await githubFetch(toGitHubPath(filePath));
     currentSha = data.sha;
-    return content;
+    return atob(data.content);
 }
 
 async function saveFileToGitHub(filePath, content, message) {
     const githubPath = toGitHubPath(filePath);
-    const encodedContent = btoa(unescape(encodeURIComponent(content)));
-    
+    const encoded = btoa(unescape(encodeURIComponent(content)));
     const res = await fetch(`${API_BASE}/contents/${githubPath}`, {
         method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            message: message || `Update ${filePath} via CDPN Admin`,
-            content: encodedContent,
-            sha: currentSha,
-            branch: BRANCH,
-        }),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message, content: encoded, sha: currentSha, branch: BRANCH }),
     });
-
-    if (!res.ok) {
-        const err = await res.json();
-        throw new Error(err.message || 'Failed to save');
-    }
-
+    if (!res.ok) { const err = await res.json(); throw new Error(err.message || 'Failed'); }
     return res.json();
 }
 
-// ===== UI FUNCTIONS =====
+// ===== UI =====
 function renderFileTree() {
     const tree = document.getElementById('fileTree');
     tree.innerHTML = '';
-    
-    FILE_TREE.forEach(item => {
-        tree.appendChild(createTreeItem(item, 0));
-    });
+    FILE_TREE.forEach(item => tree.appendChild(createTreeItem(item, 0)));
 }
 
 function createTreeItem(item, depth) {
@@ -877,25 +595,17 @@ function createTreeItem(item, depth) {
         const div = document.createElement('div');
         div.className = 'file-item';
         div.style.paddingLeft = `${0.75 + depth * 1.25}rem`;
-        div.innerHTML = `<i class="fas fa-chevron-right folder" style="font-size:0.6rem; transition: transform 0.2s;"></i> <i class="fas fa-folder folder"></i> ${item.name}`;
-        
+        div.innerHTML = `<i class="fas fa-chevron-right folder" style="font-size:0.6rem;transition:transform 0.2s;"></i> <i class="fas fa-folder folder"></i> ${item.name}`;
         const childList = document.createElement('ul');
         childList.className = 'folder-children';
         childList.style.display = 'none';
-        
-        if (item.children) {
-            item.children.forEach(child => {
-                childList.appendChild(createTreeItem(child, depth + 1));
-            });
-        }
-        
+        if (item.children) item.children.forEach(c => childList.appendChild(createTreeItem(c, depth + 1)));
         div.addEventListener('click', () => {
             const icon = div.querySelector('.fa-chevron-right');
-            const isOpen = childList.style.display !== 'none';
-            childList.style.display = isOpen ? 'none' : 'block';
-            icon.style.transform = isOpen ? '' : 'rotate(90deg)';
+            const open = childList.style.display !== 'none';
+            childList.style.display = open ? 'none' : 'block';
+            icon.style.transform = open ? '' : 'rotate(90deg)';
         });
-        
         li.appendChild(div);
         li.appendChild(childList);
         return li;
@@ -906,46 +616,34 @@ function createTreeItem(item, depth) {
         div.style.paddingLeft = `${0.75 + depth * 1.25}rem`;
         div.innerHTML = `<i class="fas fa-file-alt file-md"></i> ${item.name}`;
         div.dataset.path = item.path;
-        
         div.addEventListener('click', () => loadFile(item.path));
-        
         li.appendChild(div);
         return li;
     }
 }
 
 async function loadFile(filePath) {
-    if (isModified) {
-        if (!confirm('Tienes cambios sin guardar. ¿Deseas continuar?')) return;
-    }
-    
+    if (isModified && !confirm('Tienes cambios sin guardar. ¿Continuar?')) return;
     setStatus('loading', 'Cargando...');
-    
     try {
         const content = await getFileContent(filePath);
-        
         currentFilePath = filePath;
         originalContent = content;
         isModified = false;
-        
         document.getElementById('editor').value = content;
         document.getElementById('currentFile').textContent = filePath;
         document.getElementById('modifiedBadge').style.display = 'none';
         document.getElementById('editorToolbar').style.display = 'flex';
         document.getElementById('editorContainer').style.display = 'grid';
         document.getElementById('emptyState').style.display = 'none';
-        
         updatePreview();
-        
-        // Update active state in tree
         document.querySelectorAll('.file-item').forEach(el => el.classList.remove('active'));
-        const activeItem = document.querySelector(`[data-path="${filePath}"]`);
-        if (activeItem) activeItem.classList.add('active');
-        
+        const active = document.querySelector(`[data-path="${filePath}"]`);
+        if (active) active.classList.add('active');
         setStatus('ok', 'Conectado a GitHub');
     } catch (err) {
         setStatus('error', `Error: ${err.message}`);
-        showToast(`Error al cargar: ${err.message}`, 'error');
+        showToast(`Error: ${err.message}`, 'error');
     }
 }
 
@@ -955,59 +653,26 @@ function updatePreview() {
 }
 
 function simpleMarkdown(md) {
-    // Remove frontmatter
     md = md.replace(/^---[\s\S]*?---\n*/m, '');
-    
-    // Headers
     md = md.replace(/^### (.+)$/gm, '<h3>$1</h3>');
     md = md.replace(/^## (.+)$/gm, '<h2>$1</h2>');
     md = md.replace(/^# (.+)$/gm, '<h1>$1</h1>');
-    
-    // Code blocks
     md = md.replace(/```(\w*)\n([\s\S]*?)```/g, '<pre><code>$2</code></pre>');
-    
-    // Inline code
     md = md.replace(/`([^`]+)`/g, '<code>$1</code>');
-    
-    // Bold and italic
     md = md.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
     md = md.replace(/\*(.+?)\*/g, '<em>$1</em>');
-    
-    // Links
     md = md.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" style="color:var(--accent)">$1</a>');
-    
-    // Images
-    md = md.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" style="max-width:100%;border-radius:8px;">');
-    
-    // Blockquotes
     md = md.replace(/^> (.+)$/gm, '<blockquote>$1</blockquote>');
-    
-    // Tables
-    md = md.replace(/\|(.+)\|\n\|[-| ]+\|\n((?:\|.+\|\n?)*)/g, (match, header, body) => {
-        const headers = header.split('|').map(h => `<th>${h.trim()}</th>`).join('');
-        const rows = body.trim().split('\n').map(row => {
-            const cells = row.split('|').map(c => `<td>${c.trim()}</td>`).join('');
-            return `<tr>${cells}</tr>`;
-        }).join('');
-        return `<table><thead><tr>${headers}</tr></thead><tbody>${rows}</tbody></table>`;
+    md = md.replace(/\|(.+)\|\n\|[-| ]+\|\n((?:\|.+\|\n?)*)/g, (m, h, b) => {
+        const th = h.split('|').map(x => `<th>${x.trim()}</th>`).join('');
+        const tr = b.trim().split('\n').map(r => `<tr>${r.split('|').map(c => `<td>${c.trim()}</td>`).join('')}</tr>`).join('');
+        return `<table><thead><tr>${th}</tr></thead><tbody>${tr}</tbody></table>`;
     });
-    
-    // Lists
     md = md.replace(/^- (.+)$/gm, '<li>$1</li>');
     md = md.replace(/(<li>.*<\/li>\n?)+/g, '<ul>$&</ul>');
-    
-    // Checkboxes
-    md = md.replace(/\[ \]/g, '☐');
-    md = md.replace(/\[x\]/g, '☑');
-    
-    // Horizontal rules
     md = md.replace(/^---$/gm, '<hr>');
-    
-    // Paragraphs
     md = md.replace(/\n\n/g, '</p><p>');
     md = '<p>' + md + '</p>';
-    
-    // Clean up empty paragraphs
     md = md.replace(/<p>\s*<\/p>/g, '');
     md = md.replace(/<p>\s*(<h[1-6]>)/g, '$1');
     md = md.replace(/(<\/h[1-6]>)\s*<\/p>/g, '$1');
@@ -1019,34 +684,27 @@ function simpleMarkdown(md) {
     md = md.replace(/(<\/ul>)\s*<\/p>/g, '$1');
     md = md.replace(/<p>\s*(<blockquote>)/g, '$1');
     md = md.replace(/(<\/blockquote>)\s*<\/p>/g, '$1');
-    
     return md;
 }
 
-function setStatus(type, text) {
-    const dot = document.getElementById('statusDot');
-    const txt = document.getElementById('statusText');
-    dot.className = 'status-dot' + (type === 'error' ? ' error' : type === 'loading' ? ' loading' : '');
-    txt.textContent = text;
+function setStatus(t, txt) {
+    document.getElementById('statusDot').className = 'status-dot' + (t === 'error' ? ' error' : t === 'loading' ? ' loading' : '');
+    document.getElementById('statusText').textContent = txt;
 }
 
 function showToast(text, type = 'success') {
     const toast = document.getElementById('toast');
-    const icon = toast.querySelector('i');
     toast.className = `toast ${type}`;
-    icon.className = type === 'success' ? 'fas fa-check-circle' : 'fas fa-exclamation-circle';
+    toast.querySelector('i').className = type === 'success' ? 'fas fa-check-circle' : 'fas fa-exclamation-circle';
     document.getElementById('toastText').textContent = text;
     toast.classList.add('show');
     setTimeout(() => toast.classList.remove('show'), 3000);
 }
 
-function openInGitHub() {
-    if (!currentFilePath) return;
-    window.open(toGitHubEditUrl(currentFilePath), '_blank');
-}
+function openInGitHub() { if (currentFilePath) window.open(toGitHubEditUrl(currentFilePath), '_blank'); }
 
 function revertChanges() {
-    if (!confirm('¿Deshacer todos los cambios?')) return;
+    if (!confirm('¿Deshacer cambios?')) return;
     document.getElementById('editor').value = originalContent;
     isModified = false;
     document.getElementById('modifiedBadge').style.display = 'none';
@@ -1054,7 +712,6 @@ function revertChanges() {
     showToast('Cambios revertidos');
 }
 
-// ===== SAVE FLOW =====
 function saveFile() {
     if (!currentFilePath) return;
     document.getElementById('commitMessage').value = `Update ${currentFilePath}`;
@@ -1062,32 +719,21 @@ function saveFile() {
     document.getElementById('commitMessage').focus();
 }
 
-function closeModal() {
-    document.getElementById('commitModal').classList.remove('active');
-}
+function closeModal() { document.getElementById('commitModal').classList.remove('active'); }
 
 async function confirmSave() {
     const message = document.getElementById('commitMessage').value.trim();
-    if (!message) {
-        showToast('Escribe un mensaje de commit', 'error');
-        return;
-    }
-
+    if (!message) { showToast('Escribe un mensaje', 'error'); return; }
     const btn = document.getElementById('confirmBtn');
     btn.disabled = true;
     btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Guardando...';
-
     try {
-        const content = document.getElementById('editor').value;
-        await saveFileToGitHub(currentFilePath, content, message);
-        
-        originalContent = content;
+        await saveFileToGitHub(currentFilePath, document.getElementById('editor').value, message);
+        originalContent = document.getElementById('editor').value;
         isModified = false;
         document.getElementById('modifiedBadge').style.display = 'none';
-        
         closeModal();
-        showToast('✅ Guardado. GitHub Actions desplegará los cambios automáticamente.');
-        
+        showToast('✅ Guardado. Deploy automático en ~2 min.');
         setStatus('ok', 'Guardado — deploy en progreso...');
         setTimeout(() => setStatus('ok', 'Conectado a GitHub'), 5000);
     } catch (err) {
@@ -1099,39 +745,37 @@ async function confirmSave() {
     }
 }
 
-// ===== EVENT LISTENERS =====
+// ===== EVENTS =====
 document.getElementById('editor').addEventListener('input', () => {
     isModified = true;
     document.getElementById('modifiedBadge').style.display = 'inline';
     updatePreview();
 });
 
-// Tab support in textarea
-document.getElementById('editor').addEventListener('keydown', (e) => {
+document.getElementById('editor').addEventListener('keydown', e => {
     if (e.key === 'Tab') {
         e.preventDefault();
-        const start = e.target.selectionStart;
-        const end = e.target.selectionEnd;
-        e.target.value = e.target.value.substring(0, start) + '  ' + e.target.value.substring(end);
-        e.target.selectionStart = e.target.selectionEnd = start + 2;
+        const s = e.target.selectionStart, end = e.target.selectionEnd;
+        e.target.value = e.target.value.substring(0, s) + '  ' + e.target.value.substring(end);
+        e.target.selectionStart = e.target.selectionEnd = s + 2;
     }
 });
 
-// Ctrl+S to save
-document.addEventListener('keydown', (e) => {
-    if ((e.ctrlKey || e.metaKey) && e.key === 's') {
-        e.preventDefault();
-        if (currentFilePath) saveFile();
-    }
-});
-
-// Close modal on Escape
-document.addEventListener('keydown', (e) => {
+document.addEventListener('keydown', e => {
+    if ((e.ctrlKey || e.metaKey) && e.key === 's') { e.preventDefault(); if (currentFilePath) saveFile(); }
     if (e.key === 'Escape') closeModal();
 });
 
+document.getElementById('passwordInput').addEventListener('keydown', e => {
+    if (e.key === 'Enter') attemptLogin();
+});
+
 // ===== INIT =====
-renderFileTree();
+if (checkSession()) {
+    showAdmin();
+} else {
+    document.getElementById('loginScreen').style.display = 'flex';
+}
 </script>
 </body>
 </html>

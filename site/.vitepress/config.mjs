@@ -99,7 +99,7 @@ export default defineConfig({
           { text: '🤖 AI Security', link: '/roles/ai-security/' },
         ]
       },
-      { text: '✏️ Editar', link: '/admin.html' },
+      // Admin link removed for security — access via direct URL only
     ],
 
     // Sidebar
