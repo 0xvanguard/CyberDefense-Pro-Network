@@ -5,9 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CDPN Admin — Editor de Contenido</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <meta name="robots" content="noindex, nofollow">
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data:; connect-src 'self' https://api.github.com; frame-ancestors 'none'">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
@@ -77,6 +80,12 @@
         .login-btn:disabled { opacity: 0.5; cursor: not-allowed; }
         .login-error {
             color: var(--danger);
+            font-size: 0.875rem;
+            margin-top: 0.75rem;
+            display: none;
+        }
+        .login-rate-limit {
+            color: var(--warning);
             font-size: 0.875rem;
             margin-top: 0.75rem;
             display: none;
@@ -248,11 +257,14 @@
         <h1>CDPN Admin</h1>
         <p>Editor de contenido — Acceso restringido</p>
         <input type="password" class="login-input" id="passwordInput" placeholder="Contraseña" autocomplete="off">
-        <button class="login-btn" id="loginBtn" onclick="attemptLogin()">
+        <button class="login-btn" id="loginBtn">
             <i class="fas fa-lock"></i> Entrar
         </button>
         <div class="login-error" id="loginError">
             <i class="fas fa-exclamation-triangle"></i> Contraseña incorrecta
+        </div>
+        <div class="login-rate-limit" id="loginRateLimit">
+            <i class="fas fa-clock"></i> <span id="rateLimitText">Demasiados intentos. Espera 30 segundos.</span>
         </div>
         <div class="login-hint">
             <i class="fas fa-shield-halved"></i> Solo usuarios autorizados pueden editar contenido
@@ -272,10 +284,10 @@
                 <span class="status-dot" id="statusDot"></span>
                 <span id="statusText">Conectado a GitHub</span>
             </div>
-            <button class="btn btn-ghost btn-sm" onclick="logout()">
+            <button class="btn btn-ghost btn-sm" id="logoutBtn">
                 <i class="fas fa-sign-out-alt"></i> Salir
             </button>
-            <a href="https://github.com/0xvanguard/CyberDefense-Pro-Network" target="_blank" class="btn btn-ghost btn-sm">
+            <a href="https://github.com/0xvanguard/CyberDefense-Pro-Network" target="_blank" rel="noopener noreferrer" class="btn btn-ghost btn-sm">
                 <i class="fab fa-github"></i> Repo
             </a>
         </div>
@@ -296,13 +308,13 @@
                     </span>
                 </div>
                 <div class="editor-toolbar-right">
-                    <button class="btn btn-ghost btn-sm" onclick="openInGitHub()" title="Abrir en GitHub">
+                    <button class="btn btn-ghost btn-sm" id="openGitHubBtn" title="Abrir en GitHub">
                         <i class="fab fa-github"></i> GitHub
                     </button>
-                    <button class="btn btn-ghost btn-sm" onclick="revertChanges()" title="Deshacer">
+                    <button class="btn btn-ghost btn-sm" id="revertBtn" title="Deshacer">
                         <i class="fas fa-undo"></i> Revertir
                     </button>
-                    <button class="btn btn-success btn-sm" onclick="saveFile()" id="saveBtn">
+                    <button class="btn btn-success btn-sm" id="saveBtn">
                         <i class="fas fa-save"></i> Guardar
                     </button>
                 </div>
@@ -332,10 +344,10 @@
 <div class="modal-overlay" id="commitModal">
     <div class="modal">
         <h3><i class="fas fa-paper-plane"></i> Guardar Cambios</h3>
-        <input type="text" class="modal-input" id="commitMessage" placeholder="Mensaje del commit">
+        <input type="text" class="modal-input" id="commitMessage" placeholder="Mensaje del commit" maxlength="200">
         <div class="modal-actions">
-            <button class="btn btn-ghost" onclick="closeModal()">Cancelar</button>
-            <button class="btn btn-success" onclick="confirmSave()" id="confirmBtn">
+            <button class="btn btn-ghost" id="cancelModalBtn">Cancelar</button>
+            <button class="btn btn-success" id="confirmBtn">
                 <i class="fas fa-check"></i> Confirmar
             </button>
         </div>
@@ -349,9 +361,78 @@
 </div>
 
 <script>
+// ===== SECURITY UTILITIES =====
+
+/**
+ * Sanitize string to prevent XSS - use textContent instead of innerHTML when possible
+ */
+function sanitizeText(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+/**
+ * Escape HTML entities for safe insertion
+ */
+function escapeHtml(str) {
+    const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
+    return String(str).replace(/[&<>"']/g, c => map[c]);
+}
+
+/**
+ * Rate limiter for login attempts
+ */
+const RateLimiter = {
+    MAX_ATTEMPTS: 5,
+    WINDOW_MS: 30000, // 30 seconds
+    COOLDOWN_MS: 30000,
+    
+    getAttempts() {
+        try {
+            const data = JSON.parse(localStorage.getItem('cdpn_rate_limit') || '{}');
+            return data;
+        } catch { return { count: 0, firstAttempt: 0 }; }
+    },
+    
+    recordAttempt() {
+        const data = this.getAttempts();
+        const now = Date.now();
+        
+        // Reset if window expired
+        if (now - data.firstAttempt > this.WINDOW_MS) {
+            data.count = 1;
+            data.firstAttempt = now;
+        } else {
+            data.count++;
+        }
+        
+        localStorage.setItem('cdpn_rate_limit', JSON.stringify(data));
+        return data;
+    },
+    
+    isBlocked() {
+        const data = this.getAttempts();
+        const now = Date.now();
+        
+        if (data.count >= this.MAX_ATTEMPTS) {
+            const timeLeft = this.COOLDOWN_MS - (now - data.firstAttempt);
+            if (timeLeft > 0) {
+                return { blocked: true, timeLeft: Math.ceil(timeLeft / 1000) };
+            }
+            // Reset after cooldown
+            localStorage.removeItem('cdpn_rate_limit');
+            return { blocked: false };
+        }
+        return { blocked: false };
+    },
+    
+    reset() {
+        localStorage.removeItem('cdpn_rate_limit');
+    }
+};
+
 // ===== AUTH CONFIG =====
-// Password: cdpn-admin-2026 (SHA-256 hashed)
-// To change password: run in console: await crypto.subtle.digest('SHA-256', new TextEncoder().encode('new-password')).then(h => Array.from(new Uint8Array(h)).map(b=>b.toString(16).padStart(2,'0')).join(''))
 const AUTH_HASH = 'e815b74fffaab8809d615029776c6fa6cfeec3154ab940c3bb4b889be64e59de';
 const SESSION_KEY = 'cdpn_admin_session';
 const SESSION_DURATION = 24 * 60 * 60 * 1000; // 24 hours
@@ -390,16 +471,30 @@ function logout() {
 }
 
 async function attemptLogin() {
+    // Check rate limit
+    const rateCheck = RateLimiter.isBlocked();
+    if (rateCheck.blocked) {
+        const rateLimitEl = document.getElementById('loginRateLimit');
+        const rateLimitText = document.getElementById('rateLimitText');
+        rateLimitText.textContent = `Demasiados intentos. Espera ${rateCheck.timeLeft} segundos.`;
+        rateLimitEl.style.display = 'block';
+        return;
+    }
+    
     const password = document.getElementById('passwordInput').value;
     if (!password) return;
     
     const btn = document.getElementById('loginBtn');
     btn.disabled = true;
-    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Verificando...';
+    btn.textContent = 'Verificando...';
+    
+    // Record attempt
+    RateLimiter.recordAttempt();
     
     const hash = await hashPassword(password);
     
     if (hash === AUTH_HASH) {
+        RateLimiter.reset(); // Reset on success
         saveSession(hash);
         showAdmin();
     } else {
@@ -407,10 +502,19 @@ async function attemptLogin() {
         setTimeout(() => {
             document.getElementById('loginError').style.display = 'none';
         }, 3000);
+        
+        // Check if now blocked
+        const newRateCheck = RateLimiter.isBlocked();
+        if (newRateCheck.blocked) {
+            const rateLimitEl = document.getElementById('loginRateLimit');
+            const rateLimitText = document.getElementById('rateLimitText');
+            rateLimitText.textContent = `Demasiados intentos. Espera ${newRateCheck.timeLeft} segundos.`;
+            rateLimitEl.style.display = 'block';
+        }
     }
     
     btn.disabled = false;
-    btn.innerHTML = '<i class="fas fa-lock"></i> Entrar';
+    btn.textContent = 'Entrar';
 }
 
 function showAdmin() {
@@ -585,7 +689,7 @@ async function saveFileToGitHub(filePath, content, message) {
 // ===== UI =====
 function renderFileTree() {
     const tree = document.getElementById('fileTree');
-    tree.innerHTML = '';
+    tree.textContent = ''; // Clear safely
     FILE_TREE.forEach(item => tree.appendChild(createTreeItem(item, 0)));
 }
 
@@ -595,16 +699,31 @@ function createTreeItem(item, depth) {
         const div = document.createElement('div');
         div.className = 'file-item';
         div.style.paddingLeft = `${0.75 + depth * 1.25}rem`;
-        div.innerHTML = `<i class="fas fa-chevron-right folder" style="font-size:0.6rem;transition:transform 0.2s;"></i> <i class="fas fa-folder folder"></i> ${item.name}`;
+        
+        // Use textContent for safe rendering
+        const chevron = document.createElement('i');
+        chevron.className = 'fas fa-chevron-right folder';
+        chevron.style.cssText = 'font-size:0.6rem;transition:transform 0.2s;';
+        
+        const folderIcon = document.createElement('i');
+        folderIcon.className = 'fas fa-folder folder';
+        
+        const nameSpan = document.createElement('span');
+        nameSpan.textContent = ' ' + item.name;
+        
+        div.appendChild(chevron);
+        div.appendChild(folderIcon);
+        div.appendChild(nameSpan);
+        
         const childList = document.createElement('ul');
         childList.className = 'folder-children';
         childList.style.display = 'none';
         if (item.children) item.children.forEach(c => childList.appendChild(createTreeItem(c, depth + 1)));
+        
         div.addEventListener('click', () => {
-            const icon = div.querySelector('.fa-chevron-right');
             const open = childList.style.display !== 'none';
             childList.style.display = open ? 'none' : 'block';
-            icon.style.transform = open ? '' : 'rotate(90deg)';
+            chevron.style.transform = open ? '' : 'rotate(90deg)';
         });
         li.appendChild(div);
         li.appendChild(childList);
@@ -614,7 +733,16 @@ function createTreeItem(item, depth) {
         const div = document.createElement('div');
         div.className = 'file-item';
         div.style.paddingLeft = `${0.75 + depth * 1.25}rem`;
-        div.innerHTML = `<i class="fas fa-file-alt file-md"></i> ${item.name}`;
+        
+        // Use textContent for safe rendering
+        const fileIcon = document.createElement('i');
+        fileIcon.className = 'fas fa-file-alt file-md';
+        
+        const nameSpan = document.createElement('span');
+        nameSpan.textContent = ' ' + item.name;
+        
+        div.appendChild(fileIcon);
+        div.appendChild(nameSpan);
         div.dataset.path = item.path;
         div.addEventListener('click', () => loadFile(item.path));
         li.appendChild(div);
@@ -637,42 +765,76 @@ async function loadFile(filePath) {
         document.getElementById('editorContainer').style.display = 'grid';
         document.getElementById('emptyState').style.display = 'none';
         updatePreview();
+        
+        // Update active state safely
         document.querySelectorAll('.file-item').forEach(el => el.classList.remove('active'));
-        const active = document.querySelector(`[data-path="${filePath}"]`);
+        const active = document.querySelector('[data-path="' + CSS.escape(filePath) + '"]');
         if (active) active.classList.add('active');
+        
         setStatus('ok', 'Conectado a GitHub');
     } catch (err) {
-        setStatus('error', `Error: ${err.message}`);
-        showToast(`Error: ${err.message}`, 'error');
+        setStatus('error', 'Error: ' + err.message);
+        showToast('Error: ' + err.message, 'error');
     }
 }
 
 function updatePreview() {
     const md = document.getElementById('editor').value;
-    document.getElementById('preview').innerHTML = simpleMarkdown(md);
+    const previewEl = document.getElementById('preview');
+    // Use textContent for safe rendering, then parse markdown
+    previewEl.innerHTML = simpleMarkdown(md);
 }
 
+/**
+ * Safe markdown parser - escapes HTML before processing
+ */
 function simpleMarkdown(md) {
+    // First, escape any HTML in the source to prevent XSS
+    md = escapeHtml(md);
+    
+    // Remove frontmatter
     md = md.replace(/^---[\s\S]*?---\n*/m, '');
+    
+    // Headers
     md = md.replace(/^### (.+)$/gm, '<h3>$1</h3>');
     md = md.replace(/^## (.+)$/gm, '<h2>$1</h2>');
     md = md.replace(/^# (.+)$/gm, '<h1>$1</h1>');
+    
+    // Code blocks
     md = md.replace(/```(\w*)\n([\s\S]*?)```/g, '<pre><code>$2</code></pre>');
+    
+    // Inline code
     md = md.replace(/`([^`]+)`/g, '<code>$1</code>');
+    
+    // Bold and italic
     md = md.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
     md = md.replace(/\*(.+?)\*/g, '<em>$1</em>');
+    
+    // Links
     md = md.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" style="color:var(--accent)">$1</a>');
-    md = md.replace(/^> (.+)$/gm, '<blockquote>$1</blockquote>');
-    md = md.replace(/\|(.+)\|\n\|[-| ]+\|\n((?:\|.+\|\n?)*)/g, (m, h, b) => {
-        const th = h.split('|').map(x => `<th>${x.trim()}</th>`).join('');
-        const tr = b.trim().split('\n').map(r => `<tr>${r.split('|').map(c => `<td>${c.trim()}</td>`).join('')}</tr>`).join('');
-        return `<table><thead><tr>${th}</tr></thead><tbody>${tr}</tbody></table>`;
+    
+    // Blockquotes
+    md = md.replace(/^&gt; (.+)$/gm, '<blockquote>$1</blockquote>');
+    
+    // Tables
+    md = md.replace(/\|(.+)\|\n\|[-| ]+\|\n((?:\|.+|\n?)*)/g, (m, h, b) => {
+        const th = h.split('|').map(x => '<th>' + x.trim() + '</th>').join('');
+        const tr = b.trim().split('\n').map(r => '<tr>' + r.split('|').map(c => '<td>' + c.trim() + '</td>').join('') + '</tr>').join('');
+        return '<table><thead><tr>' + th + '</tr></thead><tbody>' + tr + '</tbody></table>';
     });
+    
+    // Lists
     md = md.replace(/^- (.+)$/gm, '<li>$1</li>');
     md = md.replace(/(<li>.*<\/li>\n?)+/g, '<ul>$&</ul>');
+    
+    // Horizontal rules
     md = md.replace(/^---$/gm, '<hr>');
+    
+    // Paragraphs
     md = md.replace(/\n\n/g, '</p><p>');
     md = '<p>' + md + '</p>';
+    
+    // Clean up empty paragraphs
     md = md.replace(/<p>\s*<\/p>/g, '');
     md = md.replace(/<p>\s*(<h[1-6]>)/g, '$1');
     md = md.replace(/(<\/h[1-6]>)\s*<\/p>/g, '$1');
@@ -684,6 +846,7 @@ function simpleMarkdown(md) {
     md = md.replace(/(<\/ul>)\s*<\/p>/g, '$1');
     md = md.replace(/<p>\s*(<blockquote>)/g, '$1');
     md = md.replace(/(<\/blockquote>)\s*<\/p>/g, '$1');
+    
     return md;
 }
 
@@ -694,7 +857,7 @@ function setStatus(t, txt) {
 
 function showToast(text, type = 'success') {
     const toast = document.getElementById('toast');
-    toast.className = `toast ${type}`;
+    toast.className = 'toast ' + type;
     toast.querySelector('i').className = type === 'success' ? 'fas fa-check-circle' : 'fas fa-exclamation-circle';
     document.getElementById('toastText').textContent = text;
     toast.classList.add('show');
@@ -714,7 +877,7 @@ function revertChanges() {
 
 function saveFile() {
     if (!currentFilePath) return;
-    document.getElementById('commitMessage').value = `Update ${currentFilePath}`;
+    document.getElementById('commitMessage').value = 'Update ' + currentFilePath;
     document.getElementById('commitModal').classList.add('active');
     document.getElementById('commitMessage').focus();
 }
@@ -724,9 +887,13 @@ function closeModal() { document.getElementById('commitModal').classList.remove(
 async function confirmSave() {
     const message = document.getElementById('commitMessage').value.trim();
     if (!message) { showToast('Escribe un mensaje', 'error'); return; }
+    
+    // Validate commit message length
+    if (message.length > 200) { showToast('Mensaje muy largo (max 200 chars)', 'error'); return; }
+    
     const btn = document.getElementById('confirmBtn');
     btn.disabled = true;
-    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Guardando...';
+    btn.textContent = 'Guardando...';
     try {
         await saveFileToGitHub(currentFilePath, document.getElementById('editor').value, message);
         originalContent = document.getElementById('editor').value;
@@ -737,15 +904,23 @@ async function confirmSave() {
         setStatus('ok', 'Guardado — deploy en progreso...');
         setTimeout(() => setStatus('ok', 'Conectado a GitHub'), 5000);
     } catch (err) {
-        showToast(`Error: ${err.message}`, 'error');
-        setStatus('error', `Error: ${err.message}`);
+        showToast('Error: ' + err.message, 'error');
+        setStatus('error', 'Error: ' + err.message);
     } finally {
         btn.disabled = false;
-        btn.innerHTML = '<i class="fas fa-check"></i> Confirmar';
+        btn.textContent = 'Confirmar';
     }
 }
 
-// ===== EVENTS =====
+// ===== EVENT LISTENERS (using addEventListener, not inline) =====
+document.getElementById('loginBtn').addEventListener('click', attemptLogin);
+document.getElementById('logoutBtn').addEventListener('click', logout);
+document.getElementById('openGitHubBtn').addEventListener('click', openInGitHub);
+document.getElementById('revertBtn').addEventListener('click', revertChanges);
+document.getElementById('saveBtn').addEventListener('click', saveFile);
+document.getElementById('cancelModalBtn').addEventListener('click', closeModal);
+document.getElementById('confirmBtn').addEventListener('click', confirmSave);
+
 document.getElementById('editor').addEventListener('input', () => {
     isModified = true;
     document.getElementById('modifiedBadge').style.display = 'inline';
@@ -768,6 +943,11 @@ document.addEventListener('keydown', e => {
 
 document.getElementById('passwordInput').addEventListener('keydown', e => {
     if (e.key === 'Enter') attemptLogin();
+});
+
+// Close modal on overlay click
+document.getElementById('commitModal').addEventListener('click', e => {
+    if (e.target === e.currentTarget) closeModal();
 });
 
 // ===== INIT =====
