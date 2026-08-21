@@ -1,9 +1,32 @@
 ---
 title: "Cómo conseguí mi primer empleo en ciberseguridad"
 description: "Camino personal, certificaciones útiles y tips de entrevista"
+author: Equipo CDPN
+date: 2026-07-06
+tags: [carrera, certificaciones, empleo, entrevista]
+readingTime: 5 min
 ---
 
+<script setup>
+import { useData } from 'vitepress'
+const { frontmatter } = useData()
+</script>
+
+<style>
+.article-meta { display:flex; gap:0.8rem; flex-wrap:wrap; margin:0.8rem 0 1.5rem; font-size:0.85rem; color:var(--vp-c-text-3); }
+.article-meta span { background:var(--vp-c-default-soft); padding:2px 10px; border-radius:6px; }
+.article-meta .accent { background:var(--vp-c-brand-soft); color:var(--vp-c-brand-1); }
+</style>
+
 # Cómo conseguí mi primer empleo en ciberseguridad
+
+<div class="article-meta">
+  <span class="accent">📝 Equipo CDPN</span>
+  <span>📅 6 Julio 2026</span>
+  <span>📖 5 min de lectura</span>
+  <span>🏷️ Carrera</span>
+  <span>🏷️ Empleo</span>
+</div>
 
 ## Mi camino
 

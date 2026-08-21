@@ -1,9 +1,32 @@
 ---
 title: "Nmap: la guía definitiva para principiantes"
 description: "20 comandos esenciales de Nmap con casos de uso reales"
+author: Equipo CDPN
+date: 2026-06-15
+tags: [herramientas, nmap, red-team, enumeracion]
+readingTime: 6 min
 ---
 
+<script setup>
+import { useData } from 'vitepress'
+const { frontmatter } = useData()
+</script>
+
+<style>
+.article-meta { display:flex; gap:0.8rem; flex-wrap:wrap; margin:0.8rem 0 1.5rem; font-size:0.85rem; color:var(--vp-c-text-3); }
+.article-meta span { background:var(--vp-c-default-soft); padding:2px 10px; border-radius:6px; }
+.article-meta .accent { background:var(--vp-c-brand-soft); color:var(--vp-c-brand-1); }
+</style>
+
 # Nmap: la guía definitiva para principiantes
+
+<div class="article-meta">
+  <span class="accent">📝 Equipo CDPN</span>
+  <span>📅 15 Junio 2026</span>
+  <span>📖 6 min de lectura</span>
+  <span>🏷️ Herramientas</span>
+  <span>🏷️ Red Team</span>
+</div>
 
 ## ¿Qué es Nmap?
 

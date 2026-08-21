@@ -1,9 +1,32 @@
 ---
 title: "Cómo crear tu laboratorio de ciberseguridad"
 description: "Hardware mínimo, software recomendado y labs con Docker"
+author: Equipo CDPN
+date: 2026-07-13
+tags: [labs, docker, hardware, setup]
+readingTime: 4 min
 ---
 
+<script setup>
+import { useData } from 'vitepress'
+const { frontmatter } = useData()
+</script>
+
+<style>
+.article-meta { display:flex; gap:0.8rem; flex-wrap:wrap; margin:0.8rem 0 1.5rem; font-size:0.85rem; color:var(--vp-c-text-3); }
+.article-meta span { background:var(--vp-c-default-soft); padding:2px 10px; border-radius:6px; }
+.article-meta .accent { background:var(--vp-c-brand-soft); color:var(--vp-c-brand-1); }
+</style>
+
 # Cómo crear tu laboratorio de ciberseguridad
+
+<div class="article-meta">
+  <span class="accent">📝 Equipo CDPN</span>
+  <span>📅 13 Julio 2026</span>
+  <span>📖 4 min de lectura</span>
+  <span>🏷️ Labs</span>
+  <span>🏷️ Docker</span>
+</div>
 
 ## ¿Por qué un lab propio?
 

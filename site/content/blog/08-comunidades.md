@@ -1,9 +1,32 @@
 ---
 title: "Las 10 mejores comunidades de ciberseguridad"
 description: "Discords, foros, redes sociales y eventos para conectarte"
+author: Equipo CDPN
+date: 2026-07-20
+tags: [comunidad, networking, discord, eventos]
+readingTime: 3 min
 ---
 
+<script setup>
+import { useData } from 'vitepress'
+const { frontmatter } = useData()
+</script>
+
+<style>
+.article-meta { display:flex; gap:0.8rem; flex-wrap:wrap; margin:0.8rem 0 1.5rem; font-size:0.85rem; color:var(--vp-c-text-3); }
+.article-meta span { background:var(--vp-c-default-soft); padding:2px 10px; border-radius:6px; }
+.article-meta .accent { background:var(--vp-c-brand-soft); color:var(--vp-c-brand-1); }
+</style>
+
 # Las 10 mejores comunidades de ciberseguridad
+
+<div class="article-meta">
+  <span class="accent">📝 Equipo CDPN</span>
+  <span>📅 20 Julio 2026</span>
+  <span>📖 3 min de lectura</span>
+  <span>🏷️ Comunidad</span>
+  <span>🏷️ Networking</span>
+</div>
 
 ## ¿Por qué importa la comunidad?
 
@@ -14,7 +37,7 @@ La ciberseguridad es un campo que **evoluciona constantemente**. Estar conectado
 ### 1. 🛡️ CDPN (CyberDefense Pro Network)
 - **Tipo**: Plataforma de aprendizaje + Discord
 - **Para qué**: Labs interactivos, gamificación, roles profesionales
-- **Enlace**: [CyberDefense Pro Network](/CyberDefense-Pro-Network/)
+- **Enlace**: [CyberDefense Pro Network](/)
 
 ### 2. 🔴 Hack The Box
 - **Tipo**: Plataforma de CTFs y máquinas

@@ -1,9 +1,32 @@
 ---
 title: "SQL Injection: el ataque más común explicado"
 description: "Qué es, cómo funciona y cómo proteger tus aplicaciones"
+author: Equipo CDPN
+date: 2026-06-22
+tags: [web, owasp, sql-injection, appsec]
+readingTime: 5 min
 ---
 
+<script setup>
+import { useData } from 'vitepress'
+const { frontmatter } = useData()
+</script>
+
+<style>
+.article-meta { display:flex; gap:0.8rem; flex-wrap:wrap; margin:0.8rem 0 1.5rem; font-size:0.85rem; color:var(--vp-c-text-3); }
+.article-meta span { background:var(--vp-c-default-soft); padding:2px 10px; border-radius:6px; }
+.article-meta .accent { background:var(--vp-c-brand-soft); color:var(--vp-c-brand-1); }
+</style>
+
 # SQL Injection: el ataque más común explicado
+
+<div class="article-meta">
+  <span class="accent">📝 Equipo CDPN</span>
+  <span>📅 22 Junio 2026</span>
+  <span>📖 5 min de lectura</span>
+  <span>🏷️ Web</span>
+  <span>🏷️ OWASP</span>
+</div>
 
 ## ¿Qué es SQL Injection?
 

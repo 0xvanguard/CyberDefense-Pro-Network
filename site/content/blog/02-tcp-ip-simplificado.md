@@ -1,9 +1,32 @@
 ---
 title: "TCP/IP explicado como si tuvieras 5 años"
 description: "Los fundamentos de redes que toda carrera en ciberseguridad requiere"
+author: Equipo CDPN
+date: 2026-06-08
+tags: [redes, tcp-ip, fundamentos, networking]
+readingTime: 4 min
 ---
 
+<script setup>
+import { useData } from 'vitepress'
+const { frontmatter } = useData()
+</script>
+
+<style>
+.article-meta { display:flex; gap:0.8rem; flex-wrap:wrap; margin:0.8rem 0 1.5rem; font-size:0.85rem; color:var(--vp-c-text-3); }
+.article-meta span { background:var(--vp-c-default-soft); padding:2px 10px; border-radius:6px; }
+.article-meta .accent { background:var(--vp-c-brand-soft); color:var(--vp-c-brand-1); }
+</style>
+
 # TCP/IP explicado como si tuvieras 5 años
+
+<div class="article-meta">
+  <span class="accent">📝 Equipo CDPN</span>
+  <span>📅 8 Junio 2026</span>
+  <span>📖 4 min de lectura</span>
+  <span>🏷️ Redes</span>
+  <span>🏷️ Fundamentos</span>
+</div>
 
 ## La analogía del correo postal
 

@@ -1,9 +1,32 @@
 ---
 title: "¿Por qué la ciberseguridad es la carrera del futuro?"
 description: "Estadísticas de demanda laboral, salarios y rutas de aprendizaje en ciberseguridad"
+author: Equipo CDPN
+date: 2026-06-01
+tags: [carrera, mercado-laboral, salarios, fundamentos]
+readingTime: 5 min
 ---
 
+<script setup>
+import { useData } from 'vitepress'
+const { frontmatter } = useData()
+</script>
+
+<style>
+.article-meta { display:flex; gap:0.8rem; flex-wrap:wrap; margin:0.8rem 0 1.5rem; font-size:0.85rem; color:var(--vp-c-text-3); }
+.article-meta span { background:var(--vp-c-default-soft); padding:2px 10px; border-radius:6px; }
+.article-meta .accent { background:var(--vp-c-brand-soft); color:var(--vp-c-brand-1); }
+</style>
+
 # ¿Por qué la ciberseguridad es la carrera del futuro?
+
+<div class="article-meta">
+  <span class="accent">📝 Equipo CDPN</span>
+  <span>📅 1 Junio 2026</span>
+  <span>📖 5 min de lectura</span>
+  <span>🏷️ Carrera</span>
+  <span>🏷️ Mercado Laboral</span>
+</div>
 
 ## La oportunidad que no puedes ignorar
 
@@ -53,4 +76,4 @@ La ciberseguridad no es solo "hacking". Es **proteger personas, empresas y país
 ---
 
 *Artículo publicado en el Blog CDPN — Semana 1*
-*Más info: [CyberDefense Pro Network](/CyberDefense-Pro-Network/)*
+*Más info: [CyberDefense Pro Network](/)*

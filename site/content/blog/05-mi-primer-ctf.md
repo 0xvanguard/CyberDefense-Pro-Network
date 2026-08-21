@@ -1,9 +1,32 @@
 ---
 title: "Mi primer CTF: lo que aprendí"
 description: "Experiencia personal, tips para empezar y recursos recomendados"
+author: Equipo CDPN
+date: 2026-06-29
+tags: [ctf, practica, competiciones, experiencia]
+readingTime: 4 min
 ---
 
+<script setup>
+import { useData } from 'vitepress'
+const { frontmatter } = useData()
+</script>
+
+<style>
+.article-meta { display:flex; gap:0.8rem; flex-wrap:wrap; margin:0.8rem 0 1.5rem; font-size:0.85rem; color:var(--vp-c-text-3); }
+.article-meta span { background:var(--vp-c-default-soft); padding:2px 10px; border-radius:6px; }
+.article-meta .accent { background:var(--vp-c-brand-soft); color:var(--vp-c-brand-1); }
+</style>
+
 # Mi primer CTF: lo que aprendí
+
+<div class="article-meta">
+  <span class="accent">📝 Equipo CDPN</span>
+  <span>📅 29 Junio 2026</span>
+  <span>📖 4 min de lectura</span>
+  <span>🏷️ CTF</span>
+  <span>🏷️ Práctica</span>
+</div>
 
 ## ¿Qué es un CTF?
 
@@ -11,7 +34,7 @@ description: "Experiencia personal, tips para empezar y recursos recomendados"
 
 ## Mi experiencia
 
-Cuando empecé en mi primer CTF, no sabía ni什么是 Nmap. Hoy puedo decirte que **los CTFs cambiaron mi carrera**.
+Cuando empecé en mi primer CTF, no sabía ni qué era Nmap. Hoy puedo decirte que **los CTFs cambiaron mi carrera**.
 
 ### Lo que encontré:
 - **Crypto** — Descifrar mensajes con César, Vigenère, RSA
