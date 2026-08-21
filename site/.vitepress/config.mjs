@@ -122,6 +122,7 @@ export default defineConfig({
             { text: '07 — Ética y Leyes', link: '/modules/fundamentos/07-etica-y-leyes' },
             { text: '08 — Herramientas Esenciales', link: '/modules/fundamentos/08-herramientas-esenciales' },
             { text: '09 — Cómo Seguir', link: '/modules/fundamentos/09-como-seguir-este-repo' },
+            { text: '10 — Linux para Ciberseguridad', link: '/modules/fundamentos/10-linux-ciberseguridad' },
           ]
         },
         {
