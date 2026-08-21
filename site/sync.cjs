@@ -66,6 +66,58 @@ const SYNC_MAP = {
   'labs/avanzado/forensics-01/README.md': 'labs/avanzado/forensics-01.md',
   'labs/avanzado/reverse-eng-01/README.md': 'labs/avanzado/reverse-eng-01.md',
   'labs/avanzado/net-forensics-01/README.md': 'labs/avanzado/net-forensics-01.md',
+
+  // ============ ROLES PROFESIONALES ============
+
+  // Red Team Roles (01-CIBERSEGURIDAD)
+  '01-CIBERSEGURIDAD/pentester-red-team/README.md': 'roles/red-team/pentester-red-team.md',
+  '01-CIBERSEGURIDAD/penetration-tester-specialized/README.md': 'roles/red-team/penetration-tester-specialized.md',
+  '01-CIBERSEGURIDAD/threat-hunter/README.md': 'roles/red-team/threat-hunter.md',
+  '01-CIBERSEGURIDAD/threat-intelligence/README.md': 'roles/red-team/threat-intelligence.md',
+  '01-CIBERSEGURIDAD/bug-bounty-hunting/README.md': 'roles/red-team/bug-bounty-hunting.md',
+  '01-CIBERSEGURIDAD/malware-analyst/README.md': 'roles/red-team/malware-analyst.md',
+  '01-CIBERSEGURIDAD/cryptographer/README.md': 'roles/red-team/cryptographer.md',
+  '01-CIBERSEGURIDAD/vulnerability-manager/README.md': 'roles/red-team/vulnerability-manager.md',
+  '01-CIBERSEGURIDAD/forense-digital/README.md': 'roles/red-team/forense-digital.md',
+
+  // Blue Team Roles (01-CIBERSEGURIDAD)
+  '01-CIBERSEGURIDAD/analista-soc/README.md': 'roles/blue-team/analista-soc.md',
+  '01-CIBERSEGURIDAD/security-analyst/README.md': 'roles/blue-team/security-analyst.md',
+  '01-CIBERSEGURIDAD/incident-responder/README.md': 'roles/blue-team/incident-responder.md',
+  '01-CIBERSEGURIDAD/seguridad-defensiva-blue-team/README.md': 'roles/blue-team/seguridad-defensiva-blue-team.md',
+  '01-CIBERSEGURIDAD/seguridad-endpoint/README.md': 'roles/blue-team/seguridad-endpoint.md',
+  '01-CIBERSEGURIDAD/seguridad-redes/README.md': 'roles/blue-team/seguridad-redes.md',
+  '01-CIBERSEGURIDAD/seguridad-operacional/README.md': 'roles/blue-team/seguridad-operacional.md',
+
+  // Engineering Roles (01-CIBERSEGURIDAD)
+  '01-CIBERSEGURIDAD/security-engineer/README.md': 'roles/engineering/security-engineer.md',
+  '01-CIBERSEGURIDAD/security-consultant/README.md': 'roles/engineering/security-consultant.md',
+  '01-CIBERSEGURIDAD/arquitecto-seguridad/README.md': 'roles/engineering/arquitecto-seguridad.md',
+  '01-CIBERSEGURIDAD/seguridad-nube/README.md': 'roles/engineering/seguridad-nube.md',
+  '01-CIBERSEGURIDAD/seguridad-aplicaciones/README.md': 'roles/engineering/seguridad-aplicaciones.md',
+  '01-CIBERSEGURIDAD/seguridad-iot-ot/README.md': 'roles/engineering/seguridad-iot-ot.md',
+  '01-CIBERSEGURIDAD/seguridad-informacion-datos/README.md': 'roles/engineering/seguridad-informacion-datos.md',
+  '01-CIBERSEGURIDAD/seguridad-cadena-suministro/README.md': 'roles/engineering/seguridad-cadena-suministro.md',
+  '01-CIBERSEGURIDAD/ia-security/README.md': 'roles/engineering/ia-security.md',
+  '01-CIBERSEGURIDAD/grc-compliance/README.md': 'roles/engineering/grc-compliance.md',
+
+  // GRC Roles (02-SEGURIDAD-INFORMACION)
+  '02-SEGURIDAD-INFORMACION/ciso/README.md': 'roles/grc/ciso.md',
+  '02-SEGURIDAD-INFORMACION/data-protection-officer/README.md': 'roles/grc/dpo.md',
+  '02-SEGURIDAD-INFORMACION/risk-manager/README.md': 'roles/grc/risk-manager.md',
+  '02-SEGURIDAD-INFORMACION/auditor-seguridad/README.md': 'roles/grc/auditor-seguridad.md',
+  '02-SEGURIDAD-INFORMACION/iso-27001-lead-implementer/README.md': 'roles/grc/iso-27001.md',
+  '02-SEGURIDAD-INFORMACION/privacy-engineer/README.md': 'roles/grc/privacy-engineer.md',
+  '02-SEGURIDAD-INFORMACION/business-continuity-manager/README.md': 'roles/grc/business-continuity.md',
+
+  // AI Security Roles (03-AI-AGENTS-TOOLS)
+  '03-AI-AGENTS-TOOLS/prompt-engineer-security/README.md': 'roles/ai-security/prompt-engineer-security.md',
+  '03-AI-AGENTS-TOOLS/ai-red-teamer/README.md': 'roles/ai-security/ai-red-teamer.md',
+  '03-AI-AGENTS-TOOLS/ml-security-engineer/README.md': 'roles/ai-security/ml-security-engineer.md',
+  '03-AI-AGENTS-TOOLS/ai-governance-officer/README.md': 'roles/ai-security/ai-governance-officer.md',
+  '03-AI-AGENTS-TOOLS/ai-incident-responder/README.md': 'roles/ai-security/ai-incident-responder.md',
+  '03-AI-AGENTS-TOOLS/ai-supply-chain-security/README.md': 'roles/ai-security/ai-supply-chain-security.md',
+  '03-AI-AGENTS-TOOLS/agentic-security-developer/README.md': 'roles/ai-security/agentic-security-developer.md',
 };
 
 /**

@@ -619,6 +619,53 @@ const GITHUB_PATHS = {
     'labs/avanzado/forensics-01.md': 'labs/avanzado/forensics-01/README.md',
     'labs/avanzado/reverse-eng-01.md': 'labs/avanzado/reverse-eng-01/README.md',
     'labs/avanzado/net-forensics-01.md': 'labs/avanzado/net-forensics-01/README.md',
+
+    // ============ ROLES PROFESIONALES ============
+    // Red Team
+    'roles/red-team/pentester-red-team.md': '01-CIBERSEGURIDAD/pentester-red-team/README.md',
+    'roles/red-team/penetration-tester-specialized.md': '01-CIBERSEGURIDAD/penetration-tester-specialized/README.md',
+    'roles/red-team/threat-hunter.md': '01-CIBERSEGURIDAD/threat-hunter/README.md',
+    'roles/red-team/threat-intelligence.md': '01-CIBERSEGURIDAD/threat-intelligence/README.md',
+    'roles/red-team/bug-bounty-hunting.md': '01-CIBERSEGURIDAD/bug-bounty-hunting/README.md',
+    'roles/red-team/malware-analyst.md': '01-CIBERSEGURIDAD/malware-analyst/README.md',
+    'roles/red-team/cryptographer.md': '01-CIBERSEGURIDAD/cryptographer/README.md',
+    'roles/red-team/vulnerability-manager.md': '01-CIBERSEGURIDAD/vulnerability-manager/README.md',
+    'roles/red-team/forense-digital.md': '01-CIBERSEGURIDAD/forense-digital/README.md',
+    // Blue Team
+    'roles/blue-team/analista-soc.md': '01-CIBERSEGURIDAD/analista-soc/README.md',
+    'roles/blue-team/security-analyst.md': '01-CIBERSEGURIDAD/security-analyst/README.md',
+    'roles/blue-team/incident-responder.md': '01-CIBERSEGURIDAD/incident-responder/README.md',
+    'roles/blue-team/seguridad-defensiva-blue-team.md': '01-CIBERSEGURIDAD/seguridad-defensiva-blue-team/README.md',
+    'roles/blue-team/seguridad-endpoint.md': '01-CIBERSEGURIDAD/seguridad-endpoint/README.md',
+    'roles/blue-team/seguridad-redes.md': '01-CIBERSEGURIDAD/seguridad-redes/README.md',
+    'roles/blue-team/seguridad-operacional.md': '01-CIBERSEGURIDAD/seguridad-operacional/README.md',
+    // Engineering
+    'roles/engineering/security-engineer.md': '01-CIBERSEGURIDAD/security-engineer/README.md',
+    'roles/engineering/security-consultant.md': '01-CIBERSEGURIDAD/security-consultant/README.md',
+    'roles/engineering/arquitecto-seguridad.md': '01-CIBERSEGURIDAD/arquitecto-seguridad/README.md',
+    'roles/engineering/seguridad-nube.md': '01-CIBERSEGURIDAD/seguridad-nube/README.md',
+    'roles/engineering/seguridad-aplicaciones.md': '01-CIBERSEGURIDAD/seguridad-aplicaciones/README.md',
+    'roles/engineering/seguridad-iot-ot.md': '01-CIBERSEGURIDAD/seguridad-iot-ot/README.md',
+    'roles/engineering/seguridad-informacion-datos.md': '01-CIBERSEGURIDAD/seguridad-informacion-datos/README.md',
+    'roles/engineering/seguridad-cadena-suministro.md': '01-CIBERSEGURIDAD/seguridad-cadena-suministro/README.md',
+    'roles/engineering/ia-security.md': '01-CIBERSEGURIDAD/ia-security/README.md',
+    'roles/engineering/grc-compliance.md': '01-CIBERSEGURIDAD/grc-compliance/README.md',
+    // GRC
+    'roles/grc/ciso.md': '02-SEGURIDAD-INFORMACION/ciso/README.md',
+    'roles/grc/dpo.md': '02-SEGURIDAD-INFORMACION/data-protection-officer/README.md',
+    'roles/grc/risk-manager.md': '02-SEGURIDAD-INFORMACION/risk-manager/README.md',
+    'roles/grc/auditor-seguridad.md': '02-SEGURIDAD-INFORMACION/auditor-seguridad/README.md',
+    'roles/grc/iso-27001.md': '02-SEGURIDAD-INFORMACION/iso-27001-lead-implementer/README.md',
+    'roles/grc/privacy-engineer.md': '02-SEGURIDAD-INFORMACION/privacy-engineer/README.md',
+    'roles/grc/business-continuity.md': '02-SEGURIDAD-INFORMACION/business-continuity-manager/README.md',
+    // AI Security
+    'roles/ai-security/prompt-engineer-security.md': '03-AI-AGENTS-TOOLS/prompt-engineer-security/README.md',
+    'roles/ai-security/ai-red-teamer.md': '03-AI-AGENTS-TOOLS/ai-red-teamer/README.md',
+    'roles/ai-security/ml-security-engineer.md': '03-AI-AGENTS-TOOLS/ml-security-engineer/README.md',
+    'roles/ai-security/ai-governance-officer.md': '03-AI-AGENTS-TOOLS/ai-governance-officer/README.md',
+    'roles/ai-security/ai-incident-responder.md': '03-AI-AGENTS-TOOLS/ai-incident-responder/README.md',
+    'roles/ai-security/ai-supply-chain-security.md': '03-AI-AGENTS-TOOLS/ai-supply-chain-security/README.md',
+    'roles/ai-security/agentic-security-developer.md': '03-AI-AGENTS-TOOLS/agentic-security-developer/README.md',
 };
 
 // ===== FILE TREE STRUCTURE =====
@@ -692,6 +739,70 @@ const FILE_TREE = [
                     { name: 'forensics-01.md', path: 'labs/avanzado/forensics-01.md', type: 'file' },
                     { name: 'reverse-eng-01.md', path: 'labs/avanzado/reverse-eng-01.md', type: 'file' },
                     { name: 'net-forensics-01.md', path: 'labs/avanzado/net-forensics-01.md', type: 'file' },
+                ]
+            },
+        ]
+    },
+    {
+        name: '💼 Roles Profesionales', type: 'folder', children: [
+            {
+                name: '🔴 Red Team', type: 'folder', children: [
+                    { name: 'pentester-red-team.md', path: 'roles/red-team/pentester-red-team.md', type: 'file' },
+                    { name: 'penetration-tester.md', path: 'roles/red-team/penetration-tester-specialized.md', type: 'file' },
+                    { name: 'threat-hunter.md', path: 'roles/red-team/threat-hunter.md', type: 'file' },
+                    { name: 'threat-intelligence.md', path: 'roles/red-team/threat-intelligence.md', type: 'file' },
+                    { name: 'bug-bounty.md', path: 'roles/red-team/bug-bounty-hunting.md', type: 'file' },
+                    { name: 'malware-analyst.md', path: 'roles/red-team/malware-analyst.md', type: 'file' },
+                    { name: 'cryptographer.md', path: 'roles/red-team/cryptographer.md', type: 'file' },
+                    { name: 'vuln-manager.md', path: 'roles/red-team/vulnerability-manager.md', type: 'file' },
+                    { name: 'forense-digital.md', path: 'roles/red-team/forense-digital.md', type: 'file' },
+                ]
+            },
+            {
+                name: '🔵 Blue Team', type: 'folder', children: [
+                    { name: 'analista-soc.md', path: 'roles/blue-team/analista-soc.md', type: 'file' },
+                    { name: 'security-analyst.md', path: 'roles/blue-team/security-analyst.md', type: 'file' },
+                    { name: 'incident-responder.md', path: 'roles/blue-team/incident-responder.md', type: 'file' },
+                    { name: 'seguridad-defensiva.md', path: 'roles/blue-team/seguridad-defensiva-blue-team.md', type: 'file' },
+                    { name: 'endpoint.md', path: 'roles/blue-team/seguridad-endpoint.md', type: 'file' },
+                    { name: 'redes.md', path: 'roles/blue-team/seguridad-redes.md', type: 'file' },
+                    { name: 'operacional.md', path: 'roles/blue-team/seguridad-operacional.md', type: 'file' },
+                ]
+            },
+            {
+                name: '🔧 Engineering', type: 'folder', children: [
+                    { name: 'security-engineer.md', path: 'roles/engineering/security-engineer.md', type: 'file' },
+                    { name: 'security-consultant.md', path: 'roles/engineering/security-consultant.md', type: 'file' },
+                    { name: 'arquitecto.md', path: 'roles/engineering/arquitecto-seguridad.md', type: 'file' },
+                    { name: 'cloud.md', path: 'roles/engineering/seguridad-nube.md', type: 'file' },
+                    { name: 'appsec.md', path: 'roles/engineering/seguridad-aplicaciones.md', type: 'file' },
+                    { name: 'iot-ot.md', path: 'roles/engineering/seguridad-iot-ot.md', type: 'file' },
+                    { name: 'data.md', path: 'roles/engineering/seguridad-informacion-datos.md', type: 'file' },
+                    { name: 'supply-chain.md', path: 'roles/engineering/seguridad-cadena-suministro.md', type: 'file' },
+                    { name: 'ia-security.md', path: 'roles/engineering/ia-security.md', type: 'file' },
+                    { name: 'grc.md', path: 'roles/engineering/grc-compliance.md', type: 'file' },
+                ]
+            },
+            {
+                name: '📋 GRC', type: 'folder', children: [
+                    { name: 'ciso.md', path: 'roles/grc/ciso.md', type: 'file' },
+                    { name: 'dpo.md', path: 'roles/grc/dpo.md', type: 'file' },
+                    { name: 'risk-manager.md', path: 'roles/grc/risk-manager.md', type: 'file' },
+                    { name: 'auditor.md', path: 'roles/grc/auditor-seguridad.md', type: 'file' },
+                    { name: 'iso-27001.md', path: 'roles/grc/iso-27001.md', type: 'file' },
+                    { name: 'privacy.md', path: 'roles/grc/privacy-engineer.md', type: 'file' },
+                    { name: 'business-continuity.md', path: 'roles/grc/business-continuity.md', type: 'file' },
+                ]
+            },
+            {
+                name: '🤖 AI Security', type: 'folder', children: [
+                    { name: 'prompt-engineer.md', path: 'roles/ai-security/prompt-engineer-security.md', type: 'file' },
+                    { name: 'ai-red-teamer.md', path: 'roles/ai-security/ai-red-teamer.md', type: 'file' },
+                    { name: 'ml-security.md', path: 'roles/ai-security/ml-security-engineer.md', type: 'file' },
+                    { name: 'ai-governance.md', path: 'roles/ai-security/ai-governance-officer.md', type: 'file' },
+                    { name: 'ai-incident.md', path: 'roles/ai-security/ai-incident-responder.md', type: 'file' },
+                    { name: 'ai-supply-chain.md', path: 'roles/ai-security/ai-supply-chain-security.md', type: 'file' },
+                    { name: 'agentic-dev.md', path: 'roles/ai-security/agentic-security-developer.md', type: 'file' },
                 ]
             },
         ]

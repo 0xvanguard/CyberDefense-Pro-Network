@@ -89,6 +89,16 @@ export default defineConfig({
         ]
       },
       { text: 'Labs', link: '/labs/' },
+      {
+        text: '💼 Roles',
+        items: [
+          { text: '🔴 Red Team', link: '/roles/red-team/' },
+          { text: '🔵 Blue Team', link: '/roles/blue-team/' },
+          { text: '🔧 Engineering', link: '/roles/engineering/' },
+          { text: '📋 GRC', link: '/roles/grc/' },
+          { text: '🤖 AI Security', link: '/roles/ai-security/' },
+        ]
+      },
       { text: '✏️ Editar', link: '/admin.html' },
     ],
 
@@ -190,6 +200,81 @@ export default defineConfig({
               { text: 'reverse-eng-01: Reverse Engineering', link: '/labs/avanzado/reverse-eng-01' },
               { text: 'net-forensics-01: Network Forensics', link: '/labs/avanzado/net-forensics-01' },
             ]},
+          ]
+        }
+      ],
+      '/roles/red-team/': [
+        {
+          text: '🔴 Red Team Roles',
+          items: [
+            { text: '⚔️ Pentester / Red Team', link: '/roles/red-team/pentester-red-team' },
+            { text: '🎯 Penetration Tester', link: '/roles/red-team/penetration-tester-specialized' },
+            { text: '🎯 Threat Hunter', link: '/roles/red-team/threat-hunter' },
+            { text: '🕵️ Threat Intelligence', link: '/roles/red-team/threat-intelligence' },
+            { text: '🏹 Bug Bounty', link: '/roles/red-team/bug-bounty-hunting' },
+            { text: '🦠 Malware Analyst', link: '/roles/red-team/malware-analyst' },
+            { text: '🔢 Cryptographer', link: '/roles/red-team/cryptographer' },
+            { text: '🔎 Vulnerability Manager', link: '/roles/red-team/vulnerability-manager' },
+            { text: '🔬 Forense Digital', link: '/roles/red-team/forense-digital' },
+          ]
+        }
+      ],
+      '/roles/blue-team/': [
+        {
+          text: '🔵 Blue Team Roles',
+          items: [
+            { text: '🚨 Analista SOC', link: '/roles/blue-team/analista-soc' },
+            { text: '🧑‍💻 Security Analyst', link: '/roles/blue-team/security-analyst' },
+            { text: '🚒 Incident Responder', link: '/roles/blue-team/incident-responder' },
+            { text: '🛡️ Seguridad Defensiva', link: '/roles/blue-team/seguridad-defensiva-blue-team' },
+            { text: '💻 Endpoint Security', link: '/roles/blue-team/seguridad-endpoint' },
+            { text: '🌐 Network Security', link: '/roles/blue-team/seguridad-redes' },
+            { text: '🛡️ Operational Security', link: '/roles/blue-team/seguridad-operacional' },
+          ]
+        }
+      ],
+      '/roles/engineering/': [
+        {
+          text: '🔧 Engineering Roles',
+          items: [
+            { text: '🔧 Security Engineer', link: '/roles/engineering/security-engineer' },
+            { text: '💼 Security Consultant', link: '/roles/engineering/security-consultant' },
+            { text: '🏛️ Arquitecto de Seguridad', link: '/roles/engineering/arquitecto-seguridad' },
+            { text: '☁️ Cloud Security', link: '/roles/engineering/seguridad-nube' },
+            { text: '🧱 AppSec', link: '/roles/engineering/seguridad-aplicaciones' },
+            { text: '🏭 IoT/OT Security', link: '/roles/engineering/seguridad-iot-ot' },
+            { text: '🔐 Data Security', link: '/roles/engineering/seguridad-informacion-datos' },
+            { text: '📦 Supply Chain', link: '/roles/engineering/seguridad-cadena-suministro' },
+            { text: '🤖 AI Security', link: '/roles/engineering/ia-security' },
+            { text: '📋 GRC/Compliance', link: '/roles/engineering/grc-compliance' },
+          ]
+        }
+      ],
+      '/roles/grc/': [
+        {
+          text: '📋 GRC Roles',
+          items: [
+            { text: '👔 CISO', link: '/roles/grc/ciso' },
+            { text: '🛡️ DPO', link: '/roles/grc/dpo' },
+            { text: '📊 Risk Manager', link: '/roles/grc/risk-manager' },
+            { text: '📋 Auditor de Seguridad', link: '/roles/grc/auditor-seguridad' },
+            { text: '📐 ISO 27001', link: '/roles/grc/iso-27001' },
+            { text: '🔏 Privacy Engineer', link: '/roles/grc/privacy-engineer' },
+            { text: '🔄 Business Continuity', link: '/roles/grc/business-continuity' },
+          ]
+        }
+      ],
+      '/roles/ai-security/': [
+        {
+          text: '🤖 AI Security Roles',
+          items: [
+            { text: '💬 Prompt Engineer', link: '/roles/ai-security/prompt-engineer-security' },
+            { text: '🎯 AI Red Teamer', link: '/roles/ai-security/ai-red-teamer' },
+            { text: '🧠 ML Security Engineer', link: '/roles/ai-security/ml-security-engineer' },
+            { text: '🏛️ AI Governance', link: '/roles/ai-security/ai-governance-officer' },
+            { text: '🚨 AI Incident Responder', link: '/roles/ai-security/ai-incident-responder' },
+            { text: '📦 AI Supply Chain', link: '/roles/ai-security/ai-supply-chain-security' },
+            { text: '🤖 Agentic Security Dev', link: '/roles/ai-security/agentic-security-developer' },
           ]
         }
       ],
