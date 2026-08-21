@@ -1,0 +1,72 @@
+version: '3.8'
+
+services:
+  kali:
+    image: kalilinux/kali-rolling
+    container_name: crypto-kali
+    hostname: kali
+    networks:
+      red_at:
+        ipv4_address: 10.10.10.100
+    volumes:
+      - ./scripts:/scripts
+      - ./vault:/vault
+    tty: true
+    stdin_open: true
+    command: >
+      bash -c "
+        apt-get update && apt-get install -y \
+          openssl \
+          hashcat \
+          john \
+          gpg \
+          curl \
+          net-tools \
+          iputils-ping \
+          && bash
+      "
+
+  hash-station:
+    image: ubuntu:20.04
+    container_name: hash-station
+    hostname: hash-station
+    networks:
+      red_at:
+        ipv4_address: 10.10.10.10
+    tty: true
+    command: >
+      bash -c "
+        apt-get update && apt-get install -y \
+          apache2 \
+          && echo 'FLAG{h4sh_f0und}' > /var/www/html/flag.txt \
+            && echo 'HASHES:' > /var/www/html/hashes.txt \
+            && echo 'MD5:09981850493885693388093654634394' >> /var/www/html/hashes.txt \
+            && echo 'SHA256:ef92b778bafe771e89245b89ecbc08246d2b164990d089697de455f648436f96' >> /var/www/html/hashes.txt \
+            && apachectl -D FOREGROUND
+      "
+
+  crypto-server:
+    image: ubuntu:20.04
+    container_name: crypto-server
+    hostname: crypto-server
+    networks:
+      red_at:
+        ipv4_address: 10.10.10.20
+    volumes:
+      - ./vault:/vault
+    tty: true
+    command: >
+      bash -c "
+        apt-get update && apt-get install -y \
+          openssl \
+          && echo 'FLAG{cr4ck3d_md5_hash}' > /vault/flag.txt \
+            && echo '4b2763c432decb2e37a6b29c5a39e393' > /vault/hash.txt \
+            && echo 'Vault ready' && sleep infinity
+      "
+
+networks:
+  red_at:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.10.10.0/24

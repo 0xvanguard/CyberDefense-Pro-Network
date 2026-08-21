@@ -1,0 +1,74 @@
+version: '3.8'
+
+services:
+  kali:
+    image: kalilinux/kali-rolling
+    container_name: vuln-kali
+    hostname: kali
+    networks:
+      red_at:
+        ipv4_address: 10.10.10.100
+    volumes:
+      - ./scripts:/scripts
+    tty: true
+    stdin_open: true
+    command: >
+      bash -c "
+        apt-get update && apt-get install -y \
+          nmap \
+          nikto \
+          searchsploit \
+          net-tools \
+          iputils-ping \
+          curl \
+          && bash
+      "
+
+  web-server:
+    image: vulnerables/web-dvwa
+    container_name: web-server
+    hostname: web-server
+    networks:
+      red_at:
+        ipv4_address: 10.10.10.10
+    ports:
+      - "80:80"
+    environment:
+      - MYSQL_PASSWD=password
+
+  ftp-server:
+    image: fauria/vsftpd
+    container_name: ftp-server
+    hostname: ftp-server
+    networks:
+      red_at:
+        ipv4_address: 10.10.10.20
+    environment:
+      - FTP_USER=anonymous
+      - FTP_PASS=anonymous
+      - PASV_ADDRESS=10.10.10.20
+      - PASV_MIN_PORT=21100
+      - PASV_MAX_PORT=21110
+
+  smb-server:
+    image: dperson/sambaclient
+    container_name: smb-server
+    hostname: smb-server
+    networks:
+      red_at:
+        ipv4_address: 10.10.10.30
+    tty: true
+    command: >
+      bash -c "
+        mkdir -p /srv/samba/share \
+          && echo 'FLAG{smb_sh4r3_f0und}' > /srv/samba/share/flag.txt \
+            && chmod 777 /srv/samba/share \
+            && smbd --no-process-group -F
+      "
+
+networks:
+  red_at:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.10.10.0/24

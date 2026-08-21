@@ -11,9 +11,9 @@ Aprende ciberseguridad haciendo. Cada lab incluye ejercicios reales, flags por c
 
 | Métrica | Valor |
 |---------|-------|
-| **Total Labs** | 20 |
-| **Total Ejercicios** | 119 |
-| **Total XP Disponible** | 7,550 |
+| **Total Labs** | 25 |
+| **Total Ejercicios** | 144 |
+| **Total XP Disponible** | 8,850 |
 | **Dificultades** | Fundamento → Expert |
 
 ---
@@ -23,6 +23,11 @@ Aprende ciberseguridad haciendo. Cada lab incluye ejercicios reales, flags por c
 | Lab | Tema | XP | Ejercicios |
 |-----|------|-----|------------|
 | [net-01](/labs/fundamentos/net-01) | Fundamentos de Redes | 100 | 3 |
+| [linux-01](/labs/fundamentos/linux-01) | Linux y Terminal 🆕 | 125 | 5 |
+| [crypto-01](/labs/fundamentos/crypto-01) | Criptografía Práctica 🆕 | 150 | 4 |
+| [vuln-01](/labs/fundamentos/vuln-01) | Escaneo de Vulnerabilidades 🆕 | 125 | 4 |
+| [tools-01](/labs/fundamentos/tools-01) | Herramientas Esenciales 🆕 | 150 | 4 |
+| [linux-sec-01](/labs/fundamentos/linux-sec-01) | Seguridad en Linux 🆕 | 175 | 5 |
 
 ---
 

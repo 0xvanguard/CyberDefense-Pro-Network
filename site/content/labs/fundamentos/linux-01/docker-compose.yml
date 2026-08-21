@@ -1,0 +1,88 @@
+version: '3.8'
+
+services:
+  kali:
+    image: kalilinux/kali-rolling
+    container_name: linux-kali
+    hostname: kali
+    networks:
+      red_at:
+        ipv4_address: 10.10.10.100
+    volumes:
+      - ./scripts:/scripts
+    tty: true
+    stdin_open: true
+    command: >
+      bash -c "
+        apt-get update && apt-get install -y \
+          openssh-client \
+          openssh-server \
+          net-tools \
+          iputils-ping \
+          procps \
+          curl \
+          && echo 'root:password' | chpasswd \
+            && echo ' usuario:password123' | chpasswd \
+            && useradd -m -s /bin/bash usuario \
+            && bash
+      "
+
+  web-server:
+    image: ubuntu:20.04
+    container_name: web-server
+    hostname: web-server
+    networks:
+      red_at:
+        ipv4_address: 10.10.10.10
+    tty: true
+    command: >
+      bash -c "
+        apt-get update && apt-get install -y \
+          apache2 \
+          && echo 'FLAG{l1nux_m4st3r}' > /var/www/html/flag.txt \
+            && apachectl -D FOREGROUND
+      "
+
+  database:
+    image: ubuntu:20.04
+    container_name: database
+    hostname: database
+    networks:
+      red_at:
+        ipv4_address: 10.10.10.20
+    tty: true
+    command: >
+      bash -c "
+        apt-get update && apt-get install -y \
+          mysql-server \
+          && service mysql start \
+            && mysql -e \"CREATE DATABASE IF NOT EXISTS cdpn;\" \
+            && mysql -e \"USE cdpn; CREATE TABLE IF NOT EXISTS users (id INT, name VARCHAR(50));\" \
+            && mysql -e \"USE cdpn; INSERT INTO users VALUES (1, 'admin'), (2, 'user');\" \
+            && sleep infinity
+      "
+
+  ssh-server:
+    image: ubuntu:20.04
+    container_name: ssh-server
+    hostname: ssh-server
+    networks:
+      red_at:
+        ipv4_address: 10.10.10.30
+    tty: true
+    command: >
+      bash -c "
+        apt-get update && apt-get install -y \
+          openssh-server \
+          && mkdir /var/run/sshd \
+            && echo 'root:password' | chpasswd \
+            && echo ' PermitRootLogin yes' >> /etc/ssh/sshd_config \
+            && /usr/sbin/sshd -D
+      "
+
+networks:
+  red_at:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.10.10.0/24

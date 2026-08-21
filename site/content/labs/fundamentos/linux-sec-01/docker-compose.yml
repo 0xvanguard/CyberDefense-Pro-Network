@@ -1,0 +1,100 @@
+version: '3.8'
+
+services:
+  kali:
+    image: kalilinux/kali-rolling
+    container_name: sec-kali
+    hostname: kali
+    networks:
+      red_at:
+        ipv4_address: 10.10.10.100
+    volumes:
+      - ./scripts:/scripts
+    tty: true
+    stdin_open: true
+    command: >
+      bash -c "
+        apt-get update && apt-get install -y \
+          nmap \
+          lynis \
+          auditd \
+          fail2ban-client \
+          net-tools \
+          iputils-ping \
+          curl \
+          ssh \
+          && bash
+      "
+
+  web-server:
+    image: ubuntu:20.04
+    container_name: web-server
+    hostname: web-server
+    networks:
+      red_at:
+        ipv4_address: 10.10.10.10
+    volumes:
+      - ./scripts:/scripts
+    tty: true
+    command: >
+      bash -c "
+        apt-get update && apt-get install -y \
+          apache2 \
+          iptables \
+          auditd \
+          lynis \
+          && echo 'FLAG{f1r3w4ll_4ct1v3}' > /var/www/html/flag.txt \
+            && apachectl -D FOREGROUND
+      "
+
+  database:
+    image: centos:8
+    container_name: database
+    hostname: database
+    networks:
+      red_at:
+        ipv4_address: 10.10.10.20
+    volumes:
+      - ./scripts:/scripts
+    tty: true
+    command: >
+      bash -c "
+        yum install -y \
+          mysql-server \
+          && systemctl start mysqld \
+            && mysql -e \"CREATE DATABASE IF NOT EXISTS test;\" \
+            && mysql -e \"USE test; CREATE TABLE IF NOT EXISTS users (id INT, name VARCHAR(50));\" \
+            && mysql -e \"USE test; INSERT INTO users VALUES (1, 'admin');\" \
+            && echo 'FLAG{s3l1nux_m4n4g3d}' > /root/flag.txt \
+            && sleep infinity
+      "
+
+  ssh-server:
+    image: ubuntu:20.04
+    container_name: ssh-server
+    hostname: ssh-server
+    networks:
+      red_at:
+        ipv4_address: 10.10.10.30
+    volumes:
+      - ./scripts:/scripts
+    tty: true
+    command: >
+      bash -c "
+        apt-get update && apt-get install -y \
+          openssh-server \
+          fail2ban \
+          && mkdir /var/run/sshd \
+            && echo 'root:password' | chpasswd \
+            && sed -i 's/#PermitRootLogin yes/PermitRootLogin no/' /etc/ssh/sshd_config \
+            && sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config \
+            && echo 'FLAG{ssh_h4rd3n3d}' > /root/flag.txt \
+            && /usr/sbin/sshd -D
+      "
+
+networks:
+  red_at:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.10.10.0/24

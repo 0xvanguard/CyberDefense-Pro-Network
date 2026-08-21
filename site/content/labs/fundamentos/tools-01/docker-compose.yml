@@ -1,0 +1,80 @@
+version: '3.8'
+
+services:
+  kali:
+    image: kalilinux/kali-rolling
+    container_name: tools-kali
+    hostname: kali
+    networks:
+      red_at:
+        ipv4_address: 10.10.10.100
+    volumes:
+      - ./scripts:/scripts
+    tty: true
+    stdin_open: true
+    command: >
+      bash -c "
+        apt-get update && apt-get install -y \
+          nmap \
+          wireshark-common \
+          tcpdump \
+          nikto \
+          searchsploit \
+          metasploit-framework \
+          net-tools \
+          iputils-ping \
+          curl \
+          && bash
+      "
+
+  web-application:
+    image: vulnerables/web-dvwa
+    container_name: web-app
+    hostname: web-app
+    networks:
+      red_at:
+        ipv4_address: 10.10.10.10
+    ports:
+      - "80:80"
+    environment:
+      - MYSQL_PASSWD=password
+
+  database:
+    image: ubuntu:20.04
+    container_name: database
+    hostname: database
+    networks:
+      red_at:
+        ipv4_address: 10.10.10.20
+    tty: true
+    command: >
+      bash -c "
+        apt-get update && apt-get install -y \
+          mysql-server \
+          && service mysql start \
+            && mysql -e \"CREATE DATABASE IF NOT EXISTS test;\" \
+            && mysql -e \"USE test; CREATE TABLE IF NOT EXISTS secrets (id INT, data VARCHAR(100));\" \
+            && mysql -e \"USE test; INSERT INTO secrets VALUES (1, 'FLAG{mysql_4cc3ss}');\" \
+            && sleep infinity
+      "
+
+  ftp-server:
+    image: fauria/vsftpd
+    container_name: ftp-server
+    hostname: ftp-server
+    networks:
+      red_at:
+        ipv4_address: 10.10.10.30
+    environment:
+      - FTP_USER=anonymous
+      - FTP_PASS=anonymous
+      - PASV_ADDRESS=10.10.10.30
+      - PASV_MIN_PORT=21100
+      - PASV_MAX_PORT=21110
+
+networks:
+  red_at:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.10.10.0/24
