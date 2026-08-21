@@ -1,0 +1,1211 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧪 Labs — CyberDefense Pro Network</title>
+    <link rel="stylesheet" href="../docs/assets/css/gamification.css">
+    <style>
+        :root {
+            --bg-primary: #0a0a1a;
+            --bg-secondary: #111128;
+            --bg-card: #1a1a3e;
+            --text-primary: #e0e0ff;
+            --text-secondary: #8888aa;
+            --accent-green: #2ecc71;
+            --accent-blue: #3498db;
+            --accent-purple: #9b59b6;
+            --accent-orange: #e67e22;
+            --accent-red: #e74c3c;
+            --accent-gold: #f1c40f;
+            --border: rgba(255,255,255,0.08);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ===== ANIMATED BACKGROUND ===== */
+        .bg-grid {
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(46, 204, 113, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(46, 204, 113, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            position: relative;
+            z-index: 1;
+            padding: 2rem;
+            text-align: center;
+            background: linear-gradient(180deg, rgba(46, 204, 113, 0.08) 0%, transparent 100%);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #2ecc71, #3498db, #9b59b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        /* ===== XP BANNER ===== */
+        .xp-banner {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 1.5rem 2rem;
+            background: linear-gradient(135deg, rgba(26, 26, 62, 0.9) 0%, rgba(17, 17, 40, 0.9) 100%);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 2rem;
+            align-items: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .xp-level-badge {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-gold), #ffaa00);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            color: #1a1a2e;
+            box-shadow: 0 0 30px rgba(241, 196, 15, 0.3);
+        }
+
+        .xp-level-badge .level-num {
+            font-size: 1.8rem;
+            line-height: 1;
+        }
+
+        .xp-level-badge .level-label {
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .xp-stats {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .xp-stats .stat-row {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .xp-stats .stat-row .label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            min-width: 100px;
+        }
+
+        .xp-stats .stat-row .value {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .xp-stats .stat-row .value.gold { color: var(--accent-gold); }
+        .xp-stats .stat-row .value.green { color: var(--accent-green); }
+        .xp-stats .stat-row .value.blue { color: var(--accent-blue); }
+        .xp-stats .stat-row .value.purple { color: var(--accent-purple); }
+
+        .xp-progress-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .xp-progress-section .progress-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .xp-progress-section .progress-bar {
+            width: 200px;
+            height: 10px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .xp-progress-section .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-green), var(--accent-blue));
+            border-radius: 10px;
+            transition: width 1s ease;
+        }
+
+        /* ===== STREAK & BADGES ===== */
+        .engagement-bar {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto 2rem;
+            padding: 0 2rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .streak-card {
+            flex: 1;
+            min-width: 200px;
+            padding: 1rem 1.5rem;
+            background: linear-gradient(135deg, rgba(255, 107, 0, 0.1), rgba(255, 165, 0, 0.05));
+            border: 1px solid rgba(255, 107, 0, 0.3);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .streak-card .fire { font-size: 2rem; }
+
+        .streak-card .streak-info .count {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #ff6b00;
+        }
+
+        .streak-card .streak-info .label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .badges-preview {
+            flex: 2;
+            min-width: 300px;
+            padding: 1rem 1.5rem;
+            background: rgba(26, 26, 62, 0.5);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+        }
+
+        .badges-preview .title {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+        }
+
+        .badges-preview .badges-row {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .badges-preview .badge-chip {
+            padding: 0.3rem 0.75rem;
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .badges-preview .badge-chip.locked {
+            opacity: 0.4;
+            filter: grayscale(1);
+        }
+
+        /* ===== FILTERS ===== */
+        .filters {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto 2rem;
+            padding: 0 2rem;
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1.25rem;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border);
+            border-radius: 25px;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .filter-btn:hover {
+            background: rgba(46, 204, 113, 0.1);
+            border-color: rgba(46, 204, 113, 0.3);
+            color: var(--accent-green);
+        }
+
+        .filter-btn.active {
+            background: rgba(46, 204, 113, 0.15);
+            border-color: var(--accent-green);
+            color: var(--accent-green);
+        }
+
+        /* ===== LAB GRID ===== */
+        .labs-container {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem 4rem;
+        }
+
+        .difficulty-section {
+            margin-bottom: 3rem;
+        }
+
+        .difficulty-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .difficulty-header .icon {
+            font-size: 1.5rem;
+        }
+
+        .difficulty-header h2 {
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        .difficulty-header .count {
+            margin-left: auto;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            padding: 0.25rem 0.75rem;
+            background: rgba(255,255,255,0.05);
+            border-radius: 15px;
+        }
+
+        .labs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        /* ===== LAB CARD ===== */
+        .lab-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .lab-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(46, 204, 113, 0.3);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .lab-card.completed {
+            border-color: rgba(46, 204, 113, 0.4);
+        }
+
+        .lab-card.completed::after {
+            content: '✅';
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .lab-card-header {
+            padding: 1.5rem;
+            background: linear-gradient(135deg, rgba(46, 204, 113, 0.08), rgba(52, 152, 219, 0.08));
+            border-bottom: 1px solid var(--border);
+        }
+
+        .lab-card-header .lab-icon {
+            font-size: 2rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .lab-card-header h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+        }
+
+        .lab-card-header .lab-subtitle {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .lab-card-body {
+            padding: 1.5rem;
+        }
+
+        .lab-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .lab-meta .tag {
+            padding: 0.25rem 0.6rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .tag.difficulty {
+            background: rgba(241, 196, 15, 0.15);
+            color: var(--accent-gold);
+        }
+
+        .tag.xp {
+            background: rgba(46, 204, 113, 0.15);
+            color: var(--accent-green);
+        }
+
+        .tag.time {
+            background: rgba(52, 152, 219, 0.15);
+            color: var(--accent-blue);
+        }
+
+        .tag.tools {
+            background: rgba(155, 89, 182, 0.15);
+            color: var(--accent-purple);
+        }
+
+        .lab-description {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+
+        .lab-objectives {
+            list-style: none;
+            margin-bottom: 1rem;
+        }
+
+        .lab-objectives li {
+            padding: 0.3rem 0;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+
+        .lab-objectives li::before {
+            content: '▸';
+            color: var(--accent-green);
+            font-weight: bold;
+        }
+
+        .lab-card-footer {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .lab-progress-bar {
+            flex: 1;
+            margin-right: 1rem;
+        }
+
+        .lab-progress-bar .bar {
+            height: 6px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .lab-progress-bar .fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-green), var(--accent-blue));
+            border-radius: 6px;
+            transition: width 0.5s;
+        }
+
+        .lab-progress-bar .label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-top: 0.3rem;
+        }
+
+        .start-btn {
+            padding: 0.5rem 1.25rem;
+            background: linear-gradient(135deg, var(--accent-green), #27ae60);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .start-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 20px rgba(46, 204, 113, 0.4);
+        }
+
+        .start-btn.completed {
+            background: linear-gradient(135deg, rgba(46, 204, 113, 0.2), rgba(46, 204, 113, 0.1));
+            cursor: default;
+        }
+
+        /* ===== RECOMMENDED PATH ===== */
+        .recommended-path {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto 3rem;
+            padding: 0 2rem;
+        }
+
+        .path-card {
+            background: linear-gradient(135deg, rgba(155, 89, 182, 0.1), rgba(52, 152, 219, 0.1));
+            border: 1px solid rgba(155, 89, 182, 0.3);
+            border-radius: 16px;
+            padding: 2rem;
+        }
+
+        .path-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .path-steps {
+            display: flex;
+            gap: 0;
+            overflow-x: auto;
+            padding-bottom: 0.5rem;
+        }
+
+        .path-step {
+            flex-shrink: 0;
+            text-align: center;
+            padding: 1rem;
+            min-width: 120px;
+            position: relative;
+        }
+
+        .path-step::after {
+            content: '→';
+            position: absolute;
+            right: -8px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+        }
+
+        .path-step:last-child::after {
+            display: none;
+        }
+
+        .path-step .step-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.05);
+            border: 2px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .path-step.done .step-icon {
+            background: rgba(46, 204, 113, 0.2);
+            border-color: var(--accent-green);
+        }
+
+        .path-step.current .step-icon {
+            background: rgba(52, 152, 219, 0.2);
+            border-color: var(--accent-blue);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(52, 152, 219, 0.4); }
+            50% { box-shadow: 0 0 0 10px rgba(52, 152, 219, 0); }
+        }
+
+        .path-step .step-name {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .header h1 { font-size: 1.8rem; }
+            .xp-banner { grid-template-columns: 1fr; text-align: center; }
+            .xp-level-badge { margin: 0 auto; }
+            .labs-grid { grid-template-columns: 1fr; }
+            .path-steps { flex-direction: column; align-items: center; }
+            .path-step::after { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-grid"></div>
+
+    <!-- HEADER -->
+    <header class="header">
+        <h1>🧪 CyberDefense Labs</h1>
+        <p>Aprende ciberseguridad practicando en entornos reales. 16 labs, 3,600+ XP en juego.</p>
+    </header>
+
+    <!-- XP BANNER -->
+    <div class="xp-banner" id="xp-banner">
+        <div class="xp-level-badge">
+            <span class="level-num" id="user-level">1</span>
+            <span class="level-label">Nivel</span>
+        </div>
+        <div class="xp-stats">
+            <div class="stat-row">
+                <span class="label">XP Total</span>
+                <span class="value gold" id="user-xp">0 XP</span>
+            </div>
+            <div class="stat-row">
+                <span class="label">Rango</span>
+                <span class="value green" id="user-rank">🌱 Newcomer</span>
+            </div>
+            <div class="stat-row">
+                <span class="label">Labs Completados</span>
+                <span class="value blue" id="labs-done">0 / 18</span>
+            </div>
+            <div class="stat-row">
+                <span class="label">Badges</span>
+                <span class="value purple" id="badges-count">0 / 20</span>
+            </div>
+        </div>
+        <div class="xp-progress-section">
+            <span class="progress-label" id="progress-label">0 XP para nivel 2</span>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ENGAGEMENT BAR -->
+    <div class="engagement-bar">
+        <div class="streak-card">
+            <span class="fire">🔥</span>
+            <div class="streak-info">
+                <div class="count" id="streak-count">0 días</div>
+                <div class="label">Racha actual</div>
+            </div>
+        </div>
+        <div class="badges-preview">
+            <div class="title">🏆 Badges Desbloqueados</div>
+            <div class="badges-row" id="badges-row">
+                <!-- Filled by JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- FILTERS -->
+    <div class="filters">
+        <button class="filter-btn active" data-filter="all">🎯 Todos</button>
+        <button class="filter-btn" data-filter="fundamentos">📘 Fundamentos</button>
+        <button class="filter-btn" data-filter="intermedio">🟡 Intermedio</button>
+        <button class="filter-btn" data-filter="avanzado">🟠 Avanzado</button>
+        <button class="filter-btn" data-filter="expert">🔴 Expert</button>
+        <button class="filter-btn" data-filter="completed">✅ Completados</button>
+        <button class="filter-btn" data-filter="pending">⬜ Pendientes</button>
+    </div>
+
+    <!-- RECOMMENDED PATH -->
+    <div class="recommended-path">
+        <div class="path-card">
+            <h3>🗺️ Ruta de Aprendizaje Recomendada</h3>
+            <div class="path-steps" id="learning-path">
+                <!-- Filled by JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- LABS GRID -->
+    <div class="labs-container" id="labs-container">
+        <!-- Filled by JS -->
+    </div>
+
+    <!-- Gamification JS -->
+    <script src="../docs/assets/js/gamification.js"></script>
+    <script>
+    // ===== LAB DATA =====
+    const LABS = [
+        // FUNDAMENTOS
+        {
+            id: 'net-01',
+            name: 'Redes y Protocolos',
+            subtitle: 'Fundamentos de TCP/IP, DNS, HTTP',
+            icon: '🌐',
+            difficulty: 'fundamentos',
+            xp: 200,
+            time: '30 min',
+            tools: ['Wireshark', 'tcpdump', 'curl'],
+            path: 'labs/fundamentos/net-01',
+            objectives: [
+                'Capturar y analizar tráfico con Wireshark',
+                'Identificar protocolos TCP, UDP, HTTP',
+                'Entender el modelo OSI y TCP/IP'
+            ]
+        },
+
+        // INTERMEDIO
+        {
+            id: 'recon-01',
+            name: 'Reconocimiento y OSINT',
+            subtitle: 'Mapea la superficie de ataque con técnicas de recon',
+            icon: '🔍',
+            difficulty: 'intermedio',
+            xp: 250,
+            time: '45 min',
+            tools: ['nmap', 'dig', 'whois', 'curl'],
+            path: 'labs/intermedio/recon-01',
+            objectives: [
+                'Reconocimiento pasivo (WHOIS, DNS, crt.sh)',
+                'Enumerar subdominios y registros DNS',
+                'Descubrir hosts y escanear puertos con Nmap'
+            ]
+        },
+        {
+            id: 'pentest-01',
+            name: 'Pentesting Básico',
+            subtitle: 'Explota vulnerabilidades en servicios comunes',
+            icon: '🔓',
+            difficulty: 'intermedio',
+            xp: 300,
+            time: '60 min',
+            tools: ['metasploit', 'hydra', 'nmap'],
+            path: 'labs/intermedio/pentest-01',
+            objectives: [
+                'Explotar servicios desactualizados',
+                'Brute force con Hydra',
+                'Obtener shell inverso'
+            ]
+        },
+        {
+            id: 'vulnscan-01',
+            name: 'Escaneo de Vulnerabilidades',
+            subtitle: 'Identifica CVEs y debilidades en sistemas',
+            icon: '🛡️',
+            difficulty: 'intermedio',
+            xp: 250,
+            time: '40 min',
+            tools: ['nmap', 'nikto', 'nessus-style'],
+            path: 'labs/intermedio/vulnscan-01',
+            objectives: [
+                'Ejecutar escaneo de vulnerabilidades',
+                'Interpretar resultados de Nikto',
+                'Priorizar hallazgos por severidad'
+            ]
+        },
+        {
+            id: 'web-01',
+            name: 'Web Security Fundamentals',
+            subtitle: 'Protege aplicaciones web contra ataques comunes',
+            icon: '🌍',
+            difficulty: 'intermedio',
+            xp: 250,
+            time: '45 min',
+            tools: ['curl', 'burp', 'nikto'],
+            path: 'labs/intermedio/web-01',
+            objectives: [
+                'Identificar headers de seguridad faltantes',
+                'Detectar directorios ocultos',
+                'Analizar configuración de cookies'
+            ]
+        },
+        {
+            id: 'webapp-01',
+            name: 'Explotación Web — OWASP Top 10',
+            subtitle: 'SQLi, XSS, IDOR y más en apps vulnerables',
+            icon: '💉',
+            difficulty: 'intermedio',
+            xp: 400,
+            time: '90 min',
+            tools: ['Burp Suite', 'sqlmap', 'ffuf'],
+            path: 'labs/intermedio/webapp-01',
+            objectives: [
+                'Explotar SQL Injection (union, blind, error)',
+                'Ejecutar Cross-Site Scripting (reflejado, stored)',
+                'Abusar IDOR y SSRF'
+            ]
+        },
+        {
+            id: 'privesc-01',
+            name: 'Escalada de Privilegios',
+            subtitle: 'De usuario normal a root en Linux/Windows',
+            icon: '👑',
+            difficulty: 'intermedio',
+            xp: 350,
+            time: '60 min',
+            tools: ['linpeas', 'winpeas', 'GTFOBins'],
+            path: 'labs/intermedio/privesc-01',
+            objectives: [
+                'Identificar vectors de escalada',
+                'Explotar SUID bins y cron jobs',
+                'Obtener root en Linux'
+            ]
+        },
+        {
+            id: 'persist-01',
+            name: 'Persistencia',
+            subtitle: 'Mantén el acceso después de la explotación',
+            icon: '🔄',
+            difficulty: 'intermedio',
+            xp: 300,
+            time: '50 min',
+            tools: ['crontab', 'systemd', 'ssh keys'],
+            path: 'labs/intermedio/persist-01',
+            objectives: [
+                'Crear persistencia con cron jobs',
+                'Configurar reverse shells persistentes',
+                'Evitar detección'
+            ]
+        },
+        {
+            id: 'social-01',
+            name: 'Ingeniería Social',
+            subtitle: 'Phishing, pretexting y manipulación psicológica',
+            icon: '🎭',
+            difficulty: 'intermedio',
+            xp: 200,
+            time: '35 min',
+            tools: ['GoPhish', 'SET', 'email analysis'],
+            path: 'labs/intermedio/social-01',
+            objectives: [
+                'Crear campaña de phishing',
+                'Analizar emails maliciosos',
+                'Identificar indicadores de ingeniería social'
+            ]
+        },
+        {
+            id: 'lateral-01',
+            name: 'Movimiento Lateral',
+            subtitle: 'Navega por la red después de la intrusión',
+            icon: '🕸️',
+            difficulty: 'intermedio',
+            xp: 350,
+            time: '60 min',
+            tools: ['psexec', 'wmiexec', 'crackmapexec'],
+            path: 'labs/intermedio/lateral-01',
+            objectives: [
+                'Pass-the-Hash y Pass-the-Ticket',
+                'Enumerar dominio Active Directory',
+                'Moverse entre hosts en la red'
+            ]
+        },
+        {
+            id: 'crypto-01',
+            name: 'Criptografía Práctica',
+            subtitle: 'Descifra, analiza y rompe cifrados',
+            icon: '🔐',
+            difficulty: 'intermedio',
+            xp: 250,
+            time: '45 min',
+            tools: ['hashcat', 'john', 'openssl'],
+            path: 'labs/intermedio/crypto-01',
+            objectives: [
+                'Descifrar hashes con fuerza bruta',
+                'Analizar cifrados simétricos y asimétricos',
+                'Romper implementaciones débiles'
+            ]
+        },
+        {
+            id: 'disk-forensics-01',
+            name: 'Forense de Disco',
+            subtitle: 'Analiza discos y sistemas de archivos',
+            icon: '💾',
+            difficulty: 'intermedio',
+            xp: 300,
+            time: '55 min',
+            tools: ['Autopsy', 'volatility', 'strings'],
+            path: 'labs/intermedio/disk-forensics-01',
+            objectives: [
+                'Recuperar archivos eliminados',
+                'Analizar artifacts del sistema',
+                'Crear evidencia forense'
+            ]
+        },
+
+        // AVANZADO
+        {
+            id: 'ad-01',
+            name: 'Active Directory Attacks',
+            subtitle: 'Domina el ataque y defensa de AD',
+            icon: '🏢',
+            difficulty: 'avanzado',
+            xp: 500,
+            time: '120 min',
+            tools: ['BloodHound', 'Rubeus', 'Impacket'],
+            path: 'labs/avanzado/ad-01',
+            objectives: [
+                'Enumerar dominio con BloodHound',
+                'Explotar Kerberoasting y AS-REP',
+                'Obtener Domain Admin'
+            ]
+        },
+        {
+            id: 'malware-01',
+            name: 'Análisis de Malware',
+            subtitle: 'Analiza, descompila y entiende malware',
+            icon: '🦠',
+            difficulty: 'avanzado',
+            xp: 450,
+            time: '90 min',
+            tools: ['YARA', 'PE-bear', 'Ghidra', 'sandbox'],
+            path: 'labs/avanzado/malware-01',
+            objectives: [
+                'Crear reglas YARA para detección',
+                'Analizar PE files estáticamente',
+                'Ejecutar en sandbox seguro'
+            ]
+        },
+        {
+            id: 'cloud-01',
+            name: 'Cloud Security',
+            subtitle: 'Seguridad en AWS, Azure y GCP',
+            icon: '☁️',
+            difficulty: 'avanzado',
+            xp: 400,
+            time: '80 min',
+            tools: ['Pacu', 'ScoutSuite', 'CloudMapper'],
+            path: 'labs/avanzado/cloud-01',
+            objectives: [
+                'Enumerar recursos cloud',
+                'Explotar IAM mal configurado',
+                'Acceder a metadata services'
+            ]
+        },
+        {
+            id: 'forensics-01',
+            name: 'Forense Avanzado',
+            subtitle: 'Análisis de memoria, red y logs',
+            icon: '🔬',
+            difficulty: 'avanzado',
+            xp: 400,
+            time: '80 min',
+            tools: ['Volatility', 'Wireshark', 'ELK'],
+            path: 'labs/avanzado/forensics-01',
+            objectives: [
+                'Analizar memoria con Volatility',
+                'Correlatar logs de múltiples fuentes',
+                'Crear timeline de incidentes'
+            ]
+        },
+        {
+            id: 'reverse-eng-01',
+            name: 'Reverse Engineering',
+            subtitle: 'Descompila y analiza binarios',
+            icon: '⚙️',
+            difficulty: 'avanzado',
+            xp: 450,
+            time: '90 min',
+            tools: ['Ghidra', 'IDA', 'radare2', 'gdb'],
+            path: 'labs/avanzado/reverse-eng-01',
+            objectives: [
+                'Descompilar binarios con Ghidra',
+                'Identificar funciones clave',
+                'Entender protocolos custom'
+            ]
+        },
+        {
+            id: 'net-forensics-01',
+            name: 'Forense de Red',
+            subtitle: 'Analiza capturas de tráfico y ataca',
+            icon: '📡',
+            difficulty: 'avanzado',
+            xp: 350,
+            time: '70 min',
+            tools: ['Wireshark', 'tshark', 'NetworkMiner'],
+            path: 'labs/avanzado/net-forensics-01',
+            objectives: [
+                'Analizar PCAPs con Wireshark',
+                'Extraer archivos de tráfico',
+                'Identificar exfiltration de datos'
+            ]
+        },
+
+        // EXPERT
+        {
+            id: 'incident-01',
+            name: 'Respuesta a Incidentes',
+            subtitle: 'Detecta, containment y eradicación',
+            icon: '🚨',
+            difficulty: 'expert',
+            xp: 600,
+            time: '150 min',
+            tools: ['SIEM', 'EDR', 'forense tools'],
+            path: 'labs/expert/incident-01',
+            objectives: [
+                'Detectar indicadores de compromiso',
+                'Contener el incidente',
+                'Eradicar la amenaza y recuperar'
+            ]
+        },
+        {
+            id: 'malware-expert-01',
+            name: 'Malware Expert Analysis',
+            subtitle: 'Análisis profundo de malware avanzado',
+            icon: '🧬',
+            difficulty: 'expert',
+            xp: 700,
+            time: '180 min',
+            tools: ['Ghidra', 'x64dbg', 'API monitor'],
+            path: 'labs/expert/malware-01',
+            objectives: [
+                'Desensamblar malware ofuscado',
+                'Identificar TTPs del atacante',
+                'Crear reglas de detección'
+            ]
+        }
+    ];
+
+    // ===== DIFFICULTY CONFIG =====
+    const DIFFICULTIES = {
+        fundamentos: { label: 'Fundamentos', icon: '📘', color: '#3498db' },
+        intermedio: { label: 'Intermedio', icon: '🟡', color: '#f1c40f' },
+        avanzado: { icon: '🟠', label: 'Avanzado', color: '#e67e22' },
+        expert: { label: 'Expert', icon: '🔴', color: '#e74c3c' }
+    };
+
+    // ===== ALL BADGES =====
+    const ALL_BADGES = [
+        { id: 'first-lab', icon: '🎯', name: 'Primer Lab' },
+        { id: 'lab-master-5', icon: '🔬', name: 'Lab Enthusiast' },
+        { id: 'lab-master-10', icon: '🏆', name: 'Lab Expert' },
+        { id: 'lab-master-16', icon: '👑', name: 'Lab Legend' },
+        { id: 'streak-3', icon: '🔥', name: 'En Racha' },
+        { id: 'streak-7', icon: '⚡', name: 'Semana Perfecta' },
+        { id: 'streak-30', icon: '💎', name: 'Mes Imparable' },
+        { id: 'first-writeup', icon: '📝', name: 'Primer Writeup' },
+        { id: 'writeup-master', icon: '📚', name: 'Writeup Master' },
+        { id: 'helper', icon: '🤝', name: 'Ayudante' },
+        { id: 'mentor', icon: '🎓', name: 'Mentor' },
+        { id: 'level-5', icon: '🥉', name: 'Bronze' },
+        { id: 'level-10', icon: '🥈', name: 'Silver' },
+        { id: 'level-20', icon: '🥇', name: 'Gold' },
+        { id: 'level-30', icon: '💎', name: 'Diamond' },
+        { id: 'level-50', icon: '🌟', name: 'Legend' },
+        { id: 'night-owl', icon: '🦉', name: 'Búho Nocturno' },
+        { id: 'speed-demon', icon: '⚡', name: 'Velocista' },
+        { id: 'perfectionist', icon: '✨', name: 'Perfeccionista' }
+    ];
+
+    // ===== RENDER FUNCTIONS =====
+    function renderLabs(filter = 'all') {
+        const container = document.getElementById('labs-container');
+        const gamData = CDPN_Gamification.data;
+        const completedLabs = gamData.labsCompleted || [];
+
+        let filteredLabs = LABS;
+        if (filter === 'completed') {
+            filteredLabs = LABS.filter(l => completedLabs.includes(l.id));
+        } else if (filter === 'pending') {
+            filteredLabs = LABS.filter(l => !completedLabs.includes(l.id));
+        } else if (filter !== 'all') {
+            filteredLabs = LABS.filter(l => l.difficulty === filter);
+        }
+
+        // Group by difficulty
+        const grouped = {};
+        filteredLabs.forEach(lab => {
+            if (!grouped[lab.difficulty]) grouped[lab.difficulty] = [];
+            grouped[lab.difficulty].push(lab);
+        });
+
+        let html = '';
+        const order = ['fundamentos', 'intermedio', 'avanzado', 'expert'];
+
+        order.forEach(diff => {
+            if (!grouped[diff] || grouped[diff].length === 0) return;
+            const config = DIFFICULTIES[diff];
+
+            html += `
+                <div class="difficulty-section" data-difficulty="${diff}">
+                    <div class="difficulty-header">
+                        <span class="icon">${config.icon}</span>
+                        <h2>${config.label}</h2>
+                        <span class="count">${grouped[diff].length} labs</span>
+                    </div>
+                    <div class="labs-grid">
+            `;
+
+            grouped[diff].forEach(lab => {
+                const isCompleted = completedLabs.includes(lab.id);
+                html += `
+                    <div class="lab-card ${isCompleted ? 'completed' : ''}" data-lab-id="${lab.id}" onclick="openLab('${lab.path}')">
+                        <div class="lab-card-header">
+                            <div class="lab-icon">${lab.icon}</div>
+                            <h3>${lab.name}</h3>
+                            <div class="lab-subtitle">${lab.subtitle}</div>
+                        </div>
+                        <div class="lab-card-body">
+                            <div class="lab-meta">
+                                <span class="tag difficulty">${config.icon} ${config.label}</span>
+                                <span class="tag xp">⚡ ${lab.xp} XP</span>
+                                <span class="tag time">⏱️ ${lab.time}</span>
+                            </div>
+                            <p class="lab-description">${lab.subtitle}</p>
+                            <ul class="lab-objectives">
+                                ${lab.objectives.map(o => `<li>${o}</li>`).join('')}
+                            </ul>
+                        </div>
+                        <div class="lab-card-footer">
+                            <div class="lab-progress-bar">
+                                <div class="bar">
+                                    <div class="fill" style="width: ${isCompleted ? 100 : 0}%"></div>
+                                </div>
+                                <div class="label">${isCompleted ? '✅ Completado' : '⬜ No iniciado'}</div>
+                            </div>
+                            <button class="start-btn ${isCompleted ? 'completed' : ''}">
+                                ${isCompleted ? 'Revisar' : 'Iniciar Lab'}
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            html += '</div></div>';
+        });
+
+        if (filteredLabs.length === 0) {
+            html = `
+                <div style="text-align: center; padding: 4rem; color: var(--text-secondary);">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🔍</div>
+                    <p>No hay labs que mostrar con este filtro.</p>
+                </div>
+            `;
+        }
+
+        container.innerHTML = html;
+    }
+
+    function updateXPBanner() {
+        const stats = CDPN_Gamification.getStats();
+        document.getElementById('user-level').textContent = stats.level;
+        document.getElementById('user-xp').textContent = `${stats.xp.toLocaleString()} XP`;
+        document.getElementById('user-rank').textContent = `${stats.rank.icon} ${stats.rank.name}`;
+        document.getElementById('labs-done').textContent = `${stats.labsCompleted} / ${LABS.length}`;
+        document.getElementById('badges-count').textContent = `${stats.badges} / ${ALL_BADGES.length}`;
+        document.getElementById('progress-label').textContent = `${stats.xpForNextLevel} XP para nivel ${stats.level + 1}`;
+        document.getElementById('progress-fill').style.width = `${stats.levelProgress}%`;
+        document.getElementById('streak-count').textContent = `${stats.streak} día${stats.streak !== 1 ? 's' : ''}`;
+    }
+
+    function renderBadges() {
+        const gamData = CDPN_Gamification.data;
+        const earned = gamData.badges || [];
+        const container = document.getElementById('badges-row');
+
+        let html = '';
+        ALL_BADGES.forEach(badge => {
+            const isEarned = earned.includes(badge.id);
+            html += `
+                <span class="badge-chip ${isEarned ? '' : 'locked'}" title="${badge.name}">
+                    ${badge.icon} ${badge.name}
+                </span>
+            `;
+        });
+        container.innerHTML = html;
+    }
+
+    function renderLearningPath() {
+        const completedLabs = CDPN_Gamification.data.labsCompleted || [];
+        const pathOrder = ['net-01', 'recon-01', 'vulnscan-01', 'web-01', 'webapp-01', 'pentest-01', 'privesc-01', 'ad-01', 'malware-01'];
+        const container = document.getElementById('learning-path');
+
+        let html = '';
+        let foundCurrent = false;
+
+        pathOrder.forEach((labId, i) => {
+            const lab = LABS.find(l => l.id === labId);
+            if (!lab) return;
+
+            const isDone = completedLabs.includes(labId);
+            const isCurrent = !isDone && !foundCurrent;
+            if (isCurrent) foundCurrent = true;
+
+            html += `
+                <div class="path-step ${isDone ? 'done' : ''} ${isCurrent ? 'current' : ''}">
+                    <div class="step-icon">${lab.icon}</div>
+                    <div class="step-name">${lab.name.split(' ').slice(0, 2).join(' ')}</div>
+                </div>
+            `;
+        });
+
+        container.innerHTML = html;
+    }
+
+    function openLab(path) {
+        window.open(`${path}/README.md`, '_blank');
+    }
+
+    // ===== FILTERS =====
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderLabs(btn.dataset.filter);
+        });
+    });
+
+    // ===== INIT =====
+    function init() {
+        CDPN_Gamification.init();
+        updateXPBanner();
+        renderBadges();
+        renderLearningPath();
+        renderLabs();
+    }
+
+    document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
