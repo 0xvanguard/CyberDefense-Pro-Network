@@ -196,6 +196,13 @@ export default defineConfig({
           text: '🛡️ Seguridad de la Información',
           items: [
             { text: 'Visión General', link: '/modules/seguridad-informacion/' },
+            { text: '01 — Gestión de Riesgos', link: '/modules/seguridad-informacion/01-gestion-riesgos' },
+            { text: '02 — Blue Team / Defensa', link: '/modules/seguridad-informacion/02-blue-team-defensa' },
+            { text: '03 — SOC Operations', link: '/modules/seguridad-informacion/03-soc-operations' },
+            { text: '04 — DevSecOps', link: '/modules/seguridad-informacion/04-devsecops' },
+            { text: '05 — Hardening', link: '/modules/seguridad-informacion/05-hardening-seg-info' },
+            { text: '06 — Compliance y Normativas', link: '/modules/seguridad-informacion/06-compliance-normativas' },
+            { text: '07 — Threat Intelligence', link: '/modules/seguridad-informacion/07-threat-intelligence-seg-info' },
           ]
         }
       ],
