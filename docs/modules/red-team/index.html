@@ -81,7 +81,7 @@
 </div></div>
 
 <div class="content-block"><h3><i class="fas fa-sitemap"></i> Submódulos</h3>
-<div class="submodule-card" onclick="toggleSubmodule(this)"><div class="submodule-header"><div class="submodule-num">01</div><div class="submodule-info"><h4><i class="fas fa-search"></i> Reconocimiento OSINT</h4><span class="submodule-phase">MITRE: TA0043</span></div><i class="fas fa-chevron-down expand-icon"></i></div>
+<a href="01-reconocimiento-osint.html" class="submodule-card"><div class="submodule-header"><div class="submodule-num">01</div><div class="submodule-info"><h4><i class="fas fa-search"></i> Reconocimiento OSINT</h4><span class="submodule-phase">MITRE: TA0043</span></div><i class="fas fa-arrow-right expand-icon"></i></div></a>
 <div class="submodule-content"><p>Identificación de objetivos y tecnologías visibles.</p>
 <div class="step-guide"><div class="guide-step"><span class="guide-num">1</span><div><strong>Passiva:</strong> whois, DNS, Google Dorks, Shodan</div></div>
 <div class="guide-step"><span class="guide-num">2</span><div><strong>Activa:</strong> Nmap, theHarvester, Subfinder</div></div>
@@ -92,7 +92,7 @@ subfinder -d target.com -o subs.txt
 site:target.com filetype:pdf</code></pre></div>
 <div class="tools-used"><span class="tool-tag"><i class="fas fa-network-wired"></i> Nmap</span><span class="tool-tag"><i class="fas fa-search"></i> Subfinder</span><span class="tool-tag"><i class="fas fa-spider"></i> theHarvester</span><span class="tool-tag"><i class="fas fa-database"></i> Shodan</span></div></div></div>
 
-<div class="submodule-card" onclick="toggleSubmodule(this)"><div class="submodule-header"><div class="submodule-num">02</div><div class="submodule-info"><h4><i class="fas fa-bug"></i> Pentesting / Red Team</h4><span class="submodule-phase">MITRE: TA0001-TA0011</span></div><i class="fas fa-chevron-down expand-icon"></i></div>
+<a href="02-pentesting-red-team.html" class="submodule-card"><div class="submodule-header"><div class="submodule-num">02</div><div class="submodule-info"><h4><i class="fas fa-bug"></i> Pentesting / Red Team</h4><span class="submodule-phase">MITRE: TA0001-TA0011</span></div><i class="fas fa-arrow-right expand-icon"></i></div></a>
 <div class="submodule-content"><p>Ciclo completo de pentest. OWASP, PTES, OSSTMM.</p>
 <div class="step-guide"><div class="guide-step"><span class="guide-num">1</span><div><strong>Recon:</strong> Objetivo, rangos IP</div></div>
 <div class="guide-step"><span class="guide-num">2</span><div><strong>Escaneo:</strong> Nmap puertos/servicios</div></div>
@@ -102,11 +102,11 @@ site:target.com filetype:pdf</code></pre></div>
 <div class="guide-step"><span class="guide-num">6</span><div><strong>Reporte:</strong> Documentar hallazgos</div></div></div>
 <div class="tools-used"><span class="tool-tag"><i class="fas fa-network-wired"></i> Nmap</span><span class="tool-tag"><i class="fas fa-spider"></i> Gobuster</span><span class="tool-tag"><i class="fas fa-bug"></i> Burp Suite</span><span class="tool-tag"><i class="fas fa-explosion"></i> Metasploit</span></div></div></div>
 
-<div class="submodule-card" onclick="toggleSubmodule(this)"><div class="submodule-header"><div class="submodule-num">03</div><div class="submodule-info"><h4><i class="fas fa-exclamation-triangle"></i> Análisis de Vulnerabilidades</h4><span class="submodule-phase">MITRE: TA0042</span></div><i class="fas fa-chevron-down expand-icon"></i></div>
+<a href="03-analisis-vulnerabilidades.html" class="submodule-card"><div class="submodule-header"><div class="submodule-num">03</div><div class="submodule-info"><h4><i class="fas fa-exclamation-triangle"></i> Análisis de Vulnerabilidades</h4><span class="submodule-phase">MITRE: TA0042</span></div><i class="fas fa-arrow-right expand-icon"></i></div></a>
 <div class="submodule-content"><p>CWE, CVE, CVSS a nivel práctico.</p>
 <div class="tools-used"><span class="tool-tag"><i class="fas fa-radar"></i> Nessus</span><span class="tool-tag"><i class="fas fa-search"></i> Nuclei</span><span class="tool-tag"><i class="fas fa-shield-alt"></i> OpenVAS</span></div></div></div>
 
-<div class="submodule-card" onclick="toggleSubmodule(this)"><div class="submodule-header"><div class="submodule-num">04</div><div class="submodule-info"><h4><i class="fas fa-globe"></i> Explotación Web</h4><span class="submodule-phase">MITRE: TA0001</span></div><i class="fas fa-chevron-down expand-icon"></i></div>
+<a href="04-explotacion-web.html" class="submodule-card"><div class="submodule-header"><div class="submodule-num">04</div><div class="submodule-info"><h4><i class="fas fa-globe"></i> Explotación Web</h4><span class="submodule-phase">MITRE: TA0001</span></div><i class="fas fa-arrow-right expand-icon"></i></div></a>
 <div class="submodule-content"><p>OWASP Top 10: SQLi, XSS, CSRF, IDOR, SSRF.</p>
 <div class="code-block"><div class="code-header"><span class="code-lang">SQLi</span></div><pre><code>' OR '1'='1
 ' UNION SELECT username,password FROM users--

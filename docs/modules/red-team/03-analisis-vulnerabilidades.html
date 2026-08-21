@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>03 - Análisis de Vulnerabilidades | CDPN | CyberDefense Pro Network</title>
+<link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="../../assets/icons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../../assets/icons/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../../assets/icons/apple-touch-icon.png">
+<link rel="manifest" href="../../manifest.webmanifest">
+<meta name="description" content="Identificar, priorizar y comunicar vulnerabilidades con CVSS, CIA y gestión de vulnerabilidades.">
+<meta name="theme-color" content="#0a0e1a">
+<meta name="color-scheme" content="dark light">
+<meta property="og:type" content="website">
+<meta property="og:title" content="03 - Análisis de Vulnerabilidades | CDPN">
+<meta property="og:description" content="Identificar, priorizar y comunicar vulnerabilidades.">
+<meta property="og:url" content="https://0xvanguard.github.io/CyberDefense-Pro-Network/modules/red-team/03-analisis-vulnerabilidades.html">
+<meta property="og:image" content="https://0xvanguard.github.io/CyberDefense-Pro-Network/assets/og/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://0xvanguard.github.io/CyberDefense-Pro-Network/modules/red-team/03-analisis-vulnerabilidades.html">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/global.css">
+    <link rel="stylesheet" href="../../assets/css/module.css">
+<link rel="stylesheet" href="../../assets/css/a11y.css">
+</head>
+<body>
+<a href="#main" class="skip-link">Saltar al contenido principal</a>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="../../index.html" class="nav-logo"><i class="fas fa-shield-halved"></i> CDPN</a>
+            <ul class="nav-menu">
+                <li><a href="../../index.html"><i class="fas fa-home"></i> Inicio</a></li>
+                <li class="nav-dropdown">
+                    <a href="#"><i class="fas fa-layer-group"></i> Módulos <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../introduccion/"><span class="dot intro"></span> Introducción</a></li>
+                        <li><a href="../red-team/" class="active" aria-current="page"><span class="dot red"></span> Ofensiva</a></li>
+                        <li><a href="../seguridad-informacion/"><span class="dot blue"></span> Seguridad Info.</a></li>
+                        <li><a href="../ai-agents/"><span class="dot ai"></span> AI Agents</a></li>
+                        <li><a href="../blue-team/"><span class="dot blue"></span> Blue Team</a></li>
+                        <li><a href="../purple-team/"><span class="dot purple"></span> Purple Team</a></li>
+                        <li><a href="../laboratorios/"><span class="dot lab"></span> Labs</a></li>
+                        <li><a href="../recursos/"><span class="dot resources"></span> Recursos</a></li>
+                    </ul>
+                </li>
+                <li><a href="../../retos.html"><i class="fas fa-trophy"></i> Retos</a></li>
+                <li><a href="../../herramientas.html"><i class="fas fa-tools"></i> Herramientas</a></li>
+                <li><a href="../../labs.html"><i class="fas fa-flask"></i> Labs</a></li>
+                <li><a href="../../recursos.html"><i class="fas fa-book"></i> Recursos</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></button>
+                <a href="https://github.com/0xvanguard/CyberDefense-Pro-Network" class="nav-github" target="_blank"><i class="fab fa-github"></i></a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="breadcrumb">
+        <a href="../../index.html">CDPN</a><span>/</span> <a href="index.html">Red Team</a><span>/</span> 03 — Análisis de Vulnerabilidades
+    </div>
+
+    <section class="module-hero" style="--hero-glow: rgba(52, 152, 219, 0.08);">
+        <div class="module-hero-content">
+            <span class="module-badge intermediate"><i class="fas fa-bug"></i> INTERMEDIO-AVANZADO</span>
+            <h1>03 — <span class="gradient-text">Análisis de Vulnerabilidades</span></h1>
+            <p>Identificar, priorizar y comunicar vulnerabilidades con CVSS, CIA y gestión de vulnerabilidades.</p>
+        </div>
+    </section>
+
+    <main id="main" class="module-main">
+        <div class="content-block">
+            <h3><i class="fas fa-bullseye"></i> Objetivos de Aprendizaje</h3>
+            <div class="objectives-list">
+                <div class="objective"><i class="fas fa-check-circle"></i> Diferenciar hallazgo, debilidad, vulnerabilidad, riesgo e impacto.</div>
+                <div class="objective"><i class="fas fa-check-circle"></i> Clasificar hallazgos usando la tríada CIA.</div>
+                <div class="objective"><i class="fas fa-check-circle"></i> Aplicar el ciclo de vulnerability management.</div>
+                <div class="objective"><i class="fas fa-check-circle"></i> Usar Nuclei, OpenVAS y searchsploit para obtener evidencia.</div>
+            </div>
+        </div>
+
+        <div class="content-block">
+            <h3><i class="fas fa-sitemap"></i> Contenido del Módulo</h3>
+            
+            <div class="submodule-card expanded">
+                <div class="submodule-header">
+                    <div class="submodule-num">01</div>
+                    <div class="submodule-info">
+                        <h4><i class="fas fa-shield-alt"></i> Tríada CIA y Severidad</h4>
+                        <span class="submodule-phase">Fundamentos</span>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="submodule-content">
+                    <p>Clasificar vulnerabilidades por impacto en Confidencialidad, Integridad y Disponibilidad.</p>
+                    <div class="step-guide">
+                        <div class="guide-step"><span class="guide-num">1</span><div><strong>Confidencialidad:</strong> Acceso no autorizado a datos</div></div>
+                        <div class="guide-step"><span class="guide-num">2</span><div><strong>Integridad:</strong> Modificación no autorizada de datos</div></div>
+                        <div class="guide-step"><span class="guide-num">3</span><div><strong>Disponibilidad:</strong> Pérdida de acceso a servicios</div></div>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-header"><span class="code-lang">CVSS</span></div>
+                        <pre><code># CVSS v3.1 Score Calculator
+# https://www.first.org/cvss/calculator/3.1
+
+# Ejemplo: SQL Injection
+# AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H = 9.8 (CRÍTICA)
+
+# Severidad:
+# 0.0 - 3.9  → BAJA
+# 4.0 - 6.9  → MEDIA
+# 7.0 - 8.9  → ALTA
+# 9.0 - 10.0 → CRÍTICA</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="submodule-card">
+                <div class="submodule-header">
+                    <div class="submodule-num">02</div>
+                    <div class="submodule-info">
+                        <h4><i class="fas fa-sync-alt"></i> Ciclo de Gestión de Vulnerabilidades</h4>
+                        <span class="submodule-phase">Vulnerability Management</span>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="submodule-content">
+                    <p>Descubrir, priorizar, remediar, validar y reportar.</p>
+                    <div class="step-guide">
+                        <div class="guide-step"><span class="guide-num">1</span><div><strong>Descubrir:</strong> Escaneo con Nuclei, OpenVAS, Nmap</div></div>
+                        <div class="guide-step"><span class="guide-num">2</span><div><strong>Priorizar:</strong> CVSS + impacto business</div></div>
+                        <div class="guide-step"><span class="guide-num">3</span><div><strong>Remediar:</strong> Parches, configuración, compensación</div></div>
+                        <div class="guide-step"><span class="guide-num">4</span><div><strong>Validar:</strong> Re-escaneo y verificación</div></div>
+                        <div class="guide-step"><span class="guide-num">5</span><div><strong>Reportar:</strong> Documentación profesional</div></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="submodule-card">
+                <div class="submodule-header">
+                    <div class="submodule-num">03</div>
+                    <div class="submodule-info">
+                        <h4><i class="fas fa-red-team"></i> Perspectiva Red/Blue/Purple</h4>
+                        <span class="submodule-phase">Trabajo en equipo</span>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="submodule-content">
+                    <p>Un mismo hallazgo desde tres perspectivas diferentes.</p>
+                    <div class="step-guide">
+                        <div class="guide-step"><span class="guide-num">🔴</span><div><strong>Red Team:</strong> ¿Se puede explotar de forma realista?</div></div>
+                        <div class="guide-step"><span class="guide-num">🔵</span><div><strong>Blue Team:</strong> ¿Qué activos afecta y cómo lo detecto?</div></div>
+                        <div class="guide-step"><span class="guide-num">🟣</span><div><strong>Purple Team:</strong> ¿Cómo convertimos esto en mejora medible?</div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-block">
+            <h3><i class="fas fa-tools"></i> Herramientas Principales</h3>
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <div class="tool-icon"><i class="fas fa-search"></i></div>
+                    <h4>Nuclei</h4>
+                    <p>Scanner de vulnerabilidades basado en templates.</p>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-icon"><i class="fas fa-shield-alt"></i></div>
+                    <h4>OpenVAS / GVM</h4>
+                    <p>Scanner de vulnerabilidades open-source completo.</p>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-icon"><i class="fas fa-bug"></i></div>
+                    <h4>Searchsploit</h4>
+                    <p>Búsqueda local de Exploit-DB.</p>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-icon"><i class="fas fa-network-wired"></i></div>
+                    <h4>Nmap</h4>
+                    <p>Scripts de detección de vulnerabilidades.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-block">
+            <h3><i class="fas fa-book"></i> Recursos Adicionales</h3>
+            <div class="resources-list">
+                <a href="https://nvd.nist.gov/vuln-metrics/cvss-v3-calculator" target="_blank" class="resource-link">
+                    <i class="fas fa-external-link-alt"></i> NVD CVSS v3.1 Calculator
+                </a>
+                <a href="https://cve.mitre.org/" target="_blank" class="resource-link">
+                    <i class="fas fa-external-link-alt"></i> MITRE CVE — Base de datos de vulnerabilidades
+                </a>
+                <a href="https://www.exploit-db.com/" target="_blank" class="resource-link">
+                    <i class="fas fa-external-link-alt"></i> Exploit-DB — Exploits públicos
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-col"><h4><i class="fas fa-shield-halved"></i> CDPN</h4><p>Formando profesionales de ciberdefensa.</p></div>
+                <div class="footer-col"><h4>Módulos</h4><ul><li><a href="../introduccion/">Introducción</a></li><li><a href="index.html">Red Team</a></li><li><a href="../blue-team/">Blue Team</a></li><li><a href="../purple-team/">Purple Team</a></li></ul></div>
+                <div class="footer-col"><h4>Secciones</h4><ul><li><a href="../fundamentos/">🚀 Base para principiantes</a></li><li><a href="../../retos.html">Retos</a></li><li><a href="../../herramientas.html">Herramientas</a></li><li><a href="../../labs.html">Labs</a></li></ul></div>
+                <div class="footer-col"><h4>GitHub</h4><ul><li><a href="https://github.com/0xvanguard/CyberDefense-Pro-Network"><i class="fab fa-github"></i> Repo</a></li></ul></div>
+            </div>
+            <div class="footer-bottom"><p>&copy; 2026 CDPN. Todos los derechos reservados.</p></div>
+        </div>
+    </footer>
+    <script src="../../assets/js/shared.js"></script>
+</body>
+</html>

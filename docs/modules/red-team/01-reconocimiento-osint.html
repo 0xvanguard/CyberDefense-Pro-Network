@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>01 - Reconocimiento OSINT | CDPN | CyberDefense Pro Network</title>
+<link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="../../assets/icons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../../assets/icons/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../../assets/icons/apple-touch-icon.png">
+<link rel="manifest" href="../../manifest.webmanifest">
+<meta name="description" content="Reconocimiento y OSINT técnico: whois, DNS, Nmap, enumeración de hosts y servicios.">
+<meta name="theme-color" content="#0a0e1a">
+<meta name="color-scheme" content="dark light">
+<meta property="og:type" content="website">
+<meta property="og:title" content="01 - Reconocimiento OSINT | CDPN">
+<meta property="og:description" content="Reconocimiento y OSINT técnico para mapear superficies de ataque.">
+<meta property="og:url" content="https://0xvanguard.github.io/CyberDefense-Pro-Network/modules/red-team/01-reconocimiento-osint.html">
+<meta property="og:image" content="https://0xvanguard.github.io/CyberDefense-Pro-Network/assets/og/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://0xvanguard.github.io/CyberDefense-Pro-Network/modules/red-team/01-reconocimiento-osint.html">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/global.css">
+    <link rel="stylesheet" href="../../assets/css/module.css">
+<link rel="stylesheet" href="../../assets/css/a11y.css">
+</head>
+<body>
+<a href="#main" class="skip-link">Saltar al contenido principal</a>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="../../index.html" class="nav-logo"><i class="fas fa-shield-halved"></i> CDPN</a>
+            <ul class="nav-menu">
+                <li><a href="../../index.html"><i class="fas fa-home"></i> Inicio</a></li>
+                <li class="nav-dropdown">
+                    <a href="#"><i class="fas fa-layer-group"></i> Módulos <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../introduccion/"><span class="dot intro"></span> Introducción</a></li>
+                        <li><a href="../red-team/" class="active" aria-current="page"><span class="dot red"></span> Ofensiva</a></li>
+                        <li><a href="../seguridad-informacion/"><span class="dot blue"></span> Seguridad Info.</a></li>
+                        <li><a href="../ai-agents/"><span class="dot ai"></span> AI Agents</a></li>
+                        <li><a href="../blue-team/"><span class="dot blue"></span> Blue Team</a></li>
+                        <li><a href="../purple-team/"><span class="dot purple"></span> Purple Team</a></li>
+                        <li><a href="../laboratorios/"><span class="dot lab"></span> Labs</a></li>
+                        <li><a href="../recursos/"><span class="dot resources"></span> Recursos</a></li>
+                    </ul>
+                </li>
+                <li><a href="../../retos.html"><i class="fas fa-trophy"></i> Retos</a></li>
+                <li><a href="../../herramientas.html"><i class="fas fa-tools"></i> Herramientas</a></li>
+                <li><a href="../../labs.html"><i class="fas fa-flask"></i> Labs</a></li>
+                <li><a href="../../recursos.html"><i class="fas fa-book"></i> Recursos</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></button>
+                <a href="https://github.com/0xvanguard/CyberDefense-Pro-Network" class="nav-github" target="_blank"><i class="fab fa-github"></i></a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="breadcrumb">
+        <a href="../../index.html">CDPN</a><span>/</span> <a href="index.html">Red Team</a><span>/</span> 01 — Reconocimiento OSINT
+    </div>
+
+    <section class="module-hero" style="--hero-glow: rgba(231, 76, 60, 0.08);">
+        <div class="module-hero-content">
+            <span class="module-badge beginner"><i class="fas fa-search"></i> PRINCIPIANTE-INTERMEDIO</span>
+            <h1>01 — <span class="gradient-text">Reconocimiento OSINT</span></h1>
+            <p>Mapear la superficie de ataque con técnicas clásicas de reconocimiento y OSINT técnico.</p>
+        </div>
+    </section>
+
+    <main id="main" class="module-main">
+        <div class="content-block">
+            <h3><i class="fas fa-bullseye"></i> Objetivos de Aprendizaje</h3>
+            <div class="objectives-list">
+                <div class="objective"><i class="fas fa-check-circle"></i> Definir y delimitar el scope autorizado de un pentest.</div>
+                <div class="objective"><i class="fas fa-check-circle"></i> Usar whois, dig y Nmap para enumerar dominios, DNS y servicios.</div>
+                <div class="objective"><i class="fas fa-check-circle"></i> Descubrir hosts activos en un rango de red autorizado.</div>
+                <div class="objective"><i class="fas fa-check-circle"></i> Generar un informe de reconocimiento estructurado.</div>
+            </div>
+        </div>
+
+        <div class="content-block">
+            <h3><i class="fas fa-sitemap"></i> Contenido del Módulo</h3>
+            
+            <div class="submodule-card expanded">
+                <div class="submodule-header">
+                    <div class="submodule-num">01</div>
+                    <div class="submodule-info">
+                        <h4><i class="fas fa-crosshairs"></i> Definición de Scope</h4>
+                        <span class="submodule-phase">Metodología</span>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="submodule-content">
+                    <p>Delimitar qué está autorizado para pruebas y qué no.</p>
+                    <div class="step-guide">
+                        <div class="guide-step"><span class="guide-num">1</span><div><strong>Dominios:</strong> ¿Qué dominios están en scope?</div></div>
+                        <div class="guide-step"><span class="guide-num">2</span><div><strong>Rangos IP:</strong> ¿Qué IPs se pueden escanear?</div></div>
+                        <div class="guide-step"><span class="guide-num">3</span><div><strong>Exclusiones:</strong> ¿Qué está explícitamente fuera?</div></div>
+                        <div class="guide-step"><span class="guide-num">4</span><div><strong>Horarios:</strong> ¿Hay restricciones de tiempo?</div></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="submodule-card">
+                <div class="submodule-header">
+                    <div class="submodule-num">02</div>
+                    <div class="submodule-info">
+                        <h4><i class="fas fa-globe"></i> Reconocimiento Pasivo (DNS/WHOIS)</h4>
+                        <span class="submodule-phase">OSINT</span>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="submodule-content">
+                    <p>Obtener información sin enviar tráfico directo al objetivo.</p>
+                    <div class="step-guide">
+                        <div class="guide-step"><span class="guide-num">1</span><div><strong>WHOIS:</strong> Registro de dominios, propietario, fechas</div></div>
+                        <div class="guide-step"><span class="guide-num">2</span><div><strong>DNS:</strong> Registros A, MX, NS, TXT, CNAME</div></div>
+                        <div class="guide-step"><span class="guide-num">3</span><div><strong>CRT:</strong> Certificados SSL/TLS públicos</div></div>
+                        <div class="guide-step"><span class="guide-num">4</span><div><strong>Subdominios:</strong> Enumeración pasiva</div></div>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-header"><span class="code-lang">Ejemplo</span></div>
+                        <pre><code># WHOIS
+whois example.com
+
+# DNS records
+dig example.com A
+dig example.com MX
+dig example.com TXT
+
+# Subdominios via crt.sh
+curl -s "https://crt.sh/?q=%.example.com" | grep -oP '(?<=<TD>)[^<]+' | sort -u</code></pre>
+                    </div>
+                    <div class="tools-used">
+                        <span class="tool-tag"><i class="fas fa-terminal"></i> whois</span>
+                        <span class="tool-tag"><i class="fas fa-network-wired"></i> dig</span>
+                        <span class="tool-tag"><i class="fas fa-search"></i> Subfinder</span>
+                        <span class="tool-tag"><i class="fas fa-spider"></i> theHarvester</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="submodule-card">
+                <div class="submodule-header">
+                    <div class="submodule-num">03</div>
+                    <div class="submodule-info">
+                        <h4><i class="fas fa-server"></i> Descubrimiento de Hosts</h4>
+                        <span class="submodule-phase">Nmap</span>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="submodule-content">
+                    <p>Identificar qué IPs están activas en el rango autorizado.</p>
+                    <div class="code-block">
+                        <div class="code-header"><span class="code-lang">Nmap</span></div>
+                        <pre><code># Ping sweep
+nmap -sn 192.168.1.0/24
+
+# Host discovery (sin ping)
+nmap -Pn -sn 192.168.1.0/24
+
+# Escaneo rápido de puertos
+nmap -T4 -F 192.168.1.0/24</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="submodule-card">
+                <div class="submodule-header">
+                    <div class="submodule-num">04</div>
+                    <div class="submodule-info">
+                        <h4><i class="fas fa-plug"></i> Enumeración de Puertos y Servicios</h4>
+                        <span class="submodule-phase">Nmap</span>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="submodule-content">
+                    <p>Identificar puertos abiertos y servicios ejecutándose.</p>
+                    <div class="code-block">
+                        <div class="code-header"><span class="code-lang">Nmap</span></div>
+                        <pre><code># Escaneo completo de puertos
+nmap -sV -sC -O target.com
+
+# Escaneo de versión de servicio
+nmap -sV -p 22,80,443 target.com
+
+# Script de descubrimiento
+nmap --script discovery target.com
+
+# Guardar resultados
+nmap -sV -sC -oN scan.txt -oX scan.xml target.com</code></pre>
+                    </div>
+                    <div class="tools-used">
+                        <span class="tool-tag"><i class="fas fa-network-wired"></i> Nmap</span>
+                        <span class="tool-tag"><i class="fas fa-search"></i> Masscan</span>
+                        <span class="tool-tag"><i class="fas fa-terminal"></i> Netcat</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-block">
+            <h3><i class="fas fa-tools"></i> Herramientas Principales</h3>
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <div class="tool-icon"><i class="fas fa-network-wired"></i></div>
+                    <h4>Nmap</h4>
+                    <p>El estándar para escaneo de redes y descubrimiento de servicios.</p>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-icon"><i class="fas fa-search"></i></div>
+                    <h4>Subfinder</h4>
+                    <p>Descubrimiento de subdominios pasivo.</p>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-icon"><i class="fas fa-spider"></i></div>
+                    <h4>theHarvester</h4>
+                    <p>Recolección de emails, subdominios e IPs.</p>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-icon"><i class="fas fa-database"></i></div>
+                    <h4>Shodan</h4>
+                    <p>Motor de búsqueda de dispositivos IoT e infraestructura.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-block">
+            <h3><i class="fas fa-book"></i> Recursos Adicionales</h3>
+            <div class="resources-list">
+                <a href="https://osintframework.com/" target="_blank" class="resource-link">
+                    <i class="fas fa-external-link-alt"></i> OSINT Framework — Colección de herramientas OSINT
+                </a>
+                <a href="https://www.netlas.io/" target="_blank" class="resource-link">
+                    <i class="fas fa-external-link-alt"></i> Netlas — Descubrimiento de hosts
+                </a>
+                <a href="https://book.hacktricks.xyz/" target="_blank" class="resource-link">
+                    <i class="fas fa-external-link-alt"></i> HackTricks — Guía de reconocimiento
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-col"><h4><i class="fas fa-shield-halved"></i> CDPN</h4><p>Formando profesionales de ciberdefensa.</p></div>
+                <div class="footer-col"><h4>Módulos</h4><ul><li><a href="../introduccion/">Introducción</a></li><li><a href="index.html">Red Team</a></li><li><a href="../blue-team/">Blue Team</a></li><li><a href="../purple-team/">Purple Team</a></li></ul></div>
+                <div class="footer-col"><h4>Secciones</h4><ul><li><a href="../fundamentos/">🚀 Base para principiantes</a></li><li><a href="../../retos.html">Retos</a></li><li><a href="../../herramientas.html">Herramientas</a></li><li><a href="../../labs.html">Labs</a></li></ul></div>
+                <div class="footer-col"><h4>GitHub</h4><ul><li><a href="https://github.com/0xvanguard/CyberDefense-Pro-Network"><i class="fab fa-github"></i> Repo</a></li></ul></div>
+            </div>
+            <div class="footer-bottom"><p>&copy; 2026 CDPN. Todos los derechos reservados.</p></div>
+        </div>
+    </footer>
+    <script src="../../assets/js/shared.js"></script>
+</body>
+</html>
