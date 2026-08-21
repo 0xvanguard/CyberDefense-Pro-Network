@@ -1,5 +1,4 @@
 version: '3.8'
-
 services:
   kali:
     image: kalilinux/kali-rolling
@@ -9,22 +8,43 @@ services:
       purple_net:
         ipv4_address: 10.0.2.100
     volumes:
-      - ./scripts:/scripts
+    - ./scripts:/scripts
     tty: true
     stdin_open: true
-    command: >
-      bash -c "
-        apt-get update && apt-get install -y \
-          nmap \
-          netcat \
-          curl \
-          python3 \
-          bloodhound \
-          crackmapexec \
-          impacket-scripts \
-          && bash
-      "
-
+    command: "bash -c \"\n  apt-get update && apt-get install -y \\\n    nmap \\\n\
+      \    netcat \\\n    curl \\\n    python3 \\\n    bloodhound \\\n    crackmapexec\
+      \ \\\n    impacket-scripts \\\n    && bash\n\"\n"
+    deploy: &id001
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 128M
+    cap_drop: &id002
+    - ALL
+    security_opt: &id003
+    - no-new-privileges:true
+    healthcheck: &id004
+      test:
+      - CMD
+      - curl
+      - -f
+      - http://localhost/
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    logging: &id005
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: '3'
+    restart: unless-stopped
+    cap_add:
+    - NET_RAW
+    - NET_ADMIN
   wazuh-manager:
     image: wazuh/wazuh-manager:4.7.0
     container_name: purple-wazuh
@@ -33,9 +53,14 @@ services:
       purple_net:
         ipv4_address: 10.0.2.150
     ports:
-      - "55000:55000"
-      - "5601:5601"
-
+    - 55000:55000
+    - 5601:5601
+    deploy: *id001
+    cap_drop: *id002
+    security_opt: *id003
+    healthcheck: *id004
+    logging: *id005
+    restart: unless-stopped
   windows-target:
     image: vulnerabilities/windows-7-patch497
     container_name: purple-windows
@@ -43,7 +68,12 @@ services:
     networks:
       purple_net:
         ipv4_address: 10.0.2.10
-
+    deploy: *id001
+    cap_drop: *id002
+    security_opt: *id003
+    healthcheck: *id004
+    logging: *id005
+    restart: unless-stopped
   linux-target:
     image: ubuntu:20.04
     container_name: purple-linux
@@ -52,20 +82,18 @@ services:
       purple_net:
         ipv4_address: 10.0.2.20
     volumes:
-      - ./scripts:/scripts
+    - ./scripts:/scripts
     tty: true
-    command: >
-      bash -c "
-        apt-get update && apt-get install -y \
-          openssh-server \
-          auditd \
-          && mkdir /var/run/sshd \
-            && echo 'admin:admin123' | chpasswd \
-            && useradd -m -s /bin/bash admin \
-            && echo 'FLAG{purple_t34m_d3t3ct3d}' > /home/admin/flag.txt \
-            && /usr/sbin/sshd -D
-      "
-
+    command: "bash -c \"\n  apt-get update && apt-get install -y \\\n    openssh-server\
+      \ \\\n    auditd \\\n    && mkdir /var/run/sshd \\\n      && echo 'admin:admin123'\
+      \ | chpasswd \\\n      && useradd -m -s /bin/bash admin \\\n      && echo 'FLAG{purple_t34m_d3t3ct3d}'\
+      \ > /home/admin/flag.txt \\\n      && /usr/sbin/sshd -D\n\"\n"
+    deploy: *id001
+    cap_drop: *id002
+    security_opt: *id003
+    healthcheck: *id004
+    logging: *id005
+    restart: unless-stopped
   blue-defender:
     image: ubuntu:20.04
     container_name: purple-blue
@@ -74,21 +102,19 @@ services:
       purple_net:
         ipv4_address: 10.0.2.200
     volumes:
-      - ./scripts:/scripts
+    - ./scripts:/scripts
     tty: true
-    command: >
-      bash -c "
-        apt-get update && apt-get install -y \
-          nmap \
-          netcat \
-          curl \
-          python3 \
-          && bash
-      "
-
+    command: "bash -c \"\n  apt-get update && apt-get install -y \\\n    nmap \\\n\
+      \    netcat \\\n    curl \\\n    python3 \\\n    && bash\n\"\n"
+    deploy: *id001
+    cap_drop: *id002
+    security_opt: *id003
+    healthcheck: *id004
+    logging: *id005
+    restart: unless-stopped
 networks:
   purple_net:
     driver: bridge
     ipam:
       config:
-        - subnet: 10.0.2.0/24
+      - subnet: 10.0.2.0/24

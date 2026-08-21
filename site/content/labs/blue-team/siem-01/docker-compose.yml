@@ -1,5 +1,4 @@
 version: '3.8'
-
 services:
   kali:
     image: kalilinux/kali-rolling
@@ -9,22 +8,43 @@ services:
       blue_net:
         ipv4_address: 10.0.2.100
     volumes:
-      - ./scripts:/scripts
+    - ./scripts:/scripts
     tty: true
     stdin_open: true
-    command: >
-      bash -c "
-        apt-get update && apt-get install -y \
-          nmap \
-          netcat \
-          curl \
-          python3 \
-          volatility \
-          autopsy \
-          yara \
-          && bash
-      "
-
+    command: "bash -c \"\n  apt-get update && apt-get install -y \\\n    nmap \\\n\
+      \    netcat \\\n    curl \\\n    python3 \\\n    volatility \\\n    autopsy\
+      \ \\\n    yara \\\n    && bash\n\"\n"
+    deploy: &id001
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 128M
+    cap_drop: &id002
+    - ALL
+    security_opt: &id003
+    - no-new-privileges:true
+    healthcheck: &id004
+      test:
+      - CMD
+      - curl
+      - -f
+      - http://localhost/
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    logging: &id005
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: '3'
+    restart: unless-stopped
+    cap_add:
+    - NET_RAW
+    - NET_ADMIN
   target-server:
     image: ubuntu:20.04
     container_name: blue-target
@@ -33,21 +53,19 @@ services:
       blue_net:
         ipv4_address: 10.0.2.10
     volumes:
-      - ./scripts:/scripts
+    - ./scripts:/scripts
     tty: true
-    command: >
-      bash -c "
-        apt-get update && apt-get install -y \
-          openssh-server \
-          apache2 \
-          mysql-server \
-          && mkdir /var/run/sshd \
-            && echo 'admin:admin123' | chpasswd \
-            && useradd -m -s /bin/bash admin \
-            && echo 'FLAG{blu3_t34m靶场}' > /home/admin/flag.txt \
-            && /usr/sbin/sshd -D
-      "
-
+    command: "bash -c \"\n  apt-get update && apt-get install -y \\\n    openssh-server\
+      \ \\\n    apache2 \\\n    mysql-server \\\n    && mkdir /var/run/sshd \\\n \
+      \     && echo 'admin:admin123' | chpasswd \\\n      && useradd -m -s /bin/bash\
+      \ admin \\\n      && echo 'FLAG{blu3_t34m靶场}' > /home/admin/flag.txt \\\n  \
+      \    && /usr/sbin/sshd -D\n\"\n"
+    deploy: *id001
+    cap_drop: *id002
+    security_opt: *id003
+    healthcheck: *id004
+    logging: *id005
+    restart: unless-stopped
   web-server:
     image: vulnerables/web-dvwa
     container_name: blue-web
@@ -56,13 +74,18 @@ services:
       blue_net:
         ipv4_address: 10.0.2.20
     ports:
-      - "80:80"
+    - 80:80
     environment:
-      - MYSQL_PASSWD=password
-
+    - MYSQL_PASSWD=password
+    deploy: *id001
+    cap_drop: *id002
+    security_opt: *id003
+    healthcheck: *id004
+    logging: *id005
+    restart: unless-stopped
 networks:
   blue_net:
     driver: bridge
     ipam:
       config:
-        - subnet: 10.0.2.0/24
+      - subnet: 10.0.2.0/24

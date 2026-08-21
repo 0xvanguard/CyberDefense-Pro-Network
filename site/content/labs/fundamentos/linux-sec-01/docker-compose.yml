@@ -1,5 +1,4 @@
 version: '3.8'
-
 services:
   kali:
     image: kalilinux/kali-rolling
@@ -9,23 +8,43 @@ services:
       red_at:
         ipv4_address: 10.10.10.100
     volumes:
-      - ./scripts:/scripts
+    - ./scripts:/scripts
     tty: true
     stdin_open: true
-    command: >
-      bash -c "
-        apt-get update && apt-get install -y \
-          nmap \
-          lynis \
-          auditd \
-          fail2ban-client \
-          net-tools \
-          iputils-ping \
-          curl \
-          ssh \
-          && bash
-      "
-
+    command: "bash -c \"\n  apt-get update && apt-get install -y \\\n    nmap \\\n\
+      \    lynis \\\n    auditd \\\n    fail2ban-client \\\n    net-tools \\\n   \
+      \ iputils-ping \\\n    curl \\\n    ssh \\\n    && bash\n\"\n"
+    deploy: &id001
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 128M
+    cap_drop: &id002
+    - ALL
+    security_opt: &id003
+    - no-new-privileges:true
+    healthcheck: &id004
+      test:
+      - CMD
+      - curl
+      - -f
+      - http://localhost/
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    logging: &id005
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: '3'
+    restart: unless-stopped
+    cap_add:
+    - NET_RAW
+    - NET_ADMIN
   web-server:
     image: ubuntu:20.04
     container_name: web-server
@@ -34,19 +53,17 @@ services:
       red_at:
         ipv4_address: 10.10.10.10
     volumes:
-      - ./scripts:/scripts
+    - ./scripts:/scripts
     tty: true
-    command: >
-      bash -c "
-        apt-get update && apt-get install -y \
-          apache2 \
-          iptables \
-          auditd \
-          lynis \
-          && echo 'FLAG{f1r3w4ll_4ct1v3}' > /var/www/html/flag.txt \
-            && apachectl -D FOREGROUND
-      "
-
+    command: "bash -c \"\n  apt-get update && apt-get install -y \\\n    apache2 \\\
+      \n    iptables \\\n    auditd \\\n    lynis \\\n    && echo 'FLAG{f1r3w4ll_4ct1v3}'\
+      \ > /var/www/html/flag.txt \\\n      && apachectl -D FOREGROUND\n\"\n"
+    deploy: *id001
+    cap_drop: *id002
+    security_opt: *id003
+    healthcheck: *id004
+    logging: *id005
+    restart: unless-stopped
   database:
     image: centos:8
     container_name: database
@@ -55,20 +72,20 @@ services:
       red_at:
         ipv4_address: 10.10.10.20
     volumes:
-      - ./scripts:/scripts
+    - ./scripts:/scripts
     tty: true
-    command: >
-      bash -c "
-        yum install -y \
-          mysql-server \
-          && systemctl start mysqld \
-            && mysql -e \"CREATE DATABASE IF NOT EXISTS test;\" \
-            && mysql -e \"USE test; CREATE TABLE IF NOT EXISTS users (id INT, name VARCHAR(50));\" \
-            && mysql -e \"USE test; INSERT INTO users VALUES (1, 'admin');\" \
-            && echo 'FLAG{s3l1nux_m4n4g3d}' > /root/flag.txt \
-            && sleep infinity
-      "
-
+    command: "bash -c \"\n  yum install -y \\\n    mysql-server \\\n    && systemctl\
+      \ start mysqld \\\n      && mysql -e \\\"CREATE DATABASE IF NOT EXISTS test;\\\
+      \" \\\n      && mysql -e \\\"USE test; CREATE TABLE IF NOT EXISTS users (id\
+      \ INT, name VARCHAR(50));\\\" \\\n      && mysql -e \\\"USE test; INSERT INTO\
+      \ users VALUES (1, 'admin');\\\" \\\n      && echo 'FLAG{s3l1nux_m4n4g3d}' >\
+      \ /root/flag.txt \\\n      && sleep infinity\n\"\n"
+    deploy: *id001
+    cap_drop: *id002
+    security_opt: *id003
+    healthcheck: *id004
+    logging: *id005
+    restart: unless-stopped
   ssh-server:
     image: ubuntu:20.04
     container_name: ssh-server
@@ -77,24 +94,23 @@ services:
       red_at:
         ipv4_address: 10.10.10.30
     volumes:
-      - ./scripts:/scripts
+    - ./scripts:/scripts
     tty: true
-    command: >
-      bash -c "
-        apt-get update && apt-get install -y \
-          openssh-server \
-          fail2ban \
-          && mkdir /var/run/sshd \
-            && echo 'root:password' | chpasswd \
-            && sed -i 's/#PermitRootLogin yes/PermitRootLogin no/' /etc/ssh/sshd_config \
-            && sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config \
-            && echo 'FLAG{ssh_h4rd3n3d}' > /root/flag.txt \
-            && /usr/sbin/sshd -D
-      "
-
+    command: "bash -c \"\n  apt-get update && apt-get install -y \\\n    openssh-server\
+      \ \\\n    fail2ban \\\n    && mkdir /var/run/sshd \\\n      && echo 'root:password'\
+      \ | chpasswd \\\n      && sed -i 's/#PermitRootLogin yes/PermitRootLogin no/'\
+      \ /etc/ssh/sshd_config \\\n      && sed -i 's/#PasswordAuthentication yes/PasswordAuthentication\
+      \ no/' /etc/ssh/sshd_config \\\n      && echo 'FLAG{ssh_h4rd3n3d}' > /root/flag.txt\
+      \ \\\n      && /usr/sbin/sshd -D\n\"\n"
+    deploy: *id001
+    cap_drop: *id002
+    security_opt: *id003
+    healthcheck: *id004
+    logging: *id005
+    restart: unless-stopped
 networks:
   red_at:
     driver: bridge
     ipam:
       config:
-        - subnet: 10.10.10.0/24
+      - subnet: 10.10.10.0/24

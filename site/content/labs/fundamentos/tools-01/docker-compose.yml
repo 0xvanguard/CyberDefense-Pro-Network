@@ -1,5 +1,4 @@
 version: '3.8'
-
 services:
   kali:
     image: kalilinux/kali-rolling
@@ -9,24 +8,44 @@ services:
       red_at:
         ipv4_address: 10.10.10.100
     volumes:
-      - ./scripts:/scripts
+    - ./scripts:/scripts
     tty: true
     stdin_open: true
-    command: >
-      bash -c "
-        apt-get update && apt-get install -y \
-          nmap \
-          wireshark-common \
-          tcpdump \
-          nikto \
-          searchsploit \
-          metasploit-framework \
-          net-tools \
-          iputils-ping \
-          curl \
-          && bash
-      "
-
+    command: "bash -c \"\n  apt-get update && apt-get install -y \\\n    nmap \\\n\
+      \    wireshark-common \\\n    tcpdump \\\n    nikto \\\n    searchsploit \\\n\
+      \    metasploit-framework \\\n    net-tools \\\n    iputils-ping \\\n    curl\
+      \ \\\n    && bash\n\"\n"
+    deploy: &id001
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 128M
+    cap_drop: &id002
+    - ALL
+    security_opt: &id003
+    - no-new-privileges:true
+    healthcheck: &id004
+      test:
+      - CMD
+      - curl
+      - -f
+      - http://localhost/
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    logging: &id005
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: '3'
+    restart: unless-stopped
+    cap_add:
+    - NET_RAW
+    - NET_ADMIN
   web-application:
     image: vulnerables/web-dvwa
     container_name: web-app
@@ -35,10 +54,15 @@ services:
       red_at:
         ipv4_address: 10.10.10.10
     ports:
-      - "80:80"
+    - 80:80
     environment:
-      - MYSQL_PASSWD=password
-
+    - MYSQL_PASSWD=password
+    deploy: *id001
+    cap_drop: *id002
+    security_opt: *id003
+    healthcheck: *id004
+    logging: *id005
+    restart: unless-stopped
   database:
     image: ubuntu:20.04
     container_name: database
@@ -47,17 +71,18 @@ services:
       red_at:
         ipv4_address: 10.10.10.20
     tty: true
-    command: >
-      bash -c "
-        apt-get update && apt-get install -y \
-          mysql-server \
-          && service mysql start \
-            && mysql -e \"CREATE DATABASE IF NOT EXISTS test;\" \
-            && mysql -e \"USE test; CREATE TABLE IF NOT EXISTS secrets (id INT, data VARCHAR(100));\" \
-            && mysql -e \"USE test; INSERT INTO secrets VALUES (1, 'FLAG{mysql_4cc3ss}');\" \
-            && sleep infinity
-      "
-
+    command: "bash -c \"\n  apt-get update && apt-get install -y \\\n    mysql-server\
+      \ \\\n    && service mysql start \\\n      && mysql -e \\\"CREATE DATABASE IF\
+      \ NOT EXISTS test;\\\" \\\n      && mysql -e \\\"USE test; CREATE TABLE IF NOT\
+      \ EXISTS secrets (id INT, data VARCHAR(100));\\\" \\\n      && mysql -e \\\"\
+      USE test; INSERT INTO secrets VALUES (1, 'FLAG{mysql_4cc3ss}');\\\" \\\n   \
+      \   && sleep infinity\n\"\n"
+    deploy: *id001
+    cap_drop: *id002
+    security_opt: *id003
+    healthcheck: *id004
+    logging: *id005
+    restart: unless-stopped
   ftp-server:
     image: fauria/vsftpd
     container_name: ftp-server
@@ -66,15 +91,20 @@ services:
       red_at:
         ipv4_address: 10.10.10.30
     environment:
-      - FTP_USER=anonymous
-      - FTP_PASS=anonymous
-      - PASV_ADDRESS=10.10.10.30
-      - PASV_MIN_PORT=21100
-      - PASV_MAX_PORT=21110
-
+    - FTP_USER=anonymous
+    - FTP_PASS=anonymous
+    - PASV_ADDRESS=10.10.10.30
+    - PASV_MIN_PORT=21100
+    - PASV_MAX_PORT=21110
+    deploy: *id001
+    cap_drop: *id002
+    security_opt: *id003
+    healthcheck: *id004
+    logging: *id005
+    restart: unless-stopped
 networks:
   red_at:
     driver: bridge
     ipam:
       config:
-        - subnet: 10.10.10.0/24
+      - subnet: 10.10.10.0/24

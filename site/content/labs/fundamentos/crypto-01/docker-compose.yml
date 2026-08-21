@@ -1,5 +1,4 @@
 version: '3.8'
-
 services:
   kali:
     image: kalilinux/kali-rolling
@@ -9,23 +8,44 @@ services:
       red_at:
         ipv4_address: 10.10.10.100
     volumes:
-      - ./scripts:/scripts
-      - ./vault:/vault
+    - ./scripts:/scripts
+    - ./vault:/vault
     tty: true
     stdin_open: true
-    command: >
-      bash -c "
-        apt-get update && apt-get install -y \
-          openssl \
-          hashcat \
-          john \
-          gpg \
-          curl \
-          net-tools \
-          iputils-ping \
-          && bash
-      "
-
+    command: "bash -c \"\n  apt-get update && apt-get install -y \\\n    openssl \\\
+      \n    hashcat \\\n    john \\\n    gpg \\\n    curl \\\n    net-tools \\\n \
+      \   iputils-ping \\\n    && bash\n\"\n"
+    deploy: &id001
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 128M
+    cap_drop: &id002
+    - ALL
+    security_opt: &id003
+    - no-new-privileges:true
+    healthcheck: &id004
+      test:
+      - CMD
+      - curl
+      - -f
+      - http://localhost/
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    logging: &id005
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: '3'
+    restart: unless-stopped
+    cap_add:
+    - NET_RAW
+    - NET_ADMIN
   hash-station:
     image: ubuntu:20.04
     container_name: hash-station
@@ -34,17 +54,17 @@ services:
       red_at:
         ipv4_address: 10.10.10.10
     tty: true
-    command: >
-      bash -c "
-        apt-get update && apt-get install -y \
-          apache2 \
-          && echo 'FLAG{h4sh_f0und}' > /var/www/html/flag.txt \
-            && echo 'HASHES:' > /var/www/html/hashes.txt \
-            && echo 'MD5:09981850493885693388093654634394' >> /var/www/html/hashes.txt \
-            && echo 'SHA256:ef92b778bafe771e89245b89ecbc08246d2b164990d089697de455f648436f96' >> /var/www/html/hashes.txt \
-            && apachectl -D FOREGROUND
-      "
-
+    command: "bash -c \"\n  apt-get update && apt-get install -y \\\n    apache2 \\\
+      \n    && echo 'FLAG{h4sh_f0und}' > /var/www/html/flag.txt \\\n      && echo\
+      \ 'HASHES:' > /var/www/html/hashes.txt \\\n      && echo 'MD5:09981850493885693388093654634394'\
+      \ >> /var/www/html/hashes.txt \\\n      && echo 'SHA256:ef92b778bafe771e89245b89ecbc08246d2b164990d089697de455f648436f96'\
+      \ >> /var/www/html/hashes.txt \\\n      && apachectl -D FOREGROUND\n\"\n"
+    deploy: *id001
+    cap_drop: *id002
+    security_opt: *id003
+    healthcheck: *id004
+    logging: *id005
+    restart: unless-stopped
   crypto-server:
     image: ubuntu:20.04
     container_name: crypto-server
@@ -53,20 +73,20 @@ services:
       red_at:
         ipv4_address: 10.10.10.20
     volumes:
-      - ./vault:/vault
+    - ./vault:/vault
     tty: true
-    command: >
-      bash -c "
-        apt-get update && apt-get install -y \
-          openssl \
-          && echo 'FLAG{cr4ck3d_md5_hash}' > /vault/flag.txt \
-            && echo '4b2763c432decb2e37a6b29c5a39e393' > /vault/hash.txt \
-            && echo 'Vault ready' && sleep infinity
-      "
-
+    command: "bash -c \"\n  apt-get update && apt-get install -y \\\n    openssl \\\
+      \n    && echo 'FLAG{cr4ck3d_md5_hash}' > /vault/flag.txt \\\n      && echo '4b2763c432decb2e37a6b29c5a39e393'\
+      \ > /vault/hash.txt \\\n      && echo 'Vault ready' && sleep infinity\n\"\n"
+    deploy: *id001
+    cap_drop: *id002
+    security_opt: *id003
+    healthcheck: *id004
+    logging: *id005
+    restart: unless-stopped
 networks:
   red_at:
     driver: bridge
     ipam:
       config:
-        - subnet: 10.10.10.0/24
+      - subnet: 10.10.10.0/24

@@ -1,5 +1,4 @@
 version: '3.8'
-
 services:
   kali:
     image: kalilinux/kali-rolling
@@ -9,23 +8,43 @@ services:
       red_at:
         ipv4_address: 10.0.2.100
     volumes:
-      - ./scripts:/scripts
+    - ./scripts:/scripts
     tty: true
     stdin_open: true
-    command: >
-      bash -c "
-        apt-get update && apt-get install -y \
-          nmap \
-          netcat \
-          crackmapexec \
-          impacket-scripts \
-          evil-winrm \
-          ssh \
-          curl \
-          python3 \
-          && bash
-      "
-
+    command: "bash -c \"\n  apt-get update && apt-get install -y \\\n    nmap \\\n\
+      \    netcat \\\n    crackmapexec \\\n    impacket-scripts \\\n    evil-winrm\
+      \ \\\n    ssh \\\n    curl \\\n    python3 \\\n    && bash\n\"\n"
+    deploy: &id001
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 128M
+    cap_drop: &id002
+    - ALL
+    security_opt: &id003
+    - no-new-privileges:true
+    healthcheck: &id004
+      test:
+      - CMD
+      - curl
+      - -f
+      - http://localhost/
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    logging: &id005
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: '3'
+    restart: unless-stopped
+    cap_add:
+    - NET_RAW
+    - NET_ADMIN
   web-server:
     image: ubuntu:20.04
     container_name: lateral-web
@@ -34,19 +53,18 @@ services:
       red_at:
         ipv4_address: 10.0.2.10
     volumes:
-      - ./scripts:/scripts
+    - ./scripts:/scripts
     tty: true
-    command: >
-      bash -c "
-        apt-get update && apt-get install -y \
-          openssh-server \
-          && mkdir /var/run/sshd \
-            && echo 'admin:admin123' | chpasswd \
-            && useradd -m -s /bin/bash admin \
-            && echo 'FLAG{l4t3r4l_1n1t14l}' > /home/admin/flag.txt \
-            && /usr/sbin/sshd -D
-      "
-
+    command: "bash -c \"\n  apt-get update && apt-get install -y \\\n    openssh-server\
+      \ \\\n    && mkdir /var/run/sshd \\\n      && echo 'admin:admin123' | chpasswd\
+      \ \\\n      && useradd -m -s /bin/bash admin \\\n      && echo 'FLAG{l4t3r4l_1n1t14l}'\
+      \ > /home/admin/flag.txt \\\n      && /usr/sbin/sshd -D\n\"\n"
+    deploy: *id001
+    cap_drop: *id002
+    security_opt: *id003
+    healthcheck: *id004
+    logging: *id005
+    restart: unless-stopped
   database:
     image: ubuntu:20.04
     container_name: lateral-db
@@ -55,24 +73,22 @@ services:
       red_at:
         ipv4_address: 10.0.2.20
     volumes:
-      - ./scripts:/scripts
+    - ./scripts:/scripts
     tty: true
-    command: >
-      bash -c "
-        apt-get update && apt-get install -y \
-          openssh-server \
-          mysql-server \
-          && mkdir /var/run/sshd \
-            && echo 'dba:dba123' | chpasswd \
-            && useradd -m -s /bin/bash dba \
-            && echo 'FLAG{l4t3r4l_d4t4b4s3}' > /home/dba/flag.txt \
-            && service mysql start \
-            && mysql -e \"CREATE DATABASE IF NOT EXISTS secrets;\" \
-            && mysql -e \"USE secrets; CREATE TABLE IF NOT EXISTS data (id INT, value VARCHAR(100));\" \
-            && mysql -e \"USE secrets; INSERT INTO data VALUES (1, 'FLAG{mysql_d4t4}');\" \
-            && /usr/sbin/sshd -D
-      "
-
+    command: "bash -c \"\n  apt-get update && apt-get install -y \\\n    openssh-server\
+      \ \\\n    mysql-server \\\n    && mkdir /var/run/sshd \\\n      && echo 'dba:dba123'\
+      \ | chpasswd \\\n      && useradd -m -s /bin/bash dba \\\n      && echo 'FLAG{l4t3r4l_d4t4b4s3}'\
+      \ > /home/dba/flag.txt \\\n      && service mysql start \\\n      && mysql -e\
+      \ \\\"CREATE DATABASE IF NOT EXISTS secrets;\\\" \\\n      && mysql -e \\\"\
+      USE secrets; CREATE TABLE IF NOT EXISTS data (id INT, value VARCHAR(100));\\\
+      \" \\\n      && mysql -e \\\"USE secrets; INSERT INTO data VALUES (1, 'FLAG{mysql_d4t4}');\\\
+      \" \\\n      && /usr/sbin/sshd -D\n\"\n"
+    deploy: *id001
+    cap_drop: *id002
+    security_opt: *id003
+    healthcheck: *id004
+    logging: *id005
+    restart: unless-stopped
   file-server:
     image: ubuntu:20.04
     container_name: lateral-files
@@ -81,25 +97,22 @@ services:
       red_at:
         ipv4_address: 10.0.2.30
     volumes:
-      - ./scripts:/scripts
+    - ./scripts:/scripts
     tty: true
-    command: >
-      bash -c "
-        apt-get update && apt-get install -y \
-          openssh-server \
-          samba \
-          && mkdir /var/run/sshd \
-            && echo 'root:root123' | chpasswd \
-            && echo 'FLAG{l4t3r4l_f1l3s3rv3r}' > /root/flag.txt \
-            && mkdir -p /srv/share \
-            && echo 'FLAG{smb_sh4r3}' > /srv/share/secret.txt \
-            && chmod 777 /srv/share \
-            && /usr/sbin/sshd -D
-      "
-
+    command: "bash -c \"\n  apt-get update && apt-get install -y \\\n    openssh-server\
+      \ \\\n    samba \\\n    && mkdir /var/run/sshd \\\n      && echo 'root:root123'\
+      \ | chpasswd \\\n      && echo 'FLAG{l4t3r4l_f1l3s3rv3r}' > /root/flag.txt \\\
+      \n      && mkdir -p /srv/share \\\n      && echo 'FLAG{smb_sh4r3}' > /srv/share/secret.txt\
+      \ \\\n      && chmod 777 /srv/share \\\n      && /usr/sbin/sshd -D\n\"\n"
+    deploy: *id001
+    cap_drop: *id002
+    security_opt: *id003
+    healthcheck: *id004
+    logging: *id005
+    restart: unless-stopped
 networks:
   red_at:
     driver: bridge
     ipam:
       config:
-        - subnet: 10.0.2.0/24
+      - subnet: 10.0.2.0/24

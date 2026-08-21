@@ -1,5 +1,4 @@
 version: '3.8'
-
 services:
   kali:
     image: kalilinux/kali-rolling
@@ -9,20 +8,42 @@ services:
       red_at:
         ipv4_address: 10.0.2.100
     volumes:
-      - ./scripts:/scripts
+    - ./scripts:/scripts
     tty: true
     stdin_open: true
-    command: >
-      bash -c "
-        apt-get update && apt-get install -y \
-          nmap \
-          netcat \
-          curl \
-          python3 \
-          wget \
-          && bash
-      "
-
+    command: "bash -c \"\n  apt-get update && apt-get install -y \\\n    nmap \\\n\
+      \    netcat \\\n    curl \\\n    python3 \\\n    wget \\\n    && bash\n\"\n"
+    deploy: &id001
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 128M
+    cap_drop: &id002
+    - ALL
+    security_opt: &id003
+    - no-new-privileges:true
+    healthcheck: &id004
+      test:
+      - CMD
+      - curl
+      - -f
+      - http://localhost/
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    logging: &id005
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: '3'
+    restart: unless-stopped
+    cap_add:
+    - NET_RAW
+    - NET_ADMIN
   linux-privesc:
     image: ubuntu:20.04
     container_name: privesc-linux
@@ -31,21 +52,20 @@ services:
       red_at:
         ipv4_address: 10.0.2.10
     volumes:
-      - ./scripts:/scripts
+    - ./scripts:/scripts
     tty: true
-    command: >
-      bash -c "
-        apt-get update && apt-get install -y \
-          sudo \
-          && useradd -m -s /bin/bash lowuser \
-            && echo 'lowuser:lowpass' | chpasswd \
-            && echo 'FLAG{pr1v3sc_l1nux}' > /root/flag.txt \
-            && chmod 600 /root/flag.txt \
-            && echo 'lowuser ALL=(ALL) NOPASSWD: /usr/bin/find' >> /etc/sudoers \
-            && find / -perm -4000 -type f 2>/dev/null > /tmp/suid.txt \
-            && sleep infinity
-      "
-
+    command: "bash -c \"\n  apt-get update && apt-get install -y \\\n    sudo \\\n\
+      \    && useradd -m -s /bin/bash lowuser \\\n      && echo 'lowuser:lowpass'\
+      \ | chpasswd \\\n      && echo 'FLAG{pr1v3sc_l1nux}' > /root/flag.txt \\\n \
+      \     && chmod 600 /root/flag.txt \\\n      && echo 'lowuser ALL=(ALL) NOPASSWD:\
+      \ /usr/bin/find' >> /etc/sudoers \\\n      && find / -perm -4000 -type f 2>/dev/null\
+      \ > /tmp/suid.txt \\\n      && sleep infinity\n\"\n"
+    deploy: *id001
+    cap_drop: *id002
+    security_opt: *id003
+    healthcheck: *id004
+    logging: *id005
+    restart: unless-stopped
   windows-privesc:
     image: vulnerabilities/windows-7-patch497
     container_name: privesc-windows
@@ -53,10 +73,15 @@ services:
     networks:
       red_at:
         ipv4_address: 10.0.2.20
-
+    deploy: *id001
+    cap_drop: *id002
+    security_opt: *id003
+    healthcheck: *id004
+    logging: *id005
+    restart: unless-stopped
 networks:
   red_at:
     driver: bridge
     ipam:
       config:
-        - subnet: 10.0.2.0/24
+      - subnet: 10.0.2.0/24

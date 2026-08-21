@@ -1,5 +1,4 @@
 version: '3.8'
-
 services:
   kali:
     image: kalilinux/kali-rolling
@@ -9,22 +8,43 @@ services:
       red_at:
         ipv4_address: 10.0.2.100
     volumes:
-      - ./scripts:/scripts
+    - ./scripts:/scripts
     tty: true
     stdin_open: true
-    command: >
-      bash -c "
-        apt-get update && apt-get install -y \
-          nmap \
-          sqlmap \
-          nikto \
-          gobuster \
-          burpsuite \
-          curl \
-          python3 \
-          && bash
-      "
-
+    command: "bash -c \"\n  apt-get update && apt-get install -y \\\n    nmap \\\n\
+      \    sqlmap \\\n    nikto \\\n    gobuster \\\n    burpsuite \\\n    curl \\\
+      \n    python3 \\\n    && bash\n\"\n"
+    deploy: &id001
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 128M
+    cap_drop: &id002
+    - ALL
+    security_opt: &id003
+    - no-new-privileges:true
+    healthcheck: &id004
+      test:
+      - CMD
+      - curl
+      - -f
+      - http://localhost/
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    logging: &id005
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: '3'
+    restart: unless-stopped
+    cap_add:
+    - NET_RAW
+    - NET_ADMIN
   dvwa:
     image: vulnerables/web-dvwa
     container_name: web-dvwa
@@ -33,10 +53,15 @@ services:
       red_at:
         ipv4_address: 10.0.2.10
     ports:
-      - "80:80"
+    - 80:80
     environment:
-      - MYSQL_PASSWD=password
-
+    - MYSQL_PASSWD=password
+    deploy: *id001
+    cap_drop: *id002
+    security_opt: *id003
+    healthcheck: *id004
+    logging: *id005
+    restart: unless-stopped
   juice-shop:
     image: bkimminich/juice-shop
     container_name: web-juice
@@ -45,8 +70,13 @@ services:
       red_at:
         ipv4_address: 10.0.2.20
     ports:
-      - "3000:3000"
-
+    - 3000:3000
+    deploy: *id001
+    cap_drop: *id002
+    security_opt: *id003
+    healthcheck: *id004
+    logging: *id005
+    restart: unless-stopped
   webgoat:
     image: webgoat/webgoat
     container_name: web-webgoat
@@ -55,11 +85,16 @@ services:
       red_at:
         ipv4_address: 10.0.2.30
     ports:
-      - "8080:8080"
-
+    - 8080:8080
+    deploy: *id001
+    cap_drop: *id002
+    security_opt: *id003
+    healthcheck: *id004
+    logging: *id005
+    restart: unless-stopped
 networks:
   red_at:
     driver: bridge
     ipam:
       config:
-        - subnet: 10.0.2.0/24
+      - subnet: 10.0.2.0/24

@@ -1,5 +1,4 @@
 version: '3.8'
-
 services:
   kali:
     image: kalilinux/kali-rolling
@@ -9,26 +8,44 @@ services:
       red_at:
         ipv4_address: 10.0.2.100
     volumes:
-      - ./scripts:/scripts
+    - ./scripts:/scripts
     tty: true
     stdin_open: true
-    command: >
-      bash -c "
-        apt-get update && apt-get install -y \
-          nmap \
-          subfinder \
-          amass \
-          theharvester \
-          recon-ng \
-          nikto \
-          gobuster \
-          whatweb \
-          net-tools \
-          iputils-ping \
-          curl \
-          && bash
-      "
-
+    command: "bash -c \"\n  apt-get update && apt-get install -y \\\n    nmap \\\n\
+      \    subfinder \\\n    amass \\\n    theharvester \\\n    recon-ng \\\n    nikto\
+      \ \\\n    gobuster \\\n    whatweb \\\n    net-tools \\\n    iputils-ping \\\
+      \n    curl \\\n    && bash\n\"\n"
+    deploy: &id001
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 128M
+    cap_drop: &id002
+    - ALL
+    security_opt: &id003
+    - no-new-privileges:true
+    healthcheck: &id004
+      test:
+      - CMD
+      - curl
+      - -f
+      - http://localhost/
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    logging: &id005
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: '3'
+    restart: unless-stopped
+    cap_add:
+    - NET_RAW
+    - NET_ADMIN
   web-server:
     image: vulnerables/web-dvwa
     container_name: recon-web
@@ -37,10 +54,15 @@ services:
       red_at:
         ipv4_address: 10.0.2.10
     ports:
-      - "80:80"
+    - 80:80
     environment:
-      - MYSQL_PASSWD=password
-
+    - MYSQL_PASSWD=password
+    deploy: *id001
+    cap_drop: *id002
+    security_opt: *id003
+    healthcheck: *id004
+    logging: *id005
+    restart: unless-stopped
   ftp-server:
     image: fauria/vsftpd
     container_name: recon-ftp
@@ -49,12 +71,17 @@ services:
       red_at:
         ipv4_address: 10.0.2.20
     environment:
-      - FTP_USER=anonymous
-      - FTP_PASS=anonymous
-      - PASV_ADDRESS=10.0.2.20
-      - PASV_MIN_PORT=21100
-      - PASV_MAX_PORT=21110
-
+    - FTP_USER=anonymous
+    - FTP_PASS=anonymous
+    - PASV_ADDRESS=10.0.2.20
+    - PASV_MIN_PORT=21100
+    - PASV_MAX_PORT=21110
+    deploy: *id001
+    cap_drop: *id002
+    security_opt: *id003
+    healthcheck: *id004
+    logging: *id005
+    restart: unless-stopped
   ssh-server:
     image: ubuntu:20.04
     container_name: recon-ssh
@@ -63,21 +90,20 @@ services:
       red_at:
         ipv4_address: 10.0.2.30
     tty: true
-    command: >
-      bash -c "
-        apt-get update && apt-get install -y \
-          openssh-server \
-          && mkdir /var/run/sshd \
-            && echo 'root:password' | chpasswd \
-            && echo 'admin:admin123' | chpasswd \
-            && useradd -m -s /bin/bash admin \
-            && echo 'FLAG{ssh_3num3r4t10n}' > /home/admin/flag.txt \
-            && /usr/sbin/sshd -D
-      "
-
+    command: "bash -c \"\n  apt-get update && apt-get install -y \\\n    openssh-server\
+      \ \\\n    && mkdir /var/run/sshd \\\n      && echo 'root:password' | chpasswd\
+      \ \\\n      && echo 'admin:admin123' | chpasswd \\\n      && useradd -m -s /bin/bash\
+      \ admin \\\n      && echo 'FLAG{ssh_3num3r4t10n}' > /home/admin/flag.txt \\\n\
+      \      && /usr/sbin/sshd -D\n\"\n"
+    deploy: *id001
+    cap_drop: *id002
+    security_opt: *id003
+    healthcheck: *id004
+    logging: *id005
+    restart: unless-stopped
 networks:
   red_at:
     driver: bridge
     ipam:
       config:
-        - subnet: 10.0.2.0/24
+      - subnet: 10.0.2.0/24

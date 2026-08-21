@@ -1,5 +1,4 @@
 version: '3.8'
-
 services:
   kali:
     image: kalilinux/kali-rolling
@@ -9,24 +8,45 @@ services:
       red_at:
         ipv4_address: 10.10.10.100
     volumes:
-      - ./scripts:/scripts
+    - ./scripts:/scripts
     tty: true
     stdin_open: true
-    command: >
-      bash -c "
-        apt-get update && apt-get install -y \
-          openssh-client \
-          openssh-server \
-          net-tools \
-          iputils-ping \
-          procps \
-          curl \
-          && echo 'root:password' | chpasswd \
-            && echo ' usuario:password123' | chpasswd \
-            && useradd -m -s /bin/bash usuario \
-            && bash
-      "
-
+    command: "bash -c \"\n  apt-get update && apt-get install -y \\\n    openssh-client\
+      \ \\\n    openssh-server \\\n    net-tools \\\n    iputils-ping \\\n    procps\
+      \ \\\n    curl \\\n    && echo 'root:password' | chpasswd \\\n      && echo\
+      \ ' usuario:password123' | chpasswd \\\n      && useradd -m -s /bin/bash usuario\
+      \ \\\n      && bash\n\"\n"
+    deploy: &id001
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 128M
+    cap_drop: &id002
+    - ALL
+    security_opt: &id003
+    - no-new-privileges:true
+    healthcheck: &id004
+      test:
+      - CMD
+      - curl
+      - -f
+      - http://localhost/
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    logging: &id005
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: '3'
+    restart: unless-stopped
+    cap_add:
+    - NET_RAW
+    - NET_ADMIN
   web-server:
     image: ubuntu:20.04
     container_name: web-server
@@ -35,14 +55,15 @@ services:
       red_at:
         ipv4_address: 10.10.10.10
     tty: true
-    command: >
-      bash -c "
-        apt-get update && apt-get install -y \
-          apache2 \
-          && echo 'FLAG{l1nux_m4st3r}' > /var/www/html/flag.txt \
-            && apachectl -D FOREGROUND
-      "
-
+    command: "bash -c \"\n  apt-get update && apt-get install -y \\\n    apache2 \\\
+      \n    && echo 'FLAG{l1nux_m4st3r}' > /var/www/html/flag.txt \\\n      && apachectl\
+      \ -D FOREGROUND\n\"\n"
+    deploy: *id001
+    cap_drop: *id002
+    security_opt: *id003
+    healthcheck: *id004
+    logging: *id005
+    restart: unless-stopped
   database:
     image: ubuntu:20.04
     container_name: database
@@ -51,17 +72,18 @@ services:
       red_at:
         ipv4_address: 10.10.10.20
     tty: true
-    command: >
-      bash -c "
-        apt-get update && apt-get install -y \
-          mysql-server \
-          && service mysql start \
-            && mysql -e \"CREATE DATABASE IF NOT EXISTS cdpn;\" \
-            && mysql -e \"USE cdpn; CREATE TABLE IF NOT EXISTS users (id INT, name VARCHAR(50));\" \
-            && mysql -e \"USE cdpn; INSERT INTO users VALUES (1, 'admin'), (2, 'user');\" \
-            && sleep infinity
-      "
-
+    command: "bash -c \"\n  apt-get update && apt-get install -y \\\n    mysql-server\
+      \ \\\n    && service mysql start \\\n      && mysql -e \\\"CREATE DATABASE IF\
+      \ NOT EXISTS cdpn;\\\" \\\n      && mysql -e \\\"USE cdpn; CREATE TABLE IF NOT\
+      \ EXISTS users (id INT, name VARCHAR(50));\\\" \\\n      && mysql -e \\\"USE\
+      \ cdpn; INSERT INTO users VALUES (1, 'admin'), (2, 'user');\\\" \\\n      &&\
+      \ sleep infinity\n\"\n"
+    deploy: *id001
+    cap_drop: *id002
+    security_opt: *id003
+    healthcheck: *id004
+    logging: *id005
+    restart: unless-stopped
   ssh-server:
     image: ubuntu:20.04
     container_name: ssh-server
@@ -70,19 +92,19 @@ services:
       red_at:
         ipv4_address: 10.10.10.30
     tty: true
-    command: >
-      bash -c "
-        apt-get update && apt-get install -y \
-          openssh-server \
-          && mkdir /var/run/sshd \
-            && echo 'root:password' | chpasswd \
-            && echo ' PermitRootLogin yes' >> /etc/ssh/sshd_config \
-            && /usr/sbin/sshd -D
-      "
-
+    command: "bash -c \"\n  apt-get update && apt-get install -y \\\n    openssh-server\
+      \ \\\n    && mkdir /var/run/sshd \\\n      && echo 'root:password' | chpasswd\
+      \ \\\n      && echo ' PermitRootLogin yes' >> /etc/ssh/sshd_config \\\n    \
+      \  && /usr/sbin/sshd -D\n\"\n"
+    deploy: *id001
+    cap_drop: *id002
+    security_opt: *id003
+    healthcheck: *id004
+    logging: *id005
+    restart: unless-stopped
 networks:
   red_at:
     driver: bridge
     ipam:
       config:
-        - subnet: 10.10.10.0/24
+      - subnet: 10.10.10.0/24
