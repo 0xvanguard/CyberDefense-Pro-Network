@@ -1,0 +1,49 @@
+# 🔒 GitIgnore for Docker Labs
+# CyberDefense Pro Network
+
+# Environment files (contain secrets)
+.env
+.env.local
+.env.*.local
+
+# Docker volumes (persistent data)
+data/
+db-data/
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Docker files (generated)
+docker-compose.override.yml
+
+# Scripts with secrets
+scripts/*.sh
+!scripts/*.sh.example
+
+# Credentials
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+
+# Database dumps
+*.sql
+*.sql.gz
+*.dump

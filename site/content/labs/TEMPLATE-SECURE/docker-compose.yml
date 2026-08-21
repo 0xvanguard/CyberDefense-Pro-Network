@@ -1,0 +1,264 @@
+# 🔒 Template Seguro para Labs Docker
+# CyberDefense Pro Network
+# 
+# Este template incluye todas las mejores prácticas de seguridad:
+# - Límites de recursos
+# - Healthchecks
+- - Capability drops
+# - Filesystem read-only
+# - Security options
+# - Logging configurado
+# - Red aislada
+#
+# Uso:
+#   1. Copiar este archivo como docker-compose.yml
+#   2. Modificar servicios según el lab
+#   3. Crear archivo .env con credenciales
+#   4. Ejecutar: docker compose --env-file .env up -d
+
+version: '3.8'
+
+services:
+  # ============================================
+  # Ejemplo: Servidor Web Vulnerable
+  # ============================================
+  web-server:
+    image: vulnerables/web-dvwa:latest
+    container_name: ${LAB_NAME:-lab}-web
+    hostname: web-server
+    
+    # 🔒 Seguridad: Límites de recursos
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 128M
+    
+    # 🔒 Seguridad: Capabilities
+    cap_drop:
+      - ALL
+    cap_add:
+      - NET_BIND_SERVICE  # Para puertos < 1024
+    
+    # 🔒 Seguridad: Filesystem
+    read_only: true
+    tmpfs:
+      - /tmp
+      - /var/run
+      - /var/cache/apache2
+    
+    # 🔒 Seguridad: Options
+    security_opt:
+      - no-new-privileges:true
+    
+    # 🔒 Seguridad: Healthcheck
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    
+    # 🔒 Seguridad: Logging
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+    
+    # 🔒 Seguridad: Variables de entorno (no credenciales hardcoded)
+    environment:
+      - MYSQL_PASSWD=${MYSQL_PASSWORD:-changeme}
+    
+    # 🔒 Seguridad: Red aislada
+    networks:
+      lab-net:
+        ipv4_address: 10.0.1.10
+    
+    # 🔒 Seguridad: Puertos (solo los necesarios)
+    ports:
+      - "${WEB_PORT:-8080}:80"
+    
+    # 🔒 Seguridad: Volumenes (read-only cuando sea posible)
+    volumes:
+      - ./data/web:/var/www/html:ro
+    
+    # 🔒 Seguridad: Restart policy
+    restart: unless-stopped
+    
+    # 🔒 Seguridad: Dockerignore
+    # Crear .dockerignore con:
+    # .git
+    # .env
+    # *.md
+    # README.md
+
+  # ============================================
+  # Ejemplo: Base de Datos
+  # ============================================
+  database:
+    image: mysql:8.0
+    container_name: ${LAB_NAME:-lab}-db
+    hostname: database
+    
+    # 🔒 Seguridad: Límites de recursos
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+        reservations:
+          cpus: '0.1'
+          memory: 64M
+    
+    # 🔒 Seguridad: Capabilities
+    cap_drop:
+      - ALL
+    cap_add:
+      - NET_BIND_SERVICE
+      - SYS_NICE
+    
+    # 🔒 Seguridad: Filesystem
+    read_only: true
+    tmpfs:
+      - /tmp
+      - /var/run/mysqld
+      - /var/lib/mysql
+    
+    # 🔒 Seguridad: Options
+    security_opt:
+      - no-new-privileges:true
+    
+    # 🔒 Seguridad: Healthcheck
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    
+    # 🔒 Seguridad: Logging
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+    
+    # 🔒 Seguridad: Variables de entorno (desde .env)
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-changeme}
+      - MYSQL_DATABASE=${MYSQL_DATABASE:-lab}
+      - MYSQL_USER=${MYSQL_USER:-labuser}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-changeme}
+    
+    # 🔒 Seguridad: Red aislada
+    networks:
+      lab-net:
+        ipv4_address: 10.0.1.20
+    
+    # 🔒 Seguridad: Solo accesible internamente
+    # No exponer puertos de DB al host
+    
+    # 🔒 Seguridad: Volumenes persistentes
+    volumes:
+      - db-data:/var/lib/mysql
+    
+    # 🔒 Seguridad: Restart policy
+    restart: unless-stopped
+
+  # ============================================
+  # Ejemplo: Kali Linux (Attacker)
+  # ============================================
+  kali:
+    image: kalilinux/kali-rolling
+    container_name: ${LAB_NAME:-lab}-kali
+    hostname: kali
+    
+    # 🔒 Seguridad: Límites de recursos
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 1G
+        reservations:
+          cpus: '0.5'
+          memory: 256M
+    
+    # 🔒 Seguridad: Capabilities (Kali necesita más)
+    cap_drop:
+      - ALL
+    cap_add:
+      - NET_RAW
+      - NET_ADMIN
+    
+    # 🔒 Seguridad: No read-only (Kali necesita instalar herramientas)
+    read_only: false
+    
+    # 🔒 Seguridad: Options
+    security_opt:
+      - no-new-privileges:true
+    
+    # 🔒 Seguridad: Healthcheck
+    healthcheck:
+      test: ["CMD", "pgrep", "bash"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    
+    # 🔒 Seguridad: Logging
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+    
+    # 🔒 Seguridad: Red aislada
+    networks:
+      lab-net:
+        ipv4_address: 10.0.1.100
+    
+    # 🔒 Seguridad: Interactive mode
+    tty: true
+    stdin_open: true
+    
+    # 🔒 Seguridad: Command (instalar herramientas al iniciar)
+    command: >
+      bash -c "
+        apt-get update && apt-get install -y
+          nmap
+          netcat
+          curl
+          python3
+          && echo 'Kali ready!'
+          && bash
+      "
+    
+    # 🔒 Seguridad: Volumenes
+    volumes:
+      - ./scripts:/scripts:ro
+    
+    # 🔒 Seguridad: Restart policy
+    restart: unless-stopped
+
+# ============================================
+# Red Aislada
+# ============================================
+networks:
+  lab-net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.0.1.0/24
+    # 🔒 Seguridad: Red interna (sin acceso a internet)
+    # Descomentar si no se necesita acceso externo:
+    # internal: true
+
+# ============================================
+# Volúmenes Persistentes
+# ============================================
+volumes:
+  db-data:
+    driver: local
