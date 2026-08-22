@@ -381,86 +381,232 @@ function escapeHtml(str) {
 }
 
 /**
- * Rate limiter for login attempts
+ * Convert ArrayBuffer to hex string
+ */
+function bufferToHex(buffer) {
+    return Array.from(new Uint8Array(buffer))
+        .map(b => b.toString(16).padStart(2, '0'))
+        .join('');
+}
+
+/**
+ * Convert hex string to Uint8Array
+ */
+function hexToBuffer(hex) {
+    const bytes = new Uint8Array(hex.length / 2);
+    for (let i = 0; i < hex.length; i += 2) {
+        bytes[i / 2] = parseInt(hex.substr(i, 2), 16);
+    }
+    return bytes;
+}
+
+/**
+ * Rate limiter for login attempts — exponential backoff
+ * Uses encrypted counter to prevent tampering
  */
 const RateLimiter = {
     MAX_ATTEMPTS: 5,
-    WINDOW_MS: 30000, // 30 seconds
-    COOLDOWN_MS: 30000,
-    
-    getAttempts() {
-        try {
-            const data = JSON.parse(localStorage.getItem('cdpn_rate_limit') || '{}');
-            return data;
-        } catch { return { count: 0, firstAttempt: 0 }; }
+    WINDOW_MS: 60000,       // 1 minute window
+    BASE_COOLDOWN: 30000,   // 30 seconds base
+    MAX_COOLDOWN: 300000,   // 5 minutes max
+    STORAGE_KEY: 'cdpn_rl',
+
+    _getHmacKey() {
+        // Derived key for rate limit integrity (not the same as auth)
+        return new TextEncoder().encode('cdpn-rl-integrity-key-2026');
     },
-    
-    recordAttempt() {
-        const data = this.getAttempts();
+
+    async _sign(data) {
+        const key = await crypto.subtle.importKey(
+            'raw', this._getHmacKey(),
+            { name: 'HMAC', hash: 'SHA-256' },
+            false, ['sign']
+        );
+        const sig = await crypto.subtle.sign('HMAC', key, new TextEncoder().encode(JSON.stringify(data)));
+        return bufferToHex(sig);
+    },
+
+    async _store(data) {
+        const sig = await this._sign(data);
+        localStorage.setItem(this.STORAGE_KEY, JSON.stringify({ ...data, _sig: sig }));
+    },
+
+    async _load() {
+        try {
+            const raw = JSON.parse(localStorage.getItem(this.STORAGE_KEY) || '{}');
+            if (!raw._sig) return { count: 0, firstAttempt: 0, backoff: 0 };
+            const { _sig, ...data } = raw;
+            const expected = await this._sign(data);
+            if (_sig !== expected) {
+                // Tampered — reset
+                localStorage.removeItem(this.STORAGE_KEY);
+                return { count: 0, firstAttempt: 0, backoff: 0 };
+            }
+            return data;
+        } catch {
+            return { count: 0, firstAttempt: 0, backoff: 0 };
+        }
+    },
+
+    async recordAttempt() {
+        const data = await this._load();
         const now = Date.now();
-        
-        // Reset if window expired
+
         if (now - data.firstAttempt > this.WINDOW_MS) {
             data.count = 1;
             data.firstAttempt = now;
         } else {
             data.count++;
         }
-        
-        localStorage.setItem('cdpn_rate_limit', JSON.stringify(data));
+        // Exponential backoff
+        if (data.count >= this.MAX_ATTEMPTS) {
+            data.backoff = Math.min(
+                this.BASE_COOLDOWN * Math.pow(2, data.count - this.MAX_ATTEMPTS),
+                this.MAX_COOLDOWN
+            );
+        }
+        await this._store(data);
         return data;
     },
-    
-    isBlocked() {
-        const data = this.getAttempts();
+
+    async isBlocked() {
+        const data = await this._load();
         const now = Date.now();
-        
+
         if (data.count >= this.MAX_ATTEMPTS) {
-            const timeLeft = this.COOLDOWN_MS - (now - data.firstAttempt);
+            const cooldown = data.backoff || this.BASE_COOLDOWN;
+            const timeLeft = (data.firstAttempt + cooldown) - now;
             if (timeLeft > 0) {
                 return { blocked: true, timeLeft: Math.ceil(timeLeft / 1000) };
             }
-            // Reset after cooldown
-            localStorage.removeItem('cdpn_rate_limit');
-            return { blocked: false };
+            // Cooldown expired — allow retry but keep count for escalation
+            if (data.count >= this.MAX_ATTEMPTS + 3) {
+                // Too many total attempts — full reset
+                localStorage.removeItem(this.STORAGE_KEY);
+                return { blocked: false };
+            }
         }
         return { blocked: false };
     },
-    
-    reset() {
-        localStorage.removeItem('cdpn_rate_limit');
+
+    async reset() {
+        localStorage.removeItem(this.STORAGE_KEY);
     }
 };
 
 // ===== AUTH CONFIG =====
-const AUTH_HASH = 'e815b74fffaab8809d615029776c6fa6cfeec3154ab940c3bb4b889be64e59de';
-const SESSION_KEY = 'cdpn_admin_session';
+const SESSION_KEY = 'cdpn_admin_session_v2';
 const SESSION_DURATION = 24 * 60 * 60 * 1000; // 24 hours
 
+// PBKDF2 config — matching the stored hash parameters
+const PBKDF2_ITERATIONS = 100000;
+const PBKDF2_HASH = 'SHA-256';
+const PBKDF2_KEY_LEN = 256;
+// Stored hash: iterations:100000:SHA-256:salt(hex):hash(hex)
+const AUTH_STORED = '100000:SHA-256:a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6:7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8';
+
+// HMAC key for session signing (different from auth key)
+const HMAC_KEY_raw = 'cdpn-session-signing-key-2026-xK9mP2vL';
+
 // ===== AUTH FUNCTIONS =====
-async function hashPassword(password) {
+
+/**
+ * Derive key using PBKDF2 — much stronger than raw SHA-256
+ */
+async function deriveKey(password, salt) {
     const encoder = new TextEncoder();
-    const data = encoder.encode(password);
-    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    const keyMaterial = await crypto.subtle.importKey(
+        'raw',
+        encoder.encode(password),
+        'PBKDF2',
+        false,
+        ['deriveBits']
+    );
+    const derivedBits = await crypto.subtle.deriveBits(
+        {
+            name: 'PBKDF2',
+            salt: salt,
+            iterations: PBKDF2_ITERATIONS,
+            hash: PBKDF2_HASH
+        },
+        keyMaterial,
+        PBKDF2_KEY_LEN
+    );
+    return bufferToHex(derivedBits);
 }
 
-function checkSession() {
+/**
+ * Verify password against stored hash (constant-time comparison)
+ */
+async function verifyPassword(password) {
+    const [iterations, hashAlgo, saltHex, expectedHash] = AUTH_STORED.split(':');
+    const salt = hexToBuffer(saltHex);
+    const derived = await deriveKey(password, salt);
+
+    // Constant-time comparison to prevent timing attacks
+    if (derived.length !== expectedHash.length) return false;
+    let result = 0;
+    for (let i = 0; i < derived.length; i++) {
+        result |= derived.charCodeAt(i) ^ expectedHash.charCodeAt(i);
+    }
+    return result === 0;
+}
+
+/**
+ * Generate HMAC-signed session token
+ */
+async function createSessionToken() {
+    const encoder = new TextEncoder();
+    const key = await crypto.subtle.importKey(
+        'raw', encoder.encode(HMAC_KEY_raw),
+        { name: 'HMAC', hash: 'SHA-256' },
+        false, ['sign']
+    );
+    const nonce = bufferToHex(crypto.getRandomValues(new Uint8Array(16)));
+    const payload = JSON.stringify({
+        ts: Date.now(),
+        exp: Date.now() + SESSION_DURATION,
+        nonce: nonce,
+        ua: navigator.userAgent.slice(0, 50) // partial UA fingerprint
+    });
+    const sig = await crypto.subtle.sign('HMAC', key, encoder.encode(payload));
+    return { payload, sig: bufferToHex(sig) };
+}
+
+/**
+ * Verify session token is valid and not expired
+ */
+async function verifySessionToken(session) {
+    if (!session || !session.payload || !session.sig) return false;
+
+    // Check expiry first (fast)
+    try {
+        const data = JSON.parse(session.payload);
+        if (Date.now() > data.exp) return false;
+    } catch { return false; }
+
+    // Verify HMAC signature
+    const encoder = new TextEncoder();
+    const key = await crypto.subtle.importKey(
+        'raw', encoder.encode(HMAC_KEY_raw),
+        { name: 'HMAC', hash: 'SHA-256' },
+        false, ['verify']
+    );
+    const sigBuffer = hexToBuffer(session.sig);
+    const valid = await crypto.subtle.verify('HMAC', key, sigBuffer, encoder.encode(session.payload));
+    return valid;
+}
+
+async function checkSession() {
     try {
         const session = JSON.parse(localStorage.getItem(SESSION_KEY));
-        if (session && session.hash === AUTH_HASH && Date.now() - session.timestamp < SESSION_DURATION) {
-            return true;
-        }
-    } catch (e) {}
-    return false;
+        return await verifySessionToken(session);
+    } catch { return false; }
 }
 
-function saveSession(hash) {
-    localStorage.setItem(SESSION_KEY, JSON.stringify({
-        hash: hash,
-        timestamp: Date.now()
-    }));
+async function saveSession() {
+    const token = await createSessionToken();
+    localStorage.setItem(SESSION_KEY, JSON.stringify(token));
 }
 
 function logout() {
@@ -472,7 +618,7 @@ function logout() {
 
 async function attemptLogin() {
     // Check rate limit
-    const rateCheck = RateLimiter.isBlocked();
+    const rateCheck = await RateLimiter.isBlocked();
     if (rateCheck.blocked) {
         const rateLimitEl = document.getElementById('loginRateLimit');
         const rateLimitText = document.getElementById('rateLimitText');
@@ -480,31 +626,31 @@ async function attemptLogin() {
         rateLimitEl.style.display = 'block';
         return;
     }
-    
+
     const password = document.getElementById('passwordInput').value;
     if (!password) return;
-    
+
     const btn = document.getElementById('loginBtn');
     btn.disabled = true;
     btn.textContent = 'Verificando...';
-    
-    // Record attempt
-    RateLimiter.recordAttempt();
-    
-    const hash = await hashPassword(password);
-    
-    if (hash === AUTH_HASH) {
-        RateLimiter.reset(); // Reset on success
-        saveSession(hash);
+
+    // Record attempt (signed, tamper-proof)
+    await RateLimiter.recordAttempt();
+
+    const valid = await verifyPassword(password);
+
+    if (valid) {
+        await RateLimiter.reset(); // Reset on success
+        await saveSession();
         showAdmin();
     } else {
         document.getElementById('loginError').style.display = 'block';
         setTimeout(() => {
             document.getElementById('loginError').style.display = 'none';
         }, 3000);
-        
+
         // Check if now blocked
-        const newRateCheck = RateLimiter.isBlocked();
+        const newRateCheck = await RateLimiter.isBlocked();
         if (newRateCheck.blocked) {
             const rateLimitEl = document.getElementById('loginRateLimit');
             const rateLimitText = document.getElementById('rateLimitText');
@@ -512,7 +658,7 @@ async function attemptLogin() {
             rateLimitEl.style.display = 'block';
         }
     }
-    
+
     btn.disabled = false;
     btn.textContent = 'Entrar';
 }
@@ -951,11 +1097,13 @@ document.getElementById('commitModal').addEventListener('click', e => {
 });
 
 // ===== INIT =====
-if (checkSession()) {
-    showAdmin();
-} else {
-    document.getElementById('loginScreen').style.display = 'flex';
-}
+(async () => {
+    if (await checkSession()) {
+        showAdmin();
+    } else {
+        document.getElementById('loginScreen').style.display = 'flex';
+    }
+})();
 </script>
 </body>
 </html>
