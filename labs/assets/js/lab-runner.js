@@ -297,7 +297,7 @@ const CDPN_LabRunner = {
 
         if (state?.completed) {
             card.classList.add('completed');
-            card.querySelector('.exercise-checkbox').innerHTML = '✓';
+            card.querySelector('.exercise-checkbox').textContent = '✓';
             card.querySelector('.exercise-xp').textContent = '✅';
 
             const btn = card.querySelector('.complete-exercise-btn');
@@ -361,10 +361,14 @@ const CDPN_LabRunner = {
     showXPPopup(amount, reason) {
         const popup = document.createElement('div');
         popup.className = 'xp-popup';
-        popup.innerHTML = `
-            <span class="xp-amount">${amount}</span>
-            <span class="xp-reason">${reason}</span>
-        `;
+        const amountSpan = document.createElement('span');
+        amountSpan.className = 'xp-amount';
+        amountSpan.textContent = amount;
+        const reasonSpan = document.createElement('span');
+        reasonSpan.className = 'xp-reason';
+        reasonSpan.textContent = reason;
+        popup.appendChild(amountSpan);
+        popup.appendChild(reasonSpan);
         document.body.appendChild(popup);
 
         requestAnimationFrame(() => {
