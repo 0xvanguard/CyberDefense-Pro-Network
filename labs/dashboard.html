@@ -563,51 +563,89 @@
         // Badges
         const badgesGrid = document.getElementById('badges-grid');
         const earned = data.badges || [];
-        badgesGrid.innerHTML = ALL_BADGES.map(b => `
-            <div class="badge-card ${earned.includes(b.id) ? 'earned' : 'locked'}">
-                <div class="badge-icon">${b.icon}</div>
-                <div class="badge-name">${b.name}</div>
-                <div class="badge-status">${earned.includes(b.id) ? '✅ Desbloqueado' : '🔒 Bloqueado'}</div>
-            </div>
-        `).join('');
+        badgesGrid.textContent = '';
+        ALL_BADGES.forEach(b => {
+            const isEarned = earned.includes(b.id);
+            const card = document.createElement('div');
+            card.className = 'badge-card ' + (isEarned ? 'earned' : 'locked');
+            const icon = document.createElement('div');
+            icon.className = 'badge-icon';
+            icon.textContent = b.icon;
+            const name = document.createElement('div');
+            name.className = 'badge-name';
+            name.textContent = b.name;
+            const status = document.createElement('div');
+            status.className = 'badge-status';
+            status.textContent = isEarned ? '✅ Desbloqueado' : '🔒 Bloqueado';
+            card.appendChild(icon);
+            card.appendChild(name);
+            card.appendChild(status);
+            badgesGrid.appendChild(card);
+        });
 
         // Lab progress
         const labList = document.getElementById('lab-progress-list');
         const completedLabs = data.labsCompleted || [];
-        labList.innerHTML = LAB_LIST.map(lab => {
+        labList.textContent = '';
+        LAB_LIST.forEach(lab => {
             const isCompleted = completedLabs.includes(lab.id);
             const percent = isCompleted ? 100 : 0;
-            return `
-                <div class="lab-progress-item ${isCompleted ? 'completed' : ''}">
-                    <span class="lab-icon">${lab.icon}</span>
-                    <div class="lab-info">
-                        <div class="lab-name">${lab.name}</div>
-                        <div class="lab-diff">${lab.diff}</div>
-                    </div>
-                    <div class="lab-bar">
-                        <div class="fill" style="width: ${percent}%; background: ${lab.color}"></div>
-                    </div>
-                    <span class="lab-percent" style="color: ${isCompleted ? 'var(--green)' : 'var(--dim)'}">
-                        ${isCompleted ? '✅' : '0%'}
-                    </span>
-                </div>
-            `;
-        }).join('');
+            const item = document.createElement('div');
+            item.className = 'lab-progress-item' + (isCompleted ? ' completed' : '');
+            const icon = document.createElement('span');
+            icon.className = 'lab-icon';
+            icon.textContent = lab.icon;
+            const info = document.createElement('div');
+            info.className = 'lab-info';
+            const labName = document.createElement('div');
+            labName.className = 'lab-name';
+            labName.textContent = lab.name;
+            const labDiff = document.createElement('div');
+            labDiff.className = 'lab-diff';
+            labDiff.textContent = lab.diff;
+            info.appendChild(labName);
+            info.appendChild(labDiff);
+            const bar = document.createElement('div');
+            bar.className = 'lab-bar';
+            const fill = document.createElement('div');
+            fill.className = 'fill';
+            fill.style.width = percent + '%';
+            fill.style.background = lab.color;
+            bar.appendChild(fill);
+            const percentSpan = document.createElement('span');
+            percentSpan.className = 'lab-percent';
+            percentSpan.style.color = isCompleted ? 'var(--green)' : 'var(--dim)';
+            percentSpan.textContent = isCompleted ? '✅' : '0%';
+            item.appendChild(icon);
+            item.appendChild(info);
+            item.appendChild(bar);
+            item.appendChild(percentSpan);
+            labList.appendChild(item);
+        });
 
         // History
         const historyList = document.getElementById('history-list');
+        historyList.textContent = '';
         if (data.history && data.history.length > 0) {
             const recent = data.history.slice(-10).reverse();
-            historyList.innerHTML = recent.map(h => {
+            recent.forEach(h => {
                 const timeAgo = getTimeAgo(h.timestamp);
-                return `
-                    <div class="history-item">
-                        <span class="xp-amount">+${h.amount} XP</span>
-                        <span class="reason">${h.reason}</span>
-                        <span class="time">${timeAgo}</span>
-                    </div>
-                `;
-            }).join('');
+                const item = document.createElement('div');
+                item.className = 'history-item';
+                const xpAmount = document.createElement('span');
+                xpAmount.className = 'xp-amount';
+                xpAmount.textContent = '+' + h.amount + ' XP';
+                const reason = document.createElement('span');
+                reason.className = 'reason';
+                reason.textContent = h.reason;
+                const time = document.createElement('span');
+                time.className = 'time';
+                time.textContent = timeAgo;
+                item.appendChild(xpAmount);
+                item.appendChild(reason);
+                item.appendChild(time);
+                historyList.appendChild(item);
+            });
         }
     }
 

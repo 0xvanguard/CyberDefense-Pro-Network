@@ -1060,71 +1060,130 @@
             grouped[lab.difficulty].push(lab);
         });
 
-        let html = '';
+        container.textContent = '';
         const order = ['fundamentos', 'intermedio', 'avanzado', 'expert'];
+
+        if (filteredLabs.length === 0) {
+            const emptyDiv = document.createElement('div');
+            emptyDiv.style.cssText = 'text-align:center;padding:4rem;color:var(--text-secondary)';
+            const emptyIcon = document.createElement('div');
+            emptyIcon.style.cssText = 'font-size:3rem;margin-bottom:1rem';
+            emptyIcon.textContent = '🔍';
+            const emptyP = document.createElement('p');
+            emptyP.textContent = 'No hay labs que mostrar con este filtro.';
+            emptyDiv.appendChild(emptyIcon);
+            emptyDiv.appendChild(emptyP);
+            container.appendChild(emptyDiv);
+            return;
+        }
 
         order.forEach(diff => {
             if (!grouped[diff] || grouped[diff].length === 0) return;
             const config = DIFFICULTIES[diff];
 
-            html += `
-                <div class="difficulty-section" data-difficulty="${diff}">
-                    <div class="difficulty-header">
-                        <span class="icon">${config.icon}</span>
-                        <h2>${config.label}</h2>
-                        <span class="count">${grouped[diff].length} labs</span>
-                    </div>
-                    <div class="labs-grid">
-            `;
+            const section = document.createElement('div');
+            section.className = 'difficulty-section';
+            section.dataset.difficulty = diff;
+
+            const header = document.createElement('div');
+            header.className = 'difficulty-header';
+            const iconSpan = document.createElement('span');
+            iconSpan.className = 'icon';
+            iconSpan.textContent = config.icon;
+            const h2 = document.createElement('h2');
+            h2.textContent = config.label;
+            const countSpan = document.createElement('span');
+            countSpan.className = 'count';
+            countSpan.textContent = grouped[diff].length + ' labs';
+            header.appendChild(iconSpan);
+            header.appendChild(h2);
+            header.appendChild(countSpan);
+            section.appendChild(header);
+
+            const grid = document.createElement('div');
+            grid.className = 'labs-grid';
 
             grouped[diff].forEach(lab => {
                 const isCompleted = completedLabs.includes(lab.id);
-                html += `
-                    <div class="lab-card ${isCompleted ? 'completed' : ''}" data-lab-id="${lab.id}" onclick="openLab('${lab.path}')">
-                        <div class="lab-card-header">
-                            <div class="lab-icon">${lab.icon}</div>
-                            <h3>${lab.name}</h3>
-                            <div class="lab-subtitle">${lab.subtitle}</div>
-                        </div>
-                        <div class="lab-card-body">
-                            <div class="lab-meta">
-                                <span class="tag difficulty">${config.icon} ${config.label}</span>
-                                <span class="tag xp">⚡ ${lab.xp} XP</span>
-                                <span class="tag time">⏱️ ${lab.time}</span>
-                            </div>
-                            <p class="lab-description">${lab.subtitle}</p>
-                            <ul class="lab-objectives">
-                                ${lab.objectives.map(o => `<li>${o}</li>`).join('')}
-                            </ul>
-                        </div>
-                        <div class="lab-card-footer">
-                            <div class="lab-progress-bar">
-                                <div class="bar">
-                                    <div class="fill" style="width: ${isCompleted ? 100 : 0}%"></div>
-                                </div>
-                                <div class="label">${isCompleted ? '✅ Completado' : '⬜ No iniciado'}</div>
-                            </div>
-                            <button class="start-btn ${isCompleted ? 'completed' : ''}">
-                                ${isCompleted ? 'Revisar' : 'Iniciar Lab'}
-                            </button>
-                        </div>
-                    </div>
-                `;
+                const card = document.createElement('div');
+                card.className = 'lab-card' + (isCompleted ? ' completed' : '');
+                card.dataset.labId = lab.id;
+                card.onclick = () => openLab(lab.path);
+
+                const cardHeader = document.createElement('div');
+                cardHeader.className = 'lab-card-header';
+                const labIcon = document.createElement('div');
+                labIcon.className = 'lab-icon';
+                labIcon.textContent = lab.icon;
+                const labName = document.createElement('h3');
+                labName.textContent = lab.name;
+                const labSubtitle = document.createElement('div');
+                labSubtitle.className = 'lab-subtitle';
+                labSubtitle.textContent = lab.subtitle;
+                cardHeader.appendChild(labIcon);
+                cardHeader.appendChild(labName);
+                cardHeader.appendChild(labSubtitle);
+
+                const cardBody = document.createElement('div');
+                cardBody.className = 'lab-card-body';
+                const meta = document.createElement('div');
+                meta.className = 'lab-meta';
+                const tagDiff = document.createElement('span');
+                tagDiff.className = 'tag difficulty';
+                tagDiff.textContent = config.icon + ' ' + config.label;
+                const tagXp = document.createElement('span');
+                tagXp.className = 'tag xp';
+                tagXp.textContent = '⚡ ' + lab.xp + ' XP';
+                const tagTime = document.createElement('span');
+                tagTime.className = 'tag time';
+                tagTime.textContent = '⏱️ ' + lab.time;
+                meta.appendChild(tagDiff);
+                meta.appendChild(tagXp);
+                meta.appendChild(tagTime);
+                const desc = document.createElement('p');
+                desc.className = 'lab-description';
+                desc.textContent = lab.subtitle;
+                const objectives = document.createElement('ul');
+                objectives.className = 'lab-objectives';
+                lab.objectives.forEach(o => {
+                    const li = document.createElement('li');
+                    li.textContent = o;
+                    objectives.appendChild(li);
+                });
+                cardBody.appendChild(meta);
+                cardBody.appendChild(desc);
+                cardBody.appendChild(objectives);
+
+                const cardFooter = document.createElement('div');
+                cardFooter.className = 'lab-card-footer';
+                const progressBar = document.createElement('div');
+                progressBar.className = 'lab-progress-bar';
+                const bar = document.createElement('div');
+                bar.className = 'bar';
+                const fill = document.createElement('div');
+                fill.className = 'fill';
+                fill.style.width = (isCompleted ? 100 : 0) + '%';
+                bar.appendChild(fill);
+                const label = document.createElement('div');
+                label.className = 'label';
+                label.textContent = isCompleted ? '✅ Completado' : '⬜ No iniciado';
+                progressBar.appendChild(bar);
+                progressBar.appendChild(label);
+                const startBtn = document.createElement('button');
+                startBtn.className = 'start-btn' + (isCompleted ? ' completed' : '');
+                startBtn.textContent = isCompleted ? 'Revisar' : 'Iniciar Lab';
+                cardFooter.appendChild(progressBar);
+                cardFooter.appendChild(startBtn);
+
+                card.appendChild(cardHeader);
+                card.appendChild(cardBody);
+                card.appendChild(cardFooter);
+                grid.appendChild(card);
             });
 
-            html += '</div></div>';
+            section.appendChild(grid);
+            container.appendChild(section);
         });
-
-        if (filteredLabs.length === 0) {
-            html = `
-                <div style="text-align: center; padding: 4rem; color: var(--text-secondary);">
-                    <div style="font-size: 3rem; margin-bottom: 1rem;">🔍</div>
-                    <p>No hay labs que mostrar con este filtro.</p>
-                </div>
-            `;
-        }
-
-        container.innerHTML = html;
     }
 
     function updateXPBanner() {
@@ -1144,16 +1203,15 @@
         const earned = gamData.badges || [];
         const container = document.getElementById('badges-row');
 
-        let html = '';
+        container.textContent = '';
         ALL_BADGES.forEach(badge => {
             const isEarned = earned.includes(badge.id);
-            html += `
-                <span class="badge-chip ${isEarned ? '' : 'locked'}" title="${badge.name}">
-                    ${badge.icon} ${badge.name}
-                </span>
-            `;
+            const chip = document.createElement('span');
+            chip.className = 'badge-chip' + (isEarned ? '' : ' locked');
+            chip.title = badge.name;
+            chip.textContent = badge.icon + ' ' + badge.name;
+            container.appendChild(chip);
         });
-        container.innerHTML = html;
     }
 
     function renderLearningPath() {
@@ -1161,7 +1219,7 @@
         const pathOrder = ['net-01', 'recon-01', 'vulnscan-01', 'web-01', 'webapp-01', 'pentest-01', 'privesc-01', 'ad-01', 'malware-01'];
         const container = document.getElementById('learning-path');
 
-        let html = '';
+        container.textContent = '';
         let foundCurrent = false;
 
         pathOrder.forEach((labId, i) => {
@@ -1172,15 +1230,18 @@
             const isCurrent = !isDone && !foundCurrent;
             if (isCurrent) foundCurrent = true;
 
-            html += `
-                <div class="path-step ${isDone ? 'done' : ''} ${isCurrent ? 'current' : ''}">
-                    <div class="step-icon">${lab.icon}</div>
-                    <div class="step-name">${lab.name.split(' ').slice(0, 2).join(' ')}</div>
-                </div>
-            `;
+            const step = document.createElement('div');
+            step.className = 'path-step' + (isDone ? ' done' : '') + (isCurrent ? ' current' : '');
+            const stepIcon = document.createElement('div');
+            stepIcon.className = 'step-icon';
+            stepIcon.textContent = lab.icon;
+            const stepName = document.createElement('div');
+            stepName.className = 'step-name';
+            stepName.textContent = lab.name.split(' ').slice(0, 2).join(' ');
+            step.appendChild(stepIcon);
+            step.appendChild(stepName);
+            container.appendChild(step);
         });
-
-        container.innerHTML = html;
     }
 
     // Labs with interactive versions (all 20)
