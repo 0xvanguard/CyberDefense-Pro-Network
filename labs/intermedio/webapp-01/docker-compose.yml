@@ -56,12 +56,35 @@ services:
       webapp-net:
         ipv4_address: 10.0.4.30
     environment:
-      MYSQL_ROOT_PASSWORD: rootpass123
-      MYSQL_DATABASE: app_db
-      MYSQL_USER: webapp
-      MYSQL_PASSWORD: webapp123
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-changeme}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-app_db}
+      MYSQL_USER: ${MYSQL_USER:-webapp}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-changeme}
+    cap_drop:
+      - ALL
+    cap_add:
+      - NET_BIND_SERVICE
+      - SYS_NICE
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
     volumes:
       - ./data/init.sql:/docker-entrypoint-initdb.d/init.sql
+    restart: unless-stopped
 
 networks:
   webapp-net:

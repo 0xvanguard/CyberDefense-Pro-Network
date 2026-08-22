@@ -50,8 +50,31 @@ services:
       lab-net:
         ipv4_address: 10.10.10.20
     environment:
-      MYSQL_ROOT_PASSWORD: labpassword123
-      MYSQL_DATABASE: testdb
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-changeme}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-testdb}
+    cap_drop:
+      - ALL
+    cap_add:
+      - NET_BIND_SERVICE
+      - SYS_NICE
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+    restart: unless-stopped
 
   ftpserver:
     image: stilliard/pure-ftpd
@@ -62,8 +85,30 @@ services:
         ipv4_address: 10.10.10.30
     environment:
       PUBLICHOST: "10.10.10.30"
-      FTP_USER_NAME: labuser
-      FTP_USER_PASS: labpass123
+      FTP_USER_NAME: ${FTP_USER_NAME:-labuser}
+      FTP_USER_PASS: ${FTP_USER_PASS:-changeme}
+    cap_drop:
+      - ALL
+    cap_add:
+      - NET_BIND_SERVICE
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD", "nc", "-z", "localhost", "21"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 128M
+    restart: unless-stopped
 
 networks:
   lab-net:
