@@ -1,7 +1,7 @@
 # Plan v1.2.0 — AI Security + Labs Expansion
 
 **Fecha de planificación:** 23 Agosto 2026
-**Última actualización:** 23 Agosto 2026
+**Última actualización:** 23 Agosto 2026 (post módulo 06)
 **Objetivo:** Expandir la sección de AI Security y mejorar la experiencia de labs.
 
 ---
@@ -15,19 +15,20 @@
 | Infraestructura | Auth + i18n + navbar | 0 | 3 |
 | Documentación | Módulos faltantes + roles | 2 | 1 |
 
-### Progreso General: **5/12 (42%)**
+### Progreso General: **6/12 (50%)**
 
 ---
 
 ## 🔴 Prioridad Alta — AI Security
 
-### 1. Módulo `06-mlsecops-pipeline-seguro.md`
+### 1. Módulo `06-mlsecops-pipeline-seguro.md` ✅
 - Pipeline completo MLSecOps documentado
 - Puntos de control: datos → modelo → despliegue → operación
 - Integración con GovLLM-Sentinel
 - **Esfuerzo:** 2-3 horas
 - **Dependencias:** Ninguna
-- **Estado:** ⏳ Pendiente
+- **Estado:** ✅ Completado (436 líneas, commit `71fad56`)
+- **Archivos:** `site/content/modules/ai-agents/06-mlsecops-pipeline-seguro.md`
 
 ### 2. Módulo `04-owasp-llm-top10-2025.md` ✅
 - OWASP LLM Top 10 detallado con ejemplos
@@ -156,11 +157,12 @@ Semana 4 (14-20 Sep):
 └── Release v1.2.0
 ```
 
-### Completado en v1.1.0 (23 Ago)
+### Completado en v1.1.0 + v1.1.1 (23 Ago)
 - ✅ Dashboard educativo jailbreaking
 - ✅ Lab jailbreak-01 (400 XP)
 - ✅ Módulo 05-prompt-injection-y-jailbreaks.md
 - ✅ Módulo 04-owasp-llm-top10-2025.md
+- ✅ Módulo 06-mlsecops-pipeline-seguro.md
 - ✅ Catálogo labs actualizado
 
 ---
@@ -169,9 +171,9 @@ Semana 4 (14-20 Sep):
 
 | Métrica | v1.1.0 | v1.2.0 (meta) | Actual |
 |---------|--------|----------------|--------|
-| Módulos AI Security | 3 | 6 | 4 ✅ |
+| Módulos AI Security | 3 | 6 | 5 ✅ |
 | Labs AI Security | 2 | 5 | 2 |
-| Líneas de contenido | ~2,268 | ~4,500 | ~3,000 |
+| Líneas de contenido | ~2,268 | ~4,500 | ~3,500 |
 | Roles documentados | 7 | 10 | 7 |
 | Idiomas soportados | 1 | 2 (es + en) | 1 |
 
@@ -205,6 +207,7 @@ Semana 4 (14-20 Sep):
 | 2026-08-23 | Plan creado con 12 features |
 | 2026-08-23 | Módulo 04-owasp-llm-top10-2025.md completado |
 | 2026-08-23 | v1.1.0 lanzado con dashboard, lab y módulo 05 |
+| 2026-08-23 | Módulo 06-mlsecops-pipeline-seguro.md completado |
 
 ---
 
