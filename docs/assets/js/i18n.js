@@ -77,7 +77,7 @@ const CDPN_i18n = {
         this.applyAll();
         this.updateSwitcherUI();
 
-        console.log(`🌍 CDPN i18n: Detected language → ${this.current}`);
+
     },
 
     /**
@@ -106,7 +106,7 @@ const CDPN_i18n = {
             }
         } catch (e) {
             // Silently fail — network might be blocked
-            console.log('🌍 i18n: Geolocation API unavailable, using browser language');
+
         }
         return null;
     },

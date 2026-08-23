@@ -26,7 +26,7 @@ const CDPN_LabRunner = {
         this.bindEvents();
         this.updateProgress();
 
-        console.log(`🧪 Lab Runner initialized: ${config.id}`);
+
         return this;
     },
 

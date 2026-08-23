@@ -57,5 +57,5 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(animateStats, 800);
     }
 
-    console.log('🛡️ CDPN hub.js loaded');
+
 });

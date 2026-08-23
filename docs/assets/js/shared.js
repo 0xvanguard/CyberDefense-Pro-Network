@@ -161,5 +161,5 @@ document.addEventListener('DOMContentLoaded', () => {
         live.textContent = msg;
     }
 
-    console.log('🛡️ CDPN shared.js loaded');
+
 });

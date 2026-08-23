@@ -204,7 +204,7 @@ const CDPN_Gamification = {
         this.data = this.loadData();
         this.updateStreak();
         this.checkBadges();
-        console.log('🎮 CDPN Gamification initialized');
+
     },
     
     // Load data from localStorage
