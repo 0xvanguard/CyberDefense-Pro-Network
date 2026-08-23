@@ -1,6 +1,6 @@
 ---
 title: MLSecOps Pipeline Seguro — Datos, Modelo, Despliegue y Operación
-description: Pipeline completo de seguridad para sistemas LLM: desde la recolección de datos hasta la operación en producción con monitoreo continuo.
+description: "Pipeline completo de seguridad para sistemas LLM, desde la recoleccion de datos hasta la operacion en produccion con monitoreo continuo."
 ---
 
 # 🔒 MLSecOps Pipeline Seguro
