@@ -1,7 +1,7 @@
 # Plan v1.2.0 — AI Security + Labs Expansion
 
 **Fecha de planificación:** 23 Agosto 2026
-**Última actualización:** 23 Agosto 2026 (post módulo 06)
+**Última actualización:** 23 Agosto 2026 (post red-teaming-01)
 **Objetivo:** Expandir la sección de AI Security y mejorar la experiencia de labs.
 
 ---
@@ -11,11 +11,11 @@
 | Área | Features | Completados | Pendientes |
 |------|----------|-------------|------------|
 | AI Security | 3 módulos nuevos | 2 | 1 |
-| Labs | 2 labs nuevos + 1 interactivo | 1 | 2 |
+| Labs | 2 labs nuevos + 1 interactivo | 3 | 0 |
 | Infraestructura | Auth + i18n + navbar | 0 | 3 |
 | Documentación | Módulos faltantes + roles | 2 | 1 |
 
-### Progreso General: **7/12 (58%)**
+### Progreso General: **8/12 (67%)**
 
 ---
 
@@ -60,13 +60,14 @@
 - **Estado:** ✅ Completado (902 líneas, commit `6b647e3`)
 - **Archivos:** `docs/labs/prompt-injection-01.html`
 
-### 5. Lab `red-teaming-01.html`
+### 5. Lab `red-teaming-01.html` ✅
 - Introducción a AI Red Teaming
 - Uso de herramientas: Garak, PyRIT
 - Documentación de hallazgos
 - **Esfuerzo:** 3-4 horas
 - **Dependencias:** Módulo 06
-- **Estado:** ⏳ Pendiente
+- **Estado:** ✅ Completado (991 líneas, commit `ee60134`)
+- **Archivos:** `docs/labs/red-teaming-01.html`
 
 ### 6. Gamificación de Labs AI
 - Sistema de XP para labs de AI Security
@@ -173,8 +174,8 @@ Semana 4 (14-20 Sep):
 | Métrica | v1.1.0 | v1.2.0 (meta) | Actual |
 |---------|--------|----------------|--------|
 | Módulos AI Security | 3 | 6 | 5 ✅ |
-| Labs AI Security | 2 | 5 | 3 ✅ |
-| Lineas de contenido | ~2,268 | ~4,500 | ~4,400 |
+| Labs AI Security | 2 | 5 | 4 ✅ |
+| Lineas de contenido | ~2,268 | ~4,500 | ~5,400 |
 | Roles documentados | 7 | 10 | 7 |
 | Idiomas soportados | 1 | 2 (es + en) | 1 |
 
@@ -210,6 +211,7 @@ Semana 4 (14-20 Sep):
 | 2026-08-23 | v1.1.0 lanzado con dashboard, lab y módulo 05 |
 | 2026-08-23 | Modulo 06-mlsecops-pipeline-seguro.md completado |
 | 2026-08-23 | Lab prompt-injection-01.html completado |
+| 2026-08-23 | Lab red-teaming-01.html completado |
 
 ---
 
