@@ -15,7 +15,7 @@
 | Infraestructura | Auth + i18n + navbar | 0 | 3 |
 | Documentación | Módulos faltantes + roles | 2 | 1 |
 
-### Progreso General: **6/12 (50%)**
+### Progreso General: **7/12 (58%)**
 
 ---
 
@@ -51,13 +51,14 @@
 
 ## 🔴 Prioridad Alta — Labs
 
-### 4. Lab `prompt-injection-01.html`
+### 4. Lab `prompt-injection-01.html` ✅
 - Lab dedicado a prompt injection
 - Ejercicios con diferentes tipos de injection
 - Validación de defensas
 - **Esfuerzo:** 2-3 horas
 - **Dependencias:** Módulo 05
-- **Estado:** ⏳ Pendiente
+- **Estado:** ✅ Completado (902 líneas, commit `6b647e3`)
+- **Archivos:** `docs/labs/prompt-injection-01.html`
 
 ### 5. Lab `red-teaming-01.html`
 - Introducción a AI Red Teaming
@@ -172,8 +173,8 @@ Semana 4 (14-20 Sep):
 | Métrica | v1.1.0 | v1.2.0 (meta) | Actual |
 |---------|--------|----------------|--------|
 | Módulos AI Security | 3 | 6 | 5 ✅ |
-| Labs AI Security | 2 | 5 | 2 |
-| Líneas de contenido | ~2,268 | ~4,500 | ~3,500 |
+| Labs AI Security | 2 | 5 | 3 ✅ |
+| Lineas de contenido | ~2,268 | ~4,500 | ~4,400 |
 | Roles documentados | 7 | 10 | 7 |
 | Idiomas soportados | 1 | 2 (es + en) | 1 |
 
@@ -207,7 +208,8 @@ Semana 4 (14-20 Sep):
 | 2026-08-23 | Plan creado con 12 features |
 | 2026-08-23 | Módulo 04-owasp-llm-top10-2025.md completado |
 | 2026-08-23 | v1.1.0 lanzado con dashboard, lab y módulo 05 |
-| 2026-08-23 | Módulo 06-mlsecops-pipeline-seguro.md completado |
+| 2026-08-23 | Modulo 06-mlsecops-pipeline-seguro.md completado |
+| 2026-08-23 | Lab prompt-injection-01.html completado |
 
 ---
 
