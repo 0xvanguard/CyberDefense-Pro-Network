@@ -3,6 +3,15 @@
    XP, Badges, Progress, Leaderboard
    ======================================== */
 
+/**
+ * Escape HTML to prevent XSS
+ */
+function _escapeHtml(str) {
+    if (typeof str !== 'string') return String(str);
+    const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
+    return str.replace(/[&<>"']/g, c => map[c]);
+}
+
 const CDPN_Gamification = {
     // Storage key
     STORAGE_KEY: 'cdpn_gamification',
@@ -471,8 +480,8 @@ const CDPN_Gamification = {
         const notification = document.createElement('div');
         notification.className = 'gamification-notification';
         notification.innerHTML = `
-            <div class="notification-title">${title}</div>
-            <div class="notification-message">${message}</div>
+            <div class="notification-title">${_escapeHtml(title)}</div>
+            <div class="notification-message">${_escapeHtml(message)}</div>
         `;
         document.body.appendChild(notification);
         
@@ -491,11 +500,11 @@ const CDPN_Gamification = {
         const notification = document.createElement('div');
         notification.className = 'badge-notification';
         notification.innerHTML = `
-            <div class="badge-icon">${badge.icon}</div>
+            <div class="badge-icon">${_escapeHtml(badge.icon)}</div>
             <div class="badge-info">
                 <div class="badge-title">¡Badge Desbloqueado!</div>
-                <div class="badge-name">${badge.name}</div>
-                <div class="badge-description">${badge.description}</div>
+                <div class="badge-name">${_escapeHtml(badge.name)}</div>
+                <div class="badge-description">${_escapeHtml(badge.description)}</div>
             </div>
         `;
         document.body.appendChild(notification);

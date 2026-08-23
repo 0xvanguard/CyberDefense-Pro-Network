@@ -2,6 +2,15 @@
    CDPN Lab Runner — Interactive Lab Engine
    ======================================== */
 
+/**
+ * Escape HTML to prevent XSS in template literals
+ */
+function _escapeHtml(str) {
+    if (typeof str !== 'string') return str;
+    const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
+    return str.replace(/[&<>"']/g, c => map[c]);
+}
+
 const CDPN_LabRunner = {
     config: null,
     startTime: null,
@@ -54,16 +63,16 @@ const CDPN_LabRunner = {
             <!-- HEADER -->
             <header class="lab-header">
                 <div class="lab-title-section">
-                    <span class="lab-icon">${this.config.icon}</span>
+                    <span class="lab-icon">${_escapeHtml(this.config.icon)}</span>
                     <div>
-                        <div class="lab-title">${this.config.name}</div>
-                        <div class="lab-subtitle">${this.config.subtitle}</div>
+                        <div class="lab-title">${_escapeHtml(this.config.name)}</div>
+                        <div class="lab-subtitle">${_escapeHtml(this.config.subtitle)}</div>
                     </div>
                 </div>
                 <div class="lab-meta-tags">
-                    <span class="meta-tag difficulty">${diffConfig.icon} ${diffConfig.label}</span>
-                    <span class="meta-tag xp">⚡ ${this.config.totalXP} XP</span>
-                    <span class="meta-tag time">⏱️ ${this.config.time}</span>
+                    <span class="meta-tag difficulty">${_escapeHtml(diffConfig.icon)} ${_escapeHtml(diffConfig.label)}</span>
+                    <span class="meta-tag xp">⚡ ${_escapeHtml(String(this.config.totalXP))} XP</span>
+                    <span class="meta-tag time">⏱️ ${_escapeHtml(this.config.time)}</span>
                     <span class="meta-tag flags">🚩 ${this.config.exercises.length} ejercicios</span>
                 </div>
             </header>
@@ -115,13 +124,13 @@ const CDPN_LabRunner = {
                         ${isCompleted ? '✓' : ''}
                     </div>
                     <span class="exercise-number">EJ ${num}</span>
-                    <span class="exercise-title">${exercise.title}</span>
+                    <span class="exercise-title">${_escapeHtml(exercise.title)}</span>
                     <span class="exercise-xp">${isCompleted ? '✅' : '+' + exercise.xp + ' XP'}</span>
                     <span class="exercise-expand-icon">▼</span>
                 </div>
                 <div class="exercise-body">
                     <div class="exercise-objective">
-                        <strong>🎯 Objetivo:</strong> ${exercise.objective}
+                        <strong>🎯 Objetivo:</strong> ${_escapeHtml(exercise.objective)}
                     </div>
 
                     <div class="exercise-steps">
@@ -129,7 +138,7 @@ const CDPN_LabRunner = {
                         ${exercise.steps.map((step, si) => `
                             <div class="step-item">
                                 <span class="step-num">${si + 1}</span>
-                                <span class="step-text">${step}</span>
+                                <span class="step-text">${_escapeHtml(step)}</span>
                             </div>
                         `).join('')}
                     </div>
@@ -137,7 +146,7 @@ const CDPN_LabRunner = {
                     ${exercise.code ? `
                         <div class="code-block">
                             <div class="code-block-header">
-                                <span class="lang">${exercise.codeLang || 'bash'}</span>
+                                <span class="lang">${_escapeHtml(exercise.codeLang || 'bash')}</span>
                                 <button class="copy-btn" onclick="CDPN_LabRunner.copyCode(this)">📋 Copiar</button>
                             </div>
                             <pre>${exercise.code}</pre>
@@ -164,7 +173,7 @@ const CDPN_LabRunner = {
                         <button class="hint-btn" onclick="CDPN_LabRunner.showHint(${index})">
                             💡 Necesito una pista
                         </button>
-                        <div class="hint-text" id="hint-${index}">${exercise.hint}</div>
+                        <div class="hint-text" id="hint-${index}">${_escapeHtml(exercise.hint)}</div>
                     ` : ''}
 
                     ${exercise.solution ? `
