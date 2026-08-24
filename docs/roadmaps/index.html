@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberDefense Roadmaps — Developer Roadmaps Interactivos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0e1a;
+            --bg-secondary: #111827;
+            --bg-card: #1a1f35;
+            --bg-card-hover: #222845;
+            --accent-cyan: #00f5a0;
+            --accent-blue: #00d4ff;
+            --accent-purple: #7c3aed;
+            --accent-red: #ef4444;
+            --accent-orange: #f59e0b;
+            --accent-green: #22c55e;
+            --text-primary: #e2e8f0;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --border: #1e293b;
+            --border-light: #334155;
+            --node-size: 180px;
+            --node-height: 60px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: 'Inter', system-ui, sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ── HEADER ── */
+        .header {
+            background: linear-gradient(135deg, #0d1b2a 0%, #1a0533 50%, #0d1b2a 100%);
+            border-bottom: 1px solid var(--border);
+            padding: 1.5rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(20px);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .logo-text {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .logo-text span { color: var(--accent-cyan); }
+
+        .header-actions {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn-primary {
+            background: var(--accent-cyan);
+            color: #000;
+        }
+
+        .btn-primary:hover { background: #00d990; transform: translateY(-1px); }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border-light);
+        }
+
+        .btn-secondary:hover { border-color: var(--accent-cyan); color: var(--accent-cyan); }
+
+        /* ── MAIN LAYOUT ── */
+        .main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .page-title h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .page-title p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        /* ── ROADMAP CARDS ── */
+        .roadmaps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .roadmap-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .roadmap-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-blue));
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .roadmap-card:hover {
+            border-color: var(--accent-cyan);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 245, 160, 0.1);
+        }
+
+        .roadmap-card:hover::before { opacity: 1; }
+
+        .roadmap-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .roadmap-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .roadmap-badge {
+            font-size: 0.7rem;
+            padding: 4px 8px;
+            border-radius: 20px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-entry { background: rgba(34, 197, 94, 0.15); color: #22c55e; }
+        .badge-intermediate { background: rgba(245, 158, 11, 0.15); color: #f59e0b; }
+        .badge-advanced { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
+        .badge-expert { background: rgba(124, 58, 237, 0.15); color: #7c3aed; }
+
+        .roadmap-card h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .roadmap-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+
+        .roadmap-meta {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .meta-item svg {
+            width: 14px;
+            height: 14px;
+            opacity: 0.6;
+        }
+
+        .progress-bar {
+            height: 4px;
+            background: var(--border);
+            border-radius: 2px;
+            margin-top: 1rem;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-blue));
+            border-radius: 2px;
+            transition: width 0.5s ease;
+        }
+
+        /* ── ROADMAP VIEW ── */
+        .roadmap-view {
+            display: none;
+            background: var(--bg-secondary);
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+        }
+
+        .roadmap-view.active { display: block; }
+
+        .roadmap-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .roadmap-toolbar h2 {
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .roadmap-toolbar-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .roadmap-canvas {
+            padding: 2rem;
+            overflow: auto;
+            min-height: 500px;
+        }
+
+        /* ── TREE NODES ── */
+        .tree-container {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .tree-section {
+            margin-bottom: 1rem;
+        }
+
+        .tree-section-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--accent-cyan);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .tree-branch {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            padding-left: 1.5rem;
+            border-left: 2px solid var(--border);
+            margin-left: 0.5rem;
+        }
+
+        .tree-node {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+            max-width: 350px;
+        }
+
+        .tree-node::before {
+            content: '';
+            position: absolute;
+            left: -1.5rem;
+            top: 50%;
+            width: 1.5rem;
+            height: 2px;
+            background: var(--border);
+        }
+
+        .tree-node:hover {
+            border-color: var(--accent-cyan);
+            background: var(--bg-card-hover);
+            transform: translateX(4px);
+        }
+
+        .tree-node.completed {
+            border-color: var(--accent-green);
+            background: rgba(34, 197, 94, 0.05);
+        }
+
+        .tree-node.completed .node-check {
+            background: var(--accent-green);
+            color: #000;
+        }
+
+        .node-check {
+            width: 22px;
+            height: 22px;
+            border-radius: 6px;
+            border: 2px solid var(--border-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            flex-shrink: 0;
+            transition: all 0.2s;
+        }
+
+        .tree-node.completed .node-check::after {
+            content: '✓';
+        }
+
+        .node-content {
+            flex: 1;
+        }
+
+        .node-title {
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 2px;
+        }
+
+        .node-desc {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .node-tags {
+            display: flex;
+            gap: 4px;
+            flex-wrap: wrap;
+        }
+
+        .node-tag {
+            font-size: 0.65rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            background: rgba(0, 212, 255, 0.1);
+            color: var(--accent-blue);
+        }
+
+        /* ── STATS BAR ── */
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem 1.25rem;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            font-family: 'JetBrains Mono', monospace;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        /* ── MODAL ── */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-overlay.active { display: flex; align-items: center; justify-content: center; }
+
+        .modal {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal h3 {
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .modal-close {
+            float: right;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* ── DOWNLOAD MENU ── */
+        .download-menu {
+            position: relative;
+        }
+
+        .download-dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 4px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            min-width: 180px;
+            z-index: 50;
+        }
+
+        .download-dropdown.active { display: block; }
+
+        .download-option {
+            display: block;
+            width: 100%;
+            padding: 10px 16px;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            text-align: left;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.2s;
+        }
+
+        .download-option:hover {
+            background: var(--bg-card-hover);
+        }
+
+        .download-option:first-child { border-radius: 8px 8px 0 0; }
+        .download-option:last-child { border-radius: 0 0 8px 8px; }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 768px) {
+            .roadmaps-grid { grid-template-columns: 1fr; }
+            .stats-bar { grid-template-columns: repeat(2, 1fr); }
+            .header-content { flex-direction: column; gap: 1rem; }
+            .page-title h1 { font-size: 1.8rem; }
+        }
+
+        /* ── ANIMATIONS ── */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .roadmap-card { animation: fadeIn 0.5s ease forwards; }
+        .roadmap-card:nth-child(2) { animation-delay: 0.1s; }
+        .roadmap-card:nth-child(3) { animation-delay: 0.2s; }
+        .roadmap-card:nth-child(4) { animation-delay: 0.3s; }
+    </style>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<header class="header">
+    <div class="header-content">
+        <a href="#" class="logo" onclick="showGrid(); return false;">
+            <div class="logo-icon">🛡️</div>
+            <div class="logo-text"><span>CyberDefense</span> Roadmaps</div>
+        </a>
+        <div class="header-actions">
+            <button class="btn btn-secondary" onclick="importProgress()">📥 Importar Progreso</button>
+            <button class="btn btn-secondary" onclick="resetProgress()">🔄 Reset</button>
+        </div>
+    </div>
+</header>
+
+<!-- ── MAIN ── -->
+<main class="main">
+    <!-- Grid View -->
+    <div id="gridView">
+        <div class="page-title">
+            <h1>🗺️ Cybersecurity Developer Roadmaps</h1>
+            <p>Rutas de aprendizaje interactivas — marca tu progreso, descarga, y comparte</p>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-bar">
+            <div class="stat-card">
+                <div class="stat-value" id="totalRoadmaps">8</div>
+                <div class="stat-label">Roadmaps</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="totalTopics">0</div>
+                <div class="stat-label">Temas Totales</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="completedTopics">0</div>
+                <div class="stat-label">Completados</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="overallProgress">0%</div>
+                <div class="stat-label">Progreso Total</div>
+            </div>
+        </div>
+
+        <!-- Roadmap Cards -->
+        <div class="roadmaps-grid" id="roadmapsGrid"></div>
+    </div>
+
+    <!-- Roadmap View -->
+    <div id="roadmapView" class="roadmap-view">
+        <div class="roadmap-toolbar">
+            <h2 id="roadmapTitle"></h2>
+            <div class="roadmap-toolbar-actions">
+                <button class="btn btn-secondary" onclick="showGrid()">← Volver</button>
+                <div class="download-menu">
+                    <button class="btn btn-primary" onclick="toggleDownloadMenu()">⬇ Descargar</button>
+                    <div class="download-dropdown" id="downloadDropdown">
+                        <button class="download-option" onclick="downloadJSON()">📄 JSON</button>
+                        <button class="download-option" onclick="downloadMarkdown()">📝 Markdown</button>
+                        <button class="download-option" onclick="downloadProgress()">💾 Progreso</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="roadmap-canvas" id="roadmapCanvas"></div>
+    </div>
+</main>
+
+<!-- ── DETAIL MODAL ── -->
+<div class="modal-overlay" id="detailModal">
+    <div class="modal">
+        <button class="modal-close" onclick="closeModal()">×</button>
+        <h3 id="modalTitle"></h3>
+        <p id="modalDesc" style="color: var(--text-secondary); margin-bottom: 1rem;"></p>
+        <div id="modalLinks"></div>
+    </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════════════════════
+// ROADMAP DATA
+// ══════════════════════════════════════════════════════════════
+
+const ROADMAPS = [
+    {
+        id: "soc-analyst",
+        title: "SOC Analyst",
+        icon: "🚨",
+        badge: "entry",
+        badgeText: "Entry Level",
+        description: "Analista de Centro de Operaciones de Seguridad — monitoreo, detección y respuesta a incidentes.",
+        color: "#22c55e",
+        topics: 45,
+        sections: [
+            {
+                title: "Fundamentos",
+                nodes: [
+                    { id: "net-basics", title: "Redes基础 (TCP/IP, OSI)", desc: "Modelo OSI, TCP/IP, subnetting, routing", tags: ["fundamental"] },
+                    { id: "linux-basics", title: "Linux Fundamentals", desc: "CLI, permisos, procesos, servicios, logs", tags: ["fundamental"] },
+                    { id: "windows-basics", title: "Windows Fundamentals", desc: "AD, GPO, Registry, Event Logs", tags: ["fundamental"] },
+                    { id: "security-concepts", title: "Conceptos de Seguridad", desc: "CIA, AAA, defense in depth, least privilege", tags: ["fundamental"] },
+                ]
+            },
+            {
+                title: "Herramientas SOC",
+                nodes: [
+                    { id: "siem-wazuh", title: "SIEM — Wazuh/ELK", desc: "Deploy, config, alert rules, dashboards", tags: ["tool"] },
+                    { id: "sysmon", title: "Sysmon", desc: "Process, network, registry, file monitoring", tags: ["tool"] },
+                    { id: "suricata", title: "IDS/IPS — Suricata", desc: "Network intrusion detection rules", tags: ["tool"] },
+                    { id: "virustotal", title: "VirusTotal / MalwareBazaar", desc: "Malware analysis y hashing", tags: ["tool"] },
+                    { id: "shodan", title: "Shodan / Censys", desc: "Internet-wide reconnaissance", tags: ["tool"] },
+                ]
+            },
+            {
+                title: "Detección y Análisis",
+                nodes: [
+                    { id: "sigma-rules", title: "Sigma Rules", desc: "Detection rules portables entre SIEMs", tags: ["detection"] },
+                    { id: "mitre-attack", title: "MITRE ATT&CK Mapping", desc: "Mapear eventos a tácticas y técnicas", tags: ["framework"] },
+                    { id: "log-analysis", title: "Log Analysis", desc: "Apache, auth, DNS, firewall logs", tags: ["analysis"] },
+                    { id: "ioc-analysis", title: "IOC Analysis", desc: "IPs, domains, hashes, YARA rules", tags: ["analysis"] },
+                    { id: "alert-triage", title: "Alert Triage", desc: "Priorizar, investigar, escalar alertas", tags: ["process"] },
+                ]
+            },
+            {
+                title: "Respuesta a Incidentes",
+                nodes: [
+                    { id: "ir-framework", title: "IR Framework (NIST)", desc: "Preparation → Detection → Containment → Recovery", tags: ["framework"] },
+                    { id: "playbooks", title: "Playbooks", desc: "Rutinas para ransomware, phishing, data breach", tags: ["process"] },
+                    { id: "forensics-basic", title: "Forense Básico", desc: "Disk imaging, memory analysis, timeline", tags: ["analysis"] },
+                    { id: "timeline-analysis", title: "Timeline Analysis", desc: "Correlacionar eventos en el tiempo", tags: ["analysis"] },
+                ]
+            },
+            {
+                title: "Comunicación y Reporting",
+                nodes: [
+                    { id: "report-writing", title: "Report Writing", desc: "Técnico + ejecutivo, impacto, remediación", tags: ["soft-skill"] },
+                    { id: "shift-handover", title: "Shift Handover", desc: "Documentar y transferir contexto entre turns", tags: ["process"] },
+                    { id: "executive-summary", title: "Executive Summary", desc: "Comunicar riesgo a no-técnicos", tags: ["soft-skill"] },
+                ]
+            }
+        ]
+    },
+    {
+        id: "pentester",
+        title: "Penetration Tester",
+        icon: "⚔️",
+        badge: "intermediate",
+        badgeText: "Intermediate",
+        description: "Ejecuta pruebas de penetración siguiendo metodologías profesionales (PTES, OWASP).",
+        color: "#ef4444",
+        topics: 52,
+        sections: [
+            {
+                title: "Metodología",
+                nodes: [
+                    { id: "ptes", title: "PTES Framework", desc: "Las 7 fases del pentesting profesional", tags: ["framework"] },
+                    { id: "owasp-testing", title: "OWASP Testing Guide", desc: "Testing para aplicaciones web", tags: ["framework"] },
+                    { id: "nist-800-115", title: "NIST SP 800-115", desc: "Guía técnica de security testing", tags: ["framework"] },
+                    { id: "report-template", title: "Report Template", desc: "Plantilla profesional con CVSS", tags: ["process"] },
+                ]
+            },
+            {
+                title: "Reconocimiento",
+                nodes: [
+                    { id: "subfinder", title: "subfinder / amass", desc: "Subdomain enumeration passivo", tags: ["tool"] },
+                    { id: "httpx", title: "httpx / nuclei", desc: "HTTP probing y vulnerability scanning", tags: ["tool"] },
+                    { id: "ffuf", title: "ffuf / feroxbuster", desc: "Content discovery y directory brute-force", tags: ["tool"] },
+                    { id: "gau-katana", title: "gau / katana", desc: "URL discovery y web crawling", tags: ["tool"] },
+                    { id: "shodan-censys", title: "Shodan / Censys", desc: "Internet-wide recon y fingerprinting", tags: ["tool"] },
+                ]
+            },
+            {
+                title: "Explotación Web",
+                nodes: [
+                    { id: "sqli", title: "SQL Injection", desc: "Union, blind, time-based, out-of-band", tags: ["vuln"] },
+                    { id: "xss", title: "XSS (Reflected/Stored/DOM)", desc: "Cross-Site Scripting avanzado", tags: ["vuln"] },
+                    { id: "idor", title: "IDOR", desc: "Insecure Direct Object Reference", tags: ["vuln"] },
+                    { id: "ssrf", title: "SSRF", desc: "Server-Side Request Forgery", tags: ["vuln"] },
+                    { id: "auth-bypass", title: "Auth Bypass", desc: "JWT, OAuth, session management", tags: ["vuln"] },
+                    { id: "xxe", title: "XXE", desc: "XML External Entity injection", tags: ["vuln"] },
+                ]
+            },
+            {
+                title: "Post-Explotación",
+                nodes: [
+                    { id: "privesc-linux", title: "Privilege Escalation (Linux)", desc: "SUID, cron, kernel exploits, sudo misconfig", tags: ["post-exploit"] },
+                    { id: "privesc-windows", title: "Privilege Escalation (Windows)", desc: "Token impersonation, registry, services", tags: ["post-exploit"] },
+                    { id: "lateral-movement", title: "Lateral Movement", desc: "SMB, WinRM, SSH pivoting", tags: ["post-exploit"] },
+                    { id: "persistence", title: "Persistence", desc: "Cron, services, registry, DLL hijacking", tags: ["post-exploit"] },
+                    { id: "data-exfil", title: "Data Exfiltration", desc: "DNS tunneling, HTTP, encryption", tags: ["post-exploit"] },
+                ]
+            },
+            {
+                title: "Herramientas Core",
+                nodes: [
+                    { id: "burp-suite", title: "Burp Suite", desc: "Proxy, Repeater, Intruder, Scanner", tags: ["tool"] },
+                    { id: "metasploit", title: "Metasploit Framework", desc: "Exploitation framework completo", tags: ["tool"] },
+                    { id: "sqlmap", title: "sqlmap", desc: "SQL injection automation", tags: ["tool"] },
+                    { id: "cobalt-sliver", title: "Cobalt Strike / Sliver", desc: "C2 frameworks para post-exploit", tags: ["tool"] },
+                ]
+            }
+        ]
+    },
+    {
+        id: "red-teamer",
+        title: "Red Team Operator",
+        icon: "🔴",
+        badge: "advanced",
+        badgeText: "Advanced",
+        description: "Operaciones ofensivas avanzadas — evasión, C2, adversary emulation.",
+        color: "#dc2626",
+        topics: 38,
+        sections: [
+            {
+                title: "C2 & Infrastructure",
+                nodes: [
+                    { id: "sliver-c2", title: "Sliver C2", desc: "Setup, implantes, malleable profiles", tags: ["c2"] },
+                    { id: "havoc-c2", title: "Havoc Framework", desc: "C2 moderno con sleep obfuscation", tags: ["c2"] },
+                    { id: "redirectors", title: "Redirectors & Domain Fronting", desc: "Nginx, CDN, traffic filtering", tags: ["infrastructure"] },
+                    { id: "dns-c2", title: "DNS C2 Channels", desc: "DoH, DoT, DNS tunneling para C2", tags: ["c2"] },
+                ]
+            },
+            {
+                title: "Evasión",
+                nodes: [
+                    { id: "amsi-bypass", title: "AMSI Bypass", desc: "Patch amsi.dll, reflection, loading", tags: ["evasion"] },
+                    { id: "etw-patching", title: "ETW Patching", desc: "Disable event tracing para evasion", tags: ["evasion"] },
+                    { id: "unhooking", title: "Unhooking ntdll", desc: "Bypass EDR userland hooks", tags: ["evasion"] },
+                    { id: "process-injection", title: "Process Injection", desc: "DLL injection, process hollowing", tags: ["evasion"] },
+                    { id: "lolbins", title: "LOLBins", desc: "Living off the land binaries", tags: ["evasion"] },
+                ]
+            },
+            {
+                title: "OPSEC",
+                nodes: [
+                    { id: "opsec-checklist", title: "OPSEC Checklist", desc: "Infrastructure, timing, language patterns", tags: ["opsec"] },
+                    { id: "custom-profiles", title: "Custom C2 Profiles", desc: "Malleable traffic patterns", tags: ["opsec"] },
+                    { id: "jitter-sleep", title: "Jitter & Sleep", desc: "Evitar beaconing detection", tags: ["opsec"] },
+                ]
+            },
+            {
+                title: "Adversary Emulation",
+                nodes: [
+                    { id: "mitre-apt", title: "APT Groups (MITRE)", desc: "APT29, Lazarus, FIN7, APT41", tags: ["emulation"] },
+                    { id: "atomic-red-team", title: "Atomic Red Team", desc: "Execute ATT&CK techniques", tags: ["tool"] },
+                    { id: "caldera", title: "MITRE Caldera", desc: "Automated adversary emulation", tags: ["tool"] },
+                ]
+            }
+        ]
+    },
+    {
+        id: "blue-teamer",
+        title: "Blue Team / SOC Engineer",
+        icon: "🔵",
+        badge: "intermediate",
+        badgeText: "Intermediate",
+        description: "Defensa activa — detección, monitoreo, hardening, response.",
+        color: "#3b82f6",
+        topics: 42,
+        sections: [
+            {
+                title: "Detection Engineering",
+                nodes: [
+                    { id: "detection-cycle", title: "Detection Cycle", desc: "Hypothesis → Test → Deploy → Tune", tags: ["process"] },
+                    { id: "sigma-create", title: "Crear Sigma Rules", desc: "Desde hipótesis hasta regla funcional", tags: ["detection"] },
+                    { id: "sysmon-config", title: "Sysmon Configuration", desc: "Event filtering, network, registry", tags: ["tool"] },
+                    { id: "yara-rules", title: "YARA Rules", desc: "Malware pattern matching", tags: ["detection"] },
+                ]
+            },
+            {
+                title: "SIEM & Monitoring",
+                nodes: [
+                    { id: "wazuh-deploy", title: "Wazuh Deployment", desc: "Manager, indexer, dashboard", tags: ["tool"] },
+                    { id: "elk-stack", title: "ELK Stack", desc: "Elasticsearch, Logstash, Kibana", tags: ["tool"] },
+                    { id: "dashboard-design", title: "Dashboard Design", desc: "KPIs, alert visualization, metrics", tags: ["process"] },
+                ]
+            },
+            {
+                title: "Hardening",
+                nodes: [
+                    { id: "cis-benchmarks", title: "CIS Benchmarks", desc: "Linux, Windows, Docker, Cloud", tags: ["hardening"] },
+                    { id: "linux-hardening", title: "Linux Hardening", desc: "SSH, firewall, services, audit", tags: ["hardening"] },
+                    { id: "windows-hardening", title: "Windows Hardening", desc: "GPO, Defender, AppLocker, WDAC", tags: ["hardening"] },
+                    { id: "network-hardening", title: "Network Hardening", desc: "Segmentation, ACLs, VLANs", tags: ["hardening"] },
+                ]
+            },
+            {
+                title: "Incident Response",
+                nodes: [
+                    { id: "ir-nist", title: "NIST IR Framework", desc: "6 phases de respuesta", tags: ["framework"] },
+                    { id: "forensics-disk", title: "Disk Forensics", desc: "Volatility, Autopsy, Sleuth Kit", tags: ["analysis"] },
+                    { id: "forensics-memory", title: "Memory Forensics", desc: "Volatility3, process analysis", tags: ["analysis"] },
+                    { id: "timeline-forensics", title: "Timeline Forensics", desc: "Super timeline, log correlation", tags: ["analysis"] },
+                ]
+            }
+        ]
+    },
+    {
+        id: "appsec",
+        title: "Application Security Engineer",
+        icon: "🛡️",
+        badge: "intermediate",
+        badgeText: "Intermediate",
+        description: "Seguridad en el ciclo de vida del desarrollo — SAST, DAST, code review.",
+        color: "#f59e0b",
+        topics: 40,
+        sections: [
+            {
+                title: "OWASP Top 10",
+                nodes: [
+                    { id: "owasp-injection", title: "A03: Injection", desc: "SQL, NoSQL, OS, LDAP injection", tags: ["owasp"] },
+                    { id: "owasp-broken-auth", title: "A07: Broken Auth", desc: "Session management, credential stuffing", tags: ["owasp"] },
+                    { id: "owasp-xss", title: "A07: XSS", desc: "Reflected, stored, DOM-based", tags: ["owasp"] },
+                    { id: "owasp-api", title: "OWASP API Top 10", desc: "API security specific vulnerabilities", tags: ["owasp"] },
+                ]
+            },
+            {
+                title: "Secure Code Review",
+                nodes: [
+                    { id: "static-analysis", title: "Static Analysis (SAST)", desc: "SonarQube, Semgrep, CodeQL", tags: ["tool"] },
+                    { id: "dynamic-analysis", title: "Dynamic Analysis (DAST)", desc: "OWASP ZAP, Nuclei", tags: ["tool"] },
+                    { id: "dependency-check", title: "Dependency Scanning", desc: "Snyk, Dependabot, Trivy", tags: ["tool"] },
+                    { id: "secrets-scanning", title: "Secrets Scanning", desc: "TruffleHog, GitLeaks, Gitleaks", tags: ["tool"] },
+                ]
+            },
+            {
+                title: "DevSecOps",
+                nodes: [
+                    { id: "ci-cd-security", title: "CI/CD Security", desc: "GitHub Actions, pipeline security", tags: ["devsecops"] },
+                    { id: "container-security", title: "Container Security", desc: "Docker bench, Trivy, Falco", tags: ["devsecops"] },
+                    { id: "k8s-security", title: "Kubernetes Security", desc: "RBAC, network policies, admission control", tags: ["devsecops"] },
+                ]
+            }
+        ]
+    },
+    {
+        id: "threat-hunter",
+        title: "Threat Hunter",
+        icon: "🎯",
+        badge: "advanced",
+        badgeText: "Advanced",
+        description: "Búsqueda proactiva de amenazas — hipótesis, investigation, automation.",
+        color: "#a855f7",
+        topics: 35,
+        sections: [
+            {
+                title: "Metodología",
+                nodes: [
+                    { id: "hypothesis-driven", title: "Hypothesis-Driven Hunting", desc: "Formular y probar hipótesis de amenaza", tags: ["methodology"] },
+                    { id: "intelligence-driven", title: "Intelligence-Driven", desc: "Usar CTI para guiar hunting", tags: ["methodology"] },
+                    { id: "analytics-driven", title: "Analytics-Driven", desc: "ML/statistical anomaly detection", tags: ["methodology"] },
+                ]
+            },
+            {
+                title: "Hunting Techniques",
+                nodes: [
+                    { id: "beacon-detection", title: "Beacon Detection", desc: "C2 beaconing analysis (RITA, JA3)", tags: ["technique"] },
+                    { id: "lateral-movement-hunt", title: "Lateral Movement Hunt", desc: "Pass-the-hash, Kerberoasting", tags: ["technique"] },
+                    { id: "data-exfil-hunt", title: "Data Exfiltration Hunt", desc: "DNS analysis, large transfers", tags: ["technique"] },
+                    { id: "persistence-hunt", title: "Persistence Hunt", desc: "Registry, scheduled tasks, services", tags: ["technique"] },
+                    { id: "credential-hunt", title: "Credential Hunting", desc: "LSASS, Kerberos, NTLM analysis", tags: ["technique"] },
+                ]
+            },
+            {
+                title: "Herramientas",
+                nodes: [
+                    { id: "rita", title: "RITA", desc: "Relative Information Threat Analysis", tags: ["tool"] },
+                    { id: "osquery", title: "osquery", desc: "SQL-based endpoint queries", tags: ["tool"] },
+                    { id: "fleet", title: "Fleet", desc: "osquery management at scale", tags: ["tool"] },
+                    { id: "velociraptor", title: "Velociraptor", desc: "Endpoint monitoring y hunting", tags: ["tool"] },
+                ]
+            }
+        ]
+    },
+    {
+        id: "cloud-security",
+        title: "Cloud Security Engineer",
+        icon: "☁️",
+        badge: "advanced",
+        badgeText: "Advanced",
+        description: "Seguridad en AWS, Azure, GCP — IAM, network, compliance,Containers.",
+        color: "#0ea5e9",
+        topics: 38,
+        sections: [
+            {
+                title: "Cloud Fundamentals",
+                nodes: [
+                    { id: "aws-security", title: "AWS Security", desc: "IAM, VPC, Security Groups, GuardDuty", tags: ["cloud"] },
+                    { id: "azure-security", title: "Azure Security", desc: "NSG, Defender, Sentinel, AD", tags: ["cloud"] },
+                    { id: "gcp-security", title: "GCP Security", desc: "IAM, VPC SC, Chronicle, SCC", tags: ["cloud"] },
+                ]
+            },
+            {
+                title: "Container & Kubernetes",
+                nodes: [
+                    { id: "docker-security", title: "Docker Security", desc: "CIS Benchmark, image scanning, runtime", tags: ["container"] },
+                    { id: "k8s-security", title: "Kubernetes Security", desc: "RBAC, Pod Security, Network Policies", tags: ["container"] },
+                    { id: "service-mesh", title: "Service Mesh Security", desc: "Istio, mTLS, zero trust", tags: ["container"] },
+                ]
+            },
+            {
+                title: "Cloud-Native Security",
+                nodes: [
+                    { id: "iam-best-practices", title: "IAM Best Practices", desc: "Least privilege, MFA, roles", tags: ["iam"] },
+                    { id: "cloud-compliance", title: "Cloud Compliance", desc: "CIS Benchmarks, SOC2, PCI-DSS", tags: ["compliance"] },
+                    { id: "cspm", title: "CSPM Tools", desc: "Prisma Cloud, Wiz, ScoutSuite", tags: ["tool"] },
+                ]
+            }
+        ]
+    },
+    {
+        id: "ai-security",
+        title: "AI / LLM Security Specialist",
+        icon: "🤖",
+        badge: "expert",
+        badgeText: "Expert",
+        description: "Seguridad de modelos de IA — jailbreaking, red teaming LLMs, guardrails.",
+        color: "#7c3aed",
+        topics: 32,
+        sections: [
+            {
+                title: "Fundamentos AI Security",
+                nodes: [
+                    { id: "owasp-llm-top10", title: "OWASP LLM Top 10", desc: "Top 10 vulnerabilidades de LLMs", tags: ["framework"] },
+                    { id: "llm-threat-model", title: "LLM Threat Model", desc: "Vectores de ataque y modelos de amenaza", tags: ["methodology"] },
+                    { id: "alignment-basics", title: "Alignment Basics", desc: "RLHF, Constitutional AI, safety training", tags: ["fundamental"] },
+                ]
+            },
+            {
+                title: "Ataques a LLMs",
+                nodes: [
+                    { id: "prompt-injection", title: "Prompt Injection", desc: "Directa, indirecta, tool hijacking", tags: ["attack"] },
+                    { id: "jailbreak-single", title: "Jailbreak Single-Turn", desc: "DAN, Policy Puppetry, Role Playing", tags: ["attack"] },
+                    { id: "jailbreak-multi", title: "Jailbreak Multi-Turn", desc: "Crescendo, Echo Chamber, Many-Shot", tags: ["attack"] },
+                    { id: "data-exfil-llm", title: "Data Exfiltration via LLM", desc: "Extract training data, PII leakage", tags: ["attack"] },
+                    { id: "supply-chain-llm", title: "Supply Chain Attacks", desc: "Model poisoning, backdoor", tags: ["attack"] },
+                ]
+            },
+            {
+                title: "Defensa de LLMs",
+                nodes: [
+                    { id: "guardrails", title: "Guardrails", desc: "Input/output filtering, content classification", tags: ["defense"] },
+                    { id: "model-hardening", title: "Model Hardening", desc: "Fine-tuning, adversarial training, R2D2", tags: ["defense"] },
+                    { id: "llm-monitoring", title: "LLM Monitoring", desc: "Logging, anomaly detection, rate limiting", tags: ["defense"] },
+                    { id: "llm-red-teaming", title: "LLM Red Teaming", desc: "Garak, PyRIT, promptfoo, HarmBench", tags: ["tool"] },
+                ]
+            }
+        ]
+    }
+];
+
+// ══════════════════════════════════════════════════════════════
+// STATE & STORAGE
+// ══════════════════════════════════════════════════════════════
+
+let currentRoadmap = null;
+const STORAGE_KEY = 'cyberdefense-roadmap-progress';
+
+function loadProgress() {
+    try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+    } catch { return {}; }
+}
+
+function saveProgress(progress) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+}
+
+function toggleTopic(roadmapId, topicId) {
+    const progress = loadProgress();
+    if (!progress[roadmapId]) progress[roadmapId] = {};
+    progress[roadmapId][topicId] = !progress[roadmapId][topicId];
+    saveProgress(progress);
+    updateStats();
+    if (currentRoadmap) renderRoadmap(currentRoadmap);
+}
+
+function getCompletedCount(roadmapId) {
+    const progress = loadProgress();
+    return Object.values(progress[roadmapId] || {}).filter(Boolean).length;
+}
+
+// ══════════════════════════════════════════════════════════════
+// RENDERING
+// ══════════════════════════════════════════════════════════════
+
+function renderGrid() {
+    const grid = document.getElementById('roadmapsGrid');
+    grid.innerHTML = ROADMAPS.map(r => {
+        const completed = getCompletedCount(r.id);
+        const progress = r.topics > 0 ? Math.round((completed / r.topics) * 100) : 0;
+        return `
+            <div class="roadmap-card" onclick="openRoadmap('${r.id}')">
+                <div class="roadmap-card-header">
+                    <div class="roadmap-icon" style="background: ${r.color}22; color: ${r.color};">
+                        ${r.icon}
+                    </div>
+                    <span class="roadmap-badge badge-${r.badge}">${r.badgeText}</span>
+                </div>
+                <h3>${r.title}</h3>
+                <p>${r.description}</p>
+                <div class="roadmap-meta">
+                    <span class="meta-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+                        ${r.topics} temas
+                    </span>
+                    <span class="meta-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h7"/></svg>
+                        ${r.sections.length} secciones
+                    </span>
+                    <span class="meta-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        ${completed}/${r.topics} completados
+                    </span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: ${progress}%"></div>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+function renderRoadmap(roadmapId) {
+    currentRoadmap = roadmapId;
+    const roadmap = ROADMAPS.find(r => r.id === roadmapId);
+    if (!roadmap) return;
+
+    document.getElementById('gridView').style.display = 'none';
+    document.getElementById('roadmapView').classList.add('active');
+    document.getElementById('roadmapTitle').innerHTML = `${roadmap.icon} ${roadmap.title}`;
+
+    const progress = loadProgress()[roadmapId] || {};
+    const canvas = document.getElementById('roadmapCanvas');
+
+    canvas.innerHTML = roadmap.sections.map(section => `
+        <div class="tree-section">
+            <div class="tree-section-title">${section.title}</div>
+            <div class="tree-branch">
+                ${section.nodes.map(node => {
+                    const isCompleted = progress[node.id] || false;
+                    return `
+                        <div class="tree-node ${isCompleted ? 'completed' : ''}" 
+                             onclick="toggleTopic('${roadmapId}', '${node.id}')"
+                             oncontextmenu="showNodeDetail('${node.title}', '${node.desc}', '${node.tags.join(', ')}'); return false;">
+                            <div class="node-check"></div>
+                            <div class="node-content">
+                                <div class="node-title">${node.title}</div>
+                                <div class="node-desc">${node.desc}</div>
+                            </div>
+                            <div class="node-tags">
+                                ${node.tags.map(t => `<span class="node-tag">${t}</span>`).join('')}
+                            </div>
+                        </div>
+                    `;
+                }).join('')}
+            </div>
+        </div>
+    `).join('');
+}
+
+function showGrid() {
+    document.getElementById('gridView').style.display = 'block';
+    document.getElementById('roadmapView').classList.remove('active');
+    currentRoadmap = null;
+    renderGrid();
+    updateStats();
+}
+
+function updateStats() {
+    let totalTopics = 0;
+    let completedTopics = 0;
+
+    ROADMAPS.forEach(r => {
+        totalTopics += r.topics;
+        completedTopics += getCompletedCount(r.id);
+    });
+
+    document.getElementById('totalRoadmaps').textContent = ROADMAPS.length;
+    document.getElementById('totalTopics').textContent = totalTopics;
+    document.getElementById('completedTopics').textContent = completedTopics;
+    document.getElementById('overallProgress').textContent = 
+        totalTopics > 0 ? Math.round((completedTopics / totalTopics) * 100) + '%' : '0%';
+}
+
+// ══════════════════════════════════════════════════════════════
+// MODAL & DETAIL
+// ══════════════════════════════════════════════════════════════
+
+function showNodeDetail(title, desc, tags) {
+    document.getElementById('modalTitle').textContent = title;
+    document.getElementById('modalDesc').textContent = desc;
+    document.getElementById('modalLinks').innerHTML = `
+        <div style="margin-bottom: 1rem;">
+            <strong style="color: var(--text-muted); font-size: 0.8rem;">TAGS:</strong>
+            <div style="display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap;">
+                ${tags.split(', ').map(t => `<span class="node-tag">${t}</span>`).join('')}
+            </div>
+        </div>
+        <div style="padding: 1rem; background: var(--bg-secondary); border-radius: 8px; font-size: 0.85rem; color: var(--text-secondary);">
+            💡 Click izquierdo para marcar como completado.<br>
+            Click derecho para ver detalles.
+        </div>
+    `;
+    document.getElementById('detailModal').classList.add('active');
+}
+
+function closeModal() {
+    document.getElementById('detailModal').classList.remove('active');
+}
+
+// ══════════════════════════════════════════════════════════════
+// DOWNLOAD FUNCTIONS
+// ══════════════════════════════════════════════════════════════
+
+function toggleDownloadMenu() {
+    document.getElementById('downloadDropdown').classList.toggle('active');
+}
+
+function downloadJSON() {
+    const roadmap = ROADMAPS.find(r => r.id === currentRoadmap);
+    if (!roadmap) return;
+    const progress = loadProgress()[currentRoadmap] || {};
+    
+    const data = {
+        roadmap: roadmap.title,
+        exported: new Date().toISOString(),
+        sections: roadmap.sections.map(s => ({
+            title: s.title,
+            topics: s.nodes.map(n => ({
+                ...n,
+                completed: progress[n.id] || false
+            }))
+        }))
+    };
+
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${currentRoadmap}-roadmap.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+    toggleDownloadMenu();
+}
+
+function downloadMarkdown() {
+    const roadmap = ROADMAPS.find(r => r.id === currentRoadmap);
+    if (!roadmap) return;
+    const progress = loadProgress()[currentRoadmap] || {};
+    
+    let md = `# ${roadmap.icon} ${roadmap.title} Roadmap\n\n`;
+    md += `> ${roadmap.description}\n\n`;
+    md += `**Exportado:** ${new Date().toLocaleDateString()}\n\n`;
+
+    roadmap.sections.forEach(s => {
+        md += `## ${s.title}\n\n`;
+        s.nodes.forEach(n => {
+            const check = progress[n.id] ? 'x' : ' ';
+            md += `- [${check}] **${n.title}** — ${n.desc}\n`;
+        });
+        md += '\n';
+    });
+
+    const blob = new Blob([md], { type: 'text/markdown' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${currentRoadmap}-roadmap.md`;
+    a.click();
+    URL.revokeObjectURL(url);
+    toggleDownloadMenu();
+}
+
+function downloadProgress() {
+    const progress = loadProgress();
+    const blob = new Blob([JSON.stringify(progress, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `cyberdefense-progress-${new Date().toISOString().split('T')[0]}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+    toggleDownloadMenu();
+}
+
+function importProgress() {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.json';
+    input.onchange = (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+            try {
+                const data = JSON.parse(ev.target.result);
+                saveProgress(data);
+                updateStats();
+                renderGrid();
+                alert('✅ Progreso importado correctamente');
+            } catch {
+                alert('❌ Archivo inválido');
+            }
+        };
+        reader.readAsText(file);
+    };
+    input.click();
+}
+
+function resetProgress() {
+    if (confirm('¿Estás seguro de que quieres borrar todo el progreso?')) {
+        localStorage.removeItem(STORAGE_KEY);
+        updateStats();
+        renderGrid();
+        if (currentRoadmap) renderRoadmap(currentRoadmap);
+    }
+}
+
+// ══════════════════════════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════════════════════════
+
+document.addEventListener('DOMContentLoaded', () => {
+    renderGrid();
+    updateStats();
+});
+
+// Close modal on escape
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeModal();
+});
+
+// Close download menu on click outside
+document.addEventListener('click', (e) => {
+    if (!e.target.closest('.download-menu')) {
+        document.getElementById('downloadDropdown')?.classList.remove('active');
+    }
+});
+</script>
+
+</body>
+</html>
