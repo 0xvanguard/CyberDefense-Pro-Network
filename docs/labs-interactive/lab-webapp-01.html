@@ -1,57 +1,57 @@
 <!DOCTYPE html>
 <html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Recon & OSINT — CyberDefense Pro Network</title>
+<title>Web App Exploitation — CyberDefense Pro Network</title>
 <style>
 :root{--bg:#0a0a0f;--bg2:#12121a;--card:#1a1a2e;--bdr:#2a2a3e;--grn:#00ff88;--red:#ff3366;--cyn:#00d4ff;--yel:#ffd700;--pur:#a855f7;--txt:#e0e0e0;--txt2:#888;--tbg:#0d1117}
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var(--txt);min-height:100vh}
 .hdr{background:linear-gradient(135deg,#1a1a2e,#16213e);border-bottom:1px solid var(--bdr);padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.8rem}
-.hdr h1{font-size:1.2rem;color:#1abc9c}.hdr h1 span{color:var(--txt2);font-weight:400}
+.hdr h1{font-size:1.2rem;color:#e67e22}.hdr h1 span{color:var(--txt2);font-weight:400}
 .badge{padding:.25rem .6rem;border-radius:16px;font-size:.68rem;font-weight:600}
-.b-lv{background:#1abc9c22;color:#1abc9c;border:1px solid #1abc9c55}
+.b-lv{background:#e67e2222;color:#e67e22;border:1px solid #e67e2255}
 .b-pg{background:rgba(0,255,136,.15);color:var(--grn);border:1px solid rgba(0,255,136,.3)}
 .lay{display:grid;grid-template-columns:240px 1fr 240px;height:calc(100vh - 55px)}
 .tp{background:var(--bg2);border-right:1px solid var(--bdr);overflow-y:auto;padding:.7rem}
-.tp h3{color:#1abc9c;font-size:.75rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:.6rem}
+.tp h3{color:#e67e22;font-size:.75rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:.6rem}
 .ti{background:var(--card);border:1px solid var(--bdr);border-radius:7px;padding:.6rem;margin-bottom:.4rem;cursor:pointer;transition:all .2s;position:relative}
-.ti:hover{border-color:#1abc9c;transform:translateX(3px)}.ti.act{border-color:var(--grn);background:rgba(0,255,136,.05)}
+.ti:hover{border-color:#e67e22;transform:translateX(3px)}.ti.act{border-color:var(--grn);background:rgba(0,255,136,.05)}
 .ti.done{border-color:var(--grn);opacity:.65}.ti.done::after{content:'\2713';position:absolute;top:.3rem;right:.5rem;color:var(--grn);font-size:1rem}
 .tn{font-size:.58rem;color:var(--pur);text-transform:uppercase;letter-spacing:1px}
 .tt{font-size:.78rem;font-weight:600;margin:.15rem 0}.th{font-size:.65rem;color:var(--txt2)}
 .cmd{display:flex;flex-direction:column;background:var(--tbg)}
 .cmd-tabs{display:flex;background:#161b22;border-bottom:1px solid var(--bdr);padding:0 .5rem}
 .cmd-tab{padding:.35rem .7rem;font-size:.7rem;color:var(--txt2);border-bottom:2px solid transparent;cursor:pointer}
-.cmd-tab.act{color:#1abc9c;border-bottom-color:#1abc9c}
+.cmd-tab.act{color:#e67e22;border-bottom-color:#e67e22}
 .cmd-out{flex:1;overflow-y:auto;padding:.7rem;font-family:'JetBrains Mono',monospace;font-size:.76rem;line-height:1.45}
 .cmd-out .pl{display:flex;gap:.4rem;margin-bottom:.15rem}
-.cmd-out .ps{color:#1abc9c;font-weight:bold}.cmd-out .cm{color:#fff}
+.cmd-out .ps{color:#e67e22;font-weight:bold}.cmd-out .cm{color:#fff}
 .cmd-out .op{color:var(--txt2);margin-left:.7rem}.cmd-out .ok{color:var(--grn);margin-left:.7rem}
 .cmd-out .er{color:var(--red);margin-left:.7rem}.cmd-out .wn{color:var(--yel);margin-left:.7rem}
 .cmd-out .if{color:var(--cyn);margin-left:.7rem}
 .cmd-in{display:flex;align-items:center;padding:.4rem .7rem;background:#0d1117;border-top:1px solid var(--bdr)}
-.cmd-in .ps{color:#1abc9c;font-family:monospace;font-weight:bold;font-size:.78rem;margin-right:.4rem}
+.cmd-in .ps{color:#e67e22;font-family:monospace;font-weight:bold;font-size:.78rem;margin-right:.4rem}
 #inp{flex:1;background:0 0;border:none;color:#fff;font-family:'JetBrains Mono',monospace;font-size:.76rem;outline:none}
 .rp{background:var(--bg2);border-left:1px solid var(--bdr);overflow-y:auto;padding:.7rem}
 .rp h3{color:var(--pur);font-size:.75rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:.6rem}
 .sd{text-align:center;padding:.7rem;background:var(--card);border:1px solid var(--bdr);border-radius:7px;margin-top:.6rem}
 .sv{font-size:1.6rem;font-weight:800;color:var(--grn)}.sl{font-size:.6rem;color:var(--txt2);text-transform:uppercase;letter-spacing:1px}
-.wb{background:linear-gradient(135deg,#1abc9c15,#1abc9c08);border:1px solid #1abc9c33;border-radius:7px;padding:.7rem;margin-bottom:.6rem}
-.wb h4{color:#1abc9c;margin-bottom:.3rem}.wb p{font-size:.7rem;color:var(--txt2);line-height:1.4}
+.wb{background:linear-gradient(135deg,#e67e2215,#e67e2208);border:1px solid #e67e2233;border-radius:7px;padding:.7rem;margin-bottom:.6rem}
+.wb h4{color:#e67e22;margin-bottom:.3rem}.wb p{font-size:.7rem;color:var(--txt2);line-height:1.4}
 ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--bdr);border-radius:3px}
 @media(max-width:1024px){.lay{grid-template-columns:1fr}.tp{display:flex;overflow-x:auto}.ti{min-width:160px;flex-shrink:0}.rp{display:none}}
 </style></head><body>
-<div class="hdr"><h1>🔍 Recon & OSINT <span>— Lab Interactivo</span></h1>
+<div class="hdr"><h1>🌐 Web App Exploitation <span>— Lab Interactivo</span></h1>
 <div class="hdr" style="border:0;padding:0"><span class="badge b-lv">Nivel: Intermedio</span>
 <span class="badge b-pg" id="pg">0/6 completado</span></div></div>
 <div class="lay">
 <div class="tp"><h3>📋 Objetivos</h3>
-<div class="wb"><h4>🎯 Recon & OSINT</h4><p>Reconocimiento pasivo y activo: WHOIS, DNS, subdomains, social, attack surface.</p></div>
-<div class="ti act" data-t="0" onclick="sel(0)"><div class="tn">Paso 1</div><div class="tt">WHOIS & DNS</div><div class="th">Info del dominio</div></div>
-<div class="ti" data-t="1" onclick="sel(1)"><div class="tn">Paso 2</div><div class="tt">Subdomain Enum</div><div class="th">Subdominios ocultos</div></div>
-<div class="ti" data-t="2" onclick="sel(2)"><div class="tn">Paso 3</div><div class="tt">Port Scanning</div><div class="th">Servicios y puertos</div></div>
-<div class="ti" data-t="3" onclick="sel(3)"><div class="tn">Paso 4</div><div class="tt">Web Fingerprinting</div><div class="th">Tecnologías web</div></div>
-<div class="ti" data-t="4" onclick="sel(4)"><div class="tn">Paso 5</div><div class="tt">OSINT Social</div><div class="th">Redes sociales</div></div>
-<div class="ti" data-t="5" onclick="sel(5)"><div class="tn">Paso 6</div><div class="tt">Attack Surface</div><div class="th">Mapa completo</div></div>
+<div class="wb"><h4>🎯 Web App Exploitation</h4><p>Explotación web avanzada: SQLi + WAF bypass, IDOR, file upload, JWT, session hijack.</p></div>
+<div class="ti act" data-t="0" onclick="sel(0)"><div class="tn">Paso 1</div><div class="tt">SQLi Advanced</div><div class="th">Bypass WAF + extraer datos</div></div>
+<div class="ti" data-t="1" onclick="sel(1)"><div class="tn">Paso 2</div><div class="tt">IDOR</div><div class="th">Acceso a datos ajenos</div></div>
+<div class="ti" data-t="2" onclick="sel(2)"><div class="tn">Paso 3</div><div class="tt">File Upload</div><div class="th">Subir archivos maliciosos</div></div>
+<div class="ti" data-t="3" onclick="sel(3)"><div class="tn">Paso 4</div><div class="tt">API Abuse</div><div class="th">Explotar endpoints REST</div></div>
+<div class="ti" data-t="4" onclick="sel(4)"><div class="tn">Paso 5</div><div class="tt">JWT Manipulation</div><div class="th">Forjar tokens JWT</div></div>
+<div class="ti" data-t="5" onclick="sel(5)"><div class="tn">Paso 6</div><div class="tt">Session Hijack</div><div class="th">Robar sesiones</div></div>
 
 <div class="sd"><div class="sv" id="sc">0</div><div class="sl">Puntos XP</div></div></div>
 <div class="cmd">
@@ -64,7 +64,7 @@ body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var
 <div class="sd"><div class="sv" id="rc">0</div><div class="sl">Hallazgos</div></div></div>
 </div>
 <script>
-let cur=0,dn=new Set(),sc=0,hc=0,hi=-1,hist=[],resps={"whois corp-security.local": "Domain: corp-security.local | Registrar: NameCheap | Org: CorpSec Industries S.A. | Country: CO", "subfinder -d corp-security.local": "9 subdomains: mail, vpn, dev, staging, api, admin, gitlab, grafana, jenkins", "nmap -sV -p- 10.0.1.0/24 --exclude 10.0.1.100": "9 services: SSH, HTTP, SSL, MySQL, PostgreSQL, Jenkins, Tomcat, Prometheus, MongoDB", "whatweb api.corp-security.local": "Node.js/Express | JWT (HS256) | Swagger /api-docs EXPOSED!", "osint social corp-security": "LinkedIn: 47 employees | GitHub: 3 repos (secrets found!) | CEO: Pedro Lopez", "report recon": "📋 RECON REPORT\nSubdomains: 9 | CVEs: 3 | Attack Surface: 14 points\nCRITICAL: Jenkins RCE + MongoDB no auth\nHIGH: Swagger exposed + GitHub secrets ✅ LAB COMPLETED!"};
+let cur=0,dn=new Set(),sc=0,hc=0,hi=-1,hist=[],resps={"sqlmap -u 'api.local/items?id=1' --tamper=bypass --dbs": "WAF bypassed! Tables: users (1247), credit_cards (892) ← CRITICAL", "curl api.local/users/1/profile -H 'Bearer user_token'": "IDOR: Admin profile accessed with user token — SSN exposed", "curl -X POST upload.local/submit -F 'file=@shell.php.jpg'": "Extension bypass: .php.jpg accepted → RCE possible", "python3 jwt_tool.py token.txt -T -S hs256 -p admin123": "JWT secret cracked: admin123 → Token forged → Full takeover", "report webapp": "📋 WEB APP EXPLOITATION\nSQLi + WAF bypass: CRITICAL (892 credit cards)\nIDOR: CRITICAL | JWT: CRITICAL\nFile Upload: HIGH | API: HIGH ✅ LAB COMPLETED!"};
 const xp=150,tot=900,steps=6;
 const O=document.getElementById("out"),I=document.getElementById("inp");
 function sb(){O.scrollTop=O.scrollHeight}
