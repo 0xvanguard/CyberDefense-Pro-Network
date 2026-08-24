@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab: OSINT Recon — CyberDefense Pro Network</title>
+  <style>
+    :root {
+      --bg-primary: #0a0a0f;
+      --bg-secondary: #12121a;
+      --bg-card: #1a1a2e;
+      --border: #2a2a3e;
+      --accent-green: #00ff88;
+      --accent-red: #ff3366;
+      --accent-cyan: #00d4ff;
+      --accent-yellow: #ffd700;
+      --accent-purple: #a855f7;
+      --text-primary: #e0e0e0;
+      --text-secondary: #888;
+      --terminal-bg: #0d1117;
+      --terminal-green: #39ff14;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg-primary); color: var(--text-primary); min-height: 100vh; }
+
+    .lab-header {
+      background: linear-gradient(135deg, #1a1a2e, #16213e);
+      border-bottom: 1px solid var(--border);
+      padding: 1.5rem 2rem;
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+    }
+    .lab-header h1 { font-size: 1.4rem; color: var(--accent-cyan); }
+    .lab-header h1 span { color: var(--text-secondary); font-weight: 400; }
+    .status-badge { padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; }
+    .badge-level { background: rgba(0,212,255,0.15); color: var(--accent-cyan); border: 1px solid rgba(0,212,255,0.3); }
+    .badge-progress { background: rgba(0,255,136,0.15); color: var(--accent-green); border: 1px solid rgba(0,255,136,0.3); }
+
+    .lab-layout { display: grid; grid-template-columns: 280px 1fr 300px; height: calc(100vh - 70px); }
+
+    .tasks-panel {
+      background: var(--bg-secondary); border-right: 1px solid var(--border); overflow-y: auto; padding: 1rem;
+    }
+    .tasks-panel h3 { color: var(--accent-cyan); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1rem; }
+
+    .task-item {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
+      padding: 0.8rem; margin-bottom: 0.6rem; cursor: pointer; transition: all 0.3s; position: relative;
+    }
+    .task-item:hover { border-color: var(--accent-cyan); transform: translateX(4px); }
+    .task-item.active { border-color: var(--accent-green); background: rgba(0,255,136,0.05); }
+    .task-item.completed { border-color: var(--accent-green); opacity: 0.7; }
+    .task-item.completed::after { content: '✓'; position: absolute; top: 0.5rem; right: 0.8rem; color: var(--accent-green); font-size: 1.2rem; }
+
+    .task-number { font-size: 0.65rem; color: var(--accent-purple); text-transform: uppercase; letter-spacing: 1px; }
+    .task-title { font-size: 0.85rem; font-weight: 600; margin: 0.3rem 0; }
+    .task-hint { font-size: 0.72rem; color: var(--text-secondary); }
+
+    .terminal-panel { display: flex; flex-direction: column; background: var(--terminal-bg); }
+    .terminal-tabs {
+      display: flex; background: #161b22; border-bottom: 1px solid var(--border); padding: 0 0.5rem;
+    }
+    .terminal-tab {
+      padding: 0.5rem 1rem; font-size: 0.75rem; color: var(--text-secondary);
+      border-bottom: 2px solid transparent; cursor: pointer; transition: all 0.2s;
+    }
+    .terminal-tab.active { color: var(--accent-green); border-bottom-color: var(--accent-green); }
+
+    .terminal-output {
+      flex: 1; overflow-y: auto; padding: 1rem;
+      font-family: 'JetBrains Mono', 'Fira Code', monospace; font-size: 0.82rem; line-height: 1.6;
+    }
+    .terminal-output .prompt-line { display: flex; gap: 0.5rem; margin-bottom: 0.3rem; }
+    .terminal-output .prompt-symbol { color: var(--accent-green); font-weight: bold; }
+    .terminal-output .command { color: #fff; }
+    .terminal-output .output { color: var(--text-secondary); margin-left: 1rem; }
+    .terminal-output .success { color: var(--accent-green); margin-left: 1rem; }
+    .terminal-output .error { color: var(--accent-red); margin-left: 1rem; }
+    .terminal-output .warning { color: var(--accent-yellow); margin-left: 1rem; }
+    .terminal-output .info { color: var(--accent-cyan); margin-left: 1rem; }
+
+    .terminal-input-area {
+      display: flex; align-items: center; padding: 0.6rem 1rem; background: #0d1117; border-top: 1px solid var(--border);
+    }
+    .terminal-input-area .prompt-symbol {
+      color: var(--accent-green); font-family: monospace; font-weight: bold; font-size: 0.85rem; margin-right: 0.5rem;
+    }
+    #terminal-input {
+      flex: 1; background: transparent; border: none; color: #fff;
+      font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; outline: none;
+    }
+
+    .topology-panel { background: var(--bg-secondary); border-left: 1px solid var(--border); overflow-y: auto; padding: 1rem; }
+    .topology-panel h3 { color: var(--accent-purple); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1rem; }
+
+    .intel-card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 0.8rem; margin-bottom: 0.6rem;
+    }
+    .intel-card h4 { font-size: 0.8rem; color: var(--accent-cyan); margin-bottom: 0.5rem; }
+    .intel-item { font-size: 0.75rem; padding: 0.3rem 0; color: var(--text-secondary); border-bottom: 1px solid rgba(255,255,255,0.05); font-family: monospace; }
+    .intel-item .label { color: var(--text-primary); font-weight: 600; }
+    .intel-item .value { color: var(--accent-green); }
+
+    .intel-empty { color: var(--text-secondary); font-size: 0.75rem; font-style: italic; padding: 1rem 0; }
+
+    .score-display { text-align: center; padding: 1rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; margin-top: 1rem; }
+    .score-value { font-size: 2rem; font-weight: 800; color: var(--accent-green); }
+    .score-label { font-size: 0.7rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px; }
+
+    .welcome-banner {
+      background: linear-gradient(135deg, rgba(0,212,255,0.1), rgba(168,85,247,0.1));
+      border: 1px solid rgba(0,212,255,0.3); border-radius: 8px; padding: 1rem; margin-bottom: 1rem;
+    }
+    .welcome-banner h4 { color: var(--accent-cyan); margin-bottom: 0.5rem; }
+    .welcome-banner p { font-size: 0.78rem; color: var(--text-secondary); line-height: 1.5; }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg-primary); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+    @media (max-width: 1024px) {
+      .lab-layout { grid-template-columns: 1fr; }
+      .tasks-panel { display: flex; overflow-x: auto; }
+      .task-item { min-width: 200px; flex-shrink: 0; }
+      .topology-panel { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="lab-header">
+    <h1>🔍 OSINT Recon <span>— Reconocimiento de Fuentes Abiertas</span></h1>
+    <div class="lab-status">
+      <span class="status-badge badge-level">Nivel: Básico-Intermedio</span>
+      <span class="status-badge badge-progress" id="progress-badge">0/7 completado</span>
+    </div>
+  </div>
+
+  <div class="lab-layout">
+    <div class="tasks-panel">
+      <h3>📋 Objetivos</h3>
+      <div class="welcome-banner">
+        <h4>🎯 Lab OSINT</h4>
+        <p>Recolecta información sobre el objetivo usando únicamente fuentes abiertas. Cada herramienta revela intel nuevo en el panel derecho.</p>
+      </div>
+
+      <div class="task-item active" data-task="0" onclick="selectTask(0)">
+        <div class="task-number">Paso 1</div>
+        <div class="task-title">Reconocimiento DNS</div>
+        <div class="task-hint">Busca registros DNS del dominio objetivo</div>
+      </div>
+      <div class="task-item" data-task="1" onclick="selectTask(1)">
+        <div class="task-number">Paso 2</div>
+        <div class="task-title">WHOIS Lookup</div>
+        <div class="task-hint">Obtén información del registrante</div>
+      </div>
+      <div class="task-item" data-task="2" onclick="selectTask(2)">
+        <div class="task-number">Paso 3</div>
+        <div class="task-title">Subdomain Enumeration</div>
+        <div class="task-hint">Encuentra subdominios ocultos</div>
+      </div>
+      <div class="task-item" data-task="3" onclick="selectTask(3)">
+        <div class="task-number">Paso 4</div>
+        <div class="task-title">Email Harvesting</div>
+        <div class="task-hint">Recopila emails del dominio</div>
+      </div>
+      <div class="task-item" data-task="4" onclick="selectTask(4)">
+        <div class="task-number">Paso 5</div>
+        <div class="task-title">Shodan Search</div>
+        <div class="task-hint">Busca dispositivos expuestos en internet</div>
+      </div>
+      <div class="task-item" data-task="5" onclick="selectTask(5)">
+        <div class="task-number">Paso 6</div>
+        <div class="task-title">GitHub Dorking</div>
+        <div class="task-hint">Busca secretos en repositorios públicos</div>
+      </div>
+      <div class="task-item" data-task="6" onclick="selectTask(6)">
+        <div class="task-number">Paso 7</div>
+        <div class="task-title">OSINT Report</div>
+        <div class="task-hint">Consolida todo el intel recopilado</div>
+      </div>
+
+      <div class="score-display">
+        <div class="score-value" id="score">0</div>
+        <div class="score-label">Puntos XP</div>
+      </div>
+    </div>
+
+    <div class="terminal-panel">
+      <div class="terminal-tabs">
+        <div class="terminal-tab active">⚡ osint@recon</div>
+        <div class="terminal-tab">📋 Intel Log</div>
+      </div>
+      <div class="terminal-output" id="terminal-output">
+        <div class="info">═══════════════════════════════════════════════════════</div>
+        <div class="info">  🔍 OSINT Recon Lab — CyberDefense Pro Network</div>
+        <div class="info">  Objetivo: acme-corp.com</div>
+        <div class="info">═══════════════════════════════════════════════════════</div>
+        <div class="output"></div>
+        <div class="output">Recolecta inteligencia sobre el objetivo usando herramientas OSINT.</div>
+        <div class="output">Cada comando exitoso revela datos en el panel derecho.</div>
+        <div class="output"></div>
+        <div class="warning">💡 Escribe "help" para ver comandos disponibles</div>
+        <div class="warning">💡 Escribe "hint" para obtener ayuda</div>
+        <div class="output"></div>
+      </div>
+      <div class="terminal-input-area">
+        <span class="prompt-symbol">osint@recon:~$</span>
+        <input type="text" id="terminal-input" placeholder="Escribe un comando..." autofocus autocomplete="off" spellcheck="false">
+      </div>
+    </div>
+
+    <div class="topology-panel">
+      <h3>🗂️ Intel Recopilado</h3>
+      <div id="intel-panels">
+        <div class="intel-empty">Completa pasos para descubrir inteligencia...</div>
+      </div>
+      <div class="score-display">
+        <div style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:0.3rem;">DatoS Descubiertos</div>
+        <div class="score-value" id="intel-count">0</div>
+        <div class="score-label">de 28 posibles</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentTask = 0;
+    let completedTasks = new Set();
+    let score = 0;
+    let intelCount = 0;
+    let commandHistory = [];
+    let historyIndex = -1;
+    let discoveredIntel = {};
+
+    const tasks = [
+      {
+        title: "Reconocimiento DNS",
+        xp: 100,
+        responses: {
+          "dig acme-corp.com": `; <<>> DiG 9.18.18-0ubuntu0.22.04.2-Ubuntu <<>> acme-corp.com
+;; ANSWER SECTION:
+acme-corp.com.    300    IN    A    104.21.45.67
+acme-corp.com.    300    IN    MX    10 mail.acme-corp.com
+acme-corp.com.    300    IN    MX    20 mail2.acme-corp.com
+acme-corp.com.    300    IN    TXT   "v=spf1 include:_spf.google.com ~all"
+acme-corp.com.    300    IN    NS    ns1.cloudflare-dns.com
+acme-corp.com.    300    IN    NS    ns2.cloudflare-dns.com
+acme-corp.com.    300    IN    SOA   ns1.cloudflare-dns.com admin.acme-corp.com`,
+          "dig acme-corp.com ANY": `;; ANSWER SECTION:
+acme-corp.com.    300    IN    A    104.21.45.67
+acme-corp.com.    300    IN    AAAA 2606:4700::6815:2d43
+acme-corp.com.    300    IN    MX   10 mail.acme-corp.com
+acme-corp.com.    300    IN    TXT  "v=spf1 include:_spf.google.com ~all"
+acme-corp.com.    300    IN    TXT  "google-site-verification=abc123"
+acme-corp.com.    300    IN    NS   ns1.cloudflare-dns.com`,
+          "nslookup acme-corp.com": `Server:    8.8.8.8
+Address:   8.8.8.8#53
+
+Non-authoritative answer:
+Name:    acme-corp.com
+Address: 104.21.45.67
+
+acme-corp.com  mail exchanger = 10 mail.acme-corp.com.
+acme-corp.com  mail exchanger = 20 mail2.acme-corp.com
+acme-corp.com  nameserver = ns1.cloudflare-dns.com
+acme-corp.com  nameserver = ns2.cloudflare-dns.com`,
+          "host acme-corp.com": `acme-corp.com has address 104.21.45.67
+acme-corp.com mail is handled by 10 mail.acme-corp.com.
+acme-corp.com mail is handled by 20 mail2.acme-corp.com
+acme-corp.com domain name server ns1.cloudflare-dns.com`
+        },
+        completionCheck: (cmd) => ["dig","nslookup","host","dnsrecon","dnsenum"].some(c => cmd.includes(c)),
+        intel: [
+          { type: "IP", label: "IP Principal", value: "104.21.45.67" },
+          { type: "IPv6", label: "IPv6", value: "2606:4700::6815:2d43" },
+          { type: "MX", label: "Mail Servers", value: "mail.acme-corp.com (10), mail2.acme-corp.com (20)" },
+          { type: "NS", label: "Nameservers", value: "ns1/ns2.cloudflare-dns.com" },
+          { type: "CDN", label: "CDN/WAF", value: "Cloudflare" },
+          { type: "TXT", label: "SPF Record", value: "v=spf1 include:_spf.google.com ~all" },
+          { type: "TXT", label: "Google Verification", value: "google-site-verification=abc123" }
+        ]
+      },
+      {
+        title: "WHOIS Lookup",
+        xp: 100,
+        responses: {
+          "whois acme-corp.com": `   Domain Name: ACME-CORP.COM
+   Registry Domain ID: 1234567890_DOMAIN_COM-VRSN
+   Registrar WHOIS Server: whois.namecheap.com
+   Registrar: NameCheap, Inc.
+   Updated Date: 2026-01-15T12:00:00Z
+   Creation Date: 2019-03-22T08:30:00Z
+   Registrant Organization: Acme Corporation S.A.
+   Registrant Country: CO
+   Registrant Email: admin@acme-corp.com
+   Admin Email: sysadmin@acme-corp.com
+   Tech Email: devops@acme-corp.com
+   Name Server: NS1.CLOUDFLARE-DNS.COM
+   Name Server: NS2.CLOUDFLARE-DNS.COM
+   DNSSEC: unsigned`,
+          "whois 104.21.45.67": `#
+# NetRange: 104.16.0.0 - 104.31.255.255
+# CIDR: 104.16.0.0/12
+# NetName: CLOUDFLARENET
+# Organization: Cloudflare, Inc. (NET-13)
+# Country: US
+# Abuse Contact: abuse@cloudflare.com`,
+          "curl whoami.am": `190.45.123.45`
+        },
+        completionCheck: (cmd) => cmd.includes("whois") || cmd.includes("curl whoami"),
+        intel: [
+          { type: "REG", label: "Registrar", value: "NameCheap, Inc." },
+          { type: "ORG", label: "Organización", value: "Acme Corporation S.A." },
+          { type: "LOC", label: "País", value: "Colombia (CO)" },
+          { type: "EMAIL", label: "Email Admin", value: "admin@acme-corp.com" },
+          { type: "EMAIL", label: "Email Sysadmin", value: "sysadmin@acme-corp.com" },
+          { type: "EMAIL", label: "Email DevOps", value: "devops@acme-corp.com" },
+          { type: "DATE", label: "Creado", value: "2019-03-22 (7+ años)" }
+        ]
+      },
+      {
+        title: "Subdomain Enumeration",
+        xp: 150,
+        responses: {
+          "subfinder -d acme-corp.com": `subfinder v2.6.3
+
+[INF] Enumerating subdomains for acme-corp.com
+[vpn.acme-corp.com] -> 104.21.45.70
+[mail.acme-corp.com] -> 104.21.45.68
+[mail2.acme-corp.com] -> 104.21.45.69
+[dev.acme-corp.com] -> 104.21.45.71
+[staging.acme-corp.com] -> 104.21.45.72
+[api.acme-corp.com] -> 104.21.45.73
+[admin.acme-corp.com] -> 104.21.45.74
+[gitlab.acme-corp.com] -> 104.21.45.75
+[grafana.acme-corp.com] -> 104.21.45.76
+[jenkins.acme-corp.com] -> 104.21.45.77
+[confluence.acme-corp.com] -> 104.21.45.78
+[jira.acme-corp.com] -> 104.21.45.79
+[grafana-internal.acme-corp.com] -> 10.0.1.50
+[jenkins-internal.acme-corp.com] -> 10.0.1.51
+
+[INF] Found 14 subdomains for acme-corp.com`,
+          "amass enum -passive -d acme-corp.com": `www.acme-corp.com
+api.acme-corp.com
+admin.acme-corp.com
+dev.acme-corp.com
+staging.acme-corp.com
+gitlab.acme-corp.com
+grafana.acme-corp.com
+jenkins.acme-corp.com
+confluence.acme-corp.com
+vpn.acme-corp.com
+mail.acme-corp.com
+mail2.acme-corp.com
+grafana-internal.acme-corp.com
+jenkins-internal.acme-corp.com`,
+          "dnsrecon -d acme-corp.com -t brt": `[*] Performing host and subdomain brute force enumeration
+[+] A: acme-corp.com - 104.21.45.67
+[+] A: www.acme-corp.com - 104.21.45.67
+[+] A: api.acme-corp.com - 104.21.45.73
+[+] A: admin.acme-corp.com - 104.21.45.74
+[+] A: dev.acme-corp.com - 104.21.45.71
+[+] A: staging.acme-corp.com - 104.21.45.72
+[+] A: vpn.acme-corp.com - 104.21.45.70
+[+] A: mail.acme-corp.com - 104.21.45.68
+[+] A: gitlab.acme-corp.com - 104.21.45.75
+[+] A: grafana.acme-corp.com - 104.21.45.76
+[+] A: jenkins.acme-corp.com - 104.21.45.77`
+        },
+        completionCheck: (cmd) => cmd.includes("subfinder") || cmd.includes("amass") || cmd.includes("dnsrecon"),
+        intel: [
+          { type: "SUB", label: "Subdominios", value: "14 encontrados" },
+          { type: "DEV", label: "Dev/Staging", value: "dev.acme-corp.com, staging.acme-corp.com" },
+          { type: "ADMIN", label: "Admin Panels", value: "admin.acme-corp.com, jira.acme-corp.com" },
+          { type: "TOOLS", label: "Herramientas Dev", value: "GitLab, Jenkins, Grafana, Confluence" },
+          { type: "LEAK", label: "Internal DNS Leak", value: "grafana-internal (10.0.1.50), jenkins-internal (10.0.1.51)" },
+          { type: "VPN", label: "VPN", value: "vpn.acme-corp.com" }
+        ]
+      },
+      {
+        title: "Email Harvesting",
+        xp: 120,
+        responses: {
+          "theHarvester -d acme-corp.com -b google": `[+] Emails found: 12
+-----------------------------------------
+admin@acme-corp.com
+sysadmin@acme-corp.com
+devops@acme-corp.com
+ciso@acme-corp.com
+marketing@acme-corp.com
+hr@acme-corp.com
+j.rodriguez@acme-corp.com
+m.garcia@acme-corp.com
+a.martinez@acme-corp.com
+l.sanchez@acme-corp.com
+p.lopez@acme-corp.com
+ceo@acme-corp.com
+
+[+] Hosts found: 8
+-----------------------------------------
+www.acme-corp.com
+mail.acme-corp.com
+api.acme-corp.com
+admin.acme-corp.com
+dev.acme-corp.com`,
+          "linkedin2username acme corp": `[*] Searching LinkedIn for Acme Corporation employees...
+John Rodriguez — DevOps Engineer
+Maria Garcia — CISO
+Andres Martinez — Senior Developer
+Laura Sanchez — Marketing Director
+Pedro Lopez — CEO
+Sofia Herrera — HR Manager
+Carlos Mendez — SysAdmin
+Diana Vargas — Security Analyst
+Ricardo Torres — Backend Developer
+Ana Gutierrez — Frontend Developer`,
+          "git dork 'acme-corp.com password OR api_key OR secret'": `[github.com/acme-corp/webapp] config/database.yml — line 42: password: "Pr0d_P@ssw0rd_2024!"
+[github.com/acme-corp/webapp] .env.example — AWS_ACCESS_KEY_ID=AKIA...
+[github.com/acme-corp/mobile-app] config.json — api_token: "ghp_aBcDeFgHiJkLmNoPqRsTuVwXyZ1234567890"
+[github.com/acme-corp/infra] ansible/group_vars/all.yml — vault_password: "$6$rounds=5000$..."`
+        },
+        completionCheck: (cmd) => cmd.includes("harvester") || cmd.includes("linkedin") || cmd.includes("dork") || cmd.includes("theHarvester"),
+        intel: [
+          { type: "EMAIL", label: "Emails", value: "12 emails encontrados" },
+          { type: "PEOPLE", label: "Empleados", value: "CISO, DevOps, CEO, SysAdmin..." },
+          { type: "ROLE", label: "CISO", value: "Maria Garcia (m.garcia@acme-corp.com)" },
+          { type: "ROLE", label: "CEO", value: "Pedro Lopez (p.lopez@acme-corp.com)" },
+          { type: "SECRET", label: "Credentials GitHub", value: "database password, AWS key, API token" },
+          { type: "SECRET", label: "Vault Password", value: "Ansible vault en infra repo" }
+        ]
+      },
+      {
+        title: "Shodan Search",
+        xp: 150,
+        responses: {
+          "shodan search 'org:Acme Corporation'": `Shodan Search Results: 23 hosts
+
+IP               PORT  PRODUCT               VERSION   ORG
+104.21.45.67     443   Cloudflare            -         Acme Corporation S.A.
+104.21.45.68     25    Postfix               3.4.8     Acme Corporation S.A.
+104.21.45.68     993   Dovecot               2.3.11    Acme Corporation S.A.
+104.21.45.70     443   OpenVPN               2.5.6     Acme Corporation S.A.
+104.21.45.71     80    Apache                2.4.52    Acme Corporation S.A.
+104.21.45.73     443   nginx                 1.24.0    Acme Corporation S.A.
+104.21.45.74     443   Apache                2.4.52    Acme Corporation S.A.
+104.21.45.75     443   GitLab                15.8.0    Acme Corporation S.A.
+104.21.45.76     3000  Grafana               9.3.6     Acme Corporation S.A.
+104.21.45.77     8080  Jenkins               2.389.1   Acme Corporation S.A.
+104.21.45.78     8090  Confluence            8.1.4     Acme Corporation S.A.
+10.0.1.50        3000  Grafana               9.2.0     Acme Corporation S.A. [INTERNAL]
+10.0.1.51        8080  Jenkins               2.375.0   Acme Corporation S.A. [INTERNAL]
+
+Alerts:
+- grafana-internal has no authentication (Anonymous access enabled)
+- Jenkins 2.375.0 has CVE-2023-XXXX vulnerability
+- OpenVPN version outdated, consider update`,
+          "shodan host 104.21.45.77": `Host: 104.21.45.77
+Organization: Acme Corporation S.A.
+Country: Colombia
+City: Bogota
+
+Ports: 8080/tcp, 22/tcp
+Product: Jenkins 2.389.1
+OS: Linux
+
+HTTP Headers:
+  Server: Jetty(10.0.13)
+  X-Frame-Options: SAMEORIGIN
+  
+Vulnerabilities:
+  CVE-2023-40238 — Jenkins Script Console RCE (HIGH)
+  CVE-2023-27905 — Jenkins Git Plugin SSRF (MEDIUM)
+  
+SSL Certificate:
+  Subject: CN=jenkins.acme-corp.com
+  Issuer: Let's Encrypt Authority X3
+  Valid: 2026-01-01 to 2026-04-01`,
+          "shodan search 'org:Acme vuln:cve-2023'": `Found 4 results:
+
+104.21.45.75:443 — GitLab 15.8.0 — CVE-2023-22410 (Authorization Bypass)
+104.21.45.77:8080 — Jenkins 2.389.1 — CVE-2023-40238 (Script Console RCE)
+104.21.45.76:3000 — Grafana 9.3.6 — CVE-2023-4822 (Snapshot Auth Bypass)
+104.21.45.78:8090 — Confluence 8.1.4 — CVE-2023-22527 (RCE)`
+        },
+        completionCheck: (cmd) => cmd.includes("shodan"),
+        intel: [
+          { type: "PORT", label: "Puertos Expuestos", value: "25, 443, 993, 3000, 8080, 8090" },
+          { type: "CVE", label: "Vulnerabilidades", value: "4 CVEs críticos encontrados" },
+          { type: "VULN", label: "Jenkins RCE", value: "CVE-2023-40238 (Script Console)" },
+          { type: "VULN", label: "GitLab Auth Bypass", value: "CVE-2023-22410" },
+          { type: "VULN", label: "Grafana Snapshot", value: "CVE-2023-4822 (No Auth)" },
+          { type: "LEAK", label: "Internal Exposed", value: "Grafana + Jenkins internos visibles" }
+        ]
+      },
+      {
+        title: "GitHub Dorking",
+        xp: 120,
+        responses: {
+          "github-dork org:acme-corp password": `Results: 15 matches
+
+[acme-corp/webapp] config/production.yml — line 23:
+  password: "${DB_PROD_PASSWORD}"
+  api_key: "sk-prod-abc123def456ghi789"
+
+[acme-corp/api-gateway] .env — line 8:
+  DATABASE_URL=postgresql://admin:Sup3rS3cret!@db.acme-corp.com:5432/prod
+
+[acme-corp/infra] terraform/variables.tf — line 45:
+  variable "aws_secret_access_key" { default = "wJalrXUtnFEMI/K7MDENG..." }
+
+[acme-corp/mobile-app] config/config.js — line 12:
+  FIREBASE_KEY: "AAAA1234-xxx:APA91b..."
+  STRIPE_KEY: "sk_live_51J3x8..."`,
+          "github-dork org:acme-corp .env": `Results: 8 matches
+
+[acme-corp/webapp] .env.local — REDACTED (still has secrets)
+[acme-corp/webapp] .env.production — line 3: SECRET_KEY=django-insecure-abc123!
+[acme-corp/webapp] .env.staging — line 5: AWS_SECRET=wJalrXUtnFEMI/K7...
+[acme-corp/api-gateway] .env — FULL DATABASE CREDENTIALS
+[acme-corp/infra] .env — ANSIBLE_VAULT_PASSWORD
+[acme-corp/monitoring] .env — GRAFANA_ADMIN_PASS=admin123!
+[acme-corp/ci-cd] .env — DOCKER_HUB_TOKEN=pat_xxx
+[acme-corp/mobile-app] .env — FIREBASE_SERVICE_ACCOUNT_KEY`,
+          "github-dork org:acme-corp 'BEGIN RSA PRIVATE KEY'": `Results: 3 matches
+
+[acme-corp/infra] certs/server.key — FULL RSA PRIVATE KEY
+[acme-corp/infra] certs/ssl.key — FULL RSA PRIVATE KEY  
+[acme-corp/api-gateway] keys/jwt_private.pem — FULL RSA PRIVATE KEY
+
+⚠️ CRITICAL: These are production private keys committed to public repos!`
+        },
+        completionCheck: (cmd) => cmd.includes("github") || cmd.includes("dork") || cmd.includes("git"),
+        intel: [
+          { type: "SECRET", label: "DB Credentials", value: "admin:Sup3rS3cret!@db.acme-corp.com" },
+          { type: "SECRET", label: "AWS Keys", value: "Access Key + Secret Key expuestos" },
+          { type: "SECRET", label: "Stripe Live Key", value: "sk_live_51J3x8..." },
+          { type: "SECRET", label: "Firebase Key", value: "AAAA1234-xxx:APA91b..." },
+          { type: "SECRET", label: "RSA Private Keys", value: "3 llaves privadas expuestas" },
+          { type: "SECRET", label: "Grafana Pass", value: "admin123!" }
+        ]
+      },
+      {
+        title: "OSINT Report",
+        xp: 200,
+        responses: {
+          "report": null,
+          "report generate": null,
+          "osint-report": null,
+          "_default_report": `
+═══════════════════════════════════════════════════════════════════════
+                    📋 REPORTE OSINT — ACME-CORP.COM
+              CyberDefense Pro Network — Lab OSINT Recon
+═══════════════════════════════════════════════════════════════════════
+
+🎯 RESUMEN EJECUTIVO
+────────────────────
+Dominio: acme-corp.com
+Organización: Acme Corporation S.A. (Colombia)
+IP Principal: 104.21.45.67 (Cloudflare)
+Registrar: NameCheap
+Creado: 2019-03-22
+
+📊 INFRAESTRUCTURA
+──────────────────
+Total subdominios: 14
+├── Producción: www, mail, mail2, vpn, api
+├── Desarrollo: dev, staging
+├── Herramientas: GitLab, Jenkins, Grafana, Confluence, Jira
+└── Internal (EXPUESTOS): grafana-internal, jenkins-internal
+
+Puertos expuestos: 25, 443, 993, 3000, 8080, 8090
+CDN/WAF: Cloudflare
+
+🔐 SEGURIDAD — HALLAZGOS CRÍTICOS
+───────────────────────────────────
+#1 [CRÍTICO] Credenciales de Base de Datos en GitHub
+   Repo: acme-corp/api-gateway
+   Impacto: Acceso completo a base de datos de producción
+
+#2 [CRÍTICO] AWS Keys comprometidas
+   Repo: acme-corp/infra
+   Impacto: Posible acceso a infraestructura AWS completa
+
+#3 [CRÍTICO] RSA Private Keys en repos públicos
+   Repos: acme-corp/infra, acme-corp/api-gateway
+   Impacto: Suplantación de identidad, MITM
+
+#4 [ALTO] Stripe Live Key expuesta
+   Repo: acme-corp/webapp
+   Impacto: Fraude financiero
+
+#5 [ALTO] Jenkins CVE-2023-40238 (RCE)
+   Host: jenkins.acme-corp.com (104.21.45.77)
+   Impacto: Ejecución remota de código
+
+#6 [ALTO] Grafana interna sin autenticación
+   Host: grafana-internal.acme-corp.com (10.0.1.50)
+   Impacto: Acceso a métricas y dashboards internos
+
+#7 [MEDIO] 12 emails corporativos expuestos
+   Impacto: Phishing dirigido, credential stuffing
+
+#8 [BAJO] Información de empleados en LinkedIn
+   Impacto: Social engineering, spear phishing
+
+👤 PERSONAS IDENTIFICADAS
+──────────────────────────
+• Pedro Lopez — CEO
+• Maria Garcia — CISO (targets prioritarios para spear phishing)
+• John Rodriguez — DevOps Engineer
+• Carlos Mendez — SysAdmin
+• Diana Vargas — Security Analyst
+
+🛡️ RECOMENDACIONES INMEDIATAS
+──────────────────────────────
+1. ROTAR TODAS las credenciales comprometidas
+2. Eliminar secrets de repos públicos (git history)
+3. Restringir acceso a Jenkins/Grafana internos
+4. Parchear CVEs críticos
+5. Implementar GitHub secret scanning
+6. Revisar logs de acceso a AWS y base de datos
+
+═══════════════════════════════════════════════════════════════════════
+                    ✅ LAB COMPLETADO — ¡FELICIDADES!
+═══════════════════════════════════════════════════════════════════════`
+        },
+        completionCheck: (cmd) => cmd.includes("report") || cmd.includes("osint"),
+        intel: []
+      }
+    ];
+
+    const terminal = document.getElementById('terminal-output');
+    const input = document.getElementById('terminal-input');
+
+    function scrollToBottom() { terminal.scrollTop = terminal.scrollHeight; }
+
+    function addLine(text, className = 'output') {
+      const div = document.createElement('div');
+      div.className = className;
+      div.textContent = text;
+      terminal.appendChild(div);
+      scrollToBottom();
+    }
+
+    function addPromptLine(cmd) {
+      const div = document.createElement('div');
+      div.className = 'prompt-line';
+      div.innerHTML = `<span class="prompt-symbol">osint@recon:~$</span> <span class="command">${escapeHtml(cmd)}</span>`;
+      terminal.appendChild(div);
+      scrollToBottom();
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    function addIntel(intelItems) {
+      const container = document.getElementById('intel-panels');
+      if (intelCount === 0) container.innerHTML = '';
+
+      const task = tasks[currentTask];
+      const card = document.createElement('div');
+      card.className = 'intel-card';
+      card.innerHTML = `<h4>${task.title}</h4>`;
+
+      intelItems.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'intel-item';
+        div.innerHTML = `<span class="label">[${item.type}] ${item.label}:</span> <span class="value">${item.value}</span>`;
+        card.appendChild(div);
+        intelCount++;
+      });
+
+      container.appendChild(card);
+      document.getElementById('intel-count').textContent = intelCount;
+    }
+
+    function selectTask(index) {
+      document.querySelectorAll('.task-item').forEach(t => t.classList.remove('active'));
+      const taskEl = document.querySelector(`.task-item[data-task="${index}"]`);
+      if (taskEl && !taskEl.classList.contains('completed')) taskEl.classList.add('active');
+      currentTask = index;
+      addLine('');
+      addLine(`📋 ${tasks[index].title}`, 'info');
+    }
+
+    function completeTask(index) {
+      if (completedTasks.has(index)) return;
+      completedTasks.add(index);
+      score += tasks[index].xp;
+      const taskEl = document.querySelector(`.task-item[data-task="${index}"]`);
+      taskEl.classList.add('completed');
+      taskEl.classList.remove('active');
+      document.getElementById('score').textContent = score;
+      document.getElementById('progress-badge').textContent = `${completedTasks.size}/7 completado`;
+
+      if (tasks[index].intel.length > 0) addIntel(tasks[index].intel);
+
+      if (index < tasks.length - 1) selectTask(index + 1);
+      else {
+        addLine('');
+        addLine('═══════════════════════════════════════════════════', 'success');
+        addLine('  🎉 ¡¡FELICIDADES!! ¡Has completado el lab OSINT!', 'success');
+        addLine(`  Intel recopilado: ${intelCount} datos`, 'success');
+        addLine(`  Puntuación final: ${score} XP`, 'success');
+        addLine('═══════════════════════════════════════════════════', 'success');
+      }
+    }
+
+    function processCommand(cmd) {
+      addPromptLine(cmd);
+      commandHistory.push(cmd);
+      historyIndex = commandHistory.length;
+
+      const trimmed = cmd.trim().toLowerCase();
+      if (trimmed === 'help') {
+        addLine('Comandos OSINT disponibles:', 'info');
+        addLine('  dig / nslookup / host  — DNS enumeration', 'output');
+        addLine('  whois                  — Domain registration info', 'output');
+        addLine('  subfinder / amass      — Subdomain enumeration', 'output');
+        addLine('  theHarvester           — Email harvesting', 'output');
+        addLine('  shodan                 — Internet-wide scanning', 'output');
+        addLine('  github-dork            — Search GitHub for secrets', 'output');
+        addLine('  report                 — Generate OSINT report', 'output');
+        addLine('  hint                   — Show current task hints', 'output');
+        addLine('  clear                  — Clear terminal', 'output');
+        return;
+      }
+      if (trimmed === 'hint') {
+        addLine(`💡 Paso ${currentTask + 1}: ${tasks[currentTask].title}`, 'warning');
+        addLine(`  Comandos válidos para este paso:`, 'warning');
+        return;
+      }
+      if (trimmed === 'clear') { terminal.innerHTML = ''; return; }
+
+      const task = tasks[currentTask];
+      let response = null;
+      if (task.responses[cmd.trim()]) response = task.responses[cmd.trim()];
+      if (!response && task.responses['_default_report']) response = task.responses['_default_report'];
+
+      if (response) {
+        response.split('\n').forEach(line => addLine(line, 'output'));
+        if (task.completionCheck(cmd.trim())) {
+          setTimeout(() => {
+            addLine('');
+            addLine(`✅ ¡Tarea completada! +${task.xp} XP`, 'success');
+            completeTask(currentTask);
+          }, 500);
+        }
+      } else {
+        let validCmd = false;
+        for (const t of tasks) {
+          for (const tc of Object.keys(t.responses)) {
+            if (tc === '_default_report') continue;
+            if (cmd.trim().toLowerCase().includes(tc.split(' ')[0])) { validCmd = true; break; }
+          }
+        }
+        if (validCmd) {
+          addLine(`⚠️ Comando válido pero no para el paso actual.`, 'warning');
+          addLine(`💡 Escribe "hint" para obtener ayuda`, 'warning');
+        } else {
+          addLine(`bash: ${cmd.split(' ')[0]}: command not found`, 'error');
+          addLine(`💡 Escribe "help" para ver comandos disponibles`, 'warning');
+        }
+      }
+    }
+
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        const cmd = input.value.trim();
+        if (cmd) { processCommand(cmd); input.value = ''; }
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        if (historyIndex > 0) { historyIndex--; input.value = commandHistory[historyIndex]; }
+      } else if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        if (historyIndex < commandHistory.length - 1) { historyIndex++; input.value = commandHistory[historyIndex]; }
+        else { historyIndex = commandHistory.length; input.value = ''; }
+      }
+    });
+
+    document.querySelector('.terminal-panel').addEventListener('click', () => input.focus());
+    selectTask(0);
+  </script>
+</body>
+</html>
