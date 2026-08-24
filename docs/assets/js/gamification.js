@@ -168,6 +168,53 @@ const CDPN_Gamification = {
             condition: (stats) => stats.level >= 50
         },
         
+        // AI Security
+        'ai-first-steps': {
+            name: 'First Steps',
+            icon: '🛡️',
+            description: 'Completaste tu primer lab de AI Security',
+            xp: 50,
+            condition: (stats) => (stats.aiLabsCompleted || 0) >= 1
+        },
+        'ai-injection-expert': {
+            name: 'Injection Expert',
+            icon: '💉',
+            description: 'Completar Prompt-Injection-01 al 100%',
+            xp: 100,
+            condition: (stats) => (stats.aiLabs || {}).completed && (stats.aiLabs.completed['prompt-injection-01'] || 0) >= 100
+        },
+        'ai-guardrail-master': {
+            name: 'Guardrail Master',
+            icon: '🔓',
+            description: 'Completar Jailbreak-01 al 100%',
+            xp: 150,
+            condition: (stats) => (stats.aiLabs || {}).completed && (stats.aiLabs.completed['jailbreak-01'] || 0) >= 100
+        },
+        'ai-red-team-operative': {
+            name: 'Red Team Operative',
+            icon: '🎯',
+            description: 'Completar Red-Teaming-01 al 100%',
+            xp: 150,
+            condition: (stats) => (stats.aiLabs || {}).completed && (stats.aiLabs.completed['red-teaming-01'] || 0) >= 100
+        },
+        'ai-security-specialist': {
+            name: 'AI Security Specialist',
+            icon: '🤖',
+            description: 'Completar los 3 labs de AI Security',
+            xp: 200,
+            condition: (stats) => (stats.aiLabsCompleted || 0) >= 3
+        },
+        'ai-security-guru': {
+            name: 'AI Security Guru',
+            icon: '👑',
+            description: 'Obtener todos los badges de AI Security',
+            xp: 300,
+            condition: (stats) => {
+                const aiBadges = ['ai-first-steps', 'ai-injection-expert', 'ai-guardrail-master', 'ai-red-team-operative', 'ai-security-specialist'];
+                return aiBadges.every(b => (stats.badges || []).includes(b));
+            }
+        },
+
         // Special
         'night-owl': {
             name: 'Búho Nocturno',

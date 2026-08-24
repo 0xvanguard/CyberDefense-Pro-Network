@@ -1,7 +1,7 @@
 # Plan v1.2.0 — AI Security + Labs Expansion
 
 **Fecha de planificación:** 23 Agosto 2026
-**Última actualización:** 23 Agosto 2026 (post red-teaming-01)
+**Última actualización:** 24 Agosto 2026 (post gamificación + roles)
 **Objetivo:** Expandir la sección de AI Security y mejorar la experiencia de labs.
 
 ---
@@ -11,11 +11,11 @@
 | Área | Features | Completados | Pendientes |
 |------|----------|-------------|------------|
 | AI Security | 3 módulos nuevos | 2 | 1 |
-| Labs | 2 labs nuevos + 1 interactivo | 3 | 0 |
+| Labs | 2 labs nuevos + gamificación | 4 | 0 |
 | Infraestructura | Auth + i18n + navbar | 0 | 3 |
-| Documentación | Módulos faltantes + roles | 2 | 1 |
+| Documentación | Roles actualizados | 3 | 0 |
 
-### Progreso General: **8/12 (67%)**
+### Progreso General: **10/12 (83%)**
 
 ---
 
@@ -69,13 +69,15 @@
 - **Estado:** ✅ Completado (991 líneas, commit `ee60134`)
 - **Archivos:** `docs/labs/red-teaming-01.html`
 
-### 6. Gamificación de Labs AI
+### 6. Gamificación de Labs AI ✅
 - Sistema de XP para labs de AI Security
-- Badges: "Jailbreak Expert", "Guardrail Master", "AI Red Teamer"
+- Badges: "Injection Expert", "Guardrail Master", "Red Team Operative", "AI Security Specialist", "AI Security Guru"
 - Leaderboard integrado
 - **Esfuerzo:** 2-3 horas
 - **Dependencias:** Labs 4 y 5
-- **Estado:** ⏳ Pendiente
+- **Estado:** ✅ Completado (24 Ago 2026)
+- **Archivos:** `docs/assets/js/gamification.js`, `docs/assets/js/ai-security-lab-tracker.js`, `docs/ai-security-gamification.html`
+- **Detalles:** 6 badges AI Security en gamification.js, bridge script con localStorage, labs con persistencia de progreso
 
 ---
 
@@ -107,13 +109,15 @@
 
 ## 🟢 Prioridad Normal — Documentación
 
-### 10. Roles AI Security actualizados
+### 10. Roles AI Security actualizados ✅
 - Actualizar `ai-red-teamer.md` con labs nuevos
 - Actualizar `prompt-engineer-security.md` con módulos
 - Actualizar `ml-security-engineer.md` con GovLLM-Sentinel
 - **Esfuerzo:** 1-2 horas
 - **Dependencias:** Features 1-3
-- **Estado:** ⏳ Pendiente
+- **Estado:** ✅ Completado (24 Ago 2026)
+- **Archivos:** `site/content/roles/ai-security/ai-red-teamer.md`, `site/content/roles/ai-security/prompt-engineer-security.md`, `site/content/roles/ai-security/ml-security-engineer.md`
+- **Detalles:** Sección "Labs CDPN" en los 3 roles, referencias a módulos 04/05/06, links a gamificación, roadmaps actualizados con labs
 
 ### 11. README actualizado
 - Agregar sección "AI Security Labs"
@@ -175,8 +179,9 @@ Semana 4 (14-20 Sep):
 |---------|--------|----------------|--------|
 | Módulos AI Security | 3 | 6 | 5 ✅ |
 | Labs AI Security | 2 | 5 | 4 ✅ |
+| Gamificación | 0 | 1 | 1 ✅ |
+| Roles AI Security | 0 | 3 | 3 ✅ |
 | Lineas de contenido | ~2,268 | ~4,500 | ~5,400 |
-| Roles documentados | 7 | 10 | 7 |
 | Idiomas soportados | 1 | 2 (es + en) | 1 |
 
 ---
@@ -212,8 +217,10 @@ Semana 4 (14-20 Sep):
 | 2026-08-23 | Modulo 06-mlsecops-pipeline-seguro.md completado |
 | 2026-08-23 | Lab prompt-injection-01.html completado |
 | 2026-08-23 | Lab red-teaming-01.html completado |
+| 2026-08-24 | Gamificación de Labs AI completada (6 badges, tracker, integración en 3 labs) |
+| 2026-08-24 | Roles AI Security actualizados (ai-red-teamer, prompt-engineer-security, ml-security-engineer) |
 
 ---
 
 *Plan creado por Buffy — 23 Agosto 2026*
-*Última actualización: 23 Agosto 2026*
+*Última actualización: 24 Agosto 2026*

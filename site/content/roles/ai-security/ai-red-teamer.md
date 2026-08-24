@@ -90,6 +90,7 @@ Es el **rol más sexy de 2025-2026**. Empresas top contratando: Anthropic, OpenA
 - [ ] **Garak** ejecutado contra Llama, Mistral, Claude, GPT
 - [ ] **PyRIT** con red team orchestrator + scoring
 - [ ] **promptfoo** test suite para 10 jailbreak categories
+- [ ] Completar [Lab Red-Teaming-01](/labs/red-teaming-01/) y [Lab Prompt-Injection-01](/labs/prompt-injection-01/)
 - [ ] Replicar 3 ataques académicos publicados (PAIR, GCG, AutoDAN)
 
 ### Fase 3 — Investigación / aporte (7-12 meses)
@@ -120,6 +121,25 @@ Es el **rol más sexy de 2025-2026**. Empresas top contratando: Anthropic, OpenA
 - **`penetration-tester-specialized`** *(01)* → mismo perfil de specialist
 - **`prompt-engineer-security`** *(03)* → subdisciplina aplicada
 - **`agentic-security-developer`** *(03)* → red team de agentes
+
+---
+
+## 📚 Labs CDPN — AI Security
+
+Práctica hands-on con los labs del CyberDefense Pro Network:
+
+| Lab | XP | Descripción |
+|-----|----|-------------|
+| [Lab Prompt-Injection-01](/labs/prompt-injection-01/) | 350 XP | Técnicas de prompt injection: direct, indirect, encoding bypass, y defensas |
+| [Lab Jailbreak-01](/labs/jailbreak-01/) | 400 XP | Evaluación de guardrails en LLMs con adversarial testing |
+| [Lab Red-Teaming-01](/labs/red-teaming-01/) | 400 XP | AI Red Teaming con Garak, PyRIT y promptfoo — reporte de hallazgos |
+
+**Módulos complementarios:**
+- [04 — OWASP LLM Top 10 2025](/modules/ai-agents/04-owasp-llm-top10-2025/) — Las 10 vulnerabilidades críticas en LLMs con mitigaciones
+- [05 — Prompt Injection y Jailbreaks](/modules/ai-agents/05-prompt-injection-y-jailbreaks/) — Deep-dive en inyección de prompts y jailbreaking
+- [06 — MLSecOps Pipeline Seguro](/modules/ai-agents/06-mlsecops-pipeline-seguro/) — Pipeline completo de seguridad para MLOps
+
+**Gamificación:** Acumula XP y desbloquea badges completando labs → [Dashboard de Gamificación](/ai-security-gamification/)
 
 ---
 

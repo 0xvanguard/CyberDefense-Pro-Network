@@ -83,6 +83,8 @@ Es el rol con **menor barrera técnica** dentro de `03-` — perfil ideal para p
 ### Fase 2 — Aplicación defensiva (3-6 meses)
 - [ ] NeMo Guardrails desplegado en lab
 - [ ] Llama Guard + Rebuff como capas de defensa
+- [ ] Completar [Lab Prompt-Injection-01](/labs/prompt-injection-01/) (350 XP) — aplicar defensas en ejercicios reales
+- [ ] Completar [Lab Jailbreak-01](/labs/jailbreak-01/) (400 XP) — testear guardrails propios
 - [ ] promptfoo test suite con 20+ jailbreak attempts conocidos
 - [ ] Sistema completo: input filter → LLM → output filter → audit log
 
@@ -113,6 +115,23 @@ Es el rol con **menor barrera técnica** dentro de `03-` — perfil ideal para p
 - **`agentic-security-developer`** *(03)* → prompts son base de agents seguros
 - **`ml-security-engineer`** *(03)* → solapamiento en GenAI product
 - **`seguridad-aplicaciones`** *(01)* → si LLMs van en apps web
+
+---
+
+## 📚 Labs CDPN — AI Security
+
+Práctica hands-on con los labs del CyberDefense Pro Network:
+
+| Lab | XP | Descripción |
+|-----|----|-------------|
+| [Lab Prompt-Injection-01](/labs/prompt-injection-01/) | 350 XP | Técnicas de prompt injection: instruction override, role manipulation, encoding bypass — y sus defensas |
+| [Lab Jailbreak-01](/labs/jailbreak-01/) | 400 XP | Evaluación de guardrails: modela ataques para diseñar mejores defensas |
+
+**Módulos complementarios:**
+- [04 — OWASP LLM Top 10 2025](/modules/ai-agents/04-owasp-llm-top10-2025/) — LLM01 (Prompt Injection), LLM02 (Insecure Output), LLM06 (Excessive Agency) en profundidad
+- [05 — Prompt Injection y Jailbreaks](/modules/ai-agents/05-prompt-injection-y-jailbreaks/) — Deep-dive en técnicas ofensivas para entenderlas y defenderse
+
+**Gamificación:** Acumula XP y desbloquea badges completando labs → [Dashboard de Gamificación](/ai-security-gamification/)
 
 ---
 

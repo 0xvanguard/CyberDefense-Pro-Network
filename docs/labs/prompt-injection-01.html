@@ -866,11 +866,16 @@
                 result.innerHTML = '<i class="fas fa-check-circle"></i> Correcto!' +
                     (questionId === 'q5' ? ' La respuesta varia segun el modelo y la tecnica.' : '');
                 if (!answered.has(questionId)) {
-                    updateScore(questionId === 'q1' ? 20 : questionId === 'q2' ? 20 :
+                    const points = questionId === 'q1' ? 20 : questionId === 'q2' ? 20 :
                                questionId === 'q3' ? 25 : questionId === 'q4' ? 25 :
                                questionId === 'q5' ? 40 : questionId === 'q6' ? 40 :
-                               questionId === 'q7' ? 50 : 0);
+                               questionId === 'q7' ? 50 : 0;
+                    updateScore(points);
                     answered.add(questionId);
+                    // Persist to gamification
+                    if (typeof CDPN_AISecurityTracker !== 'undefined') {
+                        CDPN_AISecurityTracker.recordAnswer('prompt-injection-01', questionId, points, true);
+                    }
                 }
             } else {
                 result.className = 'result-msg error';
@@ -898,5 +903,7 @@
             }
         }
     </script>
+    <script src="../assets/js/gamification.js"></script>
+    <script src="../assets/js/ai-security-lab-tracker.js"></script>
 </body>
 </html>

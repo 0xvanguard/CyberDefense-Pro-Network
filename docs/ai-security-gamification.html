@@ -30,6 +30,7 @@
     <link rel="stylesheet" href="assets/css/module.css">
     <link rel="stylesheet" href="assets/css/subpages.css">
     <link rel="stylesheet" href="assets/css/a11y.css">
+    <link rel="stylesheet" href="assets/css/gamification.css">
     <style>
         .gamification-hero { background: linear-gradient(135deg, var(--bg-secondary), rgba(255, 215, 0, 0.05)); }
         .gamification-hero::before { background: radial-gradient(circle, rgba(255, 215, 0, 0.08) 0%, transparent 70%); }
@@ -536,8 +537,132 @@
         </div>
     </footer>
 
+    <script src="assets/js/gamification.js"></script>
+    <script src="assets/js/ai-security-lab-tracker.js"></script>
     <script src="assets/js/i18n.js"></script>
     <script src="assets/js/i18n-lang.js"></script>
     <script src="assets/js/shared.js"></script>
+    <script>
+    /* Dynamic rendering for AI Security Gamification */
+    (function() {
+        function _esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+        function renderProgress() {
+            const stats = CDPN_Gamification.getStats();
+            const summary = CDPN_AISecurityTracker.getSummary();
+
+            // Update hero stats
+            const heroStats = document.querySelector('.hero-stats');
+            if (heroStats) {
+                heroStats.innerHTML = `
+                    <div class="stat"><span class="stat-number">${_esc(String(stats.xp.toLocaleString()))}</span><span class="stat-label">XP Total</span></div>
+                    <div class="stat"><span class="stat-number">${_esc(String(stats.badges))}</span><span class="stat-label">Badges</span></div>
+                    <div class="stat"><span class="stat-number">${_esc(String(summary.labsCompleted))}</span><span class="stat-label">Labs</span></div>
+                `;
+            }
+
+            // Update progress section
+            const progressSection = document.querySelector('.progress-section');
+            if (progressSection) {
+                const maxXP = 1150;
+                const pct = Math.min(100, Math.round((stats.xp / maxXP) * 100));
+                progressSection.innerHTML = `
+                    <h2 style="margin-bottom: 16px;"><i class="fas fa-chart-line" style="color: #ffd700;"></i> Tu Progreso</h2>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                        <span style="color: var(--text-secondary);">Nivel: <strong style="color: #ffd700;">${_esc(stats.rank.name)}</strong></span>
+                        <span style="color: var(--text-muted); font-family: var(--font-mono);">${_esc(String(stats.xp.toLocaleString()))} / 1,150 XP</span>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-fill" style="width: ${_esc(String(pct))}%;">${_esc(String(pct))}%</div>
+                    </div>
+                    <div style="display: flex; gap: 16px; margin-top: 16px; flex-wrap: wrap;">
+                        <div style="flex:1; min-width: 200px; padding: 12px; background: var(--bg-tertiary); border-radius: 8px;">
+                            <div style="color: var(--text-muted); font-size: 0.8rem;">Labs Completados</div>
+                            <div style="font-size: 1.5rem; font-weight: 800; color: var(--accent-primary);">${_esc(String(summary.labsCompleted))} / ${_esc(String(summary.totalLabs))}</div>
+                        </div>
+                        <div style="flex:1; min-width: 200px; padding: 12px; background: var(--bg-tertiary); border-radius: 8px;">
+                            <div style="color: var(--text-muted); font-size: 0.8rem;">Preguntas Respondidas</div>
+                            <div style="font-size: 1.5rem; font-weight: 800; color: var(--accent-primary);">${_esc(String(summary.questionsAnswered))} / ${_esc(String(summary.totalQuestions))}</div>
+                        </div>
+                        <div style="flex:1; min-width: 200px; padding: 12px; background: var(--bg-tertiary); border-radius: 8px;">
+                            <div style="color: var(--text-muted); font-size: 0.8rem;">Badges Desbloqueados</div>
+                            <div style="font-size: 1.5rem; font-weight: 800; color: var(--accent-primary);">${_esc(String(stats.badges))} / ${_esc(String(stats.totalBadges))}</div>
+                        </div>
+                    </div>
+                    <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 12px;">
+                        Tu progreso se guarda localmente en tu navegador.
+                    </p>
+                `;
+            }
+
+            // Update lab progress cards
+            document.querySelectorAll('.lab-progress-card').forEach(card => {
+                const link = card.querySelector('a[href*="labs/"]');
+                if (!link) return;
+                const href = link.getAttribute('href');
+                let labId = null;
+                if (href.includes('prompt-injection-01')) labId = 'prompt-injection-01';
+                else if (href.includes('jailbreak-01')) labId = 'jailbreak-01';
+                else if (href.includes('red-teaming-01')) labId = 'red-teaming-01';
+                if (!labId) return;
+
+                const labStats = summary.labs[labId];
+                if (!labStats) return;
+
+                const miniFill = card.querySelector('.mini-progress-fill');
+                if (miniFill) {
+                    miniFill.style.width = labStats.progress + '%';
+                }
+
+                // Add status indicator
+                const header = card.querySelector('.lab-progress-header');
+                if (header && !card.querySelector('.lab-status')) {
+                    const status = document.createElement('span');
+                    status.className = 'lab-status';
+                    status.style.cssText = 'font-size: 0.8rem; font-weight: 600;';
+                    if (labStats.completed) {
+                        status.style.color = '#2ecc71';
+                        status.textContent = '✅ Completado';
+                    } else if (labStats.progress > 0) {
+                        status.style.color = '#f39c12';
+                        status.textContent = '⏳ ' + labStats.progress + '%';
+                    } else {
+                        status.style.color = 'var(--text-muted)';
+                        status.textContent = '🔴 No iniciado';
+                    }
+                    header.appendChild(status);
+                }
+            });
+
+            // Update badges
+            document.querySelectorAll('.badge-card').forEach(card => {
+                const badgeName = card.querySelector('h3');
+                if (!badgeName) return;
+                const name = badgeName.textContent.trim();
+                const badgeMap = {
+                    'First Steps': 'ai-first-steps',
+                    'Injection Expert': 'ai-injection-expert',
+                    'Guardrail Master': 'ai-guardrail-master',
+                    'Red Team Operative': 'ai-red-team-operative',
+                    'AI Security Specialist': 'ai-security-specialist',
+                    'Perfect Score': 'perfectionist',
+                    'AI Security Guru': 'ai-security-guru',
+                    'Speed Runner': 'speed-demon'
+                };
+                const badgeId = badgeMap[name];
+                if (badgeId && CDPN_Gamification.data.badges.includes(badgeId)) {
+                    card.classList.remove('locked');
+                    const iconDiv = card.querySelector('.badge-icon');
+                    if (iconDiv) iconDiv.style.opacity = '1';
+                }
+            });
+        }
+
+        // Run on load
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(renderProgress, 200);
+        });
+    })();
+    </script>
 </body>
 </html>
