@@ -1,6 +1,6 @@
-> 🚀 **¿Eres principiante?** Antes de este módulo, revisa la **[base común del repo](../00-FUNDAMENTOS/)** (1 carpeta atrás). Ahí están los conceptos que necesitas para que esto te haga sentido.
+> 🚀 **¿Eres principiante?** Antes de este módulo, revisa la **[base común del repo](../fundamentos/)** (1 carpeta atrás). Ahí están los conceptos que necesitas para que esto te haga sentido.
 >
-> Elige tu ruta de aprendizaje: 🛡️ [Defensor](../00-FUNDAMENTOS/rutas/ruta-defensor.md) · ⚔️ [Atacante](../00-FUNDAMENTOS/rutas/ruta-atacante.md) · 🤖 [AI Security](../00-FUNDAMENTOS/rutas/ruta-ai-security.md)
+> Elige tu ruta de aprendizaje: 🛡️ [Defensor](../fundamentos/rutas/ruta-defensor.md) · ⚔️ [Atacante](../fundamentos/rutas/ruta-atacante.md) · 🤖 [AI Security](../fundamentos/rutas/ruta-ai-security.md)
 
 # 🔴 Área 1 — Ciberseguridad Ofensiva y Base Purple
 

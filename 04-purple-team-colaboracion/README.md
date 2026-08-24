@@ -1,6 +1,6 @@
-> 🚀 **¿Eres principiante?** Antes de este módulo, revisa la **[base común del repo](../00-FUNDAMENTOS/)** (1 carpeta atrás). Purple team une red+blue: necesitas base de ambos lados primero.
+> 🚀 **¿Eres principiante?** Antes de este módulo, revisa la **[base común del repo](../fundamentos/)** (1 carpeta atrás). Purple team une red+blue: necesitas base de ambos lados primero.
 >
-> Empieza por 🛡️ [Ruta Defensor](../00-FUNDAMENTOS/rutas/ruta-defensor.md) o ⚔️ [Ruta Atacante](../00-FUNDAMENTOS/rutas/ruta-atacante.md) y vuelve aquí cuando domines una de las dos.
+> Empieza por 🛡️ [Ruta Defensor](../fundamentos/rutas/ruta-defensor.md) o ⚔️ [Ruta Atacante](../fundamentos/rutas/ruta-atacante.md) y vuelve aquí cuando domines una de las dos.
 
 # Área: Purple Team / Colaboración Red–Blue
 

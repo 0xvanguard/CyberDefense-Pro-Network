@@ -1,8 +1,8 @@
 <div align="center">
 
-> 🚀 **¿Eres principiante?** Si estás recién empezando, mejor pasa primero por la **[base común del repo](../00-FUNDAMENTOS/)** (1 carpeta atrás) antes de mirar certificaciones, libros y cursos de aquí.
+> 🚀 **¿Eres principiante?** Si estás recién empezando, mejor pasa primero por la **[base común del repo](../fundamentos/)** (1 carpeta atrás) antes de mirar certificaciones, libros y cursos de aquí.
 >
-> Recomendado: tras la base, elige tu ruta 🛡️ [Defensor](../00-FUNDAMENTOS/rutas/ruta-defensor.md) · ⚔️ [Atacante](../00-FUNDAMENTOS/rutas/ruta-atacante.md) · 🤖 [AI Security](../00-FUNDAMENTOS/rutas/ruta-ai-security.md).
+> Recomendado: tras la base, elige tu ruta 🛡️ [Defensor](../fundamentos/rutas/ruta-defensor.md) · ⚔️ [Atacante](../fundamentos/rutas/ruta-atacante.md) · 🤖 [AI Security](../fundamentos/rutas/ruta-ai-security.md).
 
 # 📚 05 — RECURSOS
 

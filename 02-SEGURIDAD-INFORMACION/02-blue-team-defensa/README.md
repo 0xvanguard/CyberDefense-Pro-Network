@@ -15,7 +15,7 @@
 | 🎯 **Resultado** | Montar un SIEM, escribir detección propia (Sigma/YARA/Wazuh) y cazar amenazas con método |
 | 🧪 **Práctica** | Wazuh en Docker + Sysmon/Suricata + reglas custom verificadas |
 | 🗂️ **Portafolio** | Reglas de detección mapeadas a ATT&CK + hunts documentados |
-| 🔗 **Requiere** | [Ruta de Fundamentos](../../00-FUNDAMENTOS/) |
+| 🔗 **Requiere** | [Ruta de Fundamentos](../../fundamentos/) |
 | 🔗 **Conduce a** | [Módulo 03 — SOC Operations](../03-soc-operations/) |
 
 ---

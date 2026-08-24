@@ -1,8 +1,8 @@
 <div align="center">
 
-> 🚀 **¿Eres principiante?** Antes de lanzar labs, revisa la **[base común del repo](../00-FUNDAMENTOS/)** (1 carpeta atrás). Los labs presuponen que sabes usar la terminal y las herramientas básicas.
+> 🚀 **¿Eres principiante?** Antes de lanzar labs, revisa la **[base común del repo](../fundamentos/)** (1 carpeta atrás). Los labs presuponen que sabes usar la terminal y las herramientas básicas.
 >
-> Elige tu ruta: 🛡️ [Defensor](../00-FUNDAMENTOS/rutas/ruta-defensor.md) · ⚔️ [Atacante](../00-FUNDAMENTOS/rutas/ruta-atacante.md) · 🤖 [AI Security](../00-FUNDAMENTOS/rutas/ruta-ai-security.md)
+> Elige tu ruta: 🛡️ [Defensor](../fundamentos/rutas/ruta-defensor.md) · ⚔️ [Atacante](../fundamentos/rutas/ruta-atacante.md) · 🤖 [AI Security](../fundamentos/rutas/ruta-ai-security.md)
 
 # 🧪 04 — LABORATORIOS
 

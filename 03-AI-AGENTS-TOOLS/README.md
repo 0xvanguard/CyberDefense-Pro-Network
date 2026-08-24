@@ -1,8 +1,8 @@
 <div align="center">
 
-> 🚀 **New to cybersecurity?** Start with the **[shared fundamentals of this repo](../00-FUNDAMENTOS/)** (1 folder up) before diving into AI Security. The base covers networks, OS, vulnerabilities and ethics — all needed to make sense of this area. (Spanish · work in progress on EN version.)
+> 🚀 **New to cybersecurity?** Start with the **[shared fundamentals of this repo](../fundamentos/)** (1 folder up) before diving into AI Security. The base covers networks, OS, vulnerabilities and ethics — all needed to make sense of this area. (Spanish · work in progress on EN version.)
 >
-> Choose your learning path: 🛡️ [Blue Team](../00-FUNDAMENTOS/rutas/ruta-defensor.md) · ⚔️ [Red Team](../00-FUNDAMENTOS/rutas/ruta-atacante.md) · 🤖 [AI Security](../00-FUNDAMENTOS/rutas/ruta-ai-security.md)
+> Choose your learning path: 🛡️ [Blue Team](../fundamentos/rutas/ruta-defensor.md) · ⚔️ [Red Team](../fundamentos/rutas/ruta-atacante.md) · 🤖 [AI Security](../fundamentos/rutas/ruta-ai-security.md)
 
 # 🤖 03 — AI AGENTS & TOOLS
 

@@ -1,6 +1,6 @@
-> 🚀 **¿Eres principiante?** Esta carpeta es una intro específica. La **base completa para principiantes** del repo vive ahora en **[00-FUNDAMENTOS/](../00-FUNDAMENTOS/)** — empieza ahí.
+> 🚀 **¿Eres principiante?** Esta carpeta es una intro específica. La **base completa para principiantes** del repo vive ahora en **[00-FUNDAMENTOS/](../fundamentos/)** — empieza ahí.
 >
-> Rutas desde la base: 🛡️ [Defensor](../00-FUNDAMENTOS/rutas/ruta-defensor.md) · ⚔️ [Atacante](../00-FUNDAMENTOS/rutas/ruta-atacante.md) · 🤖 [AI Security](../00-FUNDAMENTOS/rutas/ruta-ai-security.md)
+> Rutas desde la base: 🛡️ [Defensor](../fundamentos/rutas/ruta-defensor.md) · ⚔️ [Atacante](../fundamentos/rutas/ruta-atacante.md) · 🤖 [AI Security](../fundamentos/rutas/ruta-ai-security.md)
 
 # 🎓 Introducción a la Ciberseguridad
 
