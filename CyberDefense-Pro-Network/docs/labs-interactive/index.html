@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Labs Interactivos — CyberDefense Pro Network</title>
+  <style>
+    :root {
+      --bg-primary: #0a0a0f;
+      --bg-secondary: #12121a;
+      --bg-card: #1a1a2e;
+      --border: #2a2a3e;
+      --accent-green: #00ff88;
+      --accent-red: #ff3366;
+      --accent-cyan: #00d4ff;
+      --accent-yellow: #ffd700;
+      --accent-purple: #a855f7;
+      --text-primary: #e0e0e0;
+      --text-secondary: #888;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+    }
+    .hero {
+      text-align: center;
+      padding: 4rem 2rem 3rem;
+      background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 50%, #0d1117 100%);
+      border-bottom: 1px solid var(--border);
+    }
+    .hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(135deg, var(--accent-green), var(--accent-cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero p { color: var(--text-secondary); font-size: 1.1rem; max-width: 600px; margin: 0 auto; }
+    .hero .stats { display: flex; justify-content: center; gap: 2rem; margin-top: 2rem; }
+    .hero .stat { text-align: center; }
+    .hero .stat-value { font-size: 2rem; font-weight: 800; color: var(--accent-green); }
+    .hero .stat-label { font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px; }
+
+    .labs-grid {
+      max-width: 1200px;
+      margin: 3rem auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .lab-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      transition: all 0.3s;
+      cursor: pointer;
+      text-decoration: none;
+      color: var(--text-primary);
+      display: block;
+      position: relative;
+      overflow: hidden;
+    }
+    .lab-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+    }
+    .lab-card:hover { transform: translateY(-4px); border-color: var(--accent-cyan); box-shadow: 0 8px 32px rgba(0,212,255,0.15); }
+    .lab-card.green::before { background: linear-gradient(90deg, var(--accent-green), var(--accent-cyan)); }
+    .lab-card.cyan::before { background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple)); }
+    .lab-card.yellow::before { background: linear-gradient(90deg, var(--accent-yellow), #ff6b35); }
+    .lab-card.red::before { background: linear-gradient(90deg, var(--accent-red), var(--accent-purple)); }
+    .lab-card.purple::before { background: linear-gradient(90deg, var(--accent-purple), var(--accent-cyan)); }
+
+    .lab-icon { font-size: 2rem; margin-bottom: 0.8rem; }
+    .lab-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.3rem; }
+    .lab-desc { font-size: 0.82rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 1rem; }
+
+    .lab-meta { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .lab-badge {
+      padding: 0.2rem 0.6rem;
+      border-radius: 12px;
+      font-size: 0.65rem;
+      font-weight: 600;
+    }
+    .badge-easy { background: rgba(0,255,136,0.15); color: var(--accent-green); }
+    .badge-medium { background: rgba(255,215,0,0.15); color: var(--accent-yellow); }
+    .badge-hard { background: rgba(255,51,102,0.15); color: var(--accent-red); }
+    .badge-xp { background: rgba(168,85,247,0.15); color: var(--accent-purple); }
+    .badge-time { background: rgba(0,212,255,0.15); color: var(--accent-cyan); }
+
+    .back-link {
+      display: inline-block;
+      margin: 2rem;
+      color: var(--accent-cyan);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--accent-green); }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: var(--text-secondary);
+      font-size: 0.75rem;
+      border-top: 1px solid var(--border);
+    }
+  </style>
+</head>
+<body>
+  <a href="../" class="back-link">← Volver al Campus</a>
+
+  <div class="hero">
+    <h1>🧪 Labs Interactivos</h1>
+    <p>Aprende ciberseguridad practicando en simulaciones reales. Sin Docker, sin backend — todo en tu navegador.</p>
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-value">4</div>
+        <div class="stat-label">Labs</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">28</div>
+        <div class="stat-label">Ejercicios</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">3,100+</div>
+        <div class="stat-label">XP Total</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">∞</div>
+        <div class="stat-label">Reintentos</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="labs-grid">
+    <a href="lab-pentest-01.html" class="lab-card red">
+      <div class="lab-icon">🔴</div>
+      <div class="lab-title">Pentest Básico</div>
+      <div class="lab-desc">Pentest completo contra una red corporativa: recon, enumeración, explotación con Metasploit, post-explotación y reporte.</div>
+      <div class="lab-meta">
+        <span class="lab-badge badge-medium">Intermedio</span>
+        <span class="lab-badge badge-xp">1,200 XP</span>
+        <span class="lab-badge badge-time">~30 min</span>
+      </div>
+    </a>
+
+    <a href="lab-recon-01.html" class="lab-card cyan">
+      <div class="lab-icon">🔍</div>
+      <div class="lab-title">OSINT Recon</div>
+      <div class="lab-desc">Reconocimiento de fuentes abiertas: DNS, WHOIS, subdomain enum, email harvesting, Shodan, GitHub dorking y reporte final.</div>
+      <div class="lab-meta">
+        <span class="lab-badge badge-easy">Básico-Intermedio</span>
+        <span class="lab-badge badge-xp">940 XP</span>
+        <span class="lab-badge badge-time">~25 min</span>
+      </div>
+    </a>
+
+    <a href="lab-web-01.html" class="lab-card yellow">
+      <div class="lab-icon">🌐</div>
+      <div class="lab-title">Web Security</div>
+      <div class="lab-desc">Web app pentest: fingerprinting, SQL injection (bypass + data extraction + RCE), XSS (reflected + stored), directory traversal.</div>
+      <div class="lab-meta">
+        <span class="lab-badge badge-medium">Intermedio</span>
+        <span class="lab-badge badge-xp">1,040 XP</span>
+        <span class="lab-badge badge-time">~35 min</span>
+      </div>
+    </a>
+
+    <a href="lab-malware-01.html" class="lab-card purple">
+      <div class="lab-icon">🦠</div>
+      <div class="lab-title">Malware Analysis</div>
+      <div class="lab-desc">Análisis estático y dinámico de malware: hashes, strings, PE imports, VirusTotal, dynamic analysis, network capture, YARA + MITRE ATT&CK.</div>
+      <div class="lab-meta">
+        <span class="lab-badge badge-hard">Avanzado</span>
+        <span class="lab-badge badge-xp">990 XP</span>
+        <span class="lab-badge badge-time">~40 min</span>
+      </div>
+    </a>
+  </div>
+
+  <footer>
+    <p>CyberDefense Pro Network — Labs Interactivos v1.0</p>
+    <p style="margin-top:0.3rem;">Construido con ❤️ para la comunidad de ciberseguridad</p>
+  </footer>
+</body>
+</html>
