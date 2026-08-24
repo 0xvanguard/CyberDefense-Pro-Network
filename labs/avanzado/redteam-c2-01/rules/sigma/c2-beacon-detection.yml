@@ -1,0 +1,20 @@
+title: C2 Beacon Activity Detected
+id: redteam-c2-01-beacon
+status: experimental
+description: Detects potential C2 beacon activity
+tags:
+  - attack.command_and_control
+  - attack.t1071
+logsource:
+  category: network_connection
+  product: windows
+detection:
+  selection:
+    EventID: 3
+    DestinationPort:
+      - 4444
+      - 5555
+      - 8443
+    Initiated: 'true'
+  condition: selection
+level: high
