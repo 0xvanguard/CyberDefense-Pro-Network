@@ -1,0 +1,91 @@
+version: '3.8'
+
+services:
+  # ── TARGET: Windows con Sysmon ──
+  target:
+    image: mfriesen/windows-docker:latest
+    container_name: purple-target
+    hostname: WIN-TARGET
+    networks:
+      purple-net:
+        ipv4_address: 10.0.40.20
+    ports:
+      - "3389:3389"
+    volumes:
+      - shared-data:/shared
+    tty: true
+
+  # ── SIEM: Wazuh Manager ──
+  wazuh-manager:
+    image: wazuh/wazuh-manager:4.7
+    container_name: purple-wazuh-manager
+    hostname: wazuh-manager
+    networks:
+      purple-net:
+        ipv4_address: 10.0.40.30
+    ports:
+      - "1514:1514"
+      - "1515:1515"
+      - "55000:55000"
+    environment:
+      - INDEXER_URL=https://wazuh-indexer:9200
+      - FILEBEAT_ENABLED=true
+    depends_on:
+      - wazuh-indexer
+
+  # ── SIEM: Wazuh Indexer ──
+  wazuh-indexer:
+    image: wazuh/wazuh-indexer:4.7
+    container_name: purple-wazuh-indexer
+    hostname: wazuh-indexer
+    networks:
+      purple-net:
+        ipv4_address: 10.0.40.40
+    environment:
+      - discovery.type=single-node
+      - "OPENSEARCH_JAVA_OPTS=-Xms512m -Xmx512m"
+      - DISABLE_SECURITY_PLUGIN=true
+
+  # ── SIEM: Wazuh Dashboard ──
+  wazuh-dashboard:
+    image: wazuh/wazuh-dashboard:4.7
+    container_name: purple-wazuh-dashboard
+    hostname: wazuh-dashboard
+    networks:
+      purple-net:
+        ipv4_address: 10.0.40.50
+    ports:
+      - "5601:5601"
+    environment:
+      - WAZUH_MANAGER_URL=https://wazuh-manager:1515
+      - INDEXER_URL=https://wazuh-indexer:9200
+    depends_on:
+      - wazuh-manager
+
+  # ── RED TEAM: Atomic Red Team Runner ──
+  atomic-runner:
+    build:
+      context: .
+      dockerfile: target/Dockerfile.atomic
+    container_name: purple-atomic-runner
+    hostname: ATOMIC-RUNNER
+    networks:
+      purple-net:
+        ipv4_address: 10.0.40.60
+    volumes:
+      - shared-data:/shared
+      - ./rules/sigma:/sigma-rules
+    depends_on:
+      - wazuh-manager
+    tty: true
+
+networks:
+  purple-net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.0.40.0/24
+
+volumes:
+  shared-data:
+    driver: local
