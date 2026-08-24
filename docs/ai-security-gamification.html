@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Security Headers -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+    <title>🏆 AI Security Gamification | CDPN</title>
+    <meta name="description" content="Sistema de gamificacion para labs de AI Security: badges, XP, logros y leaderboard.">
+    <meta name="theme-color" content="#0a0e1a">
+    <meta name="color-scheme" content="dark light">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/apple-touch-icon.png">
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="canonical" href="https://0xvanguard.github.io/CyberDefense-Pro-Network/ai-security-gamification.html">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="AI Security Gamification - CDPN">
+    <meta property="og:description" content="Sistema de gamificacion para labs de AI Security.">
+    <meta property="og:image" content="https://0xvanguard.github.io/CyberDefense-Pro-Network/assets/og/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/global.css">
+    <link rel="stylesheet" href="assets/css/module.css">
+    <link rel="stylesheet" href="assets/css/subpages.css">
+    <link rel="stylesheet" href="assets/css/a11y.css">
+    <style>
+        .gamification-hero { background: linear-gradient(135deg, var(--bg-secondary), rgba(255, 215, 0, 0.05)); }
+        .gamification-hero::before { background: radial-gradient(circle, rgba(255, 215, 0, 0.08) 0%, transparent 70%); }
+        
+        .badge-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            text-align: center;
+            transition: all var(--transition-normal);
+            position: relative;
+            overflow: hidden;
+        }
+        .badge-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+        }
+        .badge-card.locked {
+            opacity: 0.5;
+            filter: grayscale(50%);
+        }
+        .badge-card.locked::after {
+            content: '\f023';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            font-size: 1rem;
+            color: var(--text-muted);
+        }
+        .badge-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            font-size: 2rem;
+        }
+        .badge-icon.gold { background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 165, 0, 0.2)); color: #ffd700; }
+        .badge-icon.silver { background: linear-gradient(135deg, rgba(192, 192, 192, 0.2), rgba(169, 169, 169, 0.2)); color: #c0c0c0; }
+        .badge-icon.bronze { background: linear-gradient(135deg, rgba(205, 127, 50, 0.2), rgba(184, 115, 51, 0.2)); color: #cd7f32; }
+        .badge-icon.purple { background: linear-gradient(135deg, rgba(155, 89, 182, 0.2), rgba(142, 68, 173, 0.2)); color: #9b59b6; }
+        .badge-icon.red { background: linear-gradient(135deg, rgba(231, 76, 60, 0.2), rgba(192, 57, 43, 0.2)); color: #e74c3c; }
+        .badge-icon.green { background: linear-gradient(135deg, rgba(26, 188, 156, 0.2), rgba(22, 160, 133, 0.2)); color: #1abc9c; }
+        .badge-card h3 { font-size: 1.1rem; margin-bottom: 8px; }
+        .badge-card p { color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 12px; }
+        .badge-xp {
+            display: inline-block;
+            padding: 4px 12px;
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #ffd700;
+            font-family: var(--font-mono);
+        }
+        
+        .progress-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            margin-bottom: 32px;
+        }
+        .progress-bar-container {
+            width: 100%;
+            height: 24px;
+            background: var(--bg-tertiary);
+            border-radius: 50px;
+            overflow: hidden;
+            margin: 16px 0;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ffd700, #ff8c00);
+            border-radius: 50px;
+            transition: width 1s ease;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 12px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #000;
+        }
+        
+        .leaderboard-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .leaderboard-table th {
+            padding: 14px 16px;
+            background: var(--bg-tertiary);
+            text-align: left;
+            font-weight: 600;
+            color: var(--accent-primary);
+            border-bottom: 1px solid var(--border-color);
+        }
+        .leaderboard-table td {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-secondary);
+        }
+        .leaderboard-table tr:hover td {
+            background: rgba(255, 215, 0, 0.03);
+        }
+        .rank-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            font-weight: 800;
+            font-size: 0.9rem;
+        }
+        .rank-1 { background: linear-gradient(135deg, #ffd700, #ff8c00); color: #000; }
+        .rank-2 { background: linear-gradient(135deg, #c0c0c0, #a9a9a9); color: #000; }
+        .rank-3 { background: linear-gradient(135deg, #cd7f32, #b87333); color: #000; }
+        .rank-other { background: var(--bg-tertiary); color: var(--text-muted); }
+        
+        .lab-progress-card {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            margin-bottom: 12px;
+        }
+        .lab-progress-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+        .lab-progress-header h4 { font-size: 1rem; display: flex; align-items: center; gap: 8px; }
+        .lab-progress-header h4 i { color: var(--accent-primary); }
+        .lab-xp {
+            font-family: var(--font-mono);
+            font-weight: 700;
+            color: #ffd700;
+        }
+        .mini-progress {
+            width: 100%;
+            height: 8px;
+            background: var(--bg-primary);
+            border-radius: 50px;
+            overflow: hidden;
+        }
+        .mini-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+            border-radius: 50px;
+            transition: width 0.5s ease;
+        }
+        
+        @media (max-width: 768px) {
+            .badge-card { padding: 16px; }
+            .badge-icon { width: 60px; height: 60px; font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Skip link -->
+    <a href="#main" class="skip-link">Saltar al contenido principal</a>
+
+    <!-- NAVBAR -->
+    <nav class="navbar" role="navigation" aria-label="Navegacion principal">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo" aria-label="CDPN - Inicio"><i class="fas fa-shield-halved" aria-hidden="true"></i> CDPN</a>
+            <ul class="nav-menu">
+                <li><a href="index.html"><i class="fas fa-home"></i> Inicio</a></li>
+                <li class="nav-dropdown">
+                    <a href="#"><i class="fas fa-layer-group"></i> Modulos <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="modules/fundamentos/"><span class="dot intro"></span> Fundamentos</a></li>
+                        <li><a href="modules/ai-agents/"><span class="dot ai"></span> AI Agents</a></li>
+                        <li><a href="jailbreaking-education.html"><span class="dot ai"></span> AI Security</a></li>
+                        <li><a href="modules/blue-team/"><span class="dot blue"></span> Blue Team</a></li>
+                    </ul>
+                </li>
+                <li><a href="retos.html"><i class="fas fa-trophy" aria-hidden="true"></i> Retos</a></li>
+                <li><a href="herramientas.html"><i class="fas fa-tools" aria-hidden="true"></i> Herramientas</a></li>
+                <li><a href="labs.html"><i class="fas fa-flask" aria-hidden="true"></i> Labs</a></li>
+                <li><a href="ai-security-gamification.html" class="active" aria-current="page"><i class="fas fa-trophy" aria-hidden="true"></i> Gamificacion</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema"><i class="fas fa-moon" aria-hidden="true"></i></button>
+                <a href="https://github.com/0xvanguard/CyberDefense-Pro-Network" class="nav-github" target="_blank" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i></a>
+            </div>
+        </div>
+    </nav>
+
+    <main id="main">
+
+    <!-- HERO -->
+    <section class="page-hero gamification-hero">
+        <div class="page-hero-content">
+            <span class="page-badge"><i class="fas fa-trophy"></i> GAMIFICACION</span>
+            <h1>AI Security <span class="gradient-text">Gamification</span></h1>
+            <p>Gana XP, desbloquea badges y demuestra tu experticia en AI Security con nuestros labs interactivos.</p>
+            <div class="hero-stats">
+                <div class="stat"><span class="stat-number">1,150</span><span class="stat-label">XP Total</span></div>
+                <div class="stat"><span class="stat-number">8</span><span class="stat-label">Badges</span></div>
+                <div class="stat"><span class="stat-number">3</span><span class="stat-label">Labs</span></div>
+            </div>
+        </div>
+    </section>
+
+    <main class="main-content">
+
+        <!-- PROGRESO GLOBAL -->
+        <section class="labs-section">
+            <div class="progress-section">
+                <h2 style="margin-bottom: 16px;"><i class="fas fa-chart-line" style="color: #ffd700;"></i> Tu Progreso</h2>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                    <span style="color: var(--text-secondary);">Nivel: <strong style="color: #ffd700;">AI Security Apprentice</strong></span>
+                    <span style="color: var(--text-muted); font-family: var(--font-mono);">0 / 1,150 XP</span>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar-fill" style="width: 0%;">0%</div>
+                </div>
+                <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 12px;">
+                    Completa los labs para ganar XP y desbloquear badges. Tu progreso se guarda localmente en tu navegador.
+                </p>
+            </div>
+        </section>
+
+        <!-- LABS DISPONIBLES -->
+        <section class="labs-section">
+            <h2><i class="fas fa-flask"></i> Labs Disponibles</h2>
+            <p class="section-desc">Completa estos labs para ganar XP y desbloquear badges.</p>
+
+            <div class="lab-progress-card">
+                <div class="lab-progress-header">
+                    <h4><i class="fas fa-syringe"></i> Prompt-Injection-01</h4>
+                    <span class="lab-xp">350 XP</span>
+                </div>
+                <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 12px;">Tecnicas y defensa contra prompt injection.</p>
+                <div class="mini-progress">
+                    <div class="mini-progress-fill" style="width: 0%;"></div>
+                </div>
+                <div style="margin-top: 12px;">
+                    <a href="labs/prompt-injection-01.html" style="color: var(--accent-primary); font-size: 0.9rem;">Iniciar lab →</a>
+                </div>
+            </div>
+
+            <div class="lab-progress-card">
+                <div class="lab-progress-header">
+                    <h4><i class="fas fa-unlock-alt"></i> Jailbreak-01</h4>
+                    <span class="lab-xp">400 XP</span>
+                </div>
+                <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 12px;">Evaluacion de guardrails en LLMs.</p>
+                <div class="mini-progress">
+                    <div class="mini-progress-fill" style="width: 0%;"></div>
+                </div>
+                <div style="margin-top: 12px;">
+                    <a href="labs/jailbreak-01.html" style="color: var(--accent-primary); font-size: 0.9rem;">Iniciar lab →</a>
+                </div>
+            </div>
+
+            <div class="lab-progress-card">
+                <div class="lab-progress-header">
+                    <h4><i class="fas fa-crosshairs"></i> Red-Teaming-01</h4>
+                    <span class="lab-xp">400 XP</span>
+                </div>
+                <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 12px;">AI Red Teaming con Garak, PyRIT y promptfoo.</p>
+                <div class="mini-progress">
+                    <div class="mini-progress-fill" style="width: 0%;"></div>
+                </div>
+                <div style="margin-top: 12px;">
+                    <a href="labs/red-teaming-01.html" style="color: var(--accent-primary); font-size: 0.9rem;">Iniciar lab →</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- BADGES -->
+        <section class="labs-section">
+            <h2><i class="fas fa-medal"></i> Badges</h2>
+            <p class="section-desc">Desbloquea badges completando logros especificos.</p>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px;">
+                <!-- Badge 1 -->
+                <div class="badge-card locked">
+                    <div class="badge-icon bronze"><i class="fas fa-shield-halved"></i></div>
+                    <h3>First Steps</h3>
+                    <p>Completar tu primer lab de AI Security</p>
+                    <span class="badge-xp">+50 XP</span>
+                </div>
+
+                <!-- Badge 2 -->
+                <div class="badge-card locked">
+                    <div class="badge-icon silver"><i class="fas fa-syringe"></i></div>
+                    <h3>Injection Expert</h3>
+                    <p>Completar Prompt-Injection-01 al 100%</p>
+                    <span class="badge-xp">+100 XP</span>
+                </div>
+
+                <!-- Badge 3 -->
+                <div class="badge-card locked">
+                    <div class="badge-icon gold"><i class="fas fa-unlock-alt"></i></div>
+                    <h3>Guardrail Master</h3>
+                    <p>Completar Jailbreak-01 al 100%</p>
+                    <span class="badge-xp">+150 XP</span>
+                </div>
+
+                <!-- Badge 4 -->
+                <div class="badge-card locked">
+                    <div class="badge-icon red"><i class="fas fa-crosshairs"></i></div>
+                    <h3>Red Team Operative</h3>
+                    <p>Completar Red-Teaming-01 al 100%</p>
+                    <span class="badge-xp">+150 XP</span>
+                </div>
+
+                <!-- Badge 5 -->
+                <div class="badge-card locked">
+                    <div class="badge-icon purple"><i class="fas fa-robot"></i></div>
+                    <h3>AI Security Specialist</h3>
+                    <p>Completar los 3 labs de AI Security</p>
+                    <span class="badge-xp">+200 XP</span>
+                </div>
+
+                <!-- Badge 6 -->
+                <div class="badge-card locked">
+                    <div class="badge-icon green"><i class="fas fa-check-double"></i></div>
+                    <h3>Perfect Score</h3>
+                    <p>Obtener 100% en cualquier lab</p>
+                    <span class="badge-xp">+100 XP</span>
+                </div>
+
+                <!-- Badge 7 -->
+                <div class="badge-card locked">
+                    <div class="badge-icon gold"><i class="fas fa-crown"></i></div>
+                    <h3>AI Security Guru</h3>
+                    <p>Obtener todos los badges</p>
+                    <span class="badge-xp">+300 XP</span>
+                </div>
+
+                <!-- Badge 8 -->
+                <div class="badge-card locked">
+                    <div class="badge-icon red"><i class="fas fa-fire"></i></div>
+                    <h3>Speed Runner</h3>
+                    <p>Completar un lab en menos de 30 min</p>
+                    <span class="badge-xp">+100 XP</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- LEADERBOARD -->
+        <section class="labs-section">
+            <h2><i class="fas fa-trophy"></i> Leaderboard</h2>
+            <p class="section-desc">Los mejores puntajes de la comunidad.</p>
+
+            <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); overflow: hidden;">
+                <table class="leaderboard-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Participante</th>
+                            <th>XP</th>
+                            <th>Badges</th>
+                            <th>Labs</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="rank-badge rank-1">1</span></td>
+                            <td><strong>0xvanguard</strong></td>
+                            <td style="font-family: var(--font-mono); color: #ffd700;">1,150</td>
+                            <td>8/8</td>
+                            <td>3/3</td>
+                        </tr>
+                        <tr>
+                            <td><span class="rank-badge rank-2">2</span></td>
+                            <td><strong>Community Member</strong></td>
+                            <td style="font-family: var(--font-mono); color: #c0c0c0;">---</td>
+                            <td>--</td>
+                            <td>--</td>
+                        </tr>
+                        <tr>
+                            <td><span class="rank-badge rank-3">3</span></td>
+                            <td><strong>Community Member</strong></td>
+                            <td style="font-family: var(--font-mono); color: #cd7f32;">---</td>
+                            <td>--</td>
+                            <td>--</td>
+                        </tr>
+                        <tr>
+                            <td><span class="rank-badge rank-other">4</span></td>
+                            <td><strong>Community Member</strong></td>
+                            <td style="font-family: var(--font-mono);">---</td>
+                            <td>--</td>
+                            <td>--</td>
+                        </tr>
+                        <tr>
+                            <td><span class="rank-badge rank-other">5</span></td>
+                            <td><strong>Community Member</strong></td>
+                            <td style="font-family: var(--font-mono);">---</td>
+                            <td>--</td>
+                            <td>--td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 12px; text-align: center;">
+                <i class="fas fa-info-circle"></i> El leaderboard se actualiza cuando compartes tu progreso.
+            </p>
+        </section>
+
+        <!-- COMO FUNCIONA -->
+        <section class="labs-section">
+            <h2><i class="fas fa-question-circle"></i> Como Funciona</h2>
+
+            <div class="content-block">
+                <h3><i class="fas fa-list-ol"></i> Sistema de XP</h3>
+                <div class="step-guide">
+                    <div class="guide-step"><span class="guide-num">1</span><div><strong>Completa ejercicios:</strong> Cada pregunta correcta te da XP segun su dificultad.</div></div>
+                    <div class="guide-step"><span class="guide-num">2</span><div><strong>Termina el lab:</strong> Al completar todos los ejercicios, ganas el XP bonus del lab.</div></div>
+                    <div class="guide-step"><span class="guide-num">3</span><div><strong>Desbloquea badges:</strong> Logros especificos desbloquean badges con XP adicional.</div></div>
+                    <div class="guide-step"><span class="guide-num">4</span><div><strong>Sube de nivel:</strong> Acumula XP para subir de rango en el leaderboard.</div></div>
+                </div>
+            </div>
+
+            <div class="content-block">
+                <h3><i class="fas fa-medal"></i> Niveles</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px;">
+                    <div style="padding: 16px; background: rgba(205, 127, 50, 0.06); border: 1px solid rgba(205, 127, 50, 0.12); border-radius: var(--radius-md); text-align: center;">
+                        <div style="font-size: 1.5rem; margin-bottom: 8px;">🥉</div>
+                        <h4 style="color: #cd7f32; margin-bottom: 4px;">Apprentice</h4>
+                        <p style="color: var(--text-muted); font-size: 0.8rem;">0 - 200 XP</p>
+                    </div>
+                    <div style="padding: 16px; background: rgba(192, 192, 192, 0.06); border: 1px solid rgba(192, 192, 192, 0.12); border-radius: var(--radius-md); text-align: center;">
+                        <div style="font-size: 1.5rem; margin-bottom: 8px;">🥈</div>
+                        <h4 style="color: #c0c0c0; margin-bottom: 4px;">Practitioner</h4>
+                        <p style="color: var(--text-muted); font-size: 0.8rem;">201 - 500 XP</p>
+                    </div>
+                    <div style="padding: 16px; background: rgba(255, 215, 0, 0.06); border: 1px solid rgba(255, 215, 0, 0.12); border-radius: var(--radius-md); text-align: center;">
+                        <div style="font-size: 1.5rem; margin-bottom: 8px;">🥇</div>
+                        <h4 style="color: #ffd700; margin-bottom: 4px;">Specialist</h4>
+                        <p style="color: var(--text-muted); font-size: 0.8rem;">501 - 800 XP</p>
+                    </div>
+                    <div style="padding: 16px; background: rgba(155, 89, 182, 0.06); border: 1px solid rgba(155, 89, 182, 0.12); border-radius: var(--radius-md); text-align: center;">
+                        <div style="font-size: 1.5rem; margin-bottom: 8px;">👑</div>
+                        <h4 style="color: #9b59b6; margin-bottom: 4px;">Guru</h4>
+                        <p style="color: var(--text-muted); font-size: 0.8rem;">801+ XP</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="hub-cta">
+            <h2>Comienza tu Mision</h2>
+            <p>Elige un lab y comienza a ganar XP y badges.</p>
+            <div class="hub-cta-buttons">
+                <a href="labs/prompt-injection-01.html" class="btn btn-primary"><i class="fas fa-syringe"></i> Prompt Injection Lab</a>
+                <a href="labs/jailbreak-01.html" class="btn btn-outline"><i class="fas fa-unlock-alt"></i> Jailbreak Lab</a>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4><i class="fas fa-shield-halved"></i> CDPN</h4>
+                    <p>Formando profesionales de ciberdefensa en todo el mundo.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>AI Security</h4>
+                    <ul role="list">
+                        <li><a href="jailbreaking-education.html">Dashboard</a></li>
+                        <li><a href="labs/prompt-injection-01.html">Prompt Injection Lab</a></li>
+                        <li><a href="labs/jailbreak-01.html">Jailbreak Lab</a></li>
+                        <li><a href="labs/red-teaming-01.html">Red Teaming Lab</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Secciones</h4>
+                    <ul role="list">
+                        <li><a href="retos.html">Retos</a></li>
+                        <li><a href="herramientas.html">Herramientas</a></li>
+                        <li><a href="labs.html">Labs</a></li>
+                        <li><a href="recursos.html">Recursos</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Comunidad</h4>
+                    <ul role="list">
+                        <li><a href="https://github.com/0xvanguard/CyberDefense-Pro-Network" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> GitHub</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 CyberDefense Pro Network. Todos los derechos reservados.</p>
+                <p>Hecho con <i class="fas fa-heart"></i> por profesionales, para profesionales</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/i18n.js"></script>
+    <script src="assets/js/i18n-lang.js"></script>
+    <script src="assets/js/shared.js"></script>
+</body>
+</html>
