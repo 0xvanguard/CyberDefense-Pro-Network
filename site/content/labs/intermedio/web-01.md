@@ -5,6 +5,14 @@ description: "🌐 Lab web-01: Web Application Security (OWASP Top 10)"
 
 # 🌐 Lab web-01: Web Application Security (OWASP Top 10)
 
+
+::: tip 🧪 Lab Interactivo Disponible
+**¿Quieres practicar esto en tu navegador?** Tenemos una versión interactiva con terminal simulado.
+
+👉 **[Abrir Lab Interactivo](/CyberDefense-Pro-Network/labs-interactive/lab-web-01.html)** — Sin Docker, sin configuración. Solo abre y practica.
+:::
+
+
 > Identifica y explota vulnerabilidades web comunes siguiendo el OWASP Top 10.
 
 ## 📊 Diagrama del Escenario

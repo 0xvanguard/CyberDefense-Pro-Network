@@ -5,6 +5,14 @@ description: "🌐 Lab net-01: TCP/IP & OSI Model"
 
 # 🌐 Lab net-01: TCP/IP & OSI Model
 
+
+::: tip 🧪 Lab Interactivo Disponible
+**¿Quieres practicar esto en tu navegador?** Tenemos una versión interactiva con terminal simulado.
+
+👉 **[Abrir Lab Interactivo](/CyberDefense-Pro-Network/labs-interactive/lab-net-01.html)** — Sin Docker, sin configuración. Solo abre y practica.
+:::
+
+
 > Domina los fundamentos de redes que toda carrera en ciberseguridad requiere.
 
 ## 📊 Diagrama del Lab

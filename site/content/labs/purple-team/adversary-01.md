@@ -5,6 +5,14 @@ description: "⚔️ Lab adversary-01: Adversary Emulation"
 
 # ⚔️ Lab adversary-01: Adversary Emulation
 
+
+::: tip 🧪 Lab Interactivo Disponible
+**¿Quieres practicar esto en tu navegador?** Tenemos una versión interactiva con terminal simulado.
+
+👉 **[Abrir Lab Interactivo](/CyberDefense-Pro-Network/labs-interactive/lab-purple-01.html)** — Sin Docker, sin configuración. Solo abre y practica.
+:::
+
+
 > Emula adversaries reales usando MITRE ATT&CK y mide la efectividad de tus defensas.
 
 ## 🎯 Objetivos de Aprendizaje

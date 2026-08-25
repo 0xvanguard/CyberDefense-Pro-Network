@@ -5,6 +5,14 @@ description: "🌐 Lab net-forensics-01: Network Forensics"
 
 # 🌐 Lab net-forensics-01: Network Forensics
 
+
+::: tip 🧪 Lab Interactivo Disponible
+**¿Quieres practicar esto en tu navegador?** Tenemos una versión interactiva con terminal simulado.
+
+👉 **[Abrir Lab Interactivo](/CyberDefense-Pro-Network/labs-interactive/lab-net-forensics-01.html)** — Sin Docker, sin configuración. Solo abre y practica.
+:::
+
+
 > Analiza capturas de tráfico de red para detectar intrusiones, extraer evidencia y reconstruir ataques.
 
 ## 📊 Diagrama del Entorno

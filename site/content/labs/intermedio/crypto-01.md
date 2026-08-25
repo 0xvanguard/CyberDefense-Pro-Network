@@ -5,6 +5,14 @@ description: "� Lab crypto-01: Cryptography Challenges"
 
 # 🔐 Lab crypto-01: Cryptography Challenges
 
+
+::: tip 🧪 Lab Interactivo Disponible
+**¿Quieres practicar esto en tu navegador?** Tenemos una versión interactiva con terminal simulado.
+
+👉 **[Abrir Lab Interactivo](/CyberDefense-Pro-Network/labs-interactive/lab-crypto-01.html)** — Sin Docker, sin configuración. Solo abre y practica.
+:::
+
+
 > Resuelve desafíos de criptografía clásica y moderna para entender fortalezas y debilidades.
 
 ## 📊 Diagrama de Criptografía

@@ -5,6 +5,14 @@ description: "🟣 Lab purple-01: Purple Team Operations"
 
 # 🟣 Lab purple-01: Purple Team Operations
 
+
+::: tip 🧪 Lab Interactivo Disponible
+**¿Quieres practicar esto en tu navegador?** Tenemos una versión interactiva con terminal simulado.
+
+👉 **[Abrir Lab Interactivo](/CyberDefense-Pro-Network/labs-interactive/lab-purple-01.html)** — Sin Docker, sin configuración. Solo abre y practica.
+:::
+
+
 > Ejecuta operaciones Purple Team completas: desde la planificación hasta la medición de métricas de mejora continua.
 
 ## 📊 Diagrama del Lab

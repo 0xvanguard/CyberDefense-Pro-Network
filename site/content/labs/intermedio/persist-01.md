@@ -5,6 +5,14 @@ description: "� Lab persist-01: Técnicas de Persistencia"
 
 # 🔒 Lab persist-01: Técnicas de Persistencia
 
+
+::: tip 🧪 Lab Interactivo Disponible
+**¿Quieres practicar esto en tu navegador?** Tenemos una versión interactiva con terminal simulado.
+
+👉 **[Abrir Lab Interactivo](/CyberDefense-Pro-Network/labs-interactive/lab-persist-01.html)** — Sin Docker, sin configuración. Solo abre y practica.
+:::
+
+
 > Implementa mecanismos de persistencia en sistemas Linux y Windows para mantener acceso tras reinicios.
 
 ## 📊 Diagrama del Escenario

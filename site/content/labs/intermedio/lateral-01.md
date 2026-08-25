@@ -5,6 +5,14 @@ description: "� Lab lateral-01: Movimiento Lateral"
 
 # 🔄 Lab lateral-01: Movimiento Lateral
 
+
+::: tip 🧪 Lab Interactivo Disponible
+**¿Quieres practicar esto en tu navegador?** Tenemos una versión interactiva con terminal simulado.
+
+👉 **[Abrir Lab Interactivo](/CyberDefense-Pro-Network/labs-interactive/lab-lateral-01.html)** — Sin Docker, sin configuración. Solo abre y practica.
+:::
+
+
 > Navega entre sistemas de una red comprometida usando técnicas de movimiento lateral como Pass-the-Hash, PsExec, WinRM y SSH tunneling.
 
 ## 📊 Diagrama del Escenario

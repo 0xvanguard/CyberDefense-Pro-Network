@@ -5,6 +5,14 @@ description: "� Lab recon-01: Reconocimiento y OSINT"
 
 # 🔍 Lab recon-01: Reconocimiento y OSINT
 
+
+::: tip 🧪 Lab Interactivo Disponible
+**¿Quieres practicar esto en tu navegador?** Tenemos una versión interactiva con terminal simulado.
+
+👉 **[Abrir Lab Interactivo](/CyberDefense-Pro-Network/labs-interactive/lab-recon-01.html)** — Sin Docker, sin configuración. Solo abre y practica.
+:::
+
+
 > Mapea la superficie de ataque completa de un entorno empresarial simulado con técnicas de reconocimiento pasivo y activo.
 
 ## 📊 Diagrama del Escenario

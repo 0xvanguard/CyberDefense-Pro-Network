@@ -5,6 +5,14 @@ description: "� Lab privesc-01: Linux Privilege Escalation"
 
 # 🔐 Lab privesc-01: Linux Privilege Escalation
 
+
+::: tip 🧪 Lab Interactivo Disponible
+**¿Quieres practicar esto en tu navegador?** Tenemos una versión interactiva con terminal simulado.
+
+👉 **[Abrir Lab Interactivo](/CyberDefense-Pro-Network/labs-interactive/lab-privesc-01.html)** — Sin Docker, sin configuración. Solo abre y practica.
+:::
+
+
 > Escala de privilegios en un sistema Linux vulnerable usando técnicas reales de pentesting.
 
 ## 📊 Diagrama del Escenario

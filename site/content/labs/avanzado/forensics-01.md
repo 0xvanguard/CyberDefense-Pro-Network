@@ -5,6 +5,14 @@ description: "� Lab forensics-01: Digital Forensics"
 
 # 🔍 Lab forensics-01: Digital Forensics
 
+
+::: tip 🧪 Lab Interactivo Disponible
+**¿Quieres practicar esto en tu navegador?** Tenemos una versión interactiva con terminal simulado.
+
+👉 **[Abrir Lab Interactivo](/CyberDefense-Pro-Network/labs-interactive/lab-forensics-01.html)** — Sin Docker, sin configuración. Solo abre y practica.
+:::
+
+
 > Analiza evidencia digital, reconstruye timelines y recupera datos de sistemas comprometidos.
 
 ## 📊 Diagrama del Análisis Forense

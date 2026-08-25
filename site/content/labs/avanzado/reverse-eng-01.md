@@ -5,6 +5,14 @@ description: "� Lab reverse-eng-01: Reverse Engineering"
 
 # 🔧 Lab reverse-eng-01: Reverse Engineering
 
+
+::: tip 🧪 Lab Interactivo Disponible
+**¿Quieres practicar esto en tu navegador?** Tenemos una versión interactiva con terminal simulado.
+
+👉 **[Abrir Lab Interactivo](/CyberDefense-Pro-Network/labs-interactive/lab-reverse-eng-01.html)** — Sin Docker, sin configuración. Solo abre y practica.
+:::
+
+
 > Descompila, desensambla y analiza binarios para entender su comportamiento interno, algoritmos y secreos embebidos.
 
 ## 📊 Diagrama del Entorno

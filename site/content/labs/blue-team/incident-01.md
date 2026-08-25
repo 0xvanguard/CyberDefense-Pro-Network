@@ -5,6 +5,14 @@ description: "🚨 Lab incident-01: Incident Response"
 
 # 🚨 Lab incident-01: Incident Response
 
+
+::: tip 🧪 Lab Interactivo Disponible
+**¿Quieres practicar esto en tu navegador?** Tenemos una versión interactiva con terminal simulado.
+
+👉 **[Abrir Lab Interactivo](/CyberDefense-Pro-Network/labs-interactive/lab-incident-01.html)** — Sin Docker, sin configuración. Solo abre y practica.
+:::
+
+
 > Responde a incidentes de seguridad reales: desde la detección hasta la recuperación completa.
 
 ## 🎯 Objetivos de Aprendizaje

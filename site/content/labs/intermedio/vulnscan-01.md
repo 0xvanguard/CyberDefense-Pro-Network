@@ -5,6 +5,14 @@ description: "Lab vulnscan-01: Análisis de Vulnerabilidades"
 
 # 🛡️ Lab vulnscan-01: Análisis de Vulnerabilidades
 
+
+::: tip 🧪 Lab Interactivo Disponible
+**¿Quieres practicar esto en tu navegador?** Tenemos una versión interactiva con terminal simulado.
+
+👉 **[Abrir Lab Interactivo](/CyberDefense-Pro-Network/labs-interactive/lab-vulnscan-01.html)** — Sin Docker, sin configuración. Solo abre y practica.
+:::
+
+
 > Escanea, clasifica y documenta vulnerabilidades usando Nuclei, Nmap NSE y searchsploit con metodología CVSS/CIA.
 
 ## 📊 Diagrama del Escenario
