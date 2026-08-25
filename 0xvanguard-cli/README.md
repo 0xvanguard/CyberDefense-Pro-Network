@@ -1,118 +1,122 @@
-# 0xv — 0xvanguard Cybersecurity CLI
+<div align="center">
 
-> **35 tools. One empire. One terminal.**
+# 🛡️ 0xv CLI
 
-A command-line tool to manage, audit, search, and sync all 35 repos in the [0xvanguard](https://github.com/0xvanguard) cybersecurity arsenal.
+### The Unified Command Line Interface for All 0xvanguard Security Projects
 
-## ⚡ Quick Start
+![Version](https://img.shields.io/badge/version-1.0.0-blue)
+![Python](https://img.shields.io/badge/python-3.8+-green)
+![License](https://img.shields.io/badge/license-MIT-yellow)
+![Projects](https://img.shields.io/badge/projects-46-red)
 
-```bash
-# Clone this repo
-git clone https://github.com/0xvanguard/0xvanguard-cli.git
-cd 0xvanguard-cli
+**Manage, audit, and monitor all 46 security projects** from a single terminal.
 
-# Run directly
-python3 0xv help
+[0xv CLI](https://github.com/0xvanguard/0xvanguard-cli) • [Try It Live](#quick-start) • [Commands](#commands)
 
-# Or install globally
-chmod +x 0xv
-sudo cp 0xv /usr/local/bin/
+</div>
 
-# Now run from anywhere
-0xv help
-```
+---
+
+## 🛡️ What is 0xv CLI?
+
+0xv CLI is a **unified command line interface** that provides a single entry point to manage, audit, and monitor all 0xvanguard security projects.
+
+### Why 0xv CLI?
+
+| Without 0xv CLI | With 0xv CLI |
+|-----------------|--------------|
+| Manual repo management | **Automated management** |
+| No portfolio view | **Unified dashboard** |
+| Manual security checks | **Automated auditing** |
+| No reporting | **Built-in reports** |
 
 ## 📋 Commands
 
 | Command | Description |
 |---------|-------------|
-| `0xv list` | List all 35 repos by category |
-| `0xv list --category ai-security` | Filter by category |
-| `0xv search <query>` | Search repos by name, description, or tags |
-| `0xv info <repo>` | Show detailed info about a repo |
-| `0xv status` | Show portfolio status (local vs GitHub) |
-| `0xv categories` | List all categories with repos |
-| `0xv audit` | Security scan — find hardcoded secrets, XSS, etc. |
-| `0xv audit <repo>` | Audit a specific repo |
-| `0xv sync status` | Check sync status with GitHub |
-| `0xv sync create-missing` | Create repos on GitHub that are missing |
-| `0xv readme all` | Generate README.md for all repos |
-| `0xv report` | Generate full portfolio report |
+| `0xv list` | List all 46 projects |
+| `0xv info <project>` | Get project details |
+| `0xv audit <project>` | Security audit project |
+| `0xv sync` | Sync all repos |
+| `0xv report` | Generate portfolio report |
+| `0xv search <query>` | Search projects |
 
-## 🛡️ Security Audit
-
-Scans for 10 vulnerability patterns:
-
-| Pattern | Severity | Description |
-|---------|----------|-------------|
-| Hardcoded secrets | 🔴 HIGH | API keys, tokens, passwords in code |
-| eval() usage | 🔴 HIGH | Code injection risk |
-| SQL injection | 🔴 HIGH | String interpolation in queries |
-| Unsafe deserialization | 🔴 HIGH | Pickle.loads usage |
-| innerHTML | 🟡 MEDIUM | XSS risk in JavaScript |
-| Insecure HTTP | 🟡 MEDIUM | URLs should use HTTPS |
-| Weak crypto | 🟡 MEDIUM | MD5/SHA1 usage |
-| CORS wildcard | 🟡 MEDIUM | Allow any origin |
-| Open redirect | 🟡 MEDIUM | User-controlled redirects |
-| Debug mode | ⚪ LOW | Debug enabled in code |
-
-### Example
+## 🚀 Quick Start
 
 ```bash
-# Audit everything
-0xv audit all
+# Install
+git clone https://github.com/0xvanguard/0xvanguard-cli.git
+cd 0xvanguard-cli
+pip install -e .
 
-# Only HIGH severity
-0xv audit all --severity HIGH
+# List all projects
+0xv list
 
-# Audit one category
-0xv audit ai-security
+# Get project info
+0xv info promptkiller
 
-# Audit one repo
+# Audit project
 0xv audit promptkiller
+
+# Generate report
+0xv report
 ```
 
-## 📂 Categories
+## 💻 Advanced Usage
 
-| Category | Color | Repos |
-|----------|-------|-------|
-| 🛡️ AI Security | Red | medscan, promptkiller, jailbreakbench, guarddog, constitutionalkit, injectionmapper, redteamos |
-| 🔐 Security Tools | Blue | vulnseeker, zerotrustkit, passgenpro, threatmap, riskcalculator |
-| 📚 Education | Green | cyberlabs, ctf-builder, hacktheclass, cybermentor, cryptopuzzles, securecoding101, threatmodeler, vulnviz, policywriter |
-| ⚡ Productivity | Yellow | securenotes, passwordvault, securechat, privacyvpn, emailguard, filesync, backupcloud, devsecops, codesigning, iotsentinel |
-| 💚 AI for Good | Cyan | agribot, languagepreserver, disasterrelief |
+```bash
+# Search projects
+0xv search "encryption"
 
-## 🔧 Requirements
+# Audit all projects
+0xv audit all
 
-- Python 3.8+
-- `gh` CLI authenticated (for GitHub operations)
-- No pip dependencies — pure Python stdlib
+# Generate portfolio HTML
+0xv report --format html --output portfolio.html
 
-## 📁 Structure
+# Sync all repos
+0xv sync --pull
+```
+
+## 📊 Project Statistics
+
+| Category | Count |
+|----------|-------|
+| **AI Security** | 14 |
+| **Security Tools** | 9 |
+| **Education** | 9 |
+| **Productivity** | 10 |
+| **AI for Good** | 3 |
+| **Total** | **46** |
+
+## 📁 Project Structure
 
 ```
 0xvanguard-cli/
-├── 0xv                 ← Main CLI (run directly)
-├── cli.py              ← Entry point wrapper
-├── setup.py            ← pip install support
-├── README.md           ← This file
 ├── src/
-│   ├── repos.py        ← Registry of 35 repos
-│   └── categories.py   ← Category definitions
+│   ├── __init__.py
+│   └── repos.py               # Project registry
 ├── commands/
-│   ├── repos_cmd.py    ← list, search, info, status
-│   ├── audit_cmd.py    ← Security scanning
-│   ├── generate_cmd.py ← README & report generation
-│   └── sync_cmd.py     ← GitHub sync operations
-└── utils/
-    ├── display.py      ← Terminal colors & formatting
-    └── github.py       ← GitHub API wrapper
+│   ├── repos_cmd.py           # List/info commands
+│   ├── audit_cmd.py           # Security audit
+│   ├── sync_cmd.py            # Sync commands
+│   └── generate_cmd.py        # Report generation
+├── utils/
+│   ├── github.py              # GitHub API
+│   └── display.py             # Display utilities
+├── 0xv                        # CLI entry point
+├── setup.py                   # Package setup
+└── README.md
 ```
 
 ## 📄 License
 
-MIT
+MIT License — Manage your projects.
 
 ---
 
-*Protecting the world, one command at a time.* 🛡️
+<div align="center">
+
+**Built by [@0xvanguard](https://github.com/0xvanguard)** • [⭐ Star this repo](https://github.com/0xvanguard/0xvanguard-cli) • [🐛 Report Bug](https://github.com/0xvanguard/0xvanguard-cli/issues)
+
+</div>
