@@ -9,8 +9,11 @@ const CDPN_AISecurityTracker = {
     // Lab configurations
     LABS: {
         'prompt-injection-01': { name: 'Prompt-Injection-01', icon: '💉', xp: 350, totalQuestions: 8 },
+        'prompt-injection-02': { name: 'Prompt-Injection-02: Sistemas Agénticos', icon: '🤖', xp: 500, totalQuestions: 10 },
         'jailbreak-01': { name: 'Jailbreak-01', icon: '🔓', xp: 400, totalQuestions: 10 },
-        'red-teaming-01': { name: 'Red-Teaming-01', icon: '🎯', xp: 400, totalQuestions: 10 }
+        'jailbreak-02': { name: 'Jailbreak-02: Ataques Avanzados', icon: '🔥', xp: 500, totalQuestions: 10 },
+        'red-teaming-01': { name: 'Red-Teaming-01', icon: '🎯', xp: 400, totalQuestions: 10 },
+        'playground-ai-security': { name: '🎮 AI Security Playground', icon: '🎮', xp: 750, totalQuestions: 6 }
     },
 
     /**
