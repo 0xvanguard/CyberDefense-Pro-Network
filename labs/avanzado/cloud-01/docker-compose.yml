@@ -13,8 +13,11 @@ services:
       - ./scripts:/scripts
       - ./output:/output
     environment:
-      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID:-AKIAIOSFODNN7EXAMPLE}
-      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY:-wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY}
+      # REQUIRED: Set your own credentials before running
+      # export AWS_ACCESS_KEY_ID=your_access_key
+      # export AWS_SECRET_ACCESS_KEY=your_secret_key
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID:?ERROR: Set AWS_ACCESS_KEY_ID before running}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY:?ERROR: Set AWS_SECRET_ACCESS_KEY before running}
       - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION:-us-east-1}
     cap_drop:
       - ALL
