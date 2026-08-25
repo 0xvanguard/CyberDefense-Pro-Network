@@ -1,3 +1,12 @@
-"""RiskCalculator - Cybersecurity Risk Calculator"""
-from .calculator import RiskCalculator, CVSSScore, FAIRAnalysis
-__version__ = "1.0.0"
+"""RiskCalculator — Cybersecurity Risk Assessment Toolkit"""
+
+from .calculator import (
+    CVSSScore, FAIRAnalysis, RiskMatrix, RiskCalculator,
+    EPSSScore, SSVCDecision, RiskReport
+)
+
+__version__ = "2.0.0"
+__all__ = [
+    "CVSSScore", "FAIRAnalysis", "RiskMatrix", "RiskCalculator",
+    "EPSSScore", "SSVCDecision", "RiskReport"
+]
