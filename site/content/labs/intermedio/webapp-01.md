@@ -3,15 +3,16 @@ title: "🌐 Lab webapp-01: Explotación Web — OWASP Top 10"
 description: "🌐 Lab webapp-01: Explotación Web — OWASP Top 10"
 ---
 
-# 🌐 Lab webapp-01: Explotación Web — OWASP Top 10
-
-
 ::: tip 🧪 Lab Interactivo Disponible
-**¿Quieres practicar esto en tu navegador?** Tenemos una versión interactiva con terminal simulado.
+**¿Quieres practicar esto en tu navegador?** Tenemos una versión interactiva con terminal simulada, comandos reales y tracking de progreso.
 
-👉 **[Abrir Lab Interactivo](/CyberDefense-Pro-Network/labs-interactive/lab-webapp-01.html)** — Sin Docker, sin configuración. Solo abre y practica.
+👉 [**Abrir Lab Interactivo — Sin Docker**](/CyberDefense-Pro-Network/labs-interactive/lab-webapp-01.html)
+
 :::
 
+
+
+# 🌐 Lab webapp-01: Explotación Web — OWASP Top 10
 
 > Explota vulnerabilidades web del OWASP Top 10 en una aplicación vulnerable diseñada para práctica de SQL Injection, XSS, IDOR y más.
 

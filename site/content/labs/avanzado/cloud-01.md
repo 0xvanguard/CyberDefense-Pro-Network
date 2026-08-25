@@ -3,15 +3,16 @@ title: "☁ Lab cloud-01: Cloud Security (AWS/Azure)"
 description: "☁ Lab cloud-01: Cloud Security (AWS/Azure)"
 ---
 
-# ☁️ Lab cloud-01: Cloud Security (AWS/Azure)
-
-
 ::: tip 🧪 Lab Interactivo Disponible
-**¿Quieres practicar esto en tu navegador?** Tenemos una versión interactiva con terminal simulado.
+**¿Quieres practicar esto en tu navegador?** Tenemos una versión interactiva con terminal simulada, comandos reales y tracking de progreso.
 
-👉 **[Abrir Lab Interactivo](/CyberDefense-Pro-Network/labs-interactive/lab-cloud-01.html)** — Sin Docker, sin configuración. Solo abre y practica.
+👉 [**Abrir Lab Interactivo — Sin Docker**](/CyberDefense-Pro-Network/labs-interactive/lab-cloud-01.html)
+
 :::
 
+
+
+# ☁️ Lab cloud-01: Cloud Security (AWS/Azure)
 
 > Aprende a proteger y atacar entornos cloud siguiendo el Cloud Security Framework.
 

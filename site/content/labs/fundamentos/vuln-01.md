@@ -9,7 +9,7 @@ description: "🎯 Lab vuln-01: Escaneo de Vulnerabilidades"
 ::: tip 🧪 Lab Interactivo Disponible
 **¿Quieres practicar esto en tu navegador?** Tenemos una versión interactiva con terminal simulado.
 
-👉 **[Abrir Lab Interactivo](/CyberDefense-Pro-Network/labs-interactive/lab-vulnscan-01.html)** — Sin Docker, sin configuración. Solo abre y practica.
+👉 **[Abrir Lab Interactivo](/labs-interactive/lab-vulnscan-01.html)** — Sin Docker, sin configuración. Solo abre y practica.
 :::
 
 

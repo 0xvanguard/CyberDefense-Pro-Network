@@ -9,7 +9,7 @@ description: "🔐 Lab crypto-01: Criptografía Práctica"
 ::: tip 🧪 Lab Interactivo Disponible
 **¿Quieres practicar esto en tu navegador?** Tenemos una versión interactiva con terminal simulado.
 
-👉 **[Abrir Lab Interactivo](/CyberDefense-Pro-Network/labs-interactive/lab-crypto-01.html)** — Sin Docker, sin configuración. Solo abre y practica.
+👉 **[Abrir Lab Interactivo](/labs-interactive/lab-crypto-01.html)** — Sin Docker, sin configuración. Solo abre y practica.
 :::
 
 
