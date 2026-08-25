@@ -3,14 +3,12 @@ title: "� Lab lateral-01: Movimiento Lateral"
 description: "� Lab lateral-01: Movimiento Lateral"
 ---
 
+
 ::: tip 🧪 Lab Interactivo Disponible
 **¿Quieres practicar esto en tu navegador?** Tenemos una versión interactiva con terminal simulada, comandos reales y tracking de progreso.
 
 👉 [**Abrir Lab Interactivo — Sin Docker**](/CyberDefense-Pro-Network/labs-interactive/lab-lateral-01.html)
-
 :::
-
-
 
 # 🔄 Lab lateral-01: Movimiento Lateral
 

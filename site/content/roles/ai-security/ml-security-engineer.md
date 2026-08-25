@@ -88,8 +88,6 @@ Diferencia con `ai-red-teamer`:
 - [ ] ModelScan + Picklescan contra modelos de Hugging Face
 - [ ] Adversarial training con ART en modelo CV simple
 - [ ] MLflow + DVC con políticas de signing
-- [ ] Completar [Lab Red-Teaming-01](/labs/red-teaming-01/) — evaluar modelos con frameworks ofensivos para fortalecer defensas
-- [ ] Estudiar [Módulo 06 — MLSecOps Pipeline Seguro](/modules/ai-agents/06-mlsecops-pipeline-seguro/) — pipeline end-to-end con puntos de control
 - [ ] CSA AI Security empezado
 
 ### Fase 3 — Profesional (7-12 meses)
@@ -120,23 +118,6 @@ Diferencia con `ai-red-teamer`:
 - **`privacy-engineer`** *(02)* → DP en training pipelines
 - **`security-engineer`** *(01)* → MLOps es subset moderno de DevSecOps
 - **`ai-governance-officer`** *(03)* → tú implementas, ellos gobiernan
-
----
-
-## 📚 Labs CDPN — AI Security
-
-Práctica hands-on con los labs del CyberDefense Pro Network:
-
-| Lab | XP | Descripción |
-|-----|----|-------------|
-| [Lab Red-Teaming-01](/labs/red-teaming-01/) | 400 XP | AI Red Teaming con Garak, PyRIT y promptfoo — evalúa la seguridad de modelos |
-| [Lab Prompt-Injection-01](/labs/prompt-injection-01/) | 350 XP | Técnicas de prompt injection y defensas — relevante para proteger inference APIs |
-
-**Módulos complementarios:**
-- [06 — MLSecOps Pipeline Seguro](/modules/ai-agents/06-mlsecops-pipeline-seguro/) — Pipeline completo: datos → modelo → despliegue → operación con puntos de control de seguridad
-- [04 — OWASP LLM Top 10 2025](/modules/ai-agents/04-owasp-llm-top10-2025/) — Vulnerabilidades de LLMs con mitigaciones aplicables a ML pipelines
-
-**Gamificación:** Acumula XP y desbloquea badges completando labs → [Dashboard de Gamificación](/ai-security-gamification/)
 
 ---
 

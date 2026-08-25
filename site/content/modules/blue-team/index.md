@@ -3,9 +3,9 @@ title: "Área: Blue Team / Defensa"
 description: "Área: Blue Team / Defensa"
 ---
 
-> 🚀 **¿Eres principiante?** Antes de este módulo, revisa la **[base común del repo](../00-FUNDAMENTOS/)** (1 carpeta atrás). El blue team opera sobre logs y eventos: necesitas base sólida de redes y SO.
+> 🚀 **¿Eres principiante?** Antes de este módulo, revisa la **[base común del repo](../fundamentos/)** (1 carpeta atrás). El blue team opera sobre logs y eventos: necesitas base sólida de redes y SO.
 >
-> Recomendado: empieza por la ruta 🛡️ [Defensor](../00-FUNDAMENTOS/rutas/ruta-defensor.md).
+> Recomendado: empieza por la ruta 🛡️ [Defensor](../fundamentos/rutas/ruta-defensor.md).
 
 # Área: Blue Team / Defensa
 

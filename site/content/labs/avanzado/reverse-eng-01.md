@@ -3,14 +3,12 @@ title: "� Lab reverse-eng-01: Reverse Engineering"
 description: "� Lab reverse-eng-01: Reverse Engineering"
 ---
 
+
 ::: tip 🧪 Lab Interactivo Disponible
 **¿Quieres practicar esto en tu navegador?** Tenemos una versión interactiva con terminal simulada, comandos reales y tracking de progreso.
 
 👉 [**Abrir Lab Interactivo — Sin Docker**](/CyberDefense-Pro-Network/labs-interactive/lab-reverse-eng-01.html)
-
 :::
-
-
 
 # 🔧 Lab reverse-eng-01: Reverse Engineering
 

@@ -5,9 +5,9 @@ description: 02 — SEGURIDAD DE LA INFORMACIÓN
 
 <div align="center">
 
-> 🚀 **¿Eres principiante?** Antes de este módulo, revisa la **[base común del repo](../00-FUNDAMENTOS/)** (1 carpeta atrás). Conceptos de GRC, auditoría y cumplimiento se entienden mejor con la base asentada.
+> 🚀 **¿Eres principiante?** Antes de este módulo, revisa la **[base común del repo](../fundamentos/)** (1 carpeta atrás). Conceptos de GRC, auditoría y cumplimiento se entienden mejor con la base asentada.
 >
-> Elige tu ruta de aprendizaje: 🛡️ [Defensor](../00-FUNDAMENTOS/rutas/ruta-defensor.md) · ⚔️ [Atacante](../00-FUNDAMENTOS/rutas/ruta-atacante.md) · 🤖 [AI Security](../00-FUNDAMENTOS/rutas/ruta-ai-security.md)
+> Elige tu ruta de aprendizaje: 🛡️ [Defensor](../fundamentos/rutas/ruta-defensor.md) · ⚔️ [Atacante](../fundamentos/rutas/ruta-atacante.md) · 🤖 [AI Security](../fundamentos/rutas/ruta-ai-security.md)
 
 # 🔵 02 — SEGURIDAD DE LA INFORMACIÓN
 
