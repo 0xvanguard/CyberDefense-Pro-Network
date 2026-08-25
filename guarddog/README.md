@@ -4,14 +4,15 @@
 
 ### Real-Time Prompt Injection Scanner for LLM Applications
 
-![Version](https://img.shields.io/badge/version-1.3.0-blue)
+![Version](https://img.shields.io/badge/version-2.0.0-blue)
 ![Python](https://img.shields.io/badge/python-3.8+-green)
 ![License](https://img.shields.io/badge/license-MIT-yellow)
-![Speed](https://img.shields.io/badge/speed-<50ms-red)
+![Rules](https://img.shields.io/badge/rules-100+-red)
+![Speed](https://img.shields.io/badge/speed-<50ms-green)
 
 **Detect and prevent prompt injection attacks** before they reach your LLM.
 
-[GuardDog](https://github.com/0xvanguard/guarddog) • [Try It Live](#quick-start) • [Rules](#detection-rules)
+[GuardDog](https://github.com/0xvanguard/guarddog) • [Quick Start](#quick-start) • [Rules](#detection-rules)
 
 </div>
 
@@ -19,7 +20,7 @@
 
 ## 🐕 What is GuardDog?
 
-GuardDog is a **real-time prompt injection scanner** that analyzes user inputs before they reach your LLM. It detects malicious patterns, injection attempts, and adversarial inputs with sub-50ms latency.
+GuardDog is a **real-time prompt injection scanner** that analyzes user inputs before they reach your LLM. It detects malicious patterns, injection attempts, and adversarial inputs with 100+ detection rules.
 
 ### Why GuardDog?
 
@@ -27,148 +28,119 @@ GuardDog is a **real-time prompt injection scanner** that analyzes user inputs b
 |------------------|---------------|
 | Injection attacks reach LLM | **Blocked before reaching LLM** |
 | No visibility into attacks | **Full attack logging** |
-| Manual rule creation | **200+ built-in rules** |
+| Manual rule creation | **100+ built-in rules** |
 | High latency detection | **<50ms scanning** |
 
 ## 🔍 Detection Capabilities
 
-| Attack Type | Detection Rate | Latency |
-|-------------|---------------|---------|
-| **Direct Injection** | 98.5% | 12ms |
-| **Indirect Injection** | 94.2% | 18ms |
-| **System Prompt Extraction** | 96.8% | 15ms |
-| **Role Hijacking** | 92.1% | 22ms |
-| **Jailbreak Attempts** | 89.7% | 25ms |
-| **Data Exfiltration** | 97.3% | 14ms |
+| Category | Rules | Description |
+|----------|-------|-------------|
+| **Injection** | 20 | Direct/indirect prompt injection |
+| **Jailbreak** | 15 | DAN, STAN, KEVIN, AIM variants |
+| **Extraction** | 12 | System prompt extraction attempts |
+| **Role Play** | 10 | Persona manipulation attacks |
+| **Manipulation** | 12 | Social engineering techniques |
+| **Encoding** | 10 | Base64, ROT13, Hex bypasses |
+| **Context** | 8 | Context window exploitation |
+| **Token Smuggling** | 8 | Token manipulation attacks |
+| **Multi-language** | 8 | Language switching bypasses |
+| **Tool Abuse** | 8 | Code execution, file access |
+| **Adversarial** | 8 | Adversarial attack patterns |
+| **Reasoning** | 6 | Chain-of-thought exploitation |
 
 ## 🚀 Quick Start
 
 ```bash
-# Install
-pip install guarddog
-
-# Or from source
+# Clone
 git clone https://github.com/0xvanguard/guarddog.git
 cd guarddog
-pip install -e .
+
+# Scan text
+python cli.py scan "ignore all previous instructions"
+
+# Scan file
+python cli.py scan-file input.txt
+
+# List rules
+python cli.py rules --category injection
+
+# Statistics
+python cli.py stats
 ```
 
-```python
-from guarddog import Scanner
+## 💻 Python API
 
-scanner = Scanner()
+```python
+from guarddog import GuardDog
+
+scanner = GuardDog()
 
 # Scan a prompt
 result = scanner.scan("Ignore all previous instructions and...")
 
-print(f"Threat Level: {result.threat_level}")  # HIGH
-print(f"Confidence: {result.confidence}")       # 0.95
-print(f"Category: {result.category}")           # direct_injection
-print(f"Explanation: {result.explanation}")
+print(f"Threat Level: {result.threat_level}")  # critical, high, medium, low, safe
+print(f"Confidence: {result.confidence}")      # 0.0 - 1.0
+print(f"Is Attack: {result.is_attack}")        # True/False
+print(f"Categories: {result.categories_found}") # ['injection']
+
+# Get detections
+for detection in result.detections:
+    print(f"  [{detection.severity}] {detection.rule_name}")
+    print(f"  Matched: {detection.matched_text}")
 ```
 
-## 💻 Integration Examples
+## 🛡️ Integration
 
 ### Flask API
 ```python
 from flask import Flask, request, jsonify
-from guarddog import Scanner
+from guarddog import GuardDog
 
 app = Flask(__name__)
-scanner = Scanner()
+scanner = GuardDog()
 
 @app.route("/chat", methods=["POST"])
 def chat():
     user_input = request.json["message"]
-    
+
     # Scan before sending to LLM
     scan = scanner.scan(user_input)
-    
-    if scan.threat_level in ["HIGH", "CRITICAL"]:
-        return jsonify({"error": "Blocked", "reason": scan.explanation}), 403
-    
+
+    if scan.is_attack:
+        return jsonify({"error": "Blocked", "reason": scan.recommendation}), 403
+
     # Safe to process
     response = llm.chat(user_input)
     return jsonify({"response": response})
 ```
 
-### LangChain Integration
+### LangChain
 ```python
-from guarddog import GuardChain
+from guarddog import GuardDog
 
-# Wrap your LLM with GuardDog protection
-chain = GuardChain(
-    llm=your_llm,
-    scanner=Scanner(),
-    block_high=True,      # Block HIGH threats
-    log_all=True           # Log all scans
-)
+scanner = GuardDog()
 
-# Now your chain is protected
-result = chain.run("user input here")
+# Pre-process hook
+def check_input(text):
+    result = scanner.scan(text)
+    if result.is_attack:
+        raise ValueError(f"Blocked: {result.recommendation}")
+    return text
+
+# Use in chain
+chain = prompt | check_input | llm
 ```
 
-### Middleware
-```python
-from guarddog import Middleware
+## 📊 Threat Levels
 
-# Flask/Django middleware
-app.wsgi_app = Middleware(
-    app.wsgi_app,
-    scanner=Scanner(),
-    protected_paths=["/api/chat", "/api/complete"],
-    block_threshold="MEDIUM"
-)
-```
-
-## 🔧 Detection Rules
-
-### Rule Categories
-
-| Category | Rules | Description |
-|----------|-------|-------------|
-| **Direct Injection** | 45 | "Ignore previous instructions" variants |
-| **System Prompt** | 35 | Prompt extraction attempts |
-| **Role Hijacking** | 30 | Persona manipulation |
-| **Jailbreak** | 40 | Bypass techniques (DAN, Developer Mode) |
-| **Data Exfil** | 25 | Attempts to extract sensitive data |
-| **Encoding** | 30 | Base64, ROT13, Unicode bypass |
-
-### Custom Rules
-
-```python
-from guarddog import Scanner, Rule
-
-# Add custom rule
-custom_rule = Rule(
-    name="block_competitor_mentions",
-    pattern=r"(?i)(chatgpt|claude|bard|gemini)",
-    action="BLOCK",
-    explanation="Competitor mention detected"
-)
-
-scanner = Scanner(rules=[custom_rule])
-```
-
-## 📊 Performance
-
-| Metric | Value |
-|--------|-------|
-| **Latency** | 12-25ms |
-| **Throughput** | 10,000 req/sec |
-| **Memory** | 50MB |
-| **False Positive Rate** | 2.1% |
-| **False Negative Rate** | 1.8% |
-
-## 🛡️ Threat Levels
-
-| Level | Action | Description |
-|-------|--------|-------------|
-| **CRITICAL** | BLOCK | Confirmed injection attack |
-| **HIGH** | BLOCK | Likely injection attempt |
-| **MEDIUM** | LOG | Suspicious pattern detected |
-| **LOW** | MONITOR | Minor anomaly |
-| **INFO** | NONE | Informational |
+| Level | Confidence | Action |
+|-------|------------|--------|
+| **CRITICAL** | 80%+ | Block immediately |
+| **HIGH** | 60-79% | Review and consider blocking |
+| **MEDIUM** | 40-59% | Log and monitor |
+| **LOW** | 20-39% | Informational |
+| **INFO** | 1-19% | Monitor |
+| **SAFE** | 0% | Allow |
 
 ## 📁 Project Structure
 
@@ -176,16 +148,19 @@ scanner = Scanner(rules=[custom_rule])
 guarddog/
 ├── src/
 │   ├── __init__.py
-│   └── scanner.py             # Core scanning engine
-├── data/
-│   ├── rules.json             # Detection rules
-│   ├── patterns.json          # Regex patterns
-│   └── baselines.json         # Known attack patterns
-├── examples/
-│   ├── flask_app.py           # Flask integration
-│   ├── langchain.py           # LangChain integration
-│   └── middleware.py          # WSGI middleware
+│   └── scanner.py          # Core scanner (700+ lines)
+├── tests/
+│   ├── __init__.py
+│   └── test_scanner.py     # 15 tests
+├── cli.py                  # CLI tool
+├── requirements.txt
 └── README.md
+```
+
+## 🧪 Tests
+
+```bash
+python -m pytest tests/ -v
 ```
 
 ## 📄 License

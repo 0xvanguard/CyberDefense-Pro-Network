@@ -1,128 +1,82 @@
-<div align="center">
+<p align="center">
+  <img src="https://img.shields.io/badge/version-2.0.0-blue?style=for-the-badge">
+  <img src="https://img.shields.io/badge/python-3.10+-yellow?style=for-the-badge&logo=python&logoColor=white">
+  <img src="https://img.shields.io/badge/license-MIT-green?style=for-the-badge">
+  <img src="https://img.shields.io/github/stars/0xvanguard/threatmap?style=for-the-badge">
+</p>
 
-# 🌍 ThreatMap
+# 🗺️ ThreatMap
 
-### Real-Time Threat Intelligence Map with OSINT Data
+**Real-time threat intelligence visualization and OSINT aggregation platform.**
 
-![Version](https://img.shields.io/badge/version-1.0.0-blue)
-![Python](https://img.shields.io/badge/python-3.8+-green)
-![License](https://img.shields.io/badge/license-MIT-yellow)
-![Feeds](https://img.shields.io/badge/feeds-20+-red)
+ThreatMap aggregates threat indicators from multiple OSINT sources (Abuse.ch, VirusTotal, Shodan, OTX, GreyNoise, CISA KEV), geolocates them, and generates comprehensive threat reports. It correlates indicators across sources and maps global threat landscape.
 
-**Visualize global threats in real-time** with OSINT data and threat intelligence.
+## ✨ Features
 
-[ThreatMap](https://github.com/0xvanguard/threatmap) • [Try It Live](#quick-start) • [Feeds](#threat-feeds)
-
-</div>
-
----
-
-## 🌍 What is ThreatMap?
-
-ThreatMap is a **real-time threat intelligence map** that aggregates data from multiple OSINT feeds and displays global threats on an interactive map.
-
-### Why ThreatMap?
-
-| Without ThreatMap | With ThreatMap |
-|-------------------|----------------|
-| Scattered threat data | **Aggregated view** |
-| No visualization | **Interactive map** |
-| Manual correlation | **Automated analysis** |
-| No real-time updates | **Live threat feed** |
-
-## 📡 Threat Feeds
-
-| Feed | Type | Update Frequency |
-|------|------|------------------|
-| **Abuse.ch** | Malware C2 | Real-time |
-| **VirusTotal** | File/URL reputation | 5 min |
-| **Shodan** | Internet scans | 15 min |
-| **CIRCL** | DNS abuse | 30 min |
-| **PhishTank** | Phishing URLs | 1 hour |
-| **AlienVault OTX** | Threat intel | 5 min |
+| Feature | Description |
+|---------|-------------|
+| **Multi-Source Aggregation** | Pull from 8+ OSINT sources |
+| **Indicator Types** | IP, domain, URL, hash, email |
+| **Geolocation** | Map indicators to countries/cities |
+| **Correlation** | Link indicators across sources |
+| **Risk Scoring** | Confidence-weighted threat scoring |
+| **CLI Tool** | Full-featured command line interface |
+| **Export** | JSON, CSV, Markdown reports |
+| **Local DB** | SQLite cache for fast queries |
 
 ## 🚀 Quick Start
 
 ```bash
-# Install
-pip install threatmap
+# Install dependencies
+pip install -r requirements.txt
 
-# Or from source
-git clone https://github.com/0xvanguard/threatmap.git
-cd threatmap
-pip install -e .
+# Run CLI
+python cli.py sources              # List all sources
+python cli.py stats                # Show statistics
+python cli.py recent --hours 24    # Recent indicators
+python cli.py country US           # Indicators by country
+python cli.py search "cobalt"      # Search indicators
+python cli.py type ip              # Filter by type
+python cli.py threat c2_server     # Filter by threat
+python cli.py export --output report.json
 ```
+
+## 🐍 Python API
 
 ```python
-from threatmap import ThreatMap
+from src.map import ThreatMapEngine, ThreatIntelSource, ThreatIndicator
 
-# Create threat map
-map = ThreatMap()
+engine = ThreatMapEngine()
 
-# Start live feed
-map.start(port=8080)
+# Generate report
+report = engine.generate_report(time_range="30d")
+print(f"Total indicators: {report.summary['total_indicators']}")
 
-# Access at http://localhost:8080
+# Filter indicators
+c2_ips = engine.filter_indicators(indicator_type="ip", threat_type="c2_server")
+
+# Search
+results = engine.search("ransomware")
+
+# Geolocate
+geo = engine.geolocate("8.8.8.8")
+print(f"{geo.city}, {geo.country}")
 ```
 
-## 💻 API Usage
-
-```python
-from threatmap import ThreatAPI
-
-api = ThreatAPI()
-
-# Get current threats
-threats = api.get_threats(
-    region="north-america",
-    type="malware",
-    hours=24
-)
-
-# Get threat stats
-stats = api.get_stats()
-print(f"Active threats: {stats.active}")
-print(f"New today: {stats.today}")
-
-# Get specific IOCs
-iocs = api.get_iocs(type="ip", limit=100)
-```
-
-## 📊 Dashboard Features
-
-| Feature | Description |
-|---------|-------------|
-| **Live Map** | Real-time threat visualization |
-| **Heatmap** | Threat density by region |
-| **Timeline** | Threat activity over time |
-| **Filters** | By type, severity, region |
-| **Export** | Download threat data |
-
-## 📁 Project Structure
+## 📁 Structure
 
 ```
 threatmap/
 ├── src/
 │   ├── __init__.py
-│   └── map.py                 # Core map engine
-├── data/
-│   ├── feeds.json             # Threat feed sources
-│   └── countries.json         # Country boundaries
-├── dashboard/
-│   └── index.html             # Web dashboard
-├── examples/
-│   └── quick_start.py         # Getting started
+│   └── map.py              # Core engine
+├── tests/
+│   └── test_map.py         # 16 tests
+├── cli.py                   # CLI tool
+├── requirements.txt
 └── README.md
 ```
 
 ## 📄 License
 
-MIT License — Visualize threats.
-
----
-
-<div align="center">
-
-**Built by [@0xvanguard](https://github.com/0xvanguard)** • [⭐ Star this repo](https://github.com/0xvanguard/threatmap) • [🐛 Report Bug](https://github.com/0xvanguard/threatmap/issues)
-
-</div>
+MIT License — see [LICENSE](LICENSE)

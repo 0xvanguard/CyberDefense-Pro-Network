@@ -2,16 +2,17 @@
 
 # 🔍 VulnSeeker
 
-### Smart CVE Search with Risk Context and Exploit Availability
+### Smart CVE Search Engine with Risk Context
 
-![Version](https://img.shields.io/badge/version-1.0.0-blue)
+![Version](https://img.shields.io/badge/version-2.0.0-blue)
 ![Python](https://img.shields.io/badge/python-3.8+-green)
 ![License](https://img.shields.io/badge/license-MIT-yellow)
-![CVEs](https://img.shields.io/badge/CVEs-200000+-red)
+![API](https://img.shields.io/badge/API-NVD-red)
+![CVEs](https://img.shields.io/badge/CVEs-200000+-purple)
 
-**Search, analyze, and prioritize vulnerabilities** with context-aware results.
+**Search, analyze, and prioritize vulnerabilities** with context-aware results from NVD, CISA KEV, and EPSS.
 
-[VulnSeeker](https://github.com/0xvanguard/vulnseeker) • [Try It Live](#quick-start) • [Features](#features)
+[PromptKiller](https://github.com/0xvanguard/vulnseeker) • [Quick Start](#quick-start) • [CLI](#cli-usage)
 
 </div>
 
@@ -19,93 +20,93 @@
 
 ## 🔍 What is VulnSeeker?
 
-VulnSeeker is a **smart CVE search engine** that provides context-aware vulnerability information including exploit availability, risk scoring, and remediation guidance.
+VulnSeeker is a **smart CVE search engine** that provides context-rich vulnerability information including:
 
-### Why VulnSeeker?
-
-| Without VulnSeeker | With VulnSeeker |
-|--------------------|-----------------|
-| Raw CVE data | **Context-rich results** |
-| No exploit info | **Exploit availability** |
-| Manual prioritization | **Risk-based scoring** |
-| No remediation | **Fix recommendations** |
-
-## 🔍 Features
-
-| Feature | Description | Data Source |
-|---------|-------------|-------------|
-| **CVE Search** | Search by keyword, CVE ID | NVD, MITRE |
-| **Exploit Check** | Check for public exploits | ExploitDB, GitHub |
-| **Risk Scoring** | CVSS + context scoring | NVD, First.org |
-| **Remediation** | Fix recommendations | NVD, Vendor advisories |
-| **Trending** | Top vulnerabilities | Real-time analysis |
+- **Real-time NVD API integration** — Search 200,000+ CVEs
+- **CISA KEV correlation** — Know which CVEs are actively exploited
+- **EPSS scoring** — Predict exploitation probability
+- **Risk analysis** — Automated risk assessment with recommendations
+- **Export capabilities** — JSON, CSV, Markdown
 
 ## 🚀 Quick Start
 
 ```bash
-# Install
-pip install vulnseeker
-
-# Or from source
+# Clone
 git clone https://github.com/0xvanguard/vulnseeker.git
 cd vulnseeker
+
+# Install
 pip install -e .
+
+# Search
+python cli.py search "apache log4j"
+
+# Get CVE details
+python cli.py get CVE-2021-44228
+
+# Analyze risk
+python cli.py analyze CVE-2021-44228
+
+# Recent CVEs
+python cli.py recent --days 7
+
+# Product search
+python cli.py product nginx
+
+# Critical CVEs
+python cli.py critical
 ```
+
+## 💻 Python API
 
 ```python
-from vulnseeker import VulnSearch
+from vulnseeker import VulnSeeker
 
-searcher = VulnSearch()
+vs = VulnSeeker()
 
-# Search CVEs
-results = searcher.search("apache log4j")
+# Search
+results = vs.search("apache log4j", min_cvss=7.0)
+for cve in results.cves:
+    print(f"{cve.id}: CVSS {cve.cvss_score} — {cve.risk_level}")
 
-for vuln in results[:5]:
-    print(f"{vuln.cve_id}: {vuln.severity}")
-    print(f"  CVSS: {vuln.cvss_score}")
-    print(f"  Exploits: {vuln.exploit_count}")
-    print(f"  Fix: {vuln.remediation[:50]}...")
+# Get specific CVE
+cve = vs.get_cve("CVE-2021-44228")
+print(f"KEV: {cve.in_kev}")
+print(f"Exploit: {cve.exploit_available}")
+
+# Risk analysis
+analysis = vs.analyze_risk("CVE-2021-44228")
+print(f"Risk: {analysis.risk_level}")
+print(f"Exploitability: {analysis.exploitability}")
+for rec in analysis.recommendations:
+    print(f"  - {rec}")
+
+# Export
+vs.export(results.cves, "report.json", format="json")
+vs.export(results.cves, "report.csv", format="csv")
+vs.export(results.cves, "report.md", format="markdown")
 ```
 
-## 💻 Advanced Search
+## 📊 Features
 
-```python
-from vulnseeker import AdvancedSearch
+| Feature | Description |
+|---------|-------------|
+| **CVE Search** | Full-text search across NVD database |
+| **Risk Analysis** | CVSS + EPSS + KEV context |
+| **Product Lookup** | Find CVEs affecting specific software |
+| **KEV Correlation** | CISA Known Exploited Vulnerabilities |
+| **Export** | JSON, CSV, Markdown formats |
+| **Caching** | Local cache for faster repeated queries |
+| **CLI** | Full-featured command line interface |
 
-searcher = AdvancedSearch()
+## 🛡️ Risk Levels
 
-# Filter by severity
-critical = searcher.filter(severity="CRITICAL", year=2024)
-
-# Check specific software
-vulns = searcher.check_software("nginx", "1.21.0")
-print(f"Found {len(vulns)} vulnerabilities")
-
-# Get exploit details
-for vuln in vulns:
-    if vuln.has_exploit:
-        exploit = searcher.get_exploit(vuln.cve_id)
-        print(f"Exploit: {exploit.url}")
-```
-
-## 📊 Risk Report
-
-```python
-from vulnseeker import RiskReport
-
-report = RiskReport()
-
-# Generate risk report for software stack
-risk = report.analyze({
-    "nginx": "1.21.0",
-    "openssl": "1.1.1",
-    "python": "3.9"
-})
-
-print(f"Overall risk: {risk.score}/100")
-print(f"Critical vulns: {risk.critical}")
-print(f"Recommendations: {len(risk.recommendations)}")
-```
+| Level | CVSS | KEV | Exploit | Action |
+|-------|------|-----|---------|--------|
+| **CRITICAL** | 9.0+ | Yes | Available | Patch immediately |
+| **HIGH** | 7.0-8.9 | Possible | Available | Patch within 24h |
+| **MEDIUM** | 4.0-6.9 | No | Possible | Patch within 7 days |
+| **LOW** | 0-3.9 | No | Unlikely | Patch when convenient |
 
 ## 📁 Project Structure
 
@@ -113,18 +114,24 @@ print(f"Recommendations: {len(risk.recommendations)}")
 vulnseeker/
 ├── src/
 │   ├── __init__.py
-│   └── vulnseeker.py          # Core search engine
-├── data/
-│   ├── cves.json              # CVE database
-│   └── exploits.json          # Exploit database
-├── examples/
-│   └── quick_search.py        # Getting started
+│   └── vulnseeker.py        # Core library (500+ lines)
+├── tests/
+│   ├── __init__.py
+│   └── test_vulnseeker.py   # 11 tests
+├── cli.py                   # CLI tool
+├── requirements.txt
 └── README.md
+```
+
+## 🧪 Tests
+
+```bash
+python -m pytest tests/ -v
 ```
 
 ## 📄 License
 
-MIT License — Seek vulnerabilities.
+MIT License — Search vulnerabilities responsibly.
 
 ---
 

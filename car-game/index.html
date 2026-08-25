@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🏎️ Carreras Locas</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #1a1a2e;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #eee;
+      overflow: hidden;
+    }
+    h1 {
+      margin-bottom: 10px;
+      font-size: 2rem;
+      text-shadow: 0 0 20px #00d4ff, 0 0 40px #00d4ff;
+      color: #00d4ff;
+    }
+    #hud {
+      display: flex;
+      gap: 30px;
+      margin-bottom: 10px;
+      font-size: 1.1rem;
+    }
+    #hud span { background: rgba(0,212,255,0.15); padding: 6px 16px; border-radius: 8px; border: 1px solid #00d4ff55; }
+    canvas {
+      border: 2px solid #00d4ff44;
+      border-radius: 12px;
+      box-shadow: 0 0 40px rgba(0,212,255,0.2);
+    }
+    #start-screen, #gameover-screen {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      z-index: 10;
+    }
+    #gameover-screen { display: none; }
+    .big-btn {
+      padding: 14px 40px;
+      font-size: 1.3rem;
+      border: 2px solid #00d4ff;
+      background: transparent;
+      color: #00d4ff;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .big-btn:hover { background: #00d4ff22; transform: scale(1.05); }
+    .instructions { font-size: 0.9rem; color: #aaa; text-align: center; line-height: 1.6; }
+    #mobile-controls {
+      display: none;
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .ctrl-btn {
+      width: 70px; height: 70px;
+      border-radius: 50%;
+      border: 2px solid #00d4ff66;
+      background: rgba(0,212,255,0.1);
+      color: #00d4ff;
+      font-size: 1.8rem;
+      cursor: pointer;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    .ctrl-btn:active { background: rgba(0,212,255,0.3); }
+  </style>
+</head>
+<body>
+  <h1>🏎️ Carreras Locas</h1>
+
+  <div id="hud">
+    <span>🏆 Puntos: <b id="score">0</b></span>
+    <span>❤️ Vidas: <b id="lives">3</b></span>
+    <span>⚡ Velocidad: <b id="speed-display">1</b></span>
+  </div>
+
+  <canvas id="game" width="400" height="600"></canvas>
+
+  <div id="mobile-controls">
+    <button class="ctrl-btn" id="btn-left">◀</button>
+    <button class="ctrl-btn" id="btn-up">▲</button>
+    <button class="ctrl-btn" id="btn-down">▼</button>
+    <button class="ctrl-btn" id="btn-right">▶</button>
+  </div>
+
+  <div id="start-screen">
+    <p class="instructions">
+      🎮 <b>Controles:</b><br>
+      ← → Flechas o A/D para mover<br>
+      ↑ ↓ Acelerar / Frenar<br><br>
+      Esquiva los carros enemigos 🚗<br>
+      ¡Cada 500 puntos subes de nivel!
+    </p>
+    <button class="big-btn" id="start-btn">¡JUGAR!</button>
+  </div>
+
+  <div id="gameover-screen">
+    <p style="font-size:1.6rem;">💥 GAME OVER</p>
+    <p>Puntuación final: <b id="final-score">0</b></p>
+    <p>Nivel alcanzado: <b id="final-level">1</b></p>
+    <button class="big-btn" id="restart-btn">Jugar de nuevo</button>
+  </div>
+
+<script>
+const canvas = document.getElementById('game');
+const ctx = canvas.getContext('2d');
+const W = canvas.width;
+const H = canvas.height;
+
+// --- State ---
+let player, enemies, particles, stars;
+let score, lives, level, gameOver, running;
+let baseSpeed, spawnTimer;
+let keys = {};
+
+// --- Player Car ---
+function createPlayer() {
+  return { x: W / 2 - 20, y: H - 100, w: 40, h: 70, color: '#00d4ff', vx: 0 };
+}
+
+// --- Enemy Cars ---
+const enemyColors = ['#ff4757', '#ff6348', '#ffa502', '#ff7eb3', '#7bed9f', '#eccc68'];
+function spawnEnemy() {
+  const w = 40, h = 70;
+  const laneX = [50, 110, 170, 230, 290, 350];
+  const x = laneX[Math.floor(Math.random() * laneX.length)] - w / 2;
+  const speed = baseSpeed + Math.random() * 1.5;
+  const color = enemyColors[Math.floor(Math.random() * enemyColors.length)];
+  return { x, y: -h, w, h, color, speed, scored: false };
+}
+
+// --- Particles ---
+function spawnExplosion(x, y) {
+  for (let i = 0; i < 18; i++) {
+    const angle = Math.random() * Math.PI * 2;
+    const spd = 2 + Math.random() * 4;
+    particles.push({
+      x, y,
+      vx: Math.cos(angle) * spd,
+      vy: Math.sin(angle) * spd,
+      life: 30 + Math.random() * 20,
+      color: ['#ff4757','#ffa502','#ff6348','#fff'][Math.floor(Math.random()*4)],
+      size: 2 + Math.random() * 3
+    });
+  }
+}
+
+// --- Stars ---
+function createStars(count) {
+  const arr = [];
+  for (let i = 0; i < count; i++) {
+    arr.push({ x: Math.random() * W, y: Math.random() * H, speed: 0.5 + Math.random() * 2, size: 0.5 + Math.random() * 1.5 });
+  }
+  return arr;
+}
+
+// --- Draw helpers ---
+function drawCar(x, y, w, h, color, isPlayer) {
+  // Body
+  ctx.fillStyle = color;
+  roundRect(x, y, w, h, 8);
+  // Windshield
+  ctx.fillStyle = isPlayer ? '#0ff' : '#fff3';
+  roundRect(x + 6, y + (isPlayer ? 10 : 14), w - 12, 14, 4);
+  // Headlights / taillights
+  ctx.fillStyle = isPlayer ? '#fff' : '#ff0';
+  ctx.fillRect(x + 3, y + h - 8, 6, 4);
+  ctx.fillRect(x + w - 9, y + h - 8, 6, 4);
+  // Shadow
+  ctx.fillStyle = 'rgba(0,0,0,0.2)';
+  roundRect(x + 2, y + 2, w, h, 8);
+}
+
+function roundRect(x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.lineTo(x + w - r, y);
+  ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+  ctx.lineTo(x + w, y + h - r);
+  ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+  ctx.lineTo(x + r, y + h);
+  ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+  ctx.lineTo(x, y + r);
+  ctx.quadraticCurveTo(x, y, x + r, y);
+  ctx.fill();
+}
+
+function drawRoad() {
+  // Asphalt
+  ctx.fillStyle = '#2d2d3f';
+  ctx.fillRect(0, 0, W, H);
+  // Lane lines
+  const dashY = (Date.now() * 0.06 * baseSpeed) % 40;
+  ctx.fillStyle = '#ffffff22';
+  for (let lane of [80, 140, 200, 260, 320]) {
+    for (let dy = -40 + dashY; dy < H + 40; dy += 40) {
+      ctx.fillRect(lane - 1, dy, 2, 20);
+    }
+  }
+  // Road edges
+  ctx.fillStyle = '#ffffff11';
+  ctx.fillRect(20, 0, 3, H);
+  ctx.fillRect(W - 23, 0, 3, H);
+}
+
+// --- Collision ---
+function collides(a, b) {
+  const pad = 6;
+  return a.x + pad < b.x + b.w - pad &&
+         a.x + a.w - pad > b.x + pad &&
+         a.y + pad < b.y + b.h - pad &&
+         a.y + a.h - pad > b.y + pad;
+}
+
+// --- Init ---
+function init() {
+  player = createPlayer();
+  enemies = [];
+  particles = [];
+  stars = createStars(60);
+  score = 0;
+  lives = 3;
+  level = 1;
+  baseSpeed = 3;
+  spawnTimer = 0;
+  gameOver = false;
+  running = true;
+  updateHUD();
+}
+
+// --- Update ---
+function update() {
+  if (gameOver) return;
+
+  // Player movement
+  const accel = 0.8;
+  const maxSpeed = 5;
+  const friction = 0.88;
+
+  if (keys['ArrowLeft'] || keys['KeyA']) player.vx -= accel;
+  if (keys['ArrowRight'] || keys['KeyD']) player.vx += accel;
+  if (keys['ArrowUp'] || keys['KeyW']) baseSpeed = Math.min(baseSpeed + 0.03, 8);
+  if (keys['ArrowDown'] || keys['KeyS']) baseSpeed = Math.max(baseSpeed - 0.03, 2);
+
+  player.vx = Math.max(-maxSpeed, Math.min(maxSpeed, player.vx));
+  player.vx *= friction;
+  player.x += player.vx;
+  player.x = Math.max(22, Math.min(W - player.w - 22, player.x));
+
+  // Spawn enemies
+  spawnTimer++;
+  const spawnRate = Math.max(25, 70 - level * 6);
+  if (spawnTimer >= spawnRate) {
+    enemies.push(spawnEnemy());
+    spawnTimer = 0;
+  }
+
+  // Update enemies
+  for (let i = enemies.length - 1; i >= 0; i--) {
+    const e = enemies[i];
+    e.y += e.speed + baseSpeed;
+
+    // Collision
+    if (collides(player, e)) {
+      spawnExplosion(e.x + e.w / 2, e.y + e.h / 2);
+      enemies.splice(i, 1);
+      lives--;
+      updateHUD();
+      if (lives <= 0) endGame();
+      continue;
+    }
+
+    // Score
+    if (!e.scored && e.y + e.h > player.y + player.h) {
+      e.scored = true;
+      score += 10;
+      // Level up
+      const newLevel = Math.floor(score / 500) + 1;
+      if (newLevel > level) {
+        level = newLevel;
+        // Celebration particles
+        for (let j = 0; j < 30; j++) {
+          particles.push({
+            x: W / 2, y: H / 2,
+            vx: (Math.random() - 0.5) * 10,
+            vy: (Math.random() - 0.5) * 10,
+            life: 50,
+            color: enemyColors[j % enemyColors.length],
+            size: 3
+          });
+        }
+      }
+      updateHUD();
+    }
+
+    // Off screen
+    if (e.y > H + 50) enemies.splice(i, 1);
+  }
+
+  // Update particles
+  for (let i = particles.length - 1; i >= 0; i--) {
+    const p = particles[i];
+    p.x += p.vx;
+    p.y += p.vy;
+    p.life--;
+    p.vx *= 0.96;
+    p.vy *= 0.96;
+    if (p.life <= 0) particles.splice(i, 1);
+  }
+
+  // Stars
+  for (let s of stars) {
+    s.y += s.speed * baseSpeed;
+    if (s.y > H) { s.y = 0; s.x = Math.random() * W; }
+  }
+}
+
+// --- Draw ---
+function draw() {
+  drawRoad();
+
+  // Stars
+  for (let s of stars) {
+    ctx.fillStyle = `rgba(255,255,255,${0.3 + s.speed * 0.15})`;
+    ctx.fillRect(s.x, s.y, s.size, s.size);
+  }
+
+  // Enemies
+  for (let e of enemies) {
+    drawCar(e.x, e.y, e.w, e.h, e.color, false);
+  }
+
+  // Player
+  drawCar(player.x, player.y, player.w, player.h, player.color, true);
+
+  // Player glow
+  ctx.shadowColor = '#00d4ff';
+  ctx.shadowBlur = 20;
+  drawCar(player.x, player.y, player.w, player.h, '#00d4ff', true);
+  ctx.shadowBlur = 0;
+
+  // Particles
+  for (let p of particles) {
+    ctx.globalAlpha = p.life / 50;
+    ctx.fillStyle = p.color;
+    ctx.fillRect(p.x, p.y, p.size, p.size);
+  }
+  ctx.globalAlpha = 1;
+}
+
+function updateHUD() {
+  document.getElementById('score').textContent = score;
+  document.getElementById('lives').textContent = lives;
+  document.getElementById('speed-display').textContent = level;
+}
+
+function endGame() {
+  gameOver = true;
+  running = false;
+  document.getElementById('final-score').textContent = score;
+  document.getElementById('final-level').textContent = level;
+  document.getElementById('gameover-screen').style.display = 'flex';
+}
+
+// --- Game Loop ---
+function loop() {
+  if (!running) return;
+  update();
+  draw();
+  requestAnimationFrame(loop);
+}
+
+// --- Controls ---
+document.addEventListener('keydown', e => {
+  keys[e.code] = true;
+  if (['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','Space'].includes(e.code)) {
+    e.preventDefault();
+  }
+});
+document.addEventListener('keyup', e => { keys[e.code] = false; });
+
+// Mobile controls
+function setupMobile() {
+  const btnLeft = document.getElementById('btn-left');
+  const btnRight = document.getElementById('btn-right');
+  const btnUp = document.getElementById('btn-up');
+  const btnDown = document.getElementById('btn-down');
+
+  const press = (code) => (e) => { e.preventDefault(); keys[code] = true; };
+  const release = (code) => (e) => { e.preventDefault(); keys[code] = false; };
+
+  btnLeft.addEventListener('touchstart', press('ArrowLeft'));
+  btnLeft.addEventListener('touchend', release('ArrowLeft'));
+  btnRight.addEventListener('touchstart', press('ArrowRight'));
+  btnRight.addEventListener('touchend', release('ArrowRight'));
+  btnUp.addEventListener('touchstart', press('ArrowUp'));
+  btnUp.addEventListener('touchend', release('ArrowUp'));
+  btnDown.addEventListener('touchstart', press('ArrowDown'));
+  btnDown.addEventListener('touchend', release('ArrowDown'));
+}
+
+// Show mobile controls on touch devices
+if ('ontouchstart' in window) {
+  document.getElementById('mobile-controls').style.display = 'flex';
+  setupMobile();
+}
+
+// --- Buttons ---
+document.getElementById('start-btn').addEventListener('click', () => {
+  document.getElementById('start-screen').style.display = 'none';
+  init();
+  loop();
+});
+
+document.getElementById('restart-btn').addEventListener('click', () => {
+  document.getElementById('gameover-screen').style.display = 'none';
+  init();
+  loop();
+});
+
+// Initial background animation
+(function bgLoop() {
+  if (running) return;
+  ctx.fillStyle = '#1a1a2e';
+  ctx.fillRect(0, 0, W, H);
+  // Animated background stars
+  if (!stars) stars = createStars(60);
+  const t = Date.now() * 0.01;
+  for (let s of stars) {
+    s.y += s.speed;
+    if (s.y > H) { s.y = 0; s.x = Math.random() * W; }
+    ctx.fillStyle = `rgba(0,212,255,${0.2 + Math.sin(t + s.x) * 0.15})`;
+    ctx.fillRect(s.x, s.y, s.size, s.size);
+  }
+  requestAnimationFrame(bgLoop);
+})();
+</script>
+</body>
+</html>

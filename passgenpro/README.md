@@ -2,16 +2,17 @@
 
 # 🔐 PassGen Pro
 
-### Password Generator with Visual Entropy Display
+### Password Generator with Entropy Visualization
 
-![Version](https://img.shields.io/badge/version-1.0.0-blue)
+![Version](https://img.shields.io/badge/version-2.0.0-blue)
 ![Python](https://img.shields.io/badge/python-3.8+-green)
 ![License](https://img.shields.io/badge/license-MIT-yellow)
 ![Entropy](https://img.shields.io/badge/entropy-128--bit-green)
+![Security](https://img.shields.io/badge/security-cryptographic-green)
 
 **Generate secure passwords** with visual entropy analysis and strength scoring.
 
-[PassGen Pro](https://github.com/0xvanguard/passgenpro) • [Try It Live](#quick-start) • [Features](#features)
+[PassGen Pro](https://github.com/0xvanguard/passgenpro) • [Quick Start](#quick-start) • [Features](#features)
 
 </div>
 
@@ -19,94 +20,95 @@
 
 ## 🔐 What is PassGen Pro?
 
-PassGen Pro is a **password generator** with visual entropy display, strength analysis, and breach checking. It helps users create and evaluate strong passwords.
+PassGen Pro is a **cryptographically secure password generator** with visual entropy display, strength analysis, and breach checking.
 
 ### Why PassGen Pro?
 
 | Without PassGen Pro | With PassGen Pro |
 |---------------------|------------------|
 | Weak passwords | **Cryptographically secure** |
-| No strength visualization | **Visual entropy display** |
+| No strength visualization | **Visual entropy bar** |
 | No breach checking | **Breach database check** |
 | Hard to remember | **Passphrase generation** |
 
-## 🔍 Features
+## 🎯 Features
 
 | Feature | Description |
 |---------|-------------|
 | **Random Generation** | Cryptographically secure passwords |
 | **Passphrase Generation** | BIP39 word-based passphrases |
+| **PIN Generation** | Numeric PIN codes |
 | **Entropy Display** | Visual entropy bar and score |
-| **Breach Check** | Check against HaveIBeenPwned |
-| **Custom Rules** | Define password requirements |
-| **History** | Track generated passwords |
+| **Strength Analysis** | Detailed strength scoring |
+| **Crack Time Estimation** | Time to crack calculation |
+| **Batch Generation** | Generate multiple passwords |
+| **Breach Check** | Check against breach databases |
 
 ## 🚀 Quick Start
 
 ```bash
-# Install
-pip install passgenpro
-
-# Or from source
+# Clone
 git clone https://github.com/0xvanguard/passgenpro.git
 cd passgenpro
-pip install -e .
-```
-
-```python
-from passgenpro import Generator
-
-gen = Generator()
 
 # Generate random password
-password = gen.random(length=20)
-print(f"Password: {password}")
-print(f"Entropy: {password.entropy} bits")
-print(f"Strength: {password.strength}")  # Visual bar
+python cli.py random --length 20
 
 # Generate passphrase
-passphrase = gen.passphrase(words=6)
-print(f"Passphrase: {passphrase}")
+python cli.py passphrase --words 6
 
-# Check if breached
-is_breached = gen.check_breach(password)
-print(f"Breached: {is_breached}")
+# Generate PIN
+python cli.py pin --length 6
+
+# Check password strength
+python cli.py check "MyPassword123!"
+
+# Generate batch
+python cli.py batch --count 5
 ```
 
-## 💻 Advanced Usage
+## 💻 Python API
 
 ```python
-from passgenpro import AdvancedGenerator
+from passgenpro import PassGen
 
-gen = AdvancedGenerator()
+gen = PassGen()
 
-# Custom rules
-password = gen.generate(
-    length=24,
-    uppercase=True,
-    lowercase=True,
-    digits=True,
-    symbols=True,
-    exclude_similar=True,
-    exclude_ambiguous=True
-)
+# Random password
+password = gen.random(length=20)
+print(f"Password: {password.password}")
+print(f"Entropy: {password.entropy} bits")
+print(f"Strength: {password.strength_bar}")
+print(f"Crack Time: {password.crack_time}")
+
+# Passphrase
+passphrase = gen.passphrase(words=6)
+print(f"Passphrase: {passphrase.password}")
+
+# PIN
+pin = gen.pin(length=6)
+print(f"PIN: {pin.password}")
+
+# Check strength
+result = gen.check_strength("MyPassword123!")
+print(f"Strength: {result.strength}")
+print(f"Score: {result.strength_score}/100")
 
 # Batch generation
-passwords = gen.batch(count=10, length=20)
-
-# Export
-gen.export(passwords, format="csv", file="passwords.csv")
+passwords = gen.random_batch(count=5, length=16)
+for p in passwords:
+    print(f"{p.password} [{p.strength}]")
 ```
 
-## 📊 Entropy Visualization
+## 📊 Strength Levels
 
-```
-Password: J#8kL$mN2pQ!rT5vX@yZ
-Length: 20 characters
-Entropy: 128.5 bits
-Strength: [████████████████████] Excellent
-Time to crack: 10^38 years
-```
+| Level | Score | Description |
+|-------|-------|-------------|
+| **VERY_STRONG** | 80-100 | Excellent security |
+| **STRONG** | 60-79 | Good security |
+| **FAIR** | 40-59 | Moderate security |
+| **WEAK** | 20-39 | Poor security |
+| **VERY_WEAK** | 0-19 | No security |
 
 ## 📁 Project Structure
 
@@ -114,12 +116,19 @@ Time to crack: 10^38 years
 passgenpro/
 ├── src/
 │   ├── __init__.py
-│   └── generator.py           # Core generator
-├── data/
-│   └── wordlists.json         # BIP39 wordlists
-├── examples/
-│   └── quick_generate.py      # Getting started
+│   └── generator.py          # Core generator (500+ lines)
+├── tests/
+│   ├── __init__.py
+│   └── test_generator.py     # 15 tests
+├── cli.py                    # CLI tool
+├── requirements.txt
 └── README.md
+```
+
+## 🧪 Tests
+
+```bash
+python -m pytest tests/ -v
 ```
 
 ## 📄 License

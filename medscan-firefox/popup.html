@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MedScan</title>
+  <link rel="stylesheet" href="styles/popup.css">
+</head>
+<body>
+  <div class="popup-container">
+    <!-- Header -->
+    <div class="popup-header">
+      <div class="logo">
+        <span class="logo-icon">🔍</span>
+        <span class="logo-text">MedScan</span>
+      </div>
+      <div class="version">v1.0</div>
+    </div>
+
+    <!-- Status -->
+    <div class="status-bar" id="statusBar">
+      <div class="status-dot active"></div>
+      <span>Active — Scanning for medical claims</span>
+    </div>
+
+    <!-- Quick Scan Button -->
+    <button class="scan-btn" id="scanBtn">
+      <span class="scan-icon">⚡</span>
+      Scan Current Page
+    </button>
+
+    <!-- Stats -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-number" id="totalScanned">0</div>
+        <div class="stat-label">Claims Scanned</div>
+      </div>
+      <div class="stat-card danger">
+        <div class="stat-number" id="falseFound">0</div>
+        <div class="stat-label">False Found</div>
+      </div>
+      <div class="stat-card warning">
+        <div class="stat-number" id="misleadingFound">0</div>
+        <div class="stat-label">Misleading</div>
+      </div>
+    </div>
+
+    <!-- Recent Activity -->
+    <div class="section">
+      <div class="section-header">
+        <h3>Recent Activity</h3>
+        <button class="clear-btn" id="clearHistory">Clear</button>
+      </div>
+      <div class="history-list" id="historyList">
+        <div class="empty-state">
+          <span class="empty-icon">📭</span>
+          <p>No claims scanned yet</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Settings -->
+    <div class="section">
+      <div class="section-header">
+        <h3>Settings</h3>
+      </div>
+      <div class="setting-row">
+        <span>Auto-scan pages</span>
+        <label class="toggle">
+          <input type="checkbox" id="autoScan" checked>
+          <span class="slider"></span>
+        </label>
+      </div>
+      <div class="setting-row">
+        <span>Show badges</span>
+        <label class="toggle">
+          <input type="checkbox" id="showBadges" checked>
+          <span class="slider"></span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="popup-footer">
+      <span>🛡️ Protecting health, one scan at a time</span>
+      <a href="https://medscan.community" target="_blank" class="footer-link">About</a>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

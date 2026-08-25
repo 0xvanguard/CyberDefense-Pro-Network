@@ -1,3 +1,6 @@
-"""PassGen Pro - Password Generator with Visual Entropy"""
-from .generator import PassGen, PasswordAnalysis
-__version__ = "1.0.0"
+"""PassGen Pro — Password Generator with Entropy Visualization"""
+
+from .generator import PassGen, Password, EntropyAnalysis
+
+__version__ = "2.0.0"
+__all__ = ["PassGen", "Password", "EntropyAnalysis"]
