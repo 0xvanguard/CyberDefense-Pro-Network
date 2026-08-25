@@ -5,6 +5,38 @@ Each repo entry contains metadata for the CLI to work with.
 
 REPOS = {
     # === AI Security Block ===
+    "guardrailforge": {
+        "name": "GuardRailForge",
+        "description": "Framework to test, break, and harden LLM guardrails",
+        "category": "ai-security",
+        "language": "Python",
+        "tags": ["ai", "guardrails", "testing", "red-team"],
+        "priority": 1,
+    },
+    "llmfuzz": {
+        "name": "LLMFuzz",
+        "description": "Automated fuzzer for LLM system prompts",
+        "category": "ai-security",
+        "language": "Python",
+        "tags": ["ai", "fuzzer", "prompts", "mutation"],
+        "priority": 1,
+    },
+    "modelscope": {
+        "name": "ModelScope",
+        "description": "Real-time monitoring dashboard for AI model deployments",
+        "category": "ai-security",
+        "language": "Python",
+        "tags": ["ai", "monitoring", "dashboard", "security"],
+        "priority": 1,
+    },
+    "agentfirewall": {
+        "name": "AgentFirewall",
+        "description": "Security proxy for AI agents — intercept and block malicious requests",
+        "category": "ai-security",
+        "language": "Python",
+        "tags": ["ai", "firewall", "proxy", "injection"],
+        "priority": 1,
+    },
     "medscan": {
         "name": "MedScan",
         "description": "Medical misinformation detector — Firefox extension that flags false health claims in real-time",
@@ -63,6 +95,22 @@ REPOS = {
     },
 
     # === Security Tools Block ===
+    "phishguard": {
+        "name": "PhishGuard",
+        "description": "AI-powered phishing detection for emails, URLs, and messages",
+        "category": "security-tools",
+        "language": "Python",
+        "tags": ["phishing", "detection", "email", "security"],
+        "priority": 1,
+    },
+    "netmapper": {
+        "name": "NetMapper",
+        "description": "Automated network mapping and topology visualization",
+        "category": "security-tools",
+        "language": "Python",
+        "tags": ["network", "mapping", "scanner", "topology"],
+        "priority": 1,
+    },
     "vulnseeker": {
         "name": "VulnSeeker",
         "description": "CVE search engine with risk context and exploit availability",
@@ -291,14 +339,15 @@ CATEGORIES = {
     "ai-security": {
         "name": "🛡️ AI Security",
         "color": "#ef4444",
-        "repos": ["medscan", "promptkiller", "jailbreakbench", "guarddog",
+        "repos": ["guardrailforge", "llmfuzz", "modelscope", "agentfirewall",
+                  "medscan", "promptkiller", "jailbreakbench", "guarddog",
                   "constitutionalkit", "injectionmapper", "redteamos"],
     },
     "security-tools": {
         "name": "🔐 Security Tools",
         "color": "#3b82f6",
-        "repos": ["vulnseeker", "zerotrustkit", "passgenpro", "threatmap",
-                  "riskcalculator"],
+        "repos": ["phishguard", "netmapper", "vulnseeker", "zerotrustkit",
+                  "passgenpro", "threatmap", "riskcalculator"],
     },
     "education": {
         "name": "📚 Education",
