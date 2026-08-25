@@ -93,6 +93,30 @@ REPOS = {
         "tags": ["ai", "red-team", "os", "live-boot"],
         "priority": 2,
     },
+    "cyberbot": {
+        "name": "CyberBot",
+        "description": "Cybersecurity training chatbot with interactive exercises",
+        "category": "ai-security",
+        "language": "Python",
+        "tags": ["chatbot", "training", "ai", "cybersecurity"],
+        "priority": 1,
+    },
+    "aishield": {
+        "name": "AIShield",
+        "description": "Real-time adversarial defense for AI models",
+        "category": "ai-security",
+        "language": "Python",
+        "tags": ["ai", "adversarial", "defense", "hardening"],
+        "priority": 1,
+    },
+    "threatsim": {
+        "name": "ThreatSim",
+        "description": "Synthetic attack scenario generator for training",
+        "category": "ai-security",
+        "language": "Python",
+        "tags": ["simulation", "attack", "training", "scenarios"],
+        "priority": 1,
+    },
 
     # === Security Tools Block ===
     "phishguard": {
@@ -150,6 +174,22 @@ REPOS = {
         "language": "Python",
         "tags": ["risk", "cvss", "fair", "calculator"],
         "priority": 2,
+    },
+    "cyberguard": {
+        "name": "CyberGuard",
+        "description": "Automated security policy enforcer with compliance reports",
+        "category": "security-tools",
+        "language": "Python",
+        "tags": ["policy", "compliance", "automation", "soc2", "hipaa"],
+        "priority": 1,
+    },
+    "threathunt": {
+        "name": "ThreatHunt",
+        "description": "Automated threat hunting with AI and MITRE ATT&CK mapping",
+        "category": "security-tools",
+        "language": "Python",
+        "tags": ["threat-hunting", "mitre", "ai", "detection"],
+        "priority": 1,
     },
 
     # === Education Block ===
@@ -341,13 +381,15 @@ CATEGORIES = {
         "color": "#ef4444",
         "repos": ["guardrailforge", "llmfuzz", "modelscope", "agentfirewall",
                   "medscan", "promptkiller", "jailbreakbench", "guarddog",
-                  "constitutionalkit", "injectionmapper", "redteamos"],
+                  "constitutionalkit", "injectionmapper", "redteamos",
+                  "cyberbot", "aishield", "threatsim"],
     },
     "security-tools": {
         "name": "🔐 Security Tools",
         "color": "#3b82f6",
         "repos": ["phishguard", "netmapper", "vulnseeker", "zerotrustkit",
-                  "passgenpro", "threatmap", "riskcalculator"],
+                  "passgenpro", "threatmap", "riskcalculator",
+                  "cyberguard", "threathunt"],
     },
     "education": {
         "name": "📚 Education",
