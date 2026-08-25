@@ -1,0 +1,168 @@
+#!/usr/bin/env python3
+"""
+0xv — 0xvanguard CLI
+
+Manage 35 cybersecurity repos from one terminal.
+
+Usage:
+    0xv list [--category <cat>] [--verbose]
+    0xv search <query>
+    0xv info <repo>
+    0xv status
+    0xv audit [all|<category>|<repo>] [--severity HIGH|MEDIUM|LOW]
+    0xv sync [status|create-missing|push-all|full] [--dry-run]
+    0xv readme [all|<category>|<repo>]
+    0xv report
+    0xv categories
+    0xv help
+"""
+
+import sys
+import os
+
+# Add project root to path
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
+from src.repos import REPOS, CATEGORIES
+from utils.display import C, print_banner, print_header, print_error, print_info, print_table
+
+
+def parse_args(argv):
+    """Simple argument parser."""
+    args = {"command": "", "target": "", "options": {}}
+
+    if len(argv) < 2:
+        args["command"] = "help"
+        return args
+
+    args["command"] = argv[1]
+
+    if len(argv) > 2:
+        args["target"] = argv[2]
+
+    # Parse flags
+    i = 3
+    while i < len(argv):
+        arg = argv[i]
+        if arg.startswith("--"):
+            key = arg[2:].replace("-", "_")
+            if i + 1 < len(argv) and not argv[i + 1].startswith("--"):
+                args["options"][key] = argv[i + 1]
+                i += 2
+            else:
+                args["options"][key] = True
+                i += 1
+        else:
+            i += 1
+
+    return args
+
+
+def cmd_help():
+    """Print help."""
+    print_banner()
+    print(f"""{C.BOLD}COMMANDS:{C.RESET}
+
+  {C.CYAN}list{C.RESET} [--category <cat>] [--verbose]
+      List all repos, optionally filtered by category
+
+  {C.CYAN}search{C.RESET} <query>
+      Search repos by name, description, or tags
+
+  {C.CYAN}info{C.RESET} <repo>
+      Show detailed info about a specific repo
+
+  {C.CYAN}status{C.RESET}
+      Show overall portfolio status
+
+  {C.CYAN}categories{C.RESET}
+      List all categories
+
+  {C.CYAN}audit{C.RESET} [all|<category>|<repo>] [--severity HIGH|MEDIUM|LOW]
+      Security audit — scan for hardcoded secrets, XSS, etc.
+
+  {C.CYAN}sync{C.RESET} [status|create-missing|push-all|full] [--dry-run]
+      Sync local repos with GitHub
+
+  {C.CYAN}readme{C.RESET} [all|<category>|<repo>]
+      Generate README.md files for repos
+
+  {C.CYAN}report{C.RESET}
+      Generate full portfolio report
+
+  {C.CYAN}help{C.RESET}
+      Show this help
+
+{C.BOLD}CATEGORIES:{C.RESET}
+  ai-security    🛡️  AI Security (7 repos)
+  security-tools 🔐 Security Tools (5 repos)
+  education      📚 Education (9 repos)
+  productivity   ⚡ Productivity (10 repos)
+  ai-good        💚 AI for Good (3 repos)
+
+{C.BOLD}EXAMPLES:{C.RESET}
+  0xv list
+  0xv list --category ai-security
+  0xv search encryption
+  0xv info promptkiller
+  0xv audit all --severity HIGH
+  0xv sync status
+  0xv sync create-missing
+  0xv report
+""")
+
+
+def cmd_categories():
+    """List all categories."""
+    print_header("📂 Categories")
+    for key, cat in CATEGORIES.items():
+        count = len([r for r in cat["repos"] if r in REPOS])
+        print(f"  {cat['color']}{C.BOLD}{cat['name']}{C.RESET} — {count} repos")
+        for repo_name in cat["repos"]:
+            if repo_name in REPOS:
+                print(f"    {C.DIM}•{C.RESET} {repo_name}")
+        print()
+
+
+def main():
+    args = parse_args(sys.argv)
+    command = args["command"]
+    target = args["target"]
+    opts = args["options"]
+
+    if command == "help" or command == "" or command == "-h" or command == "--help":
+        cmd_help()
+    elif command == "list":
+        from commands.repos_cmd import cmd_list
+        cmd_list({"category": target or opts.get("category"), "verbose": opts.get("verbose"), "all": opts.get("all")})
+    elif command == "search":
+        from commands.repos_cmd import cmd_search
+        cmd_search({"query": target})
+    elif command == "info":
+        from commands.repos_cmd import cmd_info
+        cmd_info({"repo": target})
+    elif command == "status":
+        from commands.repos_cmd import cmd_status
+        cmd_status({})
+    elif command == "categories":
+        cmd_categories()
+    elif command == "audit":
+        from commands.audit_cmd import cmd_audit
+        cmd_audit({"target": target or "all", "severity": opts.get("severity", "")})
+    elif command == "sync":
+        from commands.sync_cmd import cmd_sync
+        cmd_sync({"action": target or "status", "dry_run": opts.get("dry_run")})
+    elif command == "readme":
+        from commands.generate_cmd import cmd_generate_readme
+        cmd_generate_readme({"target": target or "all", "output": opts.get("output", ".")})
+    elif command == "report":
+        from commands.generate_cmd import cmd_generate_report
+        cmd_generate_report({"output": opts.get("output", "PORTFOLIO_REPORT.md")})
+    else:
+        print_error(f"Unknown command: {command}")
+        print_info("Run '0xv help' for available commands")
+        sys.exit(1)
+
+
+if __name__ == "__main__":
+    main()
