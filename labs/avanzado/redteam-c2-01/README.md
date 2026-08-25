@@ -1,3 +1,10 @@
+
+::: tip 🧪 Lab Interactivo Disponible
+**¿Quieres practicar esto en tu navegador?** Tenemos una versión interactiva con terminal simulada, comandos reales y tracking de progreso.
+
+👉 [**Abrir Lab Interactivo — Sin Docker**](/CyberDefense-Pro-Network/labs-interactive/lab-redteam-c2-01.html)
+:::
+
 # 🔴 Lab redteam-c2-01: Red Team C2 Operations
 
 > Despliega un C2 covert channel, evadiendo detección, y documenta qué vio el defender.

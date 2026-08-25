@@ -1,3 +1,10 @@
+
+::: tip 🧪 Lab Interactivo Disponible
+**¿Quieres practicar esto en tu navegador?** Tenemos una versión interactiva con terminal simulada, comandos reales y tracking de progreso.
+
+👉 [**Abrir Lab Interactivo — Sin Docker**](/CyberDefense-Pro-Network/labs-interactive/lab-social-01.html)
+:::
+
 # 🎭 Lab social-01: Ingeniería Social — Campañas de Phishing
 
 > Diseña y ejecuta campañas de phishing controladas en un entorno seguro, analizando la efectividad de diferentes vectores y aprendiendo a defender contra ellos.

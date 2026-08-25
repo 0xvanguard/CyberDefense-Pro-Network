@@ -1,3 +1,10 @@
+
+::: tip 🧪 Lab Interactivo Disponible
+**¿Quieres practicar esto en tu navegador?** Tenemos una versión interactiva con terminal simulada, comandos reales y tracking de progreso.
+
+👉 [**Abrir Lab Interactivo — Sin Docker**](/CyberDefense-Pro-Network/labs-interactive/lab-vulnscan-01.html)
+:::
+
 # 🛡️ Lab vulnscan-01: Análisis de Vulnerabilidades
 
 > Escanea, clasifica y documenta vulnerabilidades usando Nuclei, Nmap NSE y searchsploit con metodología CVSS/CIA.

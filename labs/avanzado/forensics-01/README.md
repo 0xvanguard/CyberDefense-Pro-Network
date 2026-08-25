@@ -1,3 +1,10 @@
+
+::: tip 🧪 Lab Interactivo Disponible
+**¿Quieres practicar esto en tu navegador?** Tenemos una versión interactiva con terminal simulada, comandos reales y tracking de progreso.
+
+👉 [**Abrir Lab Interactivo — Sin Docker**](/CyberDefense-Pro-Network/labs-interactive/lab-forensics-01.html)
+:::
+
 # 🔍 Lab forensics-01: Digital Forensics
 
 > Analiza evidencia digital, reconstruye timelines y recupera datos de sistemas comprometidos.

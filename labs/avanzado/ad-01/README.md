@@ -1,3 +1,10 @@
+
+::: tip 🧪 Lab Interactivo Disponible
+**¿Quieres practicar esto en tu navegador?** Tenemos una versión interactiva con terminal simulada, comandos reales y tracking de progreso.
+
+👉 [**Abrir Lab Interactivo — Sin Docker**](/CyberDefense-Pro-Network/labs-interactive/lab-ad-01.html)
+:::
+
 # 🏢 Lab ad-01: Active Directory Attacks
 
 > Simula un entorno empresarial completo y explota vulnerabilidades comunes de Active Directory.

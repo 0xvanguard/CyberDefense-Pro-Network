@@ -1,3 +1,10 @@
+
+::: tip 🧪 Lab Interactivo Disponible
+**¿Quieres practicar esto en tu navegador?** Tenemos una versión interactiva con terminal simulada, comandos reales y tracking de progreso.
+
+👉 [**Abrir Lab Interactivo — Sin Docker**](/CyberDefense-Pro-Network/labs-interactive/lab-recon-01.html)
+:::
+
 # 🔍 Lab recon-01: Reconocimiento y OSINT
 
 > Mapea la superficie de ataque completa de un entorno empresarial simulado con técnicas de reconocimiento pasivo y activo.

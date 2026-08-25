@@ -1,3 +1,10 @@
+
+::: tip 🧪 Lab Interactivo Disponible
+**¿Quieres practicar esto en tu navegador?** Tenemos una versión interactiva con terminal simulada, comandos reales y tracking de progreso.
+
+👉 [**Abrir Lab Interactivo — Sin Docker**](/CyberDefense-Pro-Network/labs-interactive/lab-web-01.html)
+:::
+
 # 🌐 Lab web-01: Web Application Security (OWASP Top 10)
 
 > Identifica y explota vulnerabilidades web comunes siguiendo el OWASP Top 10.

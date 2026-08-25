@@ -1,3 +1,10 @@
+
+::: tip 🧪 Lab Interactivo Disponible
+**¿Quieres practicar esto en tu navegador?** Tenemos una versión interactiva con terminal simulada, comandos reales y tracking de progreso.
+
+👉 [**Abrir Lab Interactivo — Sin Docker**](/CyberDefense-Pro-Network/labs-interactive/lab-persist-01.html)
+:::
+
 # 🔒 Lab persist-01: Técnicas de Persistencia
 
 > Implementa mecanismos de persistencia en sistemas Linux y Windows para mantener acceso tras reinicios.

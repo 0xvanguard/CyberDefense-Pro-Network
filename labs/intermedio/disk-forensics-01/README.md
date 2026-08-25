@@ -1,3 +1,10 @@
+
+::: tip 🧪 Lab Interactivo Disponible
+**¿Quieres practicar esto en tu navegador?** Tenemos una versión interactiva con terminal simulada, comandos reales y tracking de progreso.
+
+👉 [**Abrir Lab Interactivo — Sin Docker**](/CyberDefense-Pro-Network/labs-interactive/lab-disk-forensics-01.html)
+:::
+
 # 🔍 Lab disk-forensics-01: Análisis Forense de Disco
 
 > Analiza una imagen forense de disco para recuperar evidencia, reconstruir timelines y documentar hallazgos con cadena de custodia.
