@@ -1,2 +1,2 @@
-"""Backupcloud"""
-__version__ = "1.0.0"
+from .backup import BackupCloud, BackupJob, BackupStatus
+__version__ = "2.0.0"

@@ -1,3 +1,6 @@
-"""SecureNotes - Encrypted Notes with AI"""
-from .notes import SecureNotes, Note
-__version__ = "1.0.0"
+"""SecureNotes — Encrypted Notes with AI Organization"""
+
+from .notes import SecureNotes, Note, NoteCategory
+
+__version__ = "2.0.0"
+__all__ = ["SecureNotes", "Note", "NoteCategory"]

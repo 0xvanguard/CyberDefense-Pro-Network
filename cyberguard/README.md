@@ -1,139 +1,104 @@
-<div align="center">
+<p align="center">
+  <img src="https://img.shields.io/badge/version-2.0.0-blue?style=for-the-badge">
+  <img src="https://img.shields.io/badge/python-3.10+-yellow?style=for-the-badge&logo=python&logoColor=white">
+  <img src="https://img.shields.io/badge/license-MIT-green?style=for-the-badge">
+  <img src="https://img.shields.io/badge/tests-22-passing-brightgreen?style=for-the-badge">
+  <img src="https://img.shields.io/github/stars/0xvanguard/cyberguard?style=for-the-badge">
+</p>
 
-# 🔒 CyberGuard
+# 🛡️ CyberGuard
 
-### Automated Security Policy Enforcer
+**Automated Security Policy Enforcement — SOC2, HIPAA, PCI-DSS, GDPR, NIST, ISO27001.**
 
-![Version](https://img.shields.io/badge/version-1.0.0-blue)
-![Python](https://img.shields.io/badge/python-3.8+-green)
-![License](https://img.shields.io/badge/license-MIT-yellow)
-![Frameworks](https://img.shields.io/badge/frameworks-6-purple)
+CyberGuard scans infrastructure against compliance frameworks, detects policy violations, auto-remediates where possible, and generates compliance reports with risk scores.
 
-**Enforce security policies automatically** with compliance reporting.
+## ✨ Features
 
-[CyberGuard](https://github.com/0xvanguard/cyberguard) • [Try It Live](#quick-start) • [Compliance](#compliance-frameworks)
-
-</div>
-
----
-
-## 🔒 What is CyberGuard?
-
-CyberGuard is an **automated security policy enforcement engine** that scans infrastructure for policy violations and generates compliance reports for SOC2, HIPAA, PCI-DSS, GDPR, NIST, and ISO27001.
-
-### Why CyberGuard?
-
-| Without CyberGuard | With CyberGuard |
-|--------------------|-----------------|
-| Manual compliance checks | **Automated scanning** |
-| Missed violations | **Continuous monitoring** |
-| No auto-remediation | **Self-healing policies** |
-| No audit trail | **Full compliance reports** |
-
-## 📋 Compliance Frameworks
-
-| Framework | Rules | Coverage |
-|-----------|-------|----------|
-| **SOC2** | 45 | 92% |
-| **HIPAA** | 38 | 88% |
-| **PCI-DSS** | 52 | 95% |
-| **GDPR** | 29 | 85% |
-| **NIST** | 61 | 90% |
-| **ISO27001** | 48 | 87% |
+| Feature | Description |
+|---------|-------------|
+| **6 Frameworks** | SOC2, HIPAA, PCI-DSS, GDPR, NIST, ISO27001 |
+| **Policy Engine** | Custom rules with condition evaluation |
+| **Auto-Remediation** | Fix violations automatically |
+| **Risk Scoring** | 0–100 compliance score |
+| **Compliance Reports** | Text and JSON export |
+| **Custom Policies** | Load rules from JSON files |
+| **Multi-Framework** | Scan against multiple frameworks |
+| **Violation Tracking** | Severity, action, remediation status |
 
 ## 🚀 Quick Start
 
 ```bash
-# Install
-pip install cyberguard
+pip install -r requirements.txt
 
-# Or from source
-git clone https://github.com/0xvanguard/cyberguard.git
-cd cyberguard
-pip install -e .
+# Scan against SOC2
+python cli.py scan --framework SOC2
+
+# Scan against multiple frameworks
+python cli.py scan -f HIPAA -f PCI-DSS
+
+# Auto-remediate
+python cli.py scan -f SOC2 --auto-fix
+
+# Generate report
+python cli.py report -f GDPR
+
+# List frameworks
+python cli.py frameworks
+
+# View rules
+python cli.py rules --framework HIPAA
 ```
 
+## 🐍 Python API
+
 ```python
-from cyberguard import CyberGuard
+from src.enforcer import CyberGuard
 
 guard = CyberGuard(frameworks=["SOC2", "HIPAA"])
 
-# Scan infrastructure
-results = guard.scan()
+# Scan
+result = guard.scan()
+print(f"Score: {result.score}/100")
+print(f"Violations: {len(result.violations)}")
 
-print(f"Score: {results.score}/100")
-print(f"Violations: {len(results.violations)}")
+# Remediate
+count = guard.remediate()
 
-# Auto-remediate
-guard.remediate(results)
+# Report
+print(guard.report())
 
-# Generate report
-guard.report(format="pdf", output="compliance_report.pdf")
-```
-
-## 💻 Advanced Usage
-
-```python
-from cyberguard import CyberGuard, Policy
-
-guard = CyberGuard()
-
-# Add custom policy
-policy = Policy(
-    name="encryption-required",
-    rule="all_storage_must_be_encrypted",
-    action="remediate",
-    severity="critical"
-)
-guard.add_policy(policy)
-
-# Scan with custom resources
-results = guard.scan(resources={
-    "database": {"encryption": True, "backup": True},
-    "storage": {"encryption": False, "backup": True}
+# Custom resources
+result = guard.scan(resources={
+    "my-db": {"type": "storage", "encryption_at_rest": True},
+    "my-api": {"type": "iam", "mfa_enabled": True},
 })
-
-# Get compliance score
-score = guard.compliance_score(framework="SOC2")
-print(f"SOC2 Score: {score}%")
 ```
 
-## 📊 Compliance Report
+## 📋 Frameworks
 
-| Metric | Value |
-|--------|-------|
-| **Overall Score** | 87/100 |
-| **Critical Violations** | 2 |
-| **High Violations** | 5 |
-| **Medium Violations** | 12 |
-| **Remediated** | 15 |
-| **Pending** | 4 |
+| Framework | Rules | Focus |
+|-----------|-------|-------|
+| **SOC2** | 4 | Encryption, MFA, audit logging |
+| **HIPAA** | 4 | PHI encryption, access control |
+| **PCI-DSS** | 4 | Cardholder data, network segmentation |
+| **GDPR** | 4 | Data encryption, retention, erasure |
+| **NIST** | 4 | RBAC, incident response, risk assessment |
+| **ISO27001** | 4 | ISMS, crypto controls, access management |
 
-## 📁 Project Structure
+## 📁 Structure
 
 ```
 cyberguard/
 ├── src/
 │   ├── __init__.py
-│   └── enforcer.py            # Core enforcement engine
-├── data/
-│   ├── soc2.json              # SOC2 rules
-│   ├── hipaa.json             # HIPAA rules
-│   ├── pci_dss.json           # PCI-DSS rules
-│   └── gdpr.json              # GDPR rules
-├── examples/
-│   └── quick_scan.py          # Getting started
+│   └── enforcer.py          # Core engine
+├── tests/
+│   └── test_enforcer.py     # 22 tests
+├── cli.py                   # CLI tool
+├── requirements.txt
 └── README.md
 ```
 
 ## 📄 License
 
-MIT License — Enforce security.
-
----
-
-<div align="center">
-
-**Built by [@0xvanguard](https://github.com/0xvanguard)** • [⭐ Star this repo](https://github.com/0xvanguard/cyberguard) • [🐛 Report Bug](https://github.com/0xvanguard/cyberguard/issues)
-
-</div>
+MIT License — see [LICENSE](LICENSE)

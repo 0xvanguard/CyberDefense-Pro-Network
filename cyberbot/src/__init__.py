@@ -1,2 +1,2 @@
-"""CyberBot — AI Cybersecurity Training Chatbot."""
-__version__ = "1.0.0"
+from .chatbot import CyberBot, Topic, ChatResponse
+__version__ = "2.0.0"

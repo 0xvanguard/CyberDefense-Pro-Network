@@ -1,129 +1,89 @@
-<div align="center">
+<p align="center">
+  <img src="https://img.shields.io/badge/version-2.0.0-blue?style=for-the-badge">
+  <img src="https://img.shields.io/badge/python-3.10+-yellow?style=for-the-badge&logo=python&logoColor=white">
+  <img src="https://img.shields.io/badge/license-MIT-green?style=for-the-badge">
+  <img src="https://img.shields.io/badge/tests-25-passing-brightgreen?style=for-the-badge">
+  <img src="https://img.shields.io/github/stars/0xvanguard/phishguard?style=for-the-badge">
+</p>
 
-# 🎣 PhishGuard
+# 🛡️ PhishGuard
 
-### AI-Powered Phishing Detection for Emails, URLs, and Messages
+**Phishing Detection Engine — URL, Email, and Content Analysis.**
 
-![Version](https://img.shields.io/badge/version-1.0.0-blue)
-![Python](https://img.shields.io/badge/python-3.8+-green)
-![License](https://img.shields.io/badge/license-MIT-yellow)
-![Accuracy](https://img.shields.io/badge/accuracy-98.5%25-green)
+PhishGuard detects phishing attempts using lexical analysis, pattern matching, and heuristic scoring. Analyzes URLs for suspicious TLDs, brand impersonation, and homograph attacks. Scans emails for SPF/DKIM failures, urgency patterns, and credential harvesting. Detects social engineering in text content.
 
-**Detect phishing attacks in real-time** with AI-powered analysis.
+## ✨ Features
 
-[PhishGuard](https://github.com/0xvanguard/phishguard) • [Try It Live](#quick-start) • [Features](#detection-features)
-
-</div>
-
----
-
-## 🎣 What is PhishGuard?
-
-PhishGuard is an **AI-powered phishing detection system** that analyzes emails, URLs, and messages to identify phishing attempts with 98.5% accuracy.
-
-### Why PhishGuard?
-
-| Without PhishGuard | With PhishGuard |
-|--------------------|-----------------|
-| Manual inspection | **Automated detection** |
-| Missed phishing attempts | **98.5% accuracy** |
-| Slow response | **Real-time analysis** |
-| No pattern learning | **Adaptive AI** |
-
-## 🔍 Detection Features
-
-| Feature | Description | Accuracy |
-|---------|-------------|----------|
-| **URL Analysis** | Detect malicious URLs | 99.2% |
-| **Email Analysis** | Analyze email headers/content | 97.8% |
-| **Domain Reputation** | Check domain history | 96.5% |
-| **Attachment Scanning** | Detect malicious attachments | 98.1% |
-| **Social Engineering** | Detect manipulation tactics | 95.3% |
+| Feature | Description |
+|---------|-------------|
+| **URL Analysis** | TLD, brand impersonation, IP domains, homographs |
+| **Email Analysis** | SPF/DKIM/DMARC, urgency, credential requests |
+| **Content Analysis** | Social engineering patterns, scam detection |
+| **Batch Scanning** | Scan multiple URLs at once |
+| **Risk Scoring** | 0.0–1.0 composite risk score |
+| **Verdict System** | Legitimate / Suspicious / Phishing |
+| **Homograph Detection** | Cyrillic character substitution attacks |
+| **@ Symbol Detection** | URL confusion phishing technique |
 
 ## 🚀 Quick Start
 
 ```bash
-# Install
-pip install phishguard
+pip install -r requirements.txt
 
-# Or from source
-git clone https://github.com/0xvanguard/phishguard.git
-cd phishguard
-pip install -e .
+# Analyze URL
+python cli.py url "https://paypal-verify.xyz/login"
+
+# Analyze email
+python cli.py email --from "bad@phish.com" --body "Verify your password!"
+
+# Analyze text
+python cli.py text "You have won a prize! Act now!"
+
+# Batch scan
+python cli.py batch --file urls.txt
+
+# Stats
+python cli.py stats
 ```
 
-```python
-from phishguard import Scanner
-
-scanner = Scanner()
-
-# Scan URL
-result = scanner.scan_url("https://suspicious-site.com")
-print(f"Phishing: {result.is_phishing}")  # True/False
-print(f"Confidence: {result.confidence}")  # 0.95
-print(f"Reason: {result.reason}")
-
-# Scan email
-email_result = scanner.scan_email(email_content)
-print(f"Phishing: {email_result.is_phishing}")
-```
-
-## 💻 Integration
+## 🐍 Python API
 
 ```python
-from phishguard import EmailGateway, BrowserExtension
+from src.detector import PhishDetector
 
-# Email gateway integration
-gateway = EmailGateway(
-    smtp_server="smtp.company.com",
-    scanner=Scanner(),
-    action="quarantine"  # or "alert", "block"
+detector = PhishDetector()
+
+# URL analysis
+result = detector.analyze_url("http://paypal-login.xyz/steal")
+print(f"Verdict: {result.verdict.value}, Risk: {result.risk_score:.2f}")
+
+# Email analysis
+result = detector.analyze_email(
+    headers={"from": "PayPal <security@paypal-verify.xyz>", "authentication-results": "spf=fail"},
+    body="URGENT: Verify your password immediately!"
 )
 
-# Browser extension backend
-extension = BrowserExtension(
-    scanner=Scanner(),
-    api_port=8080
-)
+# Text analysis
+result = detector.analyze_text("I am a prince and need your help transferring money")
+
+# Batch scan
+results = detector.batch_scan_urls(["https://google.com", "http://phish.xyz"])
 ```
 
-## 📊 Detection Report
-
-```python
-from phishguard import ReportGenerator
-
-report = ReportGenerator()
-
-# Generate weekly report
-weekly = report.generate(period="week")
-print(f"Scanned: {weekly.scanned} items")
-print(f"Blocked: {weekly.blocked} phishing attempts")
-print(f"Accuracy: {weekly.accuracy:.1%}")
-```
-
-## 📁 Project Structure
+## 📁 Structure
 
 ```
 phishguard/
 ├── src/
 │   ├── __init__.py
-│   └── detector.py            # Core detection engine
-├── data/
-│   ├── phishing_urls.json     # Known phishing URLs
-│   └── patterns.json          # Detection patterns
-├── examples/
-│   └── quick_scan.py          # Getting started
+│   └── detector.py        # Core engine (URL, Email, Content analyzers)
+├── tests/
+│   └── test_detector.py   # 25 tests
+├── cli.py                 # CLI tool
+├── requirements.txt
 └── README.md
 ```
 
 ## 📄 License
 
-MIT License — Protect against phishing.
-
----
-
-<div align="center">
-
-**Built by [@0xvanguard](https://github.com/0xvanguard)** • [⭐ Star this repo](https://github.com/0xvanguard/phishguard) • [🐛 Report Bug](https://github.com/0xvanguard/phishguard/issues)
-
-</div>
+MIT License — see [LICENSE](LICENSE)

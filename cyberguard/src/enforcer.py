@@ -184,6 +184,20 @@ class CyberGuard:
                        Action.BLOCK, Severity.CRITICAL, "Encryption per NIST standards",
                        [ComplianceFramework.NIST]),
         ],
+        ComplianceFramework.ISO27001: [
+            PolicyRule("isms-documentation", "infrastructure", "policy_documented == true",
+                       Action.ALERT, Severity.HIGH, "ISMS must be documented",
+                       [ComplianceFramework.ISO27001]),
+            PolicyRule("access-management", "iam", "rbac_enabled == true",
+                       Action.REMEDIATE, Severity.HIGH, "Access management per ISO 27001",
+                       [ComplianceFramework.ISO27001]),
+            PolicyRule("crypto-controls", "storage", "encryption_at_rest == true",
+                       Action.BLOCK, Severity.CRITICAL, "Cryptographic controls required",
+                       [ComplianceFramework.ISO27001]),
+            PolicyRule("supplier-security", "network", "firewall_enabled == true",
+                       Action.ALERT, Severity.MEDIUM, "Supplier security monitoring",
+                       [ComplianceFramework.ISO27001]),
+        ],
     }
 
     def __init__(self, policy_file: Optional[str] = None, frameworks: Optional[list] = None):
@@ -427,6 +441,7 @@ class CyberGuard:
                 "vuln_scan_frequency": "monthly",
                 "ir_plan": False,
                 "risk_assessment_current": False,
+                "policy_documented": False,
             },
         }
 

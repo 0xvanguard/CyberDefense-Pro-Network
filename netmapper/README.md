@@ -1,135 +1,84 @@
-<div align="center">
+<p align="center">
+  <img src="https://img.shields.io/badge/version-2.0.0-blue?style=for-the-badge">
+  <img src="https://img.shields.io/badge/python-3.10+-yellow?style=for-the-badge&logo=python&logoColor=white">
+  <img src="https://img.shields.io/badge/license-MIT-green?style=for-the-badge">
+  <img src="https://img.shields.io/badge/tests-20-passing-brightgreen?style=for-the-badge">
+  <img src="https://img.shields.io/github/stars/0xvanguard/netmapper?style=for-the-badge">
+</p>
 
-# 🗺️ NetMapper
+# 🔍 NetMapper
 
-### Automated Network Mapping and Topology Visualization
+**Network Scanner & Topology Mapper — Discover hosts, ports, services, and vulnerabilities.**
 
-![Version](https://img.shields.io/badge/version-1.0.0-blue)
-![Python](https://img.shields.io/badge/python-3.8+-green)
-![License](https://img.shields.io/badge/license-MIT-yellow)
-![Speed](https://img.shields.io/badge/speed-fast-green)
+NetMapper scans network ranges to discover active hosts, open ports, running services, and potential vulnerabilities. It maps network topology, fingerprints operating systems, grabs service banners, and identifies known risky configurations.
 
-**Discover and visualize your network** with automated scanning and topology mapping.
+## ✨ Features
 
-[NetMapper](https://github.com/0xvanguard/netmapper) • [Try It Live](#quick-start) • [Features](#features)
-
-</div>
-
----
-
-## 🗺️ What is NetMapper?
-
-NetMapper is an **automated network mapping tool** that discovers devices, maps connections, and creates visual topology diagrams of your network infrastructure.
-
-### Why NetMapper?
-
-| Without NetMapper | With NetMapper |
-|-------------------|----------------|
-| Manual network discovery | **Automated scanning** |
-| No visual topology | **Interactive diagrams** |
-| Unknown devices | **Device fingerprinting** |
-| Missing assets | **Complete inventory** |
-
-## 🔍 Features
-
-| Feature | Description | Speed |
-|---------|-------------|-------|
-| **Host Discovery** | Find all devices on network | 100 hosts/sec |
-| **Port Scanning** | Open port detection | 1000 ports/sec |
-| **Service Detection** | Identify services | 50 services/sec |
-| **OS Fingerprinting** | Detect operating systems | 95% accuracy |
-| **Topology Mapping** | Create visual diagrams | Real-time |
+| Feature | Description |
+|---------|-------------|
+| **Host Discovery** | Find active hosts via multi-port probing |
+| **Port Scanning** | 24+ common ports with service detection |
+| **OS Fingerprinting** | Guess OS from open port patterns |
+| **Banner Grabbing** | Extract service version information |
+| **Vulnerability Check** | 14 known vulnerable service patterns |
+| **Risk Assessment** | Per-port risk levels (low–critical) |
+| **Topology Mapping** | Full network topology with JSON export |
+| **Service Statistics** | Top services and OS distribution |
 
 ## 🚀 Quick Start
 
 ```bash
-# Install
-pip install netmapper
+pip install -r requirements.txt
 
-# Or from source
-git clone https://github.com/0xvanguard/netmapper.git
-cd netmapper
-pip install -e .
-```
+# Scan a network
+python cli.py scan 192.168.1.0/24
 
-```python
-from netmapper import NetworkMapper
+# Scan specific ports
+python cli.py scan 10.0.0.1 --ports 22,80,443
 
-mapper = NetworkMapper()
+# Scan single host
+python cli.py host 192.168.1.1
 
-# Scan network
-topology = mapper.scan("192.168.1.0/24")
-
-print(f"Hosts found: {len(topology.hosts)}")
-print(f"Services: {len(topology.services)}")
+# Show known vulnerable services
+python cli.py vulns
 
 # Export topology
-topology.export("network_map.html")
-topology.export("network_map.json")
+python cli.py scan 192.168.1.0/24 --output topology.json
 ```
 
-## 💻 Visualization
+## 🐍 Python API
 
 ```python
-from netmapper import Visualizer
+from src.scanner import NetworkMapper
 
-viz = Visualizer(topology)
+mapper = NetworkMapper(target="192.168.1.0/24", timeout=1.0)
+topology = mapper.scan()
 
-# Create interactive map
-viz.create_interactive(
-    output="network_topology.html",
-    layout="force",
-    show_labels=True,
-    color_by="os"
-)
+print(f"Active hosts: {topology.active_hosts}")
+print(f"Open ports: {topology.total_open_ports}")
+print(f"Vulnerabilities: {topology.total_vulnerabilities}")
 
-# Create static image
-viz.create_static(
-    output="network_topology.png",
-    format="png",
-    dpi=300
-)
+for host in topology.hosts:
+    if host.status.value == "up":
+        print(f"{host.ip} — {host.os_guess}")
+        for v in host.vulnerabilities:
+            print(f"  ⚠️  {v['service']}: {v['issue']}")
 ```
 
-## 📊 Network Report
-
-```python
-from netmapper import ReportGenerator
-
-report = ReportGenerator(topology)
-
-# Generate report
-report.generate(
-    format="markdown",
-    output="network_report.md",
-    include_topology=True,
-    include_vulnerabilities=True
-)
-```
-
-## 📁 Project Structure
+## 📁 Structure
 
 ```
 netmapper/
 ├── src/
 │   ├── __init__.py
-│   └── scanner.py             # Core scanning engine
-├── data/
-│   ├── os_fingerprints.json   # OS detection patterns
-│   └── service_probes.json    # Service detection
-├── examples/
-│   └── quick_scan.py          # Getting started
+│   └── scanner.py           # Core engine
+├── tests/
+│   └── test_scanner.py      # 20 tests
+├── cli.py                   # CLI tool
+├── requirements.txt
 └── README.md
 ```
 
 ## 📄 License
 
-MIT License — Map your network.
-
----
-
-<div align="center">
-
-**Built by [@0xvanguard](https://github.com/0xvanguard)** • [⭐ Star this repo](https://github.com/0xvanguard/netmapper) • [🐛 Report Bug](https://github.com/0xvanguard/netmapper/issues)
-
-</div>
+MIT License — see [LICENSE](LICENSE)

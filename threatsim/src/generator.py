@@ -1,256 +1,137 @@
-"""
-ThreatSim — Attack Scenario Generator
-
-Creates realistic attack scenarios based on MITRE ATT&CK framework.
-"""
-
-import json
+"""ThreatSim — Synthetic Attack Scenario Generator"""
 import random
-import time
-from typing import Dict, List, Optional
+import json
 from dataclasses import dataclass, field
+from typing import List, Dict, Optional, Any
+from datetime import datetime, timedelta
 from enum import Enum
 
-
-class Difficulty(Enum):
-    BEGINNER = "beginner"
-    INTERMEDIATE = "intermediate"
-    ADVANCED = "advanced"
-    EXPERT = "expert"
-
-
-class KillChainPhase(Enum):
-    RECONNAISSANCE = "reconnaissance"
-    WEAPONIZATION = "weaponization"
-    DELIVERY = "delivery"
-    EXPLOITATION = "exploitation"
-    INSTALLATION = "installation"
-    COMMAND_CONTROL = "command_and_control"
-    ACTIONS_ON_OBJECTIVES = "actions_on_objectives"
-
-
-@dataclass
-class AttackStep:
-    """Single step in an attack scenario."""
-    phase: KillChainPhase
-    technique_id: str  # MITRE ATT&CK technique ID
-    technique_name: str
-    description: str
-    tools: List[str] = field(default_factory=list)
-    detection: str = ""
-    mitigation: str = ""
-    log_sources: List[str] = field(default_factory=list)
-
+class AttackVector(Enum):
+    PHISHING = "phishing"
+    RANSOMWARE = "ransomware"
+    DDoS = "ddos"
+    SQL_INJECTION = "sql_injection"
+    XSS = "xss"
+    INSIDER = "insider_threat"
+    SUPPLY_CHAIN = "supply_chain"
+    ZERO_DAY = "zero_day"
 
 @dataclass
 class Scenario:
-    """Complete attack scenario."""
+    id: str
     name: str
+    attack_vector: str
     description: str
-    difficulty: Difficulty
-    threat_actor: str
-    steps: List[AttackStep]
-    objectives: List[str] = field(default_factory=list)
-    duration_hours: int = 24
-    tags: List[str] = field(default_factory=list)
+    mitre_techniques: List[str]
+    severity: str
+    objectives: List[str]
+    timeline_hours: int
+    indicators: List[str]
 
-    def to_dict(self) -> dict:
-        return {
-            "name": self.name,
-            "description": self.description,
-            "difficulty": self.difficulty.value,
-            "threat_actor": self.threat_actor,
-            "steps": [
-                {
-                    "phase": s.phase.value,
-                    "technique_id": s.technique_id,
-                    "technique_name": s.technique_name,
-                    "description": s.description,
-                    "tools": s.tools,
-                    "detection": s.detection,
-                    "mitigation": s.mitigation,
-                    "log_sources": s.log_sources,
-                }
-                for s in self.steps
-            ],
-            "objectives": self.objectives,
-            "duration_hours": self.duration_hours,
-            "tags": self.tags,
-        }
+@dataclass
+class SimulationResult:
+    scenario_id: str
+    steps_executed: int
+    detections: int
+    total_steps: int
+    detection_rate: float
+    recommendations: List[str]
 
-    def to_json(self, path: str = None) -> str:
-        data = json.dumps(self.to_dict(), indent=2)
-        if path:
-            with open(path, "w") as f:
-                f.write(data)
-        return data
-
-    def summary(self) -> str:
-        """Human-readable summary."""
-        lines = [
-            f"# {self.name}",
-            f"**Difficulty:** {self.difficulty.value}",
-            f"**Threat Actor:** {self.threat_actor}",
-            f"**Duration:** ~{self.duration_hours}h",
-            f"**Steps:** {len(self.steps)}",
-            "",
-            "## Kill Chain",
-        ]
-        for i, step in enumerate(self.steps, 1):
-            lines.append(f"### {i}. {step.technique_name} ({step.technique_id})")
-            lines.append(f"- **Phase:** {step.phase.value}")
-            lines.append(f"- {step.description}")
-            if step.tools:
-                lines.append(f"- **Tools:** {', '.join(step.tools)}")
-            if step.detection:
-                lines.append(f"- **Detection:** {step.detection}")
-            lines.append("")
-
-        return "\n".join(lines)
-
-
-# MITRE ATT&CK Techniques Database
-TECHNIQUES = {
-    "reconnaissance": [
-        {"id": "T1595", "name": "Active Scanning", "tools": ["nmap", "masscan"], "detection": "Network IDS alerts on port scans"},
-        {"id": "T1592", "name": "Gather Victim Host Info", "tools": ["theHarvester", "Shodan"], "detection": "OSINT monitoring"},
-        {"id": "T1589", "name": "Gather Victim Identity Info", "tools": ["LinkedIn", "Hunter.io"], "detection": "N/A"},
-    ],
-    "weaponization": [
-        {"id": "T1587", "name": "Develop Capabilities", "tools": ["msfvenom", "Cobalt Strike"], "detection": "EDR behavioral analysis"},
-        {"id": "T1584", "name": "Compromise Infrastructure", "tools": ["Bulletproof hosting"], "detection": "Threat intel feeds"},
-    ],
-    "delivery": [
-        {"id": "1566", "name": "Phishing", "tools": ["GoPhish", "King Phisher"], "detection": "Email gateway, user reports"},
-        {"id": "T1195", "name": "Supply Chain Compromise", "tools": ["Trojanized updates"], "detection": "Software integrity monitoring"},
-        {"id": "T1190", "name": "Exploit Public-Facing App", "tools": ["SQLMap", "Burp Suite"], "detection": "WAF logs, web server logs"},
-    ],
-    "exploitation": [
-        {"id": "T1190", "name": "Exploit Public-Facing App", "tools": ["Metasploit"], "detection": "IDS/IPS alerts"},
-        {"id": "T1059", "name": "Command and Scripting Interpreter", "tools": ["PowerShell", "bash"], "detection": "Process monitoring"},
-        {"id": "T1053", "name": "Scheduled Task/Job", "tools": ["cron", "schtasks"], "detection": "Task scheduler monitoring"},
-    ],
-    "installation": [
-        {"id": "T1547", "name": "Boot or Logon Autostart Execution", "tools": ["Registry keys", "crontab"], "detection": "Registry monitoring"},
-        {"id": "T1053", "name": "Scheduled Task/Job", "tools": ["at", "schtasks"], "detection": "Task scheduler logs"},
-        {"id": "T1574", "name": "Hijack Execution Flow", "tools": ["DLL search order hijacking"], "detection": "File integrity monitoring"},
-    ],
-    "command_and_control": [
-        {"id": "T1071", "name": "Application Layer Protocol", "tools": ["DNS tunneling", "HTTPS C2"], "detection": "Network traffic analysis"},
-        {"id": "T1573", "name": "Encrypted Channel", "tools": ["Cobalt Strike", "Sliver"], "detection": "SSL inspection"},
-        {"id": "T1090", "name": "Proxy", "tools": ["Domain fronting"], "detection": "CDN traffic analysis"},
-    ],
-    "actions_on_objectives": [
-        {"id": "T1486", "name": "Data Encrypted for Impact", "tools": ["Ransomware"], "detection": "File entropy monitoring"},
-        {"id": "T1041", "name": "Exfiltration Over C2 Channel", "tools": ["Cobalt Strike", "Sliver"], "detection": "DLP, network monitoring"},
-        {"id": "T1485", "name": "Data Destruction", "tools": ["rm", "cipher"], "detection": "File system monitoring"},
-    ],
-}
-
-
-class ScenarioGenerator:
-    """
-    Generate attack scenarios.
-
-    Usage:
-        gen = ScenarioGenerator()
-        scenario = gen.generate("ransomware", difficulty=Difficulty.ADVANCED)
-    """
-
-    PRESET_SCENARIOS = {
-        "ransomware": {
-            "name": "Ransomware Attack — Double Extortion",
-            "description": "Full ransomware attack chain from initial access through encryption and data exfiltration.",
-            "threat_actor": "Scattered Spider / ALPHV",
-            "objectives": ["Encrypt critical files", "Exfiltrate sensitive data", "Demand ransom payment"],
-            "phases": ["reconnaissance", "delivery", "exploitation", "installation", "command_and_control", "actions_on_objectives"],
-            "tags": ["ransomware", "double-extortion", "critical"],
-        },
-        "apt": {
-            "name": "APT Campaign — Intellectual Property Theft",
-            "description": "Advanced persistent threat campaign targeting trade secrets and research data.",
-            "threat_actor": "APT29 (Cozy Bear)",
-            "objectives": ["Gain persistent access", "Move laterally", "Exfiltrate IP"],
-            "phases": ["reconnaissance", "weaponization", "delivery", "exploitation", "command_and_control", "actions_on_objectives"],
-            "tags": ["apt", "espionage", "long-term"],
-        },
-        "insider": {
-            "name": "Insider Threat — Data Exfiltration",
-            "description": "Malicious insider using legitimate access to steal sensitive data.",
-            "threat_actor": "Malicious Insider",
-            "objectives": ["Exfiltrate customer data", "Cover tracks", "Bypass DLP"],
-            "phases": ["reconnaissance", "actions_on_objectives"],
-            "tags": ["insider", "data-theft", "detection"],
-        },
-        "supply-chain": {
-            "name": "Supply Chain Attack — Trojanized Update",
-            "description": "Compromise a software dependency to distribute malware to all users.",
-            "threat_actor": "APT41 / Lazarus",
-            "objectives": ["Compromise build pipeline", "Distribute trojanized package", "Maintain persistence"],
-            "phases": ["reconnaissance", "weaponization", "delivery", "exploitation", "command_and_control"],
-            "tags": ["supply-chain", "dependency", "npm", "pypi"],
-        },
-        "phishing": {
-            "name": "Business Email Compromise (BEC)",
-            "description": "Targeted phishing campaign to gain initial access and escalate privileges.",
-            "threat_actor": "Scattered Spider",
-            "objectives": ["Gain credentials", "Access email", "Wire fraud"],
-            "phases": ["reconnaissance", "weaponization", "delivery", "exploitation", "actions_on_objectives"],
-            "tags": ["phishing", "bec", "social-engineering"],
-        },
-    }
-
+class ThreatSim:
     def __init__(self):
-        self.techniques = TECHNIQUES
+        self.scenarios: List[Scenario] = self._load_scenarios()
+        self.simulation_history: List[SimulationResult] = []
+        self.counter = 0
 
-    def generate(self, scenario_type: str = "ransomware",
-                 difficulty: Difficulty = Difficulty.INTERMEDIATE) -> Scenario:
-        """Generate a complete attack scenario."""
-        preset = self.PRESET_SCENARIOS.get(scenario_type, self.PRESET_SCENARIOS["ransomware"])
+    def _load_scenarios(self) -> List[Scenario]:
+        return [
+            Scenario("SC-001", "Corporate Phishing Campaign", "phishing",
+                "Targeted phishing attack using credential harvesting pages",
+                ["T1566", "T1059", "T1078"], "high",
+                ["Steal credentials", "Gain initial access", "Escalate privileges"], 72,
+                ["Suspicious email", "Fake login page", "Credential exfil"]),
+            Scenario("SC-002", "Ransomware Deployment", "ransomware",
+                "Ransomware attack encrypting critical business data",
+                ["T1486", "T1490", "T1489"], "critical",
+                ["Encrypt files", "Demand ransom", "Exfiltrate data"], 48,
+                ["Unusual file activity", "Mass encryption", "Ransom note"]),
+            Scenario("SC-003", "DDoS Attack", "ddos",
+                "Distributed denial of service against web infrastructure",
+                ["T1498", "T1499"], "high",
+                ["Overwhelm services", "Cause downtime", "Distraction for other attacks"], 6,
+                ["Traffic spike", "Service degradation", "Multiple source IPs"]),
+            Scenario("SC-004", "SQL Injection Exploitation", "sql_injection",
+                "SQL injection to extract database contents",
+                ["T1190", "T1005"], "critical",
+                ["Bypass authentication", "Extract data", "Modify records"], 24,
+                ["Error messages", "Unusual queries", "Data exfiltration"]),
+            Scenario("SC-005", "Insider Threat", "insider_threat",
+                "Malicious insider exfiltrating sensitive data",
+                ["T1005", "T1041", "T1048"], "critical",
+                ["Access sensitive data", "Exfiltrate via USB/cloud", "Cover tracks"], 168,
+                ["Unusual access patterns", "Large downloads", "Off-hours activity"]),
+            Scenario("SC-006", "Supply Chain Attack", "supply_chain",
+                "Compromising a software dependency to backdoor applications",
+                ["T1195", "T1059", "T1071"], "critical",
+                ["Compromise dependency", "Inject backdoor", "Distribute to targets"], 720,
+                ["Suspicious code changes", "Unsigned updates", "New network connections"]),
+        ]
 
-        steps = []
-        for phase_name in preset["phases"]:
-            phase_techniques = self.techniques.get(phase_name, [])
-            if phase_techniques:
-                # Pick 1-2 techniques per phase based on difficulty
-                num_techniques = {
-                    Difficulty.BEGINNER: 1,
-                    Difficulty.INTERMEDIATE: 1,
-                    Difficulty.ADVANCED: 2,
-                    Difficulty.EXPERT: 2,
-                }.get(difficulty, 1)
+    def get_scenario(self, scenario_id: str) -> Optional[Scenario]:
+        for s in self.scenarios:
+            if s.id == scenario_id:
+                return s
+        return None
 
-                selected = random.sample(phase_techniques, min(num_techniques, len(phase_techniques)))
-                for tech in selected:
-                    steps.append(AttackStep(
-                        phase=KillChainPhase(phase_name),
-                        technique_id=tech["id"],
-                        technique_name=tech["name"],
-                        description=f"Adversary uses {tech['name']} technique during {phase_name} phase.",
-                        tools=tech["tools"],
-                        detection=tech["detection"],
-                        log_sources=["system", "network"],
-                    ))
+    def get_scenarios_by_vector(self, vector: str) -> List[Scenario]:
+        return [s for s in self.scenarios if s.attack_vector == vector]
 
-        # Adjust duration based on difficulty
-        duration = {
-            Difficulty.BEGINNER: 2,
-            Difficulty.INTERMEDIATE: 24,
-            Difficulty.ADVANCED: 72,
-            Difficulty.EXPERT: 168,
-        }.get(difficulty, 24)
+    def get_scenarios_by_severity(self, severity: str) -> List[Scenario]:
+        return [s for s in self.scenarios if s.severity == severity]
 
+    def simulate(self, scenario_id: str) -> SimulationResult:
+        scenario = self.get_scenario(scenario_id)
+        if not scenario:
+            return SimulationResult(scenario_id, 0, 0, 0, 0.0, ["Scenario not found"])
+
+        total_steps = len(scenario.mitre_techniques) * 3
+        detections = random.randint(0, total_steps)
+        detection_rate = detections / total_steps if total_steps > 0 else 0
+
+        recommendations = [
+            f"Implement monitoring for {technique}" for technique in scenario.mitre_techniques
+        ]
+        recommendations.append("Conduct regular threat hunting exercises")
+
+        result = SimulationResult(
+            scenario_id=scenario_id, steps_executed=total_steps,
+            detections=detections, total_steps=total_steps,
+            detection_rate=detection_rate, recommendations=recommendations,
+        )
+        self.simulation_history.append(result)
+        return result
+
+    def generate_random(self) -> Scenario:
+        self.counter += 1
+        vector = random.choice(list(AttackVector))
         return Scenario(
-            name=preset["name"],
-            description=preset["description"],
-            difficulty=difficulty,
-            threat_actor=preset["threat_actor"],
-            steps=steps,
-            objectives=preset["objectives"],
-            duration_hours=duration,
-            tags=preset["tags"],
+            id=f"RAND-{self.counter:04d}", name=f"Random {vector.value.title()}",
+            attack_vector=vector.value, description=f"Randomly generated {vector.value} scenario",
+            mitre_techniques=[f"T{random.randint(1000, 1500)}"],
+            severity=random.choice(["low", "medium", "high", "critical"]),
+            objectives=["Simulate attack", "Test defenses"], timeline_hours=random.randint(1, 168),
+            indicators=["Suspicious activity"],
         )
 
-    def list_presets(self) -> List[str]:
-        """List available scenario presets."""
-        return list(self.PRESET_SCENARIOS.keys())
+    def get_statistics(self) -> Dict[str, Any]:
+        return {
+            "total_scenarios": len(self.scenarios),
+            "simulations_run": len(self.simulation_history),
+            "avg_detection_rate": sum(s.detection_rate for s in self.simulation_history) / len(self.simulation_history) if self.simulation_history else 0,
+        }
+
+    def __len__(self) -> int:
+        return len(self.scenarios)
+
+    def __repr__(self) -> str:
+        return f"ThreatSim(scenarios={len(self.scenarios)})"

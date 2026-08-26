@@ -1,2 +1,2 @@
-"""Emailguard"""
-__version__ = "1.0.0"
+from .guard import EmailGuard, SpamFilter, ThreatDetection
+__version__ = "2.0.0"

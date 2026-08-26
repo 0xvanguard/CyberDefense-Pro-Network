@@ -1,2 +1,2 @@
-"""ThreatSim — Synthetic Attack Scenario Generator."""
-__version__ = "1.0.0"
+from .generator import ThreatSim, Scenario, AttackVector, SimulationResult
+__version__ = "2.0.0"

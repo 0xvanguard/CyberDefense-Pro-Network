@@ -1,3 +1,14 @@
-"""ZeroTrustKit - Zero Trust Implementation"""
-from .kit import ZeroTrustKit, VerificationResult
-__version__ = "1.0.0"
+"""ZeroTrustKit — Zero Trust Security Implementation Toolkit"""
+
+from .kit import (
+    TrustLevel, Action, VerificationResult, Policy,
+    DeviceProfile, Session, AuditLog, NetworkSegment,
+    ZeroTrustKit
+)
+
+__version__ = "2.0.0"
+__all__ = [
+    "TrustLevel", "Action", "VerificationResult", "Policy",
+    "DeviceProfile", "Session", "AuditLog", "NetworkSegment",
+    "ZeroTrustKit"
+]

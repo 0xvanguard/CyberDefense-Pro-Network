@@ -1,0 +1,2 @@
+# LLMFuzz dependencies
+# No external dependencies — uses Python stdlib only

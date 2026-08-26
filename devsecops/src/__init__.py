@@ -1,2 +1,2 @@
-"""Devsecops"""
-__version__ = "1.0.0"
+from .pipeline import DevSecOps, PipelineStage, SecurityGate
+__version__ = "2.0.0"

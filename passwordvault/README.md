@@ -1,102 +1,92 @@
-<div align="center">
+<p align="center">
+  <img src="https://img.shields.io/badge/version-2.0.0-blue?style=for-the-badge">
+  <img src="https://img.shields.io/badge/python-3.10+-yellow?style=for-the-badge&logo=python&logoColor=white">
+  <img src="https://img.shields.io/badge/license-MIT-green?style=for-the-badge">
+  <img src="https://img.shields.io/badge/tests-32-passing-brightgreen?style=for-the-badge">
+  <img src="https://img.shields.io/badge/encryption-AES--256-brightgreen?style=for-the-badge">
+  <img src="https://img.shields.io/github/stars/0xvanguard/passwordvault?style=for-the-badge">
+</p>
 
-# 🔑 PasswordVault
+# 🔐 PasswordVault
 
-### Modern Password Manager with Zero-Knowledge Encryption
+**Zero-Knowledge Password Manager — AES-256 encrypted with strength analysis.**
 
-![Version](https://img.shields.io/badge/version-1.0.0-blue)
-![Python](https://img.shields.io/badge/python-3.8+-green)
-![License](https://img.shields.io/badge/license-MIT-yellow)
-![Encryption](https://img.shields.io/badge/encryption-Zero--Knowledge-green)
+PasswordVault provides military-grade AES-256 encryption for your passwords. Features include automatic strength analysis, breach detection, secure generation, passphrases, categories, and encrypted backup.
 
-**Store passwords securely** with zero-knowledge encryption and biometric unlock.
-
-[PasswordVault](https://github.com/0xvanguard/passwordvault) • [Try It Live](#quick-start) • [Features](#features)
-
-</div>
-
----
-
-## 🔑 What is PasswordVault?
-
-PasswordVault is a **modern password manager** with zero-knowledge encryption, biometric unlock, and secure password generation.
-
-### Why PasswordVault?
-
-| Without PasswordVault | With PasswordVault |
-|----------------------|-------------------|
-| Reused passwords | **Unique passwords** |
-| No encryption | **Zero-knowledge** |
-| Manual entry | **Auto-fill** |
-| No sharing | **Secure sharing** |
-
-## 🔐 Features
+## ✨ Features
 
 | Feature | Description |
 |---------|-------------|
-| **Zero-Knowledge** | We never see your passwords |
-| **Biometric Unlock** | Fingerprint/face unlock |
-| **Auto-fill** | Browser integration |
-| **Password Generator** | Strong password creation |
-| **Secure Sharing** | Share with family/team |
+| **AES-256 Encryption** | PBKDF2 key derivation, 480K iterations |
+| **Strength Analysis** | Entropy, crack time, feature detection |
+| **Secure Generator** | Configurable password generation |
+| **Passphrase Generator** | BIP39-style word passphrases |
+| **Categories** | Organize passwords by type |
+| **Favorites** | Star frequently used entries |
+| **Encrypted Backup** | Full vault export/restore |
+| **Statistics** | Strength distribution, category counts |
 
 ## 🚀 Quick Start
 
 ```bash
-# Install
-pip install passwordvault
+pip install -r requirements.txt
 
-# Start vault
-passwordvault start
+# Generate a password
+python cli.py generate --length 20
+
+# Analyze strength
+python cli.py strength --password "MyPassword123!"
+
+# Generate passphrase
+python cli.py passphrase --words 5
+
+# Add entry
+python cli.py add -s github.com -u user@email.com -p mypass
+
+# List entries
+python cli.py list
+
+# Statistics
+python cli.py stats
 ```
 
-## 💻 Programmatic Usage
+## 🐍 Python API
 
 ```python
-from passwordvault import Vault
+from src.vault import PasswordVault
 
-vault = Vault(master_password="my_master_password")
+vault = PasswordVault(master_password="my-secret")
 
-# Add credential
-vault.add(
-    name="GitHub",
-    username="user@email.com",
-    password="secure_password",
-    url="https://github.com"
-)
+# Add
+entry = vault.add(service="github.com", username="user@email.com", password="mypass")
 
-# Get credential
-cred = vault.get("GitHub")
-print(f"Username: {cred.username}")
-print(f"Password: {cred.password}")
+# Decrypt
+password = vault.get_password(entry.id)
 
-# Generate password
-new_password = vault.generate(length=20)
-print(f"Generated: {new_password}")
+# Strength analysis
+strength = vault.analyze_password("MyPassword123!")
+print(f"Score: {strength.score}/100 ({strength.label})")
+print(f"Crack time: {strength.crack_time}")
+
+# Generate
+pw = vault.generate_password(length=20)
+pp = vault.generate_passphrase(words=5)
 ```
 
-## 📁 Project Structure
+## 📁 Structure
 
 ```
 passwordvault/
 ├── src/
 │   ├── __init__.py
-│   └── vault.py               # Core vault engine
-├── data/
-│   └── defaults.json          # Default settings
-├── examples/
-│   └── quick_start.py         # Getting started
+│   └── vault.py            # Core engine + encryption + strength
+├── tests/
+│   └── test_vault.py       # 32 tests
+├── cli.py                  # CLI tool
+├── requirements.txt
 └── README.md
 ```
 
 ## 📄 License
 
-MIT License — Manage passwords.
-
----
-
-<div align="center">
-
-**Built by [@0xvanguard](https://github.com/0xvanguard)** • [⭐ Star this repo](https://github.com/0xvanguard/passwordvault) • [🐛 Report Bug](https://github.com/0xvanguard/passwordvault/issues)
-
-</div>
+MIT License — see [LICENSE](LICENSE)

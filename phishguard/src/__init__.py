@@ -1,2 +1,14 @@
-"""PhishGuard — AI-Powered Phishing Detection."""
-__version__ = "1.0.0"
+"""PhishGuard — Phishing Detection Engine"""
+
+from .detector import (
+    Verdict, Signal, AnalysisResult,
+    URLAnalyzer, EmailAnalyzer, ContentAnalyzer,
+    PhishDetector
+)
+
+__version__ = "2.0.0"
+__all__ = [
+    "Verdict", "Signal", "AnalysisResult",
+    "URLAnalyzer", "EmailAnalyzer", "ContentAnalyzer",
+    "PhishDetector"
+]

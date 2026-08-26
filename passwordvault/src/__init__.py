@@ -1,3 +1,6 @@
-"""PasswordVault - Modern Password Manager"""
-from .vault import PasswordVault, VaultEntry
-__version__ = "1.0.0"
+"""PasswordVault — Modern Password Manager with Zero-Knowledge"""
+
+from .vault import PasswordVault, VaultEntry, PasswordStrength
+
+__version__ = "2.0.0"
+__all__ = ["PasswordVault", "VaultEntry", "PasswordStrength"]

@@ -1,136 +1,103 @@
-<div align="center">
+<p align="center">
+  <img src="https://img.shields.io/badge/version-2.0.0-blue?style=for-the-badge">
+  <img src="https://img.shields.io/badge/python-3.10+-yellow?style=for-the-badge&logo=python&logoColor=white">
+  <img src="https://img.shields.io/badge/license-MIT-green?style=for-the-badge">
+  <img src="https://img.shields.io/badge/tests-24-passing-brightgreen?style=for-the-badge">
+  <img src="https://img.shields.io/github/stars/0xvanguard/threathunt?style=for-the-badge">
+</p>
 
 # 🔍 ThreatHunt
 
-### Automated Threat Hunting with AI and MITRE ATT&CK
+**AI-Powered Automated Threat Hunting — MITRE ATT&CK mapped.**
 
-![Version](https://img.shields.io/badge/version-1.0.0-blue)
-![Python](https://img.shields.io/badge/python-3.8+-green)
-![License](https://img.shields.io/badge/license-MIT-yellow)
-![MITRE](https://img.shields.io/badge/MITRE-ATT%26CK-purple)
+ThreatHunt proactively searches for hidden threats using behavioral analysis, anomaly detection, beaconing detection, and MITRE ATT&CK framework mapping. Includes 12 built-in hunt queries covering lateral movement, credential dumping, C2 beaconing, ransomware, and more.
 
-**Proactively hunt for hidden threats** with behavioral analysis and MITRE ATT&CK mapping.
+## ✨ Features
 
-[ThreatHunt](https://github.com/0xvanguard/threathunt) • [Try It Live](#quick-start) • [Hunts](#hunt-queries)
-
-</div>
-
----
-
-## 🔍 What is ThreatHunt?
-
-ThreatHunt is an **AI-powered threat hunting engine** that proactively searches for hidden threats using behavioral analysis, anomaly detection, and MITRE ATT&CK framework mapping.
-
-### Why ThreatHunt?
-
-| Without ThreatHunt | With ThreatHunt |
-|--------------------|-----------------|
-| Reactive detection | **Proactive hunting** |
-| No MITRE mapping | **ATT&CK alignment** |
-| Manual correlation | **Automated analysis** |
-| Unknown threats | **Behavioral detection** |
-
-## 🎯 Hunt Queries
-
-| Hunt | MITRE ID | Description | Detection Rate |
-|------|----------|-------------|----------------|
-| **Lateral Movement** | T1021 | SMB/SSH lateral movement | 92% |
-| **Persistence** | T1053 | Scheduled task creation | 88% |
-| **Exfiltration** | T1048 | DNS tunneling detection | 94% |
-| **Credential Dumping** | T1003 | LSASS access detection | 96% |
-| **C2 Beaconing** | T1071 | Periodic beacon detection | 91% |
-| **Ransomware** | T1486 | Mass file encryption | 98% |
+| Feature | Description |
+|---------|-------------|
+| **12 Hunt Queries** | Pre-built MITRE-mapped detection rules |
+| **MITRE ATT&CK** | 12 tactics, 12 techniques mapped |
+| **Beaconing Detection** | Periodic C2 communication analysis |
+| **Anomaly Detection** | Z-score based anomaly scoring |
+| **IoC Matching** | Load and match against IoC feeds |
+| **Multi-Format Export** | JSON, STIX, CSV, Markdown |
+| **Demo Data** | Synthetic events for testing |
+| **Custom Hunts** | Add your own detection queries |
 
 ## 🚀 Quick Start
 
 ```bash
-# Install
-pip install threathunt
+pip install -r requirements.txt
 
-# Or from source
-git clone https://github.com/0xvanguard/threathunt.git
-cd threathunt
-pip install -e .
+# Run threat hunt
+python cli.py hunt
+
+# List hunt queries
+python cli.py queries
+
+# View MITRE tactics
+python cli.py tactics
+
+# View MITRE techniques
+python cli.py techniques
+
+# Export findings
+python cli.py export --format markdown --output report.md
+
+# Summary
+python cli.py summary
 ```
 
-```python
-from threathunt import ThreatHunter
-
-hunter = ThreatHunter(data_sources=["syslog", "dns", "netflow"])
-
-# Run hunt
-findings = hunter.hunt(timeframe="24h")
-
-print(f"Total findings: {len(findings)}")
-for finding in findings:
-    print(f"{finding.technique}: {finding.description}")
-    print(f"  Confidence: {finding.confidence:.0%}")
-    print(f"  Severity: {finding.severity.value}")
-```
-
-## 💻 Advanced Hunting
+## 🐍 Python API
 
 ```python
-from threathunt import ThreatHunter, HuntQuery
+from src.hunter import ThreatHunter, IoC
 
-hunter = ThreatHunter()
+hunter = ThreatHunter(data_sources=["all"])
 
-# Add custom hunt
-custom_hunt = HuntQuery(
-    name="custom-detection",
-    mitre_technique="T1059",
-    mitre_tactic="TA0002",
-    description="Detect suspicious PowerShell",
-    severity="high"
-)
-hunter.add_hunt(custom_hunt)
-
-# Load IoCs
-hunter.load_iocs("threat_intel.json")
+# Add IoCs
+hunter.add_ioc(IoC(type="ip", value="10.0.0.1", confidence=0.9))
 
 # Run hunt
-results = hunter.hunt(timeframe="7d")
+result = hunter.hunt(timeframe="24h")
+print(f"Findings: {len(result.findings)}")
 
 # Export
-hunter.export(results, format="stix")
-hunter.export(results, format="markdown", output="hunt_report.md")
+print(hunter.export(format="markdown"))
 ```
 
-## 📊 Hunt Report
+## 🎯 MITRE ATT&CK Coverage
 
-| Metric | Value |
-|--------|-------|
-| **Timeframe** | 24 hours |
-| **Queries Run** | 12 |
-| **Findings** | 8 |
-| **Critical** | 2 |
-| **High** | 3 |
-| **Medium** | 3 |
-| **IoCs Found** | 15 |
+| Tactic | Technique | Hunt Query |
+|--------|-----------|------------|
+| Initial Access | T1078 | Stolen credentials |
+| Initial Access | T1190 | App exploitation |
+| Execution | T1059 | PowerShell abuse |
+| Persistence | T1053 | Scheduled tasks |
+| Defense Evasion | T1027 | Obfuscated payloads |
+| Credential Access | T1003 | Credential dumping |
+| Discovery | T1082 | System enumeration |
+| Lateral Movement | T1021 | Remote services |
+| C2 | T1071 | Beaconing detection |
+| C2 | T1105 | Tool transfer |
+| Exfiltration | T1048 | DNS tunneling |
+| Impact | T1486 | Ransomware encryption |
 
-## 📁 Project Structure
+## 📁 Structure
 
 ```
 threathunt/
 ├── src/
 │   ├── __init__.py
-│   └── hunter.py              # Core hunting engine
-├── data/
-│   ├── hunts.json             # Hunt queries
-│   └── mitre.json             # MITRE ATT&CK mappings
-├── examples/
-│   └── quick_hunt.py          # Getting started
+│   └── hunter.py           # Core engine
+├── tests/
+│   └── test_hunter.py      # 24 tests
+├── cli.py                  # CLI tool
+├── requirements.txt
 └── README.md
 ```
 
 ## 📄 License
 
-MIT License — Hunt threats.
-
----
-
-<div align="center">
-
-**Built by [@0xvanguard](https://github.com/0xvanguard)** • [⭐ Star this repo](https://github.com/0xvanguard/threathunt) • [🐛 Report Bug](https://github.com/0xvanguard/threathunt/issues)
-
-</div>
+MIT License — see [LICENSE](LICENSE)

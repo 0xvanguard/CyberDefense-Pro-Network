@@ -1,3 +1,12 @@
-from .enforcer import CyberGuard
+"""CyberGuard — Automated Security Policy Enforcement"""
 
-__all__ = ["CyberGuard"]
+from .enforcer import (
+    Severity, Action, ComplianceFramework,
+    PolicyRule, Violation, ScanResult, CyberGuard
+)
+
+__version__ = "2.0.0"
+__all__ = [
+    "Severity", "Action", "ComplianceFramework",
+    "PolicyRule", "Violation", "ScanResult", "CyberGuard"
+]

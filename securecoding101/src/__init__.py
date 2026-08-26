@@ -1,3 +1,6 @@
-"""SecureCoding101 - Interactive Secure Coding Course"""
-from .course import SecureCoding, Lesson
-__version__ = "1.0.0"
+"""SecureCoding101 — Interactive Secure Coding Course"""
+
+from .course import SecureCoding, Lesson, QuizQuestion, LessonCategory
+
+__version__ = "2.0.0"
+__all__ = ["SecureCoding", "Lesson", "QuizQuestion", "LessonCategory"]

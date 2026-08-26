@@ -1,133 +1,105 @@
-<div align="center">
+<p align="center">
+  <img src="https://img.shields.io/badge/version-2.0.0-blue?style=for-the-badge">
+  <img src="https://img.shields.io/badge/python-3.10+-yellow?style=for-the-badge&logo=python&logoColor=white">
+  <img src="https://img.shields.io/badge/license-MIT-green?style=for-the-badge">
+  <img src="https://img.shields.io/badge/tests-23-passing-brightgreen?style=for-the-badge">
+  <img src="https://img.shields.io/github/stars/0xvanguard/zerotrustkit?style=for-the-badge">
+</p>
 
 # 🛡️ ZeroTrustKit
 
-### Complete Zero Trust Architecture Implementation
+**Zero Trust Security Implementation Toolkit — Never trust, always verify.**
 
-![Version](https://img.shields.io/badge/version-1.0.0-blue)
-![Python](https://img.shields.io/badge/python-3.8+-green)
-![License](https://img.shields.io/badge/license-MIT-yellow)
-![Components](https://img.shields.io/badge/components-10+-purple)
+ZeroTrustKit provides a complete framework for implementing Zero Trust architecture: identity verification, device profiling, network microsegmentation, session management, policy enforcement, and audit logging.
 
-**Implement Zero Trust** for any application with ready-to-use components.
+## ✨ Features
 
-[ZeroTrustKit](https://github.com/0xvanguard/zerotrustkit) • [Try It Live](#quick-start) • [Components](#components)
-
-</div>
-
----
-
-## 🛡️ What is ZeroTrustKit?
-
-ZeroTrustKit is a **complete Zero Trust implementation toolkit** that provides all the components needed to implement Zero Trust architecture in any application.
-
-### Why ZeroTrustKit?
-
-| Without ZeroTrustKit | With ZeroTrustKit |
-|----------------------|-------------------|
-| Complex implementation | **Ready-to-use components** |
-| Inconsistent security | **Unified Zero Trust** |
-| Hard to audit | **Built-in compliance** |
-| Manual configuration | **Automated setup** |
-
-## 🧩 Components
-
-| Component | Description | Priority |
-|-----------|-------------|----------|
-| **Identity Provider** | SSO, MFA, identity verification | P0 |
-| **Access Control** | RBAC, ABAC, policy engine | P0 |
-| **Network Security** | mTLS, micro-segmentation | P0 |
-| **Data Protection** | Encryption, DLP, classification | P1 |
-| **Device Trust** | Device verification, health checks | P1 |
-| **Workload Security** | Container security, runtime protection | P1 |
-| **Visibility** | Logging, monitoring, analytics | P2 |
-| **Automation** | Policy automation, remediation | P2 |
+| Feature | Description |
+|---------|-------------|
+| **Identity Verification** | Multi-factor risk scoring engine |
+| **Device Profiling** | Register, trust, revoke, quarantine devices |
+| **Session Management** | Create, validate, revoke sessions |
+| **Network Segmentation** | Microsegment definitions with CIDR |
+| **Policy Engine** | Customizable access policies |
+| **Audit Logging** | Full audit trail of all decisions |
+| **IP Blocklist** | Block known malicious IPs |
+| **Risk Scoring** | Composite risk from device + location + time + role |
 
 ## 🚀 Quick Start
 
 ```bash
-# Install
-pip install zerotrustkit
+pip install -r requirements.txt
 
-# Or from source
-git clone https://github.com/0xvanguard/zerotrustkit.git
-cd zerotrustkit
-pip install -e .
+# Verify a request
+python cli.py verify --user john@example.com --device iPhone-14 --ip 10.0.1.5
+
+# Register a device
+python cli.py register --device-id dev-001 --name "MacBook Pro" --trust high --mfa
+
+# Create a session
+python cli.py session --user john@example.com --create
+
+# View policies
+python cli.py policies
+
+# View network segments
+python cli.py segments
+
+# Block an IP
+python cli.py block --ip 192.168.1.100
+
+# Audit log
+python cli.py audit --limit 20
+
+# Stats
+python cli.py stats
 ```
+
+## 🐍 Python API
 
 ```python
-from zerotrustkit import ZeroTrust
+from src.kit import ZeroTrustKit, TrustLevel
 
-zt = ZeroTrust()
+ztk = ZeroTrustKit()
 
-# Initialize all components
-zt.init(
-    identity_provider="okta",
-    access_control="rbac",
-    network_security="mtls"
-)
+# Register a trusted device
+ztk.register_device("dev-001", "MacBook Pro", trust_level=TrustLevel.HIGH, mfa_enabled=True)
 
-# Enforce policy
-result = zt.enforce(
-    user="admin@example.com",
-    resource="/api/sensitive",
-    action="read"
-)
+# Verify a request
+result = ztk.verify(user="john@example.com", device="dev-001", ip="10.0.1.5", location="US")
+print(f"Action: {result.action.value}, Risk: {result.risk_score:.2f}")
 
-print(f"Allowed: {result.allowed}")
-print(f"Policy: {result.policy}")
+# Create session
+session = ztk.create_session(user="john@example.com", device_id="dev-001")
+
+# Network access check
+access = ztk.check_network_access("10.0.1.5", "ssh")
+print(f"Allowed: {access['allowed']}, Zone: {access['zone']}")
 ```
 
-## 💻 Component Usage
+## 🔐 Zero Trust Principles
 
-```python
-from zerotrustkit import IdentityProvider, AccessControl, NetworkSecurity
+| Principle | Implementation |
+|-----------|---------------|
+| **Verify Explicitly** | Identity + device + location + time verification |
+| **Least Privilege** | Role-based policies with step-up auth |
+| **Assume Breach** | Device quarantine, network segmentation |
+| **Continuous Verification** | Session validation, audit logging |
 
-# Identity Provider
-idp = IdentityProvider(provider="okta")
-token = idp.authenticate(username, password)
-
-# Access Control
-ac = AccessControl(engine="rbac")
-allowed = ac.check(user=token.user, resource="/api/data", action="read")
-
-# Network Security
-net = NetworkSecurity(tls_version="1.3")
-secure_conn = net.connect(target="api.company.com")
-```
-
-## 📊 Compliance
-
-| Framework | Coverage | Status |
-|-----------|----------|--------|
-| **NIST 800-207** | 95% | ✅ Compliant |
-| **CISA Zero Trust** | 90% | ✅ Compliant |
-| **Forrester ZTX** | 85% | ✅ Compliant |
-| **ISO 27001** | 80% | ✅ Compliant |
-
-## 📁 Project Structure
+## 📁 Structure
 
 ```
 zerotrustkit/
 ├── src/
 │   ├── __init__.py
-│   └── kit.py                 # Core toolkit
-├── data/
-│   ├── policies.json          # Access policies
-│   └── certificates.json      # TLS certificates
-├── examples/
-│   └── quick_start.py         # Getting started
+│   └── kit.py              # Core engine
+├── tests/
+│   └── test_kit.py         # 23 tests
+├── cli.py                  # CLI tool
+├── requirements.txt
 └── README.md
 ```
 
 ## 📄 License
 
-MIT License — Implement Zero Trust.
-
----
-
-<div align="center">
-
-**Built by [@0xvanguard](https://github.com/0xvanguard)** • [⭐ Star this repo](https://github.com/0xvanguard/zerotrustkit) • [🐛 Report Bug](https://github.com/0xvanguard/zerotrustkit/issues)
-
-</div>
+MIT License — see [LICENSE](LICENSE)

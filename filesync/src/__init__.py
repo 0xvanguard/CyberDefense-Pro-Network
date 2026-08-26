@@ -1,2 +1,2 @@
-"""Filesync"""
-__version__ = "1.0.0"
+from .sync import FileSync, SyncStatus, SyncResult
+__version__ = "2.0.0"

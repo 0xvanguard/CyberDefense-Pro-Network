@@ -1,2 +1,2 @@
-"""AIShield — Real-time Adversarial Defense for AI Models."""
-__version__ = "1.0.0"
+from .shield import AIShield, AdversarialAttack, DefenseResult
+__version__ = "2.0.0"
