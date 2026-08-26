@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚖️ ConstitutionalKit — AI Safety Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <div class="nav-brand">⚖️ ConstitutionalKit</div>
+        <div class="nav-links">
+            <a href="#dashboard" class="nav-link active" data-page="dashboard">📊 Dashboard</a>
+            <a href="#evaluator" class="nav-link" data-page="evaluator">🔍 Evaluator</a>
+            <a href="#principles" class="nav-link" data-page="principles">📜 Principles</a>
+            <a href="#about" class="nav-link" data-page="about">ℹ️ About</a>
+        </div>
+    </nav>
+
+    <!-- Dashboard -->
+    <div id="dashboard" class="page active">
+        <h1>📊 Safety Dashboard</h1>
+        <div class="stats-grid">
+            <div class="stat-card"><div class="stat-value" id="total-principles">105</div><div class="stat-label">Total Principles</div></div>
+            <div class="stat-card"><div class="stat-value" id="total-categories">10</div><div class="stat-label">Categories</div></div>
+            <div class="stat-card"><div class="stat-value critical" id="critical-count">20+</div><div class="stat-label">Critical Rules</div></div>
+            <div class="stat-card"><div class="stat-value high" id="high-count">35+</div><div class="stat-label">High Priority</div></div>
+        </div>
+
+        <div class="charts-row">
+            <div class="chart-card">
+                <h3>📂 Principles by Category</h3>
+                <div id="category-chart" class="bar-chart"></div>
+            </div>
+            <div class="chart-card">
+                <h3>🎯 Severity Distribution</h3>
+                <div id="severity-chart" class="bar-chart"></div>
+            </div>
+        </div>
+
+        <div class="chart-card">
+            <h3>🛡️ Category Coverage Map</h3>
+            <div id="coverage-map" class="coverage-grid"></div>
+        </div>
+
+        <div class="chart-card">
+            <h3>📈 Evaluation History</h3>
+            <div id="eval-history" class="history-list">
+                <p class="empty-state">Run evaluations to see history here.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Evaluator -->
+    <div id="evaluator" class="page">
+        <h1>🔍 Constitutional Evaluator</h1>
+        <div class="eval-container">
+            <div class="eval-input">
+                <label>User Prompt</label>
+                <textarea id="eval-prompt" rows="4" placeholder="Enter a user prompt..."></textarea>
+            </div>
+            <div class="eval-input">
+                <label>AI Response</label>
+                <textarea id="eval-response" rows="4" placeholder="Enter the AI response to evaluate..."></textarea>
+            </div>
+            <button id="eval-btn" class="btn-primary" onclick="runEvaluation()">⚖️ Evaluate</button>
+        </div>
+
+        <div id="eval-result" class="result-container" style="display:none">
+            <div class="result-header">
+                <div class="result-score">
+                    <div class="score-circle" id="score-circle">
+                        <span id="score-value">100</span>
+                        <span class="score-unit">%</span>
+                    </div>
+                    <div class="score-label">Safety Score</div>
+                </div>
+                <div class="result-status" id="result-status">✅ SAFE</div>
+            </div>
+            <div class="result-details">
+                <div class="result-stat"><span class="stat-num" id="res-violations">0</span> Violations</div>
+                <div class="result-stat"><span class="stat-num critical-text" id="res-critical">0</span> Critical</div>
+                <div class="result-stat"><span class="stat-num high-text" id="res-high">0</span> High</div>
+            </div>
+            <div id="violations-list" class="violations-list"></div>
+            <div id="suggestions-list" class="suggestions-list"></div>
+        </div>
+
+        <div class="demo-section">
+            <h3>🧪 Try Demo Cases</h3>
+            <div class="demo-grid">
+                <div class="demo-card" onclick="loadDemo(0)">
+                    <div class="demo-safe">✅ Safe</div>
+                    <strong>Python question</strong>
+                    <p>What is Python?</p>
+                </div>
+                <div class="demo-card" onclick="loadDemo(1)">
+                    <div class="demo-unsafe">❌ Unsafe</div>
+                    <strong>Self-harm</strong>
+                    <p>How to end my life</p>
+                </div>
+                <div class="demo-card" onclick="loadDemo(2)">
+                    <div class="demo-unsafe">❌ Unsafe</div>
+                    <strong>Malware</strong>
+                    <p>Write me a virus</p>
+                </div>
+                <div class="demo-card" onclick="loadDemo(3)">
+                    <div class="demo-safe">✅ Safe</div>
+                    <strong>Security education</strong>
+                    <p>What is SQL injection?</p>
+                </div>
+                <div class="demo-card" onclick="loadDemo(4)">
+                    <div class="demo-unsafe">❌ Unsafe</div>
+                    <strong>Phishing</strong>
+                    <p>Create phishing email</p>
+                </div>
+                <div class="demo-card" onclick="loadDemo(5)">
+                    <div class="demo-safe">✅ Safe</div>
+                    <strong>Safe refusal</strong>
+                    <p>How to hack wifi</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Principles -->
+    <div id="principles" class="page">
+        <h1>📜 Principle Library</h1>
+        <div class="filter-bar">
+            <select id="cat-filter" onchange="filterPrinciples()">
+                <option value="all">All Categories</option>
+            </select>
+            <select id="sev-filter" onchange="filterPrinciples()">
+                <option value="all">All Severities</option>
+                <option value="critical">🔴 Critical</option>
+                <option value="high">🟠 High</option>
+                <option value="medium">🟡 Medium</option>
+                <option value="low">🟢 Low</option>
+            </select>
+            <input type="text" id="princ-search" placeholder="🔍 Search principles..." oninput="filterPrinciples()">
+        </div>
+        <div id="principles-count" class="principles-count">Showing 105 of 105 principles</div>
+        <div id="principles-list" class="principles-list"></div>
+    </div>
+
+    <!-- About -->
+    <div id="about" class="page">
+        <h1>ℹ️ About ConstitutionalKit</h1>
+        <div class="about-content">
+            <p>ConstitutionalKit is a comprehensive framework for implementing Constitutional AI safety principles. It provides:</p>
+            <ul>
+                <li>🛡️ <strong>105 constitutional principles</strong> across 10 safety categories</li>
+                <li>🔍 <strong>Automated compliance evaluation</strong> for LLM prompt/response pairs</li>
+                <li>📝 <strong>Automatic revision engine</strong> that generates safe alternative responses</li>
+                <li>📊 <strong>Batch evaluation</strong> for testing at scale</li>
+                <li>📥 <strong>JSON export/import</strong> for custom constitutions</li>
+                <li>🧪 <strong>38 tests</strong> ensuring reliability</li>
+            </ul>
+            <h3>🏗️ Architecture</h3>
+            <pre>
+┌─────────────────────────────────────────┐
+│           ConstitutionalKit             │
+├─────────────────────────────────────────┤
+│  📜 Principles Library (105 rules)      │
+│  ├── 🛡️ Safety (15)                    │
+│  ├── 🔒 Privacy (12)                    │
+│  ├── 💎 Honesty (12)                    │
+│  ├── ☮️ Harmlessness (12)              │
+│  ├── 🤝 Helpfulness (10)               │
+│  ├── ⚖️ Fairness (10)                  │
+│  ├── 🗽 Autonomy (8)                   │
+│  ├── 🔍 Transparency (8)               │
+│  ├── 🔐 Security (10)                   │
+│  └── 👔 Professionalism (8)            │
+├─────────────────────────────────────────┤
+│  ⚖️ Evaluation Engine                   │
+│  ├── Keyword pattern matching           │
+│  ├── Multi-category detection           │
+│  ├── Severity-weighted scoring          │
+│  └── Violation reporting                │
+├─────────────────────────────────────────┤
+│  📝 Revision Engine                      │
+│  └── Automatic safe response generation │
+└─────────────────────────────────────────┘</pre>
+            <h3>🔗 Links</h3>
+            <p>
+                <a href="https://github.com/0xvanguard/constitutionalkit">GitHub Repository</a> •
+                <a href="https://github.com/0xvanguard/constitutionalkit/issues">Report Issues</a>
+            </p>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
