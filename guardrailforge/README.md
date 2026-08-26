@@ -1,105 +1,60 @@
-<div align="center">
+# 🛡️ GuardRailForge
 
-# 🔥 GuardRailForge
+**Framework to Test, Break, and Harden LLM Guardrails — 59 Attack Vectors**
 
-### Test, Break, and Harden LLM Guardrails
-
-![Version](https://img.shields.io/badge/version-1.0.0-blue)
-![Python](https://img.shields.io/badge/python-3.8+-green)
-![License](https://img.shields.io/badge/license-MIT-yellow)
-![Models](https://img.shields.io/badge/models-20+-purple)
-
-**The framework for systematic safety testing** of LLM guardrails.
-
-[GuardRailForge](https://github.com/0xvanguard/guardrailforge) • [Try It Live](#quick-start) • [Techniques](#attack-techniques)
-
-</div>
-
----
-
-## 🔥 What is GuardRailForge?
-
-GuardRailForge is a **comprehensive framework for testing LLM guardrails**. It provides systematic techniques to identify weaknesses, measure resilience, and harden safety measures.
-
-### Why GuardRailForge?
-
-| Without GuardRailForge | With GuardRailForge |
-|------------------------|---------------------|
-| Ad-hoc safety testing | **Systematic methodology** |
-| Unknown guardrail weaknesses | **Mapped vulnerabilities** |
-| No resilience metrics | **Quantified safety scores** |
-| Hard to improve | **Actionable improvements** |
-
-## 🎯 Attack Techniques
-
-| Technique | Category | Success Rate | Description |
-|-----------|----------|--------------|-------------|
-| **Persona Injection** | Direct | 67% | Override system persona |
-| **Instruction Following** | Direct | 58% | Bypass instruction hierarchy |
-| **Encoding Bypass** | Indirect | 72% | Use encoding to evade |
-| **Multi-turn Escalation** | Context | 54% | Gradual escalation |
-| **Tool Abuse** | Agent | 63% | Manipulate tool calling |
-| **Data Extraction** | Extraction | 61% | Extract system prompt |
+GuardRailForge is a comprehensive testing framework for LLM safety guardrails. It provides 59 attack vectors across 8 libraries covering OWASP LLM Top 10, jailbreaking, prompt injection, data extraction, social engineering, and more.
 
 ## 🚀 Quick Start
 
 ```bash
-# Install
-pip install guardrailforge
-
-# Or from source
-git clone https://github.com/0xvanguard/guardrailforge.git
-cd guardrailforge
-pip install -e .
+python cli.py test --library owasp_top10 --model gpt-4
+python cli.py test --library all --model gpt-4 -o results.json
+python cli.py libraries
+python cli.py vectors --library jailbreak
+python cli.py report --results results.json
 ```
 
-```python
-from guardrailforge import GuardRailTester
+## 🎯 Attack Libraries (8 Total, 59 Vectors)
 
-tester = GuardRailTester()
+| Library | Vectors | Coverage |
+|---------|---------|----------|
+| **owasp_top10** | 10 | OWASP LLM Top 10 compliance |
+| **jailbreak** | 10 | DAN, AIM, STAN, DUDE, ChaosGPT |
+| **encoding** | 8 | Base64, ROT13, hex, homoglyph, zero-width |
+| **injection** | 8 | JSON, YAML, XML, Docker, Terraform, SQL |
+| **social_engineering** | 8 | Authority, urgency, emotion, gaslighting |
+| **extraction** | 7 | System prompts, configs, debug, API docs |
+| **basic** | 5 | Direct harmful requests |
+| **multi_turn** | 3 | Gradual escalation, persona commitment |
 
-# Test a guardrail system
-results = tester.test(
-    guardrail_fn=your_guardrail_function,
-    techniques=["persona", "encoding", "extraction"],
-    num_samples=100
-)
-
-print(f"Overall resilience: {results.resilience_score:.1%}")
-print(f"Weakest technique: {results.weakest}")
-```
-
-## 💻 Testing Framework
+## 🔧 Python API
 
 ```python
-from guardrailforge import TestSuite
+from src.tester import GuardrailTester, AttackLibrary
 
-# Create test suite
-suite = TestSuite(
-    guardrail_fn=your_guardrail,
-    techniques=["all"],
-    num_samples=1000
-)
+# Load attack library
+lib = AttackLibrary.load("all")
+print(f"Loaded {lib.count} attack vectors")
 
 # Run tests
-results = suite.run()
+tester = GuardrailTester(model="gpt-4", guardrail="default")
+results = tester.run(lib.vectors)
 
-# Generate report
-report = results.to_report("markdown")
-print(report)
+# Get summary
+print(results.summary())
+# {'total_tests': 59, 'bypassed': 5, 'blocked': 50, 'bypass_rate': '8.5%'}
 
-# Export for CI/CD
-results.export_json("guardrail_test_results.json")
+# Export results
+results.to_json("results.json")
 ```
 
-## 📊 Metrics
+## 🧪 Testing
 
-| Metric | Description | Formula |
-|--------|-------------|---------|
-| **Resilience Score** | Overall guardrail strength | 1 - attack_success_rate |
-| **Coverage** | Techniques tested | tested / total_techniques |
-| **Consistency** | Score variance | std_dev(scores) |
-| **Improvement Rate** | Safety improvement over time | delta(resilience) |
+```bash
+python -m pytest tests/ -v
+```
+
+All 27 tests cover: AttackVector, TestResult, TestSuite, GuardrailTester, AttackLibrary, all 8 libraries, filtering, and evaluation logic.
 
 ## 📁 Project Structure
 
@@ -107,23 +62,21 @@ results.export_json("guardrail_test_results.json")
 guardrailforge/
 ├── src/
 │   ├── __init__.py
-│   └── tester.py              # Core testing engine
-├── data/
-│   ├── techniques.json        # Attack techniques
-│   └── benchmarks.json        # Baseline benchmarks
-├── examples/
-│   └── quick_test.py          # Getting started
+│   └── tester.py          # Core engine (400+ lines)
+├── tests/
+│   └── test_tester.py     # 27 tests
+├── cli.py                 # CLI interface
+├── requirements.txt
+├── .gitignore
 └── README.md
 ```
 
-## 📄 License
+## 🔗 Part of CyberDefense-Pro-Network
 
-MIT License — Test your guardrails.
+- [PromptKiller](../promptkiller/) — 501 adversarial prompts
+- [GuardDog](../guarddog/) — Prompt injection scanner
+- [LLMFuzz](../llmfuzz/) — Automated LLM fuzzer
 
 ---
 
-<div align="center">
-
-**Built by [@0xvanguard](https://github.com/0xvanguard)** • [⭐ Star this repo](https://github.com/0xvanguard/guardrailforge) • [🐛 Report Bug](https://github.com/0xvanguard/guardrailforge/issues)
-
-</div>
+*Built for AI safety teams who believe in testing guardrails before deployment.*
